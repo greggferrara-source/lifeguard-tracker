@@ -200,6 +200,7 @@ export default function Schedule() {
           shifts={weekShifts}
           locations={activeLocations}
           days={days}
+          availabilities={availabilities}
           onShiftClick={handleShiftClick}
           onCellClick={handleCellClick}
         />
@@ -208,11 +209,12 @@ export default function Schedule() {
           shifts={weekShifts}
           employees={employees}
           days={days}
+          availabilities={availabilities}
           onShiftClick={handleShiftClick}
+          onSwapClick={(shift) => { setSwapShift(shift); setSwapOpen(true); }}
         />
       )}
 
-      {/* Dialog */}
       <ShiftDialog
         open={dialogOpen}
         onOpenChange={setDialogOpen}
@@ -225,6 +227,23 @@ export default function Schedule() {
         onDelete={(id) => deleteShift.mutate(id)}
         defaultDate={defaultDate}
         defaultLocationId={defaultLocationId}
+      />
+      <RecurringShiftDialog
+        open={recurringOpen}
+        onOpenChange={setRecurringOpen}
+        employees={employees}
+        locations={activeLocations}
+        allShifts={shifts}
+        templates={templates}
+        onSave={handleRecurringSave}
+      />
+      <ShiftSwapDialog
+        open={swapOpen}
+        onOpenChange={setSwapOpen}
+        myShift={swapShift}
+        allShifts={shifts}
+        employees={employees}
+        onSubmit={handleSwapSubmit}
       />
     </div>
   );
