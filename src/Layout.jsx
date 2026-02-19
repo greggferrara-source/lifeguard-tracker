@@ -38,6 +38,13 @@ export default function Layout({ children, currentPageName }) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [collapsed, setCollapsed] = useState(false);
 
+  const { data: alerts = [] } = useQuery({
+    queryKey: ["alerts"],
+    queryFn: () => base44.entities.Alert.list("-created_date", 100),
+    refetchInterval: 60000,
+  });
+  const unresolvedAlerts = alerts.filter(a => !a.resolved).length;
+
   return (
     <div className="flex h-screen bg-[hsl(220,14%,96%)] overflow-hidden">
       {/* Mobile overlay */}
