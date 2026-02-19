@@ -50,6 +50,7 @@ export default function EmployeeDialog({ open, onOpenChange, employee, onSave })
         hourly_rate: employee.hourly_rate || "",
         max_hours_per_week: employee.max_hours_per_week || 40,
         color: employee.color || COLORS[0],
+        certifications: employee.certifications || [],
         notes: employee.notes || "",
       });
     } else {
@@ -63,10 +64,29 @@ export default function EmployeeDialog({ open, onOpenChange, employee, onSave })
         hourly_rate: "",
         max_hours_per_week: 40,
         color: COLORS[Math.floor(Math.random() * COLORS.length)],
+        certifications: [],
         notes: "",
       });
     }
+    setNewCert({ name: "", expiry_date: "" });
   }, [employee, open]);
+
+  const addCertification = () => {
+    if (newCert.name.trim()) {
+      setForm(f => ({
+        ...f,
+        certifications: [...f.certifications, { ...newCert }]
+      }));
+      setNewCert({ name: "", expiry_date: "" });
+    }
+  };
+
+  const removeCertification = (idx) => {
+    setForm(f => ({
+      ...f,
+      certifications: f.certifications.filter((_, i) => i !== idx)
+    }));
+  };
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
