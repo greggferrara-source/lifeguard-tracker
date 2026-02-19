@@ -98,7 +98,10 @@ Deno.serve(async (req) => {
       }
     }
 
-    // 4. Log shift reminders for tomorrow's shifts (skips actual email for employees outside app)
+    // 4. Shift reminders for tomorrow's shifts
+    if (!isEnabled("shift_reminders")) {
+      return Response.json({ success: true, ...results });
+    }
     const tomorrowShifts = shifts.filter(s => s.date === tomorrow && s.employee_id && s.status === "scheduled");
     for (const shift of tomorrowShifts) {
       const emp = employees.find(e => e.id === shift.employee_id);
