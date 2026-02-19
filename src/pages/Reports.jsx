@@ -155,8 +155,8 @@ export default function Reports() {
 
       {/* Charts Row 2 */}
       <div className="grid lg:grid-cols-2 gap-5">
-        <Card className="p-5 border-0 shadow-sm">
-          <h3 className="text-sm font-semibold text-slate-900 mb-4">Shifts by Location</h3>
+        <Card className="p-6 border border-gray-100 shadow-none rounded-2xl">
+          <h3 className="text-base font-semibold text-gray-900 mb-5">Shifts by Location</h3>
           <ResponsiveContainer width="100%" height={220}>
             <PieChart>
               <Pie data={locationData} dataKey="count" nameKey="name" cx="50%" cy="50%" outerRadius={80} label>
