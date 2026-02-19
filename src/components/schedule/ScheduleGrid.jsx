@@ -2,6 +2,7 @@ import React from "react";
 import { format, isSameDay } from "date-fns";
 import { motion } from "framer-motion";
 import { AlertTriangle } from "lucide-react";
+import { Droppable, Draggable } from "@hello-pangea/dnd";
 
 const SHIFT_COLORS = [
   "#0ea5e9","#10b981","#8b5cf6","#f59e0b","#ef4444",
@@ -27,7 +28,7 @@ function hasConflict(shift, allShifts) {
   );
 }
 
-export default function ScheduleGrid({ shifts, locations, days, onShiftClick, onCellClick }) {
+export default function ScheduleGrid({ shifts, locations, days, onShiftClick, onCellClick, canDragDrop = false }) {
   return (
     <div className="bg-white rounded-2xl shadow-sm overflow-hidden border border-slate-100">
       <div className="overflow-x-auto">
@@ -65,36 +66,50 @@ export default function ScheduleGrid({ shifts, locations, days, onShiftClick, on
                   const dateStr = format(day, "yyyy-MM-dd");
                   const isToday = isSameDay(day, new Date());
                   const dayShifts = shifts.filter(s => s.date === dateStr && s.location_id === location.id);
+                  const droppableId = `${location.id}-${dateStr}`;
                   return (
-                    <td
-                      key={dayIdx}
-                      className={`px-1.5 py-1.5 border-b border-slate-200/60 align-top cursor-pointer hover:bg-slate-50/50 transition-colors ${isToday ? "bg-cyan-50/20" : ""}`}
-                      onClick={() => onCellClick(location, dateStr)}
-                    >
-                      <div className="space-y-1 min-h-[40px]">
-                        {dayShifts.map(shift => {
-                          const conflicted = hasConflict(shift, shifts);
-                          return (
-                            <motion.div
-                              key={shift.id}
-                              whileHover={{ scale: 1.03 }}
-                              className={`shift-block rounded-lg px-2 py-1.5 text-white text-[11px] font-medium leading-tight cursor-pointer relative ${conflicted ? "ring-2 ring-orange-400 ring-offset-1" : ""}`}
-                              style={{
-                                backgroundColor: shift.color || getShiftColor(shift.employee_name),
-                                opacity: shift.status === "cancelled" ? 0.4 : 1,
-                              }}
-                              onClick={e => { e.stopPropagation(); onShiftClick(shift); }}
-                            >
-                              {conflicted && (
-                                <AlertTriangle className="absolute top-1 right-1 w-2.5 h-2.5 text-orange-300" />
-                              )}
-                              <div className="truncate font-semibold pr-3">{shift.employee_name || "OPEN"}</div>
-                              <div className="opacity-80 text-[10px]">{shift.start_time}–{shift.end_time}</div>
-                            </motion.div>
-                          );
-                        })}
-                      </div>
-                    </td>
+                    <Droppable key={dayIdx} droppableId={droppableId} isDropDisabled={!canDragDrop}>
+                      {(provided, snapshot) => (
+                        <td
+                          ref={provided.innerRef}
+                          {...provided.droppableProps}
+                          className={`px-1.5 py-1.5 border-b border-slate-200/60 align-top transition-colors ${isToday ? "bg-cyan-50/20" : ""} ${snapshot.isDraggingOver && canDragDrop ? "bg-blue-100/50" : ""}`}
+                          onClick={() => onCellClick(location, dateStr)}
+                        >
+                          <div className="space-y-1 min-h-[40px]">
+                            {dayShifts.map((shift, idx) => {
+                              const conflicted = hasConflict(shift, shifts);
+                              return (
+                                <Draggable key={shift.id} draggableId={shift.id} index={idx} isDragDisabled={!canDragDrop}>
+                                  {(provided, snapshot) => (
+                                    <motion.div
+                                      ref={provided.innerRef}
+                                      {...provided.draggableProps}
+                                      {...provided.dragHandleProps}
+                                      whileHover={canDragDrop ? { scale: 1.03 } : {}}
+                                      className={`shift-block rounded-lg px-2 py-1.5 text-white text-[11px] font-medium leading-tight relative ${conflicted ? "ring-2 ring-orange-400 ring-offset-1" : ""} ${canDragDrop ? "cursor-grab" : "cursor-pointer"} ${snapshot.isDragging ? "shadow-lg ring-2 ring-blue-400" : ""}`}
+                                      style={{
+                                        backgroundColor: shift.color || getShiftColor(shift.employee_name),
+                                        opacity: shift.status === "cancelled" ? 0.4 : 1,
+                                        ...provided.draggableProps.style,
+                                      }}
+                                      onClick={e => { e.stopPropagation(); onShiftClick(shift); }}
+                                    >
+                                      {conflicted && (
+                                        <AlertTriangle className="absolute top-1 right-1 w-2.5 h-2.5 text-orange-300" />
+                                      )}
+                                      <div className="truncate font-semibold pr-3">{shift.employee_name || "OPEN"}</div>
+                                      <div className="opacity-80 text-[10px]">{shift.start_time}–{shift.end_time}</div>
+                                    </motion.div>
+                                  )}
+                                </Draggable>
+                              );
+                            })}
+                            {provided.placeholder}
+                          </div>
+                        </td>
+                      )}
+                    </Droppable>
                   );
                 })}
               </tr>
