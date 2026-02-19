@@ -163,6 +163,9 @@ export default function Employees() {
                     <DropdownMenuItem onClick={() => { setEditingEmployee(emp); setDialogOpen(true); }}>
                       <Pencil className="w-3.5 h-3.5 mr-2" /> Edit
                     </DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => { setAvailEmployee(emp); setAvailDialogOpen(true); }}>
+                      <CalendarCheck className="w-3.5 h-3.5 mr-2" /> Set Availability
+                    </DropdownMenuItem>
                     <DropdownMenuItem
                       className="text-red-600"
                       onClick={() => deleteEmployee.mutate(emp.id)}
