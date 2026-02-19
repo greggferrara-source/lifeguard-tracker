@@ -6,11 +6,15 @@ Deno.serve(async (req) => {
     const today = new Date().toISOString().split("T")[0];
     const tomorrow = new Date(Date.now() + 86400000).toISOString().split("T")[0];
 
-    const [employees, locations, shifts] = await Promise.all([
+    const [employees, locations, shifts, settingsRecords] = await Promise.all([
       base44.asServiceRole.entities.Employee.list(),
       base44.asServiceRole.entities.Location.list(),
-      base44.asServiceRole.entities.Shift.list("-date", 500)
+      base44.asServiceRole.entities.Shift.list("-date", 500),
+      base44.asServiceRole.entities.AppSettings.filter({ key: "alert_settings" })
     ]);
+
+    const settings = settingsRecords.length > 0 ? settingsRecords[0].value : {};
+    const isEnabled = (key) => settings[key] !== false; // default true if not set
 
     const results = { alerts_created: 0, reminders_sent: 0, errors: [] };
 
