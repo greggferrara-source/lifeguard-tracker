@@ -245,7 +245,7 @@ export default function TimeOff() {
           </div>
           <DialogFooter>
             <Button variant="outline" onClick={() => setDialogOpen(false)}>Cancel</Button>
-            <Button onClick={handleCreate} className="bg-cyan-600 hover:bg-cyan-700">
+            <Button onClick={handleCreate} className="bg-[#1a9c5b] hover:bg-[#158a4e] rounded-full">
               Submit Request
             </Button>
           </DialogFooter>
