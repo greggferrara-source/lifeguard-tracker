@@ -75,23 +75,25 @@ Deno.serve(async (req) => {
     }
 
     // 3. Cert expiry check
-    const thirtyDays = new Date();
-    thirtyDays.setDate(thirtyDays.getDate() + 30);
-    const thirtyDaysStr = thirtyDays.toISOString().split("T")[0];
-    for (const emp of employees.filter(e => e.status === "active")) {
-      for (const cert of (emp.certifications || [])) {
-        if (cert.expiry_date && cert.expiry_date <= thirtyDaysStr) {
-          const expired = cert.expiry_date < today;
-          await base44.asServiceRole.entities.Alert.create({
-            type: "cert_expiry",
-            severity: expired ? "critical" : "warning",
-            title: `Cert ${expired ? "Expired" : "Expiring"}: ${emp.first_name} ${emp.last_name}`,
-            message: `${emp.first_name} ${emp.last_name}'s ${cert.name} ${expired ? "expired" : "expires"} on ${cert.expiry_date}.`,
-            employee_id: emp.id,
-            employee_name: `${emp.first_name} ${emp.last_name}`,
-            resolved: false
-          });
-          results.alerts_created++;
+    if (isEnabled("cert_expiry")) {
+      const thirtyDays = new Date();
+      thirtyDays.setDate(thirtyDays.getDate() + 30);
+      const thirtyDaysStr = thirtyDays.toISOString().split("T")[0];
+      for (const emp of employees.filter(e => e.status === "active")) {
+        for (const cert of (emp.certifications || [])) {
+          if (cert.expiry_date && cert.expiry_date <= thirtyDaysStr) {
+            const expired = cert.expiry_date < today;
+            await base44.asServiceRole.entities.Alert.create({
+              type: "cert_expiry",
+              severity: expired ? "critical" : "warning",
+              title: `Cert ${expired ? "Expired" : "Expiring"}: ${emp.first_name} ${emp.last_name}`,
+              message: `${emp.first_name} ${emp.last_name}'s ${cert.name} ${expired ? "expired" : "expires"} on ${cert.expiry_date}.`,
+              employee_id: emp.id,
+              employee_name: `${emp.first_name} ${emp.last_name}`,
+              resolved: false
+            });
+            results.alerts_created++;
+          }
         }
       }
     }
