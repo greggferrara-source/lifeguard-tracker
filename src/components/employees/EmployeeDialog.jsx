@@ -33,8 +33,10 @@ export default function EmployeeDialog({ open, onOpenChange, employee, onSave })
     hourly_rate: "",
     max_hours_per_week: 40,
     color: COLORS[0],
+    certifications: [],
     notes: "",
   });
+  const [newCert, setNewCert] = useState({ name: "", expiry_date: "" });
 
   useEffect(() => {
     if (employee) {
