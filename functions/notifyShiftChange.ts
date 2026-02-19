@@ -4,11 +4,32 @@ Deno.serve(async (req) => {
   try {
     const base44 = createClientFromRequest(req);
     const body = await req.json();
-    const { event_type, shift, old_shift } = body;
-    // event_type: "assigned" | "unassigned" | "updated" | "cancelled" | "callout" | "reminder"
+
+    // Support both direct calls and automation entity event calls
+    let event_type = body.event_type;
+    let shift = body.shift;
+    let old_shift = body.old_shift;
+
+    // Automation entity event format: { event: { type, entity_name, entity_id }, data, old_data }
+    if (body.event && body.event.entity_name === "Shift") {
+      shift = body.data;
+      old_shift = body.old_data;
+      if (body.event.type === "create") event_type = "assigned";
+      else if (body.event.type === "update") {
+        // Check what changed
+        const statusChanged = old_shift && shift && old_shift.status !== shift.status;
+        const cancelled = shift?.status === "cancelled";
+        event_type = cancelled ? "cancelled" : "updated";
+      }
+    }
 
     if (!shift || !shift.employee_id) {
       return Response.json({ skipped: true, reason: "No employee on shift" });
+    }
+
+    // Skip if just a status-only update from cancelled to something or for open shifts
+    if (shift.status === "open" || !shift.employee_id) {
+      return Response.json({ skipped: true, reason: "Open shift, no employee to notify" });
     }
 
     const employees = await base44.asServiceRole.entities.Employee.list();
