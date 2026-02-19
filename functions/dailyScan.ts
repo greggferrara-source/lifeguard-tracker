@@ -89,7 +89,7 @@ Deno.serve(async (req) => {
       }
     }
 
-    // 4. Send shift reminders for tomorrow's shifts
+    // 4. Log shift reminders for tomorrow's shifts (skips actual email for employees outside app)
     const tomorrowShifts = shifts.filter(s => s.date === tomorrow && s.employee_id && s.status === "scheduled");
     for (const shift of tomorrowShifts) {
       const emp = employees.find(e => e.id === shift.employee_id);
@@ -98,7 +98,7 @@ Deno.serve(async (req) => {
       const subject = `ShiftGuard: Shift Reminder for Tomorrow`;
       const body = `Hi ${emp.first_name},\n\nReminder: You have a shift tomorrow!\n\n📅 Date: ${shift.date}\n⏰ Time: ${shift.start_time}–${shift.end_time}\n📍 Location: ${shift.location_name}\n\nShiftGuard Team`;
       
-      await base44.asServiceRole.integrations.Core.SendEmail({ to: emp.email, subject, body });
+      // Log reminder in notification history
       await base44.asServiceRole.entities.Notification.create({
         recipient_email: emp.email,
         recipient_name: `${emp.first_name} ${emp.last_name}`,
