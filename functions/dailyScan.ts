@@ -106,7 +106,7 @@ Deno.serve(async (req) => {
       });
       results.reminders_sent++;
 
-      // SMS reminder
+      // SMS reminder via Twilio
       if (emp.phone) {
         const TWILIO_SID = Deno.env.get("TWILIO_ACCOUNT_SID");
         const TWILIO_TOKEN = Deno.env.get("TWILIO_AUTH_TOKEN");
@@ -123,7 +123,7 @@ Deno.serve(async (req) => {
             method: 'POST',
             headers: { 'Authorization': `Basic ${auth}`, 'Content-Type': 'application/x-www-form-urlencoded' },
             body: fd.toString()
-          });
+          }).catch(() => {});
         }
       }
     }
