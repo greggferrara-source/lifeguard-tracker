@@ -117,7 +117,7 @@ export default function Employees() {
               <div className="flex items-start justify-between">
                 <div className="flex items-center gap-3">
                   <div
-                    className="w-10 h-10 rounded-xl flex items-center justify-center text-white font-bold text-sm shadow-sm"
+                    className="w-11 h-11 rounded-full flex items-center justify-center text-white font-bold text-sm"
                     style={{ backgroundColor: emp.color || "#0ea5e9" }}
                   >
                     {(emp.first_name?.[0] || "")}{(emp.last_name?.[0] || "")}
