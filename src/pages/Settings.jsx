@@ -69,16 +69,16 @@ export default function Settings() {
   };
 
   return (
-    <div className="p-4 lg:p-6 space-y-5 max-w-5xl mx-auto">
+    <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-8">
       <div>
-        <h2 className="text-lg font-semibold text-slate-900">Settings</h2>
-        <p className="text-sm text-slate-500 mt-0.5">Shift templates, automation, and system configuration</p>
+        <h1 className="text-4xl font-bold text-gray-900">Settings</h1>
+        <p className="text-gray-500 mt-2">Shift templates, automation, and system configuration</p>
       </div>
 
       <Tabs value={tab} onValueChange={setTab}>
-        <TabsList className="bg-slate-100">
-          <TabsTrigger value="templates" className="text-xs">Shift Templates</TabsTrigger>
-          <TabsTrigger value="automation" className="text-xs">Automation</TabsTrigger>
+        <TabsList className="bg-gray-100 rounded-full p-1">
+          <TabsTrigger value="templates" className="rounded-full text-sm">Shift Templates</TabsTrigger>
+          <TabsTrigger value="automation" className="rounded-full text-sm">Automation</TabsTrigger>
         </TabsList>
       </Tabs>
 
