@@ -11,10 +11,16 @@ import {
   X,
   ChevronRight,
   Shield,
-  Bell
+  Bell,
+  AlertTriangle,
+  BarChart2,
+  MessageSquare,
+  Settings
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { motion, AnimatePresence } from "framer-motion";
+import { useQuery } from "@tanstack/react-query";
+import { base44 } from "@/api/base44Client";
 
 const navItems = [
   { name: "Dashboard", icon: LayoutDashboard, page: "Dashboard" },
@@ -22,6 +28,10 @@ const navItems = [
   { name: "Employees", icon: Users, page: "Employees" },
   { name: "Locations", icon: MapPin, page: "Locations" },
   { name: "Time Off", icon: Clock, page: "TimeOff" },
+  { name: "Alerts", icon: AlertTriangle, page: "Alerts", badge: "alerts" },
+  { name: "Reports", icon: BarChart2, page: "Reports" },
+  { name: "Notifications", icon: MessageSquare, page: "Notifications" },
+  { name: "Settings", icon: Settings, page: "Settings" },
 ];
 
 export default function Layout({ children, currentPageName }) {
