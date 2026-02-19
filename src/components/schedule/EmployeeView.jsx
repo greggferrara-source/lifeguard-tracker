@@ -2,6 +2,7 @@ import React from "react";
 import { format, isSameDay } from "date-fns";
 import { motion } from "framer-motion";
 import { AlertTriangle, ArrowLeftRight } from "lucide-react";
+import { Droppable, Draggable } from "@hello-pangea/dnd";
 
 const SHIFT_COLORS = [
   "#0ea5e9","#10b981","#8b5cf6","#f59e0b","#ef4444",
@@ -31,7 +32,7 @@ function getUnavailableReason(employeeId, dateStr, availabilities) {
   return null;
 }
 
-export default function EmployeeView({ shifts, employees, days, availabilities = [], onShiftClick, onSwapClick }) {
+export default function EmployeeView({ shifts, employees, days, availabilities = [], onShiftClick, onSwapClick, canDragDrop = false }) {
   const activeEmployees = employees.filter(e => e.status === "active");
 
   return (
@@ -82,36 +83,48 @@ export default function EmployeeView({ shifts, employees, days, availabilities =
                     const isToday = isSameDay(day, new Date());
                     const dayShifts = empShifts.filter(s => s.date === dateStr);
                     const unavailReason = getUnavailableReason(emp.id, dateStr, availabilities);
+                    const droppableId = `${emp.id}-${dateStr}`;
                     return (
-                      <td key={idx} className={`px-1.5 py-1.5 border-b border-slate-200/60 align-top ${isToday ? "bg-cyan-50/20" : ""} ${unavailReason && dayShifts.length === 0 ? "bg-red-50/40" : ""}`}>
-                        {unavailReason && dayShifts.length === 0 && (
-                          <div className="text-[9px] text-red-400 px-1 truncate" title={unavailReason}>🚫 {unavailReason}</div>
+                      <Droppable key={idx} droppableId={droppableId} isDropDisabled={!canDragDrop}>
+                        {(provided, snapshot) => (
+                          <td ref={provided.innerRef} {...provided.droppableProps}
+                            className={`px-1.5 py-1.5 border-b border-slate-200/60 align-top transition-colors ${isToday ? "bg-cyan-50/20" : ""} ${unavailReason && dayShifts.length === 0 ? "bg-red-50/40" : ""} ${snapshot.isDraggingOver && canDragDrop ? "bg-blue-100/50" : ""}`}>
+                            {unavailReason && dayShifts.length === 0 && (
+                              <div className="text-[9px] text-red-400 px-1 truncate" title={unavailReason}>🚫 {unavailReason}</div>
+                            )}
+                            <div className="space-y-1 min-h-[32px]">
+                              {dayShifts.map((shift, shiftIdx) => {
+                                const conflicted = hasConflict(shift, shifts);
+                                const availConflict = unavailReason;
+                                return (
+                                  <Draggable key={shift.id} draggableId={shift.id} index={shiftIdx} isDragDisabled={!canDragDrop}>
+                                    {(provided, snapshot) => (
+                                      <motion.div ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}
+                                        whileHover={canDragDrop ? { scale: 1.03 } : {}}
+                                        className={`shift-block rounded-lg px-2 py-1.5 text-white text-[11px] font-medium relative ${conflicted || availConflict ? "ring-2 ring-orange-400 ring-offset-1" : ""} ${canDragDrop ? "cursor-grab" : "cursor-pointer"} ${snapshot.isDragging ? "shadow-lg ring-2 ring-blue-400" : ""}`}
+                                        style={{ backgroundColor: emp.color || getColor(`${emp.first_name} ${emp.last_name}`), opacity: shift.status === "cancelled" ? 0.4 : 1, ...provided.draggableProps.style }}
+                                        onClick={() => onShiftClick(shift)}>
+                                        {(conflicted || availConflict) && <AlertTriangle className="absolute top-1 right-1 w-2.5 h-2.5 text-orange-300" />}
+                                        <div className="truncate pr-3">{shift.location_name || "—"}</div>
+                                        <div className="opacity-80 text-[10px]">{shift.start_time}–{shift.end_time}</div>
+                                        {onSwapClick && shift.status === "scheduled" && (
+                                          <button
+                                            onClick={e => { e.stopPropagation(); onSwapClick(shift); }}
+                                            className="absolute bottom-0.5 right-0.5 opacity-0 group-hover:opacity-100 hover:opacity-100 transition-opacity"
+                                            title="Request swap">
+                                            <ArrowLeftRight className="w-2.5 h-2.5 text-white/70" />
+                                          </button>
+                                        )}
+                                      </motion.div>
+                                    )}
+                                  </Draggable>
+                                );
+                              })}
+                              {provided.placeholder}
+                            </div>
+                          </td>
                         )}
-                        <div className="space-y-1 min-h-[32px]">
-                          {dayShifts.map(shift => {
-                            const conflicted = hasConflict(shift, shifts);
-                            const availConflict = unavailReason;
-                            return (
-                              <motion.div key={shift.id} whileHover={{ scale: 1.03 }}
-                                className={`shift-block rounded-lg px-2 py-1.5 text-white text-[11px] font-medium cursor-pointer relative ${conflicted || availConflict ? "ring-2 ring-orange-400 ring-offset-1" : ""}`}
-                                style={{ backgroundColor: emp.color || getColor(`${emp.first_name} ${emp.last_name}`), opacity: shift.status === "cancelled" ? 0.4 : 1 }}
-                                onClick={() => onShiftClick(shift)}>
-                                {(conflicted || availConflict) && <AlertTriangle className="absolute top-1 right-1 w-2.5 h-2.5 text-orange-300" />}
-                                <div className="truncate pr-3">{shift.location_name || "—"}</div>
-                                <div className="opacity-80 text-[10px]">{shift.start_time}–{shift.end_time}</div>
-                                {onSwapClick && shift.status === "scheduled" && (
-                                  <button
-                                    onClick={e => { e.stopPropagation(); onSwapClick(shift); }}
-                                    className="absolute bottom-0.5 right-0.5 opacity-0 group-hover:opacity-100 hover:opacity-100 transition-opacity"
-                                    title="Request swap">
-                                    <ArrowLeftRight className="w-2.5 h-2.5 text-white/70" />
-                                  </button>
-                                )}
-                              </motion.div>
-                            );
-                          })}
-                        </div>
-                      </td>
+                      </Droppable>
                     );
                   })}
                 </tr>
