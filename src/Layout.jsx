@@ -114,6 +114,52 @@ export default function Layout({ children, currentPageName }) {
                   </Link>
                 );
               })}
+
+              {/* Info Menu */}
+              <DropdownMenu>
+                <DropdownMenu.Trigger asChild>
+                  <Button variant="ghost" size="icon" className="text-gray-700 hover:text-gray-900">
+                    <HelpCircle className="w-4 h-4" />
+                  </Button>
+                </DropdownMenu.Trigger>
+                <DropdownMenuContent align="end" className="w-56">
+                  <DropdownMenuLabel className="text-xs font-semibold text-gray-500">Help & Info</DropdownMenuLabel>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem asChild>
+                    <a href="https://docs.shiftguard.local" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2">
+                      <BookOpen className="w-4 h-4" />
+                      <span>Documentation</span>
+                    </a>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem asChild>
+                    <a href="https://youtube.com" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2">
+                      <Play className="w-4 h-4" />
+                      <span>Video Tutorials</span>
+                    </a>
+                  </DropdownMenuItem>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuLabel className="text-xs font-semibold text-gray-500">Contact & Legal</DropdownMenuLabel>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem asChild>
+                    <a href="https://shiftguard.local/contact" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2">
+                      <Mail className="w-4 h-4" />
+                      <span>Contact Support</span>
+                    </a>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem asChild>
+                    <a href="https://shiftguard.local/terms" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2">
+                      <FileText className="w-4 h-4" />
+                      <span>Terms of Service</span>
+                    </a>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem asChild>
+                    <a href="https://shiftguard.local/privacy" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2">
+                      <FileText className="w-4 h-4" />
+                      <span>Privacy Policy</span>
+                    </a>
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
             </nav>
 
             {/* Mobile menu button */}
