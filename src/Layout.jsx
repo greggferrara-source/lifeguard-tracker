@@ -201,6 +201,29 @@ export default function Layout({ children, currentPageName }) {
                 </Link>
               );
             })}
+            <div className="border-t border-gray-200 pt-2 mt-2">
+              <DropdownMenuLabel className="text-xs font-semibold text-gray-500 px-4">Help & Info</DropdownMenuLabel>
+              <a href="https://docs.shiftguard.local" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 rounded-lg">
+                <BookOpen className="w-4 h-4" />
+                Documentation
+              </a>
+              <a href="https://youtube.com" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 rounded-lg">
+                <Play className="w-4 h-4" />
+                Video Tutorials
+              </a>
+              <a href="https://shiftguard.local/contact" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 rounded-lg">
+                <Mail className="w-4 h-4" />
+                Contact Support
+              </a>
+              <a href="https://shiftguard.local/terms" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 rounded-lg">
+                <FileText className="w-4 h-4" />
+                Terms of Service
+              </a>
+              <a href="https://shiftguard.local/privacy" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 rounded-lg">
+                <FileText className="w-4 h-4" />
+                Privacy Policy
+              </a>
+            </div>
           </div>
         )}
       </header>
