@@ -241,6 +241,27 @@ export default function Employees() {
         availability={availabilities.find(a => a.employee_id === availEmployee?.id)}
         onSave={(data) => saveAvailability.mutate(data)}
       />
+
+      {/* Profile Dialog */}
+      <Dialog open={!!selectedProfile} onOpenChange={() => setSelectedProfile(null)}>
+        <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle>Employee Profile</DialogTitle>
+          </DialogHeader>
+          {selectedProfile && (
+            <EmployeeProfile
+              employee={selectedProfile}
+              shifts={shifts}
+              onEdit={() => {
+                setEditingEmployee(selectedProfile);
+                setDialogOpen(true);
+                setSelectedProfile(null);
+              }}
+              onClose={() => setSelectedProfile(null)}
+            />
+          )}
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
