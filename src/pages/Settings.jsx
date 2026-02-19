@@ -90,15 +90,16 @@ export default function Settings() {
             </Button>
           </div>
           {templates.length === 0 && (
-            <div className="text-center py-14 text-slate-400">
-              <Clock className="w-10 h-10 mx-auto mb-3 opacity-40" />
-              <p>No templates yet. Create reusable shift patterns to speed up scheduling.</p>
+            <div className="text-center py-20 bg-gray-50 rounded-2xl">
+              <Clock className="w-10 h-10 mx-auto mb-3 text-gray-300" />
+              <p className="text-gray-400 font-medium">No templates yet.</p>
+              <p className="text-sm text-gray-400 mt-1">Create reusable shift patterns to speed up scheduling.</p>
             </div>
           )}
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {templates.map((t, i) => (
               <motion.div key={t.id} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.03 }}>
-                <Card className="p-4 border-0 shadow-sm group">
+                <Card className="p-5 border border-gray-100 shadow-none rounded-2xl group">
                   <div className="flex items-start justify-between">
                     <div>
                       <p className="font-semibold text-sm text-slate-900">{t.name}</p>
