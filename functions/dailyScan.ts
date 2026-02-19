@@ -19,6 +19,7 @@ Deno.serve(async (req) => {
     const results = { alerts_created: 0, reminders_sent: 0, errors: [] };
 
     // 1. Scan understaffing for today and tomorrow
+    if (isEnabled("understaffing"))
     for (const scanDate of [today, tomorrow]) {
       const dateShifts = shifts.filter(s => s.date === scanDate && s.status !== "cancelled");
       for (const loc of locations.filter(l => l.status === "active")) {
