@@ -131,9 +131,9 @@ export default function Schedule() {
   };
 
   return (
-    <div className="p-4 lg:p-6 space-y-5 max-w-full bg-white min-h-screen">
+    <div className="p-4 lg:p-8 space-y-5 max-w-full bg-white min-h-screen">
       {/* Toolbar */}
-      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 pb-2 border-b border-gray-100">
         <div className="flex items-center gap-2 flex-wrap">
           <Button variant="outline" size="icon" className="h-9 w-9"
             onClick={() => setWeekStart(subWeeks(weekStart, 1))}>
