@@ -10,13 +10,11 @@ import {
   Menu,
   X,
   Shield,
-  Bell,
   AlertTriangle,
   ArrowLeftRight,
   BarChart2,
   MessageSquare,
   Settings,
-  ChevronDown
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useQuery } from "@tanstack/react-query";
@@ -52,42 +50,51 @@ export default function Layout({ children, currentPageName }) {
   const pendingSwaps = swapRequests.filter(s => s.status === "pending_employee" || s.status === "pending_manager").length;
 
   return (
-    <div className="min-h-screen bg-white font-sans">
+    <div className="min-h-screen bg-white" style={{ fontFamily: "'Inter', 'Helvetica Neue', Arial, sans-serif" }}>
+      <style>{`
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+        :root {
+          --accent: #1a9c5b;
+          --accent-hover: #158a4e;
+          --accent-light: #f0faf5;
+        }
+      `}</style>
+
       {/* Top Nav */}
       <header className="border-b border-gray-100 bg-white sticky top-0 z-40">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
             {/* Logo */}
-            <div className="flex items-center gap-3">
-              <div className="w-8 h-8 rounded-lg bg-[#1a9c5b] flex items-center justify-center">
+            <Link to={createPageUrl("Dashboard")} className="flex items-center gap-2.5 group">
+              <div className="w-8 h-8 rounded-lg bg-[#1a9c5b] flex items-center justify-center shadow-sm">
                 <Shield className="w-4 h-4 text-white" />
               </div>
               <span className="font-bold text-gray-900 text-lg tracking-tight">ShiftGuard</span>
-            </div>
+            </Link>
 
             {/* Desktop Nav */}
-            <nav className="hidden lg:flex items-center gap-1">
+            <nav className="hidden xl:flex items-center gap-0.5">
               {navItems.map((item) => {
                 const isActive = currentPageName === item.page;
                 return (
                   <Link
                     key={item.page}
                     to={createPageUrl(item.page)}
-                    className={`relative flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium transition-all duration-150 ${
+                    className={`relative flex items-center gap-1.5 px-3 py-2 rounded-lg text-sm font-medium transition-all duration-150 ${
                       isActive
-                        ? "bg-[#1a9c5b] text-white"
-                        : "text-gray-600 hover:text-gray-900 hover:bg-gray-50"
+                        ? "bg-[#f0faf5] text-[#1a9c5b]"
+                        : "text-gray-500 hover:text-gray-900 hover:bg-gray-50"
                     }`}
                   >
                     <item.icon className="w-4 h-4" />
                     {item.name}
                     {item.badge === "alerts" && unresolvedAlerts > 0 && (
-                      <span className="absolute -top-0.5 -right-0.5 bg-red-500 text-white text-[9px] font-bold rounded-full w-4 h-4 flex items-center justify-center">
+                      <span className="ml-0.5 bg-red-500 text-white text-[9px] font-bold rounded-full w-4 h-4 flex items-center justify-center">
                         {unresolvedAlerts > 9 ? "9+" : unresolvedAlerts}
                       </span>
                     )}
                     {item.badge === "swaps" && pendingSwaps > 0 && (
-                      <span className="absolute -top-0.5 -right-0.5 bg-orange-500 text-white text-[9px] font-bold rounded-full w-4 h-4 flex items-center justify-center">
+                      <span className="ml-0.5 bg-orange-500 text-white text-[9px] font-bold rounded-full w-4 h-4 flex items-center justify-center">
                         {pendingSwaps > 9 ? "9+" : pendingSwaps}
                       </span>
                     )}
@@ -100,7 +107,7 @@ export default function Layout({ children, currentPageName }) {
             <Button
               variant="ghost"
               size="icon"
-              className="lg:hidden"
+              className="xl:hidden"
               onClick={() => setMobileOpen(!mobileOpen)}
             >
               {mobileOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
@@ -110,7 +117,7 @@ export default function Layout({ children, currentPageName }) {
 
         {/* Mobile Nav */}
         {mobileOpen && (
-          <div className="lg:hidden border-t border-gray-100 bg-white px-4 py-3 space-y-1">
+          <div className="xl:hidden border-t border-gray-100 bg-white px-4 py-3 space-y-1">
             {navItems.map((item) => {
               const isActive = currentPageName === item.page;
               return (
@@ -120,7 +127,7 @@ export default function Layout({ children, currentPageName }) {
                   onClick={() => setMobileOpen(false)}
                   className={`flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-medium transition-all ${
                     isActive
-                      ? "bg-[#1a9c5b] text-white"
+                      ? "bg-[#f0faf5] text-[#1a9c5b]"
                       : "text-gray-600 hover:bg-gray-50"
                   }`}
                 >
