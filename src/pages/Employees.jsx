@@ -96,12 +96,12 @@ export default function Employees() {
   );
 
   return (
-    <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-8">
+    <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-14 space-y-8">
       {/* Header */}
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-4xl font-bold text-gray-900">Employees</h1>
-          <p className="text-gray-500 mt-2">{employees.length} team member{employees.length !== 1 ? "s" : ""}</p>
+          <h1 className="text-5xl font-extrabold text-gray-900 tracking-tight">Employees</h1>
+          <p className="text-gray-400 mt-2 text-lg">{employees.length} team member{employees.length !== 1 ? "s" : ""}</p>
         </div>
         <div className="flex items-center gap-3 w-full sm:w-auto">
           <div className="relative flex-1 sm:w-64">
