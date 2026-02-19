@@ -121,7 +121,12 @@ export default function Layout({ children, currentPageName }) {
                 `}
               >
                 <item.icon className={`w-5 h-5 flex-shrink-0 ${isActive ? "text-cyan-400" : ""}`} />
-                {!collapsed && <span className="truncate">{item.name}</span>}
+                {!collapsed && <span className="truncate flex-1">{item.name}</span>}
+                {!collapsed && item.badge === "alerts" && unresolvedAlerts > 0 && (
+                  <span className="bg-red-500 text-white text-[10px] font-bold rounded-full px-1.5 py-0 min-w-[18px] text-center">
+                    {unresolvedAlerts}
+                  </span>
+                )}
               </Link>
             );
           })}
