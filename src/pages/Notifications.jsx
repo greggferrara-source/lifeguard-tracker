@@ -164,7 +164,7 @@ export default function Notifications() {
           </div>
           <DialogFooter>
             <Button variant="outline" onClick={() => setBroadcastOpen(false)}>Cancel</Button>
-            <Button className="bg-cyan-600 hover:bg-cyan-700" onClick={handleBroadcast} disabled={sending || !broadcastForm.message}>
+            <Button className="bg-[#1a9c5b] hover:bg-[#158a4e] rounded-full" onClick={handleBroadcast} disabled={sending || !broadcastForm.message}>
               <Send className="w-4 h-4 mr-1" />
               {sending ? "Sending..." : "Send Broadcast"}
             </Button>
