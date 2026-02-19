@@ -66,13 +66,13 @@ export default function Notifications() {
   const failedCount = notifications.filter(n => n.status === "failed").length;
 
   return (
-    <div className="p-4 lg:p-6 space-y-5 max-w-5xl mx-auto">
-      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+    <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-8">
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <div>
-          <h2 className="text-lg font-semibold text-slate-900">Notification History</h2>
-          <p className="text-sm text-slate-500 mt-0.5">{sentCount} sent · {failedCount} failed</p>
+          <h1 className="text-4xl font-bold text-gray-900">Notifications</h1>
+          <p className="text-gray-500 mt-2">{sentCount} sent · {failedCount} failed</p>
         </div>
-        <Button className="bg-cyan-600 hover:bg-cyan-700" size="sm" onClick={() => setBroadcastOpen(true)}>
+        <Button className="bg-[#1a9c5b] hover:bg-[#158a4e] rounded-full" size="sm" onClick={() => setBroadcastOpen(true)}>
           <Megaphone className="w-4 h-4 mr-1" /> Broadcast
         </Button>
       </div>
