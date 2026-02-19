@@ -1,7 +1,8 @@
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useEffect } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { base44 } from "@/api/base44Client";
 import { format, startOfWeek, addDays, addWeeks, subWeeks, isSameDay } from "date-fns";
+import { DragDropContext } from "@hello-pangea/dnd";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { ChevronLeft, ChevronRight, Plus, CalendarDays, MapPin, Users, AlertTriangle, Repeat, ArrowLeftRight } from "lucide-react";
@@ -22,6 +23,8 @@ export default function Schedule() {
   const [selectedShift, setSelectedShift] = useState(null);
   const [defaultDate, setDefaultDate] = useState("");
   const [defaultLocationId, setDefaultLocationId] = useState("");
+  const [currentUser, setCurrentUser] = useState(null);
+  const [canDragDrop, setCanDragDrop] = useState(false);
 
   const days = Array.from({ length: 7 }, (_, i) => addDays(weekStart, i));
   const weekDates = days.map(d => format(d, "yyyy-MM-dd"));
@@ -47,6 +50,19 @@ export default function Schedule() {
     queryKey: ["availabilities"],
     queryFn: () => base44.entities.EmployeeAvailability.list(),
   });
+
+  useEffect(() => {
+    const getUserData = async () => {
+      try {
+        const user = await base44.auth.me();
+        setCurrentUser(user);
+        setCanDragDrop(user?.role === "admin" || user?.role === "manager");
+      } catch (e) {
+        setCanDragDrop(false);
+      }
+    };
+    getUserData();
+  }, []);
 
   const createShift = useMutation({
     mutationFn: (data) => base44.entities.Shift.create(data),
@@ -117,6 +133,34 @@ export default function Schedule() {
     setSwapOpen(false);
   };
 
+  const handleDragEnd = async (result) => {
+    const { source, destination, draggableId } = result;
+    if (!destination || !canDragDrop) return;
+    
+    const shift = shifts.find(s => s.id === draggableId);
+    if (!shift) return;
+
+    const [locId, dateStr, _] = source.droppableId.split("-");
+    const [newLocId, newDateStr, __] = destination.droppableId.split("-");
+
+    if (view === "location") {
+      const newData = {
+        ...shift,
+        location_id: newLocId,
+        date: newDateStr,
+      };
+      await updateShift.mutate({ id: shift.id, data: newData });
+    } else if (view === "employee") {
+      const empId = newLocId; // In employee view, droppableId is empId-date
+      const newData = {
+        ...shift,
+        employee_id: empId,
+        date: newDateStr,
+      };
+      await updateShift.mutate({ id: shift.id, data: newData });
+    }
+  };
+
   // Availability conflict check for schedule grid
   const getAvailabilityWarning = (employeeId, dateStr) => {
     const avail = availabilities.find(a => a.employee_id === employeeId);
@@ -131,7 +175,8 @@ export default function Schedule() {
   };
 
   return (
-    <div className="p-4 lg:p-8 space-y-5 max-w-full bg-white min-h-screen">
+    <DragDropContext onDragEnd={handleDragEnd}>
+      <div className="p-4 lg:p-8 space-y-5 max-w-full bg-white min-h-screen">
       {/* Toolbar */}
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 pb-2 border-b border-gray-100">
         <div className="flex items-center gap-2 flex-wrap">
@@ -203,6 +248,7 @@ export default function Schedule() {
           availabilities={availabilities}
           onShiftClick={handleShiftClick}
           onCellClick={handleCellClick}
+          canDragDrop={canDragDrop}
         />
       ) : (
         <EmployeeView
@@ -212,6 +258,7 @@ export default function Schedule() {
           availabilities={availabilities}
           onShiftClick={handleShiftClick}
           onSwapClick={(shift) => { setSwapShift(shift); setSwapOpen(true); }}
+          canDragDrop={canDragDrop}
         />
       )}
 
@@ -246,5 +293,6 @@ export default function Schedule() {
         onSubmit={handleSwapSubmit}
       />
     </div>
+    </DragDropContext>
   );
 }
