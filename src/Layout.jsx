@@ -12,6 +12,7 @@ import {
   Shield,
   Bell,
   AlertTriangle,
+  ArrowLeftRight,
   BarChart2,
   MessageSquare,
   Settings,
