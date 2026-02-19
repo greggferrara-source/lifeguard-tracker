@@ -58,6 +58,7 @@ import ShiftSwaps from './pages/ShiftSwaps';
 import TimeOff from './pages/TimeOff';
 import Dashboard from './pages/Dashboard';
 import MyAvailability from './pages/MyAvailability';
+import Payroll from './pages/Payroll';
 import __Layout from './Layout.jsx';
 
 
@@ -73,6 +74,7 @@ export const PAGES = {
     "TimeOff": TimeOff,
     "Dashboard": Dashboard,
     "MyAvailability": MyAvailability,
+    "Payroll": Payroll,
 }
 
 export const pagesConfig = {
