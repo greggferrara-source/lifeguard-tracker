@@ -109,7 +109,7 @@ export default function AlertsPage() {
 
       {/* Tabs */}
       <Tabs value={tab} onValueChange={setTab}>
-        <TabsList className="bg-slate-100">
+        <TabsList className="bg-gray-100 rounded-full p-1">
           <TabsTrigger value="unresolved" className="text-xs">
             Unresolved {unresolvedCount > 0 && <span className="ml-1.5 bg-amber-500 text-white rounded-full px-1.5 py-0 text-[10px]">{unresolvedCount}</span>}
           </TabsTrigger>
