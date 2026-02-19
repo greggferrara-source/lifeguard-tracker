@@ -81,19 +81,32 @@ export default function EmployeeView({ shifts, employees, days, availabilities =
                     const dateStr = format(day, "yyyy-MM-dd");
                     const isToday = isSameDay(day, new Date());
                     const dayShifts = empShifts.filter(s => s.date === dateStr);
+                    const unavailReason = getUnavailableReason(emp.id, dateStr, availabilities);
                     return (
-                      <td key={idx} className={`px-1.5 py-1.5 border-b border-slate-200/60 align-top ${isToday ? "bg-cyan-50/20" : ""}`}>
-                        <div className="space-y-1 min-h-[36px]">
+                      <td key={idx} className={`px-1.5 py-1.5 border-b border-slate-200/60 align-top ${isToday ? "bg-cyan-50/20" : ""} ${unavailReason && dayShifts.length === 0 ? "bg-red-50/40" : ""}`}>
+                        {unavailReason && dayShifts.length === 0 && (
+                          <div className="text-[9px] text-red-400 px-1 truncate" title={unavailReason}>🚫 {unavailReason}</div>
+                        )}
+                        <div className="space-y-1 min-h-[32px]">
                           {dayShifts.map(shift => {
                             const conflicted = hasConflict(shift, shifts);
+                            const availConflict = unavailReason;
                             return (
                               <motion.div key={shift.id} whileHover={{ scale: 1.03 }}
-                                className={`shift-block rounded-lg px-2 py-1.5 text-white text-[11px] font-medium cursor-pointer relative ${conflicted ? "ring-2 ring-orange-400 ring-offset-1" : ""}`}
+                                className={`shift-block rounded-lg px-2 py-1.5 text-white text-[11px] font-medium cursor-pointer relative ${conflicted || availConflict ? "ring-2 ring-orange-400 ring-offset-1" : ""}`}
                                 style={{ backgroundColor: emp.color || getColor(`${emp.first_name} ${emp.last_name}`), opacity: shift.status === "cancelled" ? 0.4 : 1 }}
                                 onClick={() => onShiftClick(shift)}>
-                                {conflicted && <AlertTriangle className="absolute top-1 right-1 w-2.5 h-2.5 text-orange-300" />}
+                                {(conflicted || availConflict) && <AlertTriangle className="absolute top-1 right-1 w-2.5 h-2.5 text-orange-300" />}
                                 <div className="truncate pr-3">{shift.location_name || "—"}</div>
                                 <div className="opacity-80 text-[10px]">{shift.start_time}–{shift.end_time}</div>
+                                {onSwapClick && shift.status === "scheduled" && (
+                                  <button
+                                    onClick={e => { e.stopPropagation(); onSwapClick(shift); }}
+                                    className="absolute bottom-0.5 right-0.5 opacity-0 group-hover:opacity-100 hover:opacity-100 transition-opacity"
+                                    title="Request swap">
+                                    <ArrowLeftRight className="w-2.5 h-2.5 text-white/70" />
+                                  </button>
+                                )}
                               </motion.div>
                             );
                           })}
