@@ -41,6 +41,33 @@ export default function Settings() {
     queryFn: () => base44.entities.Location.list(),
   });
 
+  useQuery({
+    queryKey: ["alert-settings"],
+    queryFn: async () => {
+      const records = await base44.entities.AppSettings.filter({ key: "alert_settings" });
+      if (records.length > 0) {
+        setSettingsId(records[0].id);
+        setAlertSettings({ ...alertSettings, ...records[0].value });
+      }
+      return records;
+    },
+  });
+
+  const saveAlertSettings = async (newSettings) => {
+    setAlertSettings(newSettings);
+    if (settingsId) {
+      await base44.entities.AppSettings.update(settingsId, { value: newSettings });
+    } else {
+      const rec = await base44.entities.AppSettings.create({ key: "alert_settings", value: newSettings });
+      setSettingsId(rec.id);
+    }
+  };
+
+  const toggleAlert = (key) => {
+    const updated = { ...alertSettings, [key]: !alertSettings[key] };
+    saveAlertSettings(updated);
+  };
+
   const createTemplate = useMutation({
     mutationFn: (data) => base44.entities.ShiftTemplate.create(data),
     onSuccess: () => { queryClient.invalidateQueries({ queryKey: ["templates"] }); setTemplateOpen(false); },
