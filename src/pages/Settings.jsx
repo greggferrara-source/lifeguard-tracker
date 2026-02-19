@@ -167,25 +167,32 @@ export default function Settings() {
 
       {tab === "automation" && (
         <div className="space-y-5">
-          {[
-            { title: "Daily Scan", desc: "Runs every morning at 7am. Checks for understaffing, shift conflicts, and expiring certifications. Sends shift reminders to staff and alert summary to managers.", active: true, schedule: "Daily at 7:00 AM" },
-            { title: "Shift Assignment Notifications", desc: "Automatically sends email + SMS to employees when they are assigned to a new shift.", active: true, schedule: "On shift create" },
-            { title: "Shift Update Notifications", desc: "Notifies employees via email + SMS when their shift is modified (time, location, or status changes).", active: true, schedule: "On shift update" },
-          ].map((item, i) => (
-            <Card key={i} className="p-6 border border-gray-100 shadow-none rounded-2xl">
-              <div className="flex items-start justify-between gap-4">
-                <div className="flex items-start gap-3">
-                  <CheckCircle2 className="w-5 h-5 text-emerald-500 mt-0.5 flex-shrink-0" />
-                  <div>
-                    <p className="font-semibold text-sm text-slate-900">{item.title}</p>
-                    <p className="text-xs text-slate-500 mt-1 leading-relaxed">{item.desc}</p>
-                    <Badge variant="outline" className="text-[10px] mt-2">{item.schedule}</Badge>
+          <div>
+            <h2 className="text-lg font-semibold text-gray-900 mb-1">Alert Types</h2>
+            <p className="text-sm text-gray-500 mb-4">Control which checks are run during the daily scan.</p>
+            <div className="space-y-3">
+              {[
+                { key: "understaffing", title: "Understaffing Alerts", desc: "Warn when a location doesn't have enough guards scheduled." },
+                { key: "conflicts", title: "Shift Conflict Alerts", desc: "Detect employees with overlapping shifts." },
+                { key: "cert_expiry", title: "Certification Expiry Alerts", desc: "Warn when employee certifications are expiring within 30 days." },
+                { key: "shift_reminders", title: "Shift Reminders", desc: "Send email/SMS reminders to employees for tomorrow's shifts." },
+                { key: "shift_notifications", title: "Shift Assignment Notifications", desc: "Notify employees when they are assigned to or have a shift updated." },
+              ].map((item) => (
+                <Card key={item.key} className="p-5 border border-gray-100 shadow-none rounded-2xl">
+                  <div className="flex items-center justify-between gap-4">
+                    <div>
+                      <p className="font-semibold text-sm text-gray-900">{item.title}</p>
+                      <p className="text-xs text-gray-500 mt-0.5">{item.desc}</p>
+                    </div>
+                    <Switch
+                      checked={alertSettings[item.key]}
+                      onCheckedChange={() => toggleAlert(item.key)}
+                    />
                   </div>
-                </div>
-                <Badge className="bg-emerald-100 text-emerald-700 text-[10px] flex-shrink-0">Active</Badge>
-              </div>
-            </Card>
-          ))}
+                </Card>
+              ))}
+            </div>
+          </div>
 
           <Card className="p-6 border-2 border-[#1a9c5b]/20 shadow-none rounded-2xl bg-[#1a9c5b]/5">
             <h3 className="font-bold text-gray-900 text-lg mb-2">Manual Scan</h3>
