@@ -29,6 +29,7 @@ import {
   DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuLabel,
+  DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { useQuery } from "@tanstack/react-query";
 import { base44 } from "@/api/base44Client";
@@ -117,11 +118,11 @@ export default function Layout({ children, currentPageName }) {
 
               {/* Info Menu */}
               <DropdownMenu>
-                <DropdownMenu.Trigger asChild className="text-gray-700">
+                <DropdownMenuTrigger asChild>
                   <Button variant="ghost" size="icon" className="text-gray-700 hover:text-gray-900">
                     <HelpCircle className="w-4 h-4" />
                   </Button>
-                </DropdownMenu.Trigger>
+                </DropdownMenuTrigger>
                 <DropdownMenuContent align="end" className="w-56">
                   <DropdownMenuLabel className="text-xs font-semibold text-gray-500">Help & Info</DropdownMenuLabel>
                   <DropdownMenuSeparator />
