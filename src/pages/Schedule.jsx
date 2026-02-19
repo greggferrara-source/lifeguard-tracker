@@ -173,6 +173,9 @@ export default function Schedule() {
             </button>
           </div>
 
+          <Button variant="outline" size="sm" onClick={() => setRecurringOpen(true)}>
+            <Repeat className="w-4 h-4 mr-1" /> Recurring
+          </Button>
           <Button
             onClick={() => {
               setSelectedShift(null);
