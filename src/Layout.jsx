@@ -15,8 +15,21 @@ import {
   BarChart2,
   MessageSquare,
   Settings,
+  HelpCircle,
+  BookOpen,
+  Mail,
+  FileText,
+  Play,
+  MoreVertical,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuLabel,
+} from "@/components/ui/dropdown-menu";
 import { useQuery } from "@tanstack/react-query";
 import { base44 } from "@/api/base44Client";
 
