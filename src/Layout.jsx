@@ -117,7 +117,7 @@ export default function Layout({ children, currentPageName }) {
 
               {/* Info Menu */}
               <DropdownMenu>
-                <DropdownMenu.Trigger asChild>
+                <DropdownMenu.Trigger asChild className="text-gray-700">
                   <Button variant="ghost" size="icon" className="text-gray-700 hover:text-gray-900">
                     <HelpCircle className="w-4 h-4" />
                   </Button>
