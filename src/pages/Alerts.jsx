@@ -97,7 +97,7 @@ export default function AlertsPage() {
           )}
           <Button
             size="sm"
-            className="bg-cyan-600 hover:bg-cyan-700"
+            className="bg-[#1a9c5b] hover:bg-[#158a4e] rounded-full"
             onClick={handleScan}
             disabled={scanning}
           >
