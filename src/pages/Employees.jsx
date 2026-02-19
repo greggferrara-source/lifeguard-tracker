@@ -76,6 +76,7 @@ export default function Employees() {
   );
 
   return (
+    // redesigned below
     <div className="p-4 lg:p-6 space-y-5 max-w-7xl mx-auto">
       {/* Toolbar */}
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
