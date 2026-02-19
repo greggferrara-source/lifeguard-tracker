@@ -192,6 +192,38 @@ export default function EmployeeDialog({ open, onOpenChange, employee, onSave })
             </div>
           </div>
           <div>
+            <Label className="text-xs font-semibold">Certifications</Label>
+            <div className="space-y-2 mt-2">
+              {form.certifications.map((cert, idx) => {
+                const isExpired = cert.expiry_date && isPast(parseISO(cert.expiry_date));
+                return (
+                  <div key={idx} className={`p-2.5 rounded-lg flex items-center justify-between text-sm ${isExpired ? 'bg-red-50 border border-red-200' : 'bg-gray-50 border border-gray-200'}`}>
+                    <div className="flex-1">
+                      <p className="font-medium text-gray-900">{cert.name}</p>
+                      {cert.expiry_date && (
+                        <p className={`text-xs ${isExpired ? 'text-red-600 font-medium' : 'text-gray-500'}`}>
+                          {isExpired && <span className="inline-block mr-1">⚠️</span>}
+                          Expires: {format(parseISO(cert.expiry_date), 'MMM d, yyyy')}
+                        </p>
+                      )}
+                    </div>
+                    <Button size="icon" variant="ghost" className="h-6 w-6 text-gray-400 hover:text-red-600" onClick={() => removeCertification(idx)}>
+                      <Trash2 className="w-3.5 h-3.5" />
+                    </Button>
+                  </div>
+                );
+              })}
+            </div>
+            <div className="mt-3 space-y-2">
+              <Input placeholder="Cert name (e.g., CPR/AED)" value={newCert.name} onChange={(e) => setNewCert({ ...newCert, name: e.target.value })} />
+              <div className="flex gap-2">
+                <Input type="date" value={newCert.expiry_date} onChange={(e) => setNewCert({ ...newCert, expiry_date: e.target.value })} />
+                <Button size="sm" variant="outline" onClick={addCertification} className="text-xs"><Plus className="w-3 h-3" /></Button>
+              </div>
+            </div>
+          </div>
+
+          <div>
             <Label className="text-xs">Notes</Label>
             <Textarea
               value={form.notes}
@@ -200,7 +232,7 @@ export default function EmployeeDialog({ open, onOpenChange, employee, onSave })
               rows={2}
             />
           </div>
-        </div>
+          </div>
         <DialogFooter>
           <Button variant="outline" onClick={() => onOpenChange(false)}>Cancel</Button>
           <Button onClick={() => onSave(form)} className="bg-cyan-600 hover:bg-cyan-700">
