@@ -52,6 +52,10 @@ import Schedule from './pages/Schedule';
 import Employees from './pages/Employees';
 import Locations from './pages/Locations';
 import TimeOff from './pages/TimeOff';
+import Alerts from './pages/Alerts';
+import Reports from './pages/Reports';
+import Notifications from './pages/Notifications';
+import Settings from './pages/Settings';
 import __Layout from './Layout.jsx';
 
 
@@ -61,6 +65,10 @@ export const PAGES = {
     "Employees": Employees,
     "Locations": Locations,
     "TimeOff": TimeOff,
+    "Alerts": Alerts,
+    "Reports": Reports,
+    "Notifications": Notifications,
+    "Settings": Settings,
 }
 
 export const pagesConfig = {
