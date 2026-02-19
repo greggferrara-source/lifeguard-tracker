@@ -43,6 +43,7 @@ export default function Employees() {
   const [editingEmployee, setEditingEmployee] = useState(null);
   const [availDialogOpen, setAvailDialogOpen] = useState(false);
   const [availEmployee, setAvailEmployee] = useState(null);
+  const [selectedProfile, setSelectedProfile] = useState(null);
 
   const { data: employees = [], isLoading } = useQuery({
     queryKey: ["employees"],
@@ -52,6 +53,11 @@ export default function Employees() {
   const { data: availabilities = [] } = useQuery({
     queryKey: ["availabilities"],
     queryFn: () => base44.entities.EmployeeAvailability.list(),
+  });
+
+  const { data: shifts = [] } = useQuery({
+    queryKey: ["shifts"],
+    queryFn: () => base44.entities.Shift.list("-created_date", 500),
   });
 
   const saveAvailability = useMutation({
