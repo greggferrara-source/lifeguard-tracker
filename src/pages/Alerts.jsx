@@ -33,6 +33,29 @@ export default function AlertsPage() {
   const [tab, setTab] = useState("unresolved");
   const [scanning, setScanning] = useState(false);
 
+  const { data: user } = useQuery({
+    queryKey: ["user"],
+    queryFn: async () => {
+      try {
+        return await base44.auth.me();
+      } catch {
+        return null;
+      }
+    },
+  });
+
+  // Only admins can view alerts
+  if (user && user.role !== "admin") {
+    return (
+      <div className="max-w-4xl mx-auto px-6 py-20 text-center">
+        <h1 className="text-3xl font-bold text-gray-900 mb-4">Access Denied</h1>
+        <p className="text-gray-600">
+          Alerts are only available to administrators.
+        </p>
+      </div>
+    );
+  }
+
   const { data: alerts = [], isLoading } = useQuery({
     queryKey: ["alerts"],
     queryFn: () => base44.entities.Alert.list("-created_date", 200),
