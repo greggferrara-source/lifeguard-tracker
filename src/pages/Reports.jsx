@@ -92,11 +92,11 @@ export default function Reports() {
   const fillRate = rangeShifts.length > 0 ? Math.round(((rangeShifts.length - openShiftCount) / rangeShifts.length) * 100) : 0;
 
   return (
-    <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-10">
+    <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-14 space-y-10">
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-4xl font-bold text-gray-900">Reports</h1>
-          <p className="text-gray-500 mt-2">Schedule performance and workforce insights</p>
+          <h1 className="text-5xl font-extrabold text-gray-900 tracking-tight">Reports</h1>
+          <p className="text-gray-400 mt-2 text-lg">Schedule performance and workforce insights</p>
         </div>
         <Tabs value={tab} onValueChange={setTab}>
           <TabsList className="bg-slate-100">
