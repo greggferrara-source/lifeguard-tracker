@@ -11,10 +11,17 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Plus, Search, MoreHorizontal, Pencil, Trash2, Phone, Mail, CalendarCheck } from "lucide-react";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import { Plus, Search, MoreHorizontal, Pencil, Trash2, Phone, Mail, CalendarCheck, Eye } from "lucide-react";
 import { motion } from "framer-motion";
 import EmployeeDialog from "@/components/employees/EmployeeDialog";
 import AvailabilityDialog from "@/components/availability/AvailabilityDialog";
+import EmployeeProfile from "@/components/employees/EmployeeProfile";
 
 const roleLabels = {
   lifeguard: "Lifeguard",
