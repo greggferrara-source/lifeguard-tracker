@@ -34,6 +34,8 @@ export default function Employees() {
   const [search, setSearch] = useState("");
   const [dialogOpen, setDialogOpen] = useState(false);
   const [editingEmployee, setEditingEmployee] = useState(null);
+  const [availDialogOpen, setAvailDialogOpen] = useState(false);
+  const [availEmployee, setAvailEmployee] = useState(null);
 
   const { data: employees = [], isLoading } = useQuery({
     queryKey: ["employees"],
