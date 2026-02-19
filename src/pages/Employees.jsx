@@ -173,6 +173,9 @@ export default function Employees() {
                     </Button>
                   </DropdownMenuTrigger>
                   <DropdownMenuContent align="end">
+                    <DropdownMenuItem onClick={() => setSelectedProfile(emp)}>
+                      <Eye className="w-3.5 h-3.5 mr-2" /> View Profile
+                    </DropdownMenuItem>
                     <DropdownMenuItem onClick={() => { setEditingEmployee(emp); setDialogOpen(true); }}>
                       <Pencil className="w-3.5 h-3.5 mr-2" /> Edit
                     </DropdownMenuItem>
