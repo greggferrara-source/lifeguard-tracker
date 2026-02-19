@@ -101,7 +101,7 @@ export default function TimeOff() {
             setForm({ employee_id: "", start_date: "", end_date: "", reason: "" });
             setDialogOpen(true);
           }}
-          className="bg-cyan-600 hover:bg-cyan-700"
+          className="bg-[#1a9c5b] hover:bg-[#158a4e] rounded-full"
           size="sm"
         >
           <Plus className="w-4 h-4 mr-1" />
