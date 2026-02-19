@@ -43,6 +43,7 @@ Deno.serve(async (req) => {
     }
 
     // 2. Scan shift conflicts for today
+    if (isEnabled("conflicts"))
     const todayShifts = shifts.filter(s => s.date === today && s.employee_id && s.status !== "cancelled");
     const byEmployee = {};
     for (const s of todayShifts) {
