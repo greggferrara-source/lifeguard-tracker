@@ -3,6 +3,14 @@ import { createClientFromRequest } from 'npm:@base44/sdk@0.8.6';
 Deno.serve(async (req) => {
   try {
     const base44 = createClientFromRequest(req);
+
+    // Check if shift notifications are enabled
+    const settingsRecords = await base44.asServiceRole.entities.AppSettings.filter({ key: "alert_settings" });
+    const settings = settingsRecords.length > 0 ? settingsRecords[0].value : {};
+    if (settings.shift_notifications === false) {
+      return Response.json({ skipped: true, reason: "shift_notifications disabled" });
+    }
+
     const body = await req.json();
 
     // Support both direct calls and automation entity event calls
