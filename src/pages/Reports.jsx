@@ -107,23 +107,19 @@ export default function Reports() {
       </div>
 
       {/* KPI Cards */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-5">
         {[
-          { label: "Total Hours", value: totalHours.toFixed(0), icon: Clock, color: "from-cyan-500 to-blue-600", sub: "staffed hours" },
-          { label: "Est. Payroll", value: `$${payroll.toFixed(0)}`, icon: TrendingUp, color: "from-emerald-500 to-teal-600", sub: "this period" },
-          { label: "Fill Rate", value: `${fillRate}%`, icon: Users, color: "from-violet-500 to-purple-600", sub: `${openShiftCount} open shifts` },
-          { label: "Total Shifts", value: rangeShifts.length, icon: MapPin, color: "from-orange-500 to-rose-600", sub: `across ${locations.length} locations` },
+          { label: "Total Hours", value: totalHours.toFixed(0), icon: Clock, sub: "staffed hours" },
+          { label: "Est. Payroll", value: `$${payroll.toFixed(0)}`, icon: TrendingUp, sub: "this period" },
+          { label: "Fill Rate", value: `${fillRate}%`, icon: Users, sub: `${openShiftCount} open shifts` },
+          { label: "Total Shifts", value: rangeShifts.length, icon: MapPin, sub: `across ${locations.length} locations` },
         ].map((stat, i) => (
-          <Card key={i} className="p-4 border-0 shadow-sm">
-            <div className="flex items-center justify-between mb-2">
-              <p className="text-xs font-medium text-slate-500">{stat.label}</p>
-              <div className={`w-8 h-8 rounded-lg bg-gradient-to-br ${stat.color} flex items-center justify-center`}>
-                <stat.icon className="w-4 h-4 text-white" />
-              </div>
-            </div>
-            <p className="text-2xl font-bold text-slate-900">{stat.value}</p>
-            <p className="text-xs text-slate-400 mt-0.5">{stat.sub}</p>
-          </Card>
+          <div key={i} className="bg-gray-50 rounded-2xl p-6">
+            <stat.icon className="w-5 h-5 text-[#1a9c5b] mb-4" />
+            <p className="text-4xl font-bold text-gray-900">{stat.value}</p>
+            <p className="text-sm font-medium text-gray-500 mt-2">{stat.label}</p>
+            <p className="text-xs text-gray-400 mt-0.5">{stat.sub}</p>
+          </div>
         ))}
       </div>
 
