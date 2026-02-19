@@ -194,6 +194,11 @@ export default function Employees() {
                     <Phone className="w-3.5 h-3.5" /> {emp.phone}
                   </div>
                 )}
+                {availabilities.find(a => a.employee_id === emp.id) && (
+                  <div className="flex items-center gap-2 text-xs text-green-600 mt-1">
+                    <CalendarCheck className="w-3 h-3" /> Availability set
+                  </div>
+                )}
               </div>
             </Card>
           </motion.div>
