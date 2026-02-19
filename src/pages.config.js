@@ -50,6 +50,8 @@
 import Dashboard from './pages/Dashboard';
 import Schedule from './pages/Schedule';
 import Employees from './pages/Employees';
+import Locations from './pages/Locations';
+import TimeOff from './pages/TimeOff';
 import __Layout from './Layout.jsx';
 
 
@@ -57,6 +59,8 @@ export const PAGES = {
     "Dashboard": Dashboard,
     "Schedule": Schedule,
     "Employees": Employees,
+    "Locations": Locations,
+    "TimeOff": TimeOff,
 }
 
 export const pagesConfig = {
