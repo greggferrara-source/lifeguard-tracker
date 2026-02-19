@@ -139,8 +139,8 @@ export default function Reports() {
           </ResponsiveContainer>
         </Card>
 
-        <Card className="p-5 border-0 shadow-sm">
-          <h3 className="text-sm font-semibold text-slate-900 mb-4">Hours by Employee</h3>
+        <Card className="p-6 border border-gray-100 shadow-none rounded-2xl">
+          <h3 className="text-base font-semibold text-gray-900 mb-5">Hours by Employee</h3>
           <ResponsiveContainer width="100%" height={200}>
             <BarChart data={employeeData} layout="vertical">
               <CartesianGrid strokeDasharray="3 3" stroke="#f1f5f9" />
