@@ -121,7 +121,7 @@ export default function AlertsPage() {
       </Tabs>
 
       {/* Alert List */}
-      <div className="space-y-3">
+      <div className="space-y-4">
         {isLoading && <p className="text-sm text-slate-400 text-center py-8">Loading alerts...</p>}
         {!isLoading && filtered.length === 0 && (
           <div className="text-center py-16 text-slate-400">
