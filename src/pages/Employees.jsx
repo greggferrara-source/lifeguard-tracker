@@ -123,10 +123,10 @@ export default function Employees() {
                     {(emp.first_name?.[0] || "")}{(emp.last_name?.[0] || "")}
                   </div>
                   <div>
-                    <p className="font-semibold text-slate-900 text-sm">
+                    <p className="font-semibold text-gray-900">
                       {emp.first_name} {emp.last_name}
                     </p>
-                    <p className="text-xs text-slate-500">{roleLabels[emp.role] || emp.role}</p>
+                    <p className="text-sm text-gray-500">{roleLabels[emp.role] || emp.role}</p>
                   </div>
                 </div>
                 <DropdownMenu>
