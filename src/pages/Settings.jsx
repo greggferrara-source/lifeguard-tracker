@@ -136,7 +136,7 @@ export default function Settings() {
             { title: "Shift Assignment Notifications", desc: "Automatically sends email + SMS to employees when they are assigned to a new shift.", active: true, schedule: "On shift create" },
             { title: "Shift Update Notifications", desc: "Notifies employees via email + SMS when their shift is modified (time, location, or status changes).", active: true, schedule: "On shift update" },
           ].map((item, i) => (
-            <Card key={i} className="p-5 border-0 shadow-sm">
+            <Card key={i} className="p-6 border border-gray-100 shadow-none rounded-2xl">
               <div className="flex items-start justify-between gap-4">
                 <div className="flex items-start gap-3">
                   <CheckCircle2 className="w-5 h-5 text-emerald-500 mt-0.5 flex-shrink-0" />
