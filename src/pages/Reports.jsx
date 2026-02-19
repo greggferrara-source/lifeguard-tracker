@@ -168,8 +168,8 @@ export default function Reports() {
           </ResponsiveContainer>
         </Card>
 
-        <Card className="p-5 border-0 shadow-sm">
-          <h3 className="text-sm font-semibold text-slate-900 mb-4">Shift Status Breakdown</h3>
+        <Card className="p-6 border border-gray-100 shadow-none rounded-2xl">
+          <h3 className="text-base font-semibold text-gray-900 mb-5">Shift Status Breakdown</h3>
           <ResponsiveContainer width="100%" height={220}>
             <PieChart>
               <Pie data={statusData} dataKey="value" nameKey="name" cx="50%" cy="50%" outerRadius={80} label>
