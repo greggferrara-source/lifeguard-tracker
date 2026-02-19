@@ -85,7 +85,7 @@ export default function Settings() {
       {tab === "templates" && (
         <div className="space-y-4">
           <div className="flex justify-end">
-            <Button size="sm" className="bg-cyan-600 hover:bg-cyan-700" onClick={openNew}>
+            <Button size="sm" className="bg-[#1a9c5b] hover:bg-[#158a4e] rounded-full" onClick={openNew}>
               <Plus className="w-4 h-4 mr-1" /> New Template
             </Button>
           </div>
