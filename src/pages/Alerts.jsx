@@ -79,11 +79,11 @@ export default function AlertsPage() {
   const criticalCount = alerts.filter(a => a.severity === "critical" && !a.resolved).length;
 
   return (
-    <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-8">
+    <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-14 space-y-8">
       {/* Header */}
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-4xl font-bold text-gray-900">Alerts</h1>
+          <h1 className="text-5xl font-extrabold text-gray-900 tracking-tight">Alerts</h1>
           <p className="text-gray-500 mt-2">
             {unresolvedCount} unresolved · {criticalCount} critical
           </p>
