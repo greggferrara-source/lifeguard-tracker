@@ -17,11 +17,13 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { Plus, Search, MoreHorizontal, Pencil, Trash2, Phone, Mail, CalendarCheck, Eye } from "lucide-react";
+import { Plus, Search, MoreHorizontal, Pencil, Trash2, Phone, Mail, CalendarCheck, Eye, CheckSquare } from "lucide-react";
 import { motion } from "framer-motion";
+import { useQuery as useQueryBase44 } from "@tanstack/react-query";
 import EmployeeDialog from "@/components/employees/EmployeeDialog";
 import AvailabilityDialog from "@/components/availability/AvailabilityDialog";
 import EmployeeProfile from "@/components/employees/EmployeeProfile";
+import StartOnboardingDialog from "@/components/onboarding/StartOnboardingDialog";
 
 const roleLabels = {
   lifeguard: "Lifeguard",
@@ -44,6 +46,8 @@ export default function Employees() {
   const [availDialogOpen, setAvailDialogOpen] = useState(false);
   const [availEmployee, setAvailEmployee] = useState(null);
   const [selectedProfile, setSelectedProfile] = useState(null);
+  const [onboardingDialogOpen, setOnboardingDialogOpen] = useState(false);
+  const [employeeToOnboard, setEmployeeToOnboard] = useState(null);
 
   const { data: employees = [], isLoading } = useQuery({
     queryKey: ["employees"],
@@ -58,6 +62,11 @@ export default function Employees() {
   const { data: shifts = [] } = useQuery({
     queryKey: ["shifts"],
     queryFn: () => base44.entities.Shift.list("-created_date", 500),
+  });
+
+  const { data: onboardings = [] } = useQuery({
+    queryKey: ["onboardings"],
+    queryFn: () => base44.entities.Onboarding.list("-created_date", 200),
   });
 
   const saveAvailability = useMutation({
@@ -91,6 +100,43 @@ export default function Employees() {
   const deleteEmployee = useMutation({
     mutationFn: (id) => base44.entities.Employee.delete(id),
     onSuccess: () => queryClient.invalidateQueries({ queryKey: ["employees"] }),
+  });
+
+  const createOnboarding = useMutation({
+    mutationFn: async ({ employee_id, employee_name, start_date, target_completion_date, tasks }) => {
+      const user = await base44.auth.me();
+      const onboarding = await base44.entities.Onboarding.create({
+        employee_id,
+        employee_name,
+        status: "in_progress",
+        start_date,
+        target_completion_date,
+        assigned_by: user.email,
+      });
+
+      await Promise.all(
+        tasks.map((task) =>
+          base44.entities.OnboardingTask.create({
+            onboarding_id: onboarding.id,
+            employee_id,
+            employee_name,
+            title: task.title,
+            category: task.category,
+            status: "pending",
+            due_date: start_date ? new Date(new Date(start_date).getTime() + task.days * 24 * 60 * 60 * 1000).toISOString().split('T')[0] : null,
+            is_required: true,
+            display_order: tasks.indexOf(task),
+          })
+        )
+      );
+
+      return onboarding;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["onboardings"] });
+      setOnboardingDialogOpen(false);
+      setEmployeeToOnboard(null);
+    },
   });
 
   const handleSave = (formData) => {
@@ -173,22 +219,27 @@ export default function Employees() {
                     </Button>
                   </DropdownMenuTrigger>
                   <DropdownMenuContent align="end">
-                    <DropdownMenuItem onClick={() => setSelectedProfile(emp)}>
-                      <Eye className="w-3.5 h-3.5 mr-2" /> View Profile
-                    </DropdownMenuItem>
-                    <DropdownMenuItem onClick={() => { setEditingEmployee(emp); setDialogOpen(true); }}>
-                      <Pencil className="w-3.5 h-3.5 mr-2" /> Edit
-                    </DropdownMenuItem>
-                    <DropdownMenuItem onClick={() => { setAvailEmployee(emp); setAvailDialogOpen(true); }}>
-                      <CalendarCheck className="w-3.5 h-3.5 mr-2" /> Set Availability
-                    </DropdownMenuItem>
-                    <DropdownMenuItem
-                      className="text-red-600"
-                      onClick={() => deleteEmployee.mutate(emp.id)}
-                    >
-                      <Trash2 className="w-3.5 h-3.5 mr-2" /> Delete
-                    </DropdownMenuItem>
-                  </DropdownMenuContent>
+                     <DropdownMenuItem onClick={() => setSelectedProfile(emp)}>
+                       <Eye className="w-3.5 h-3.5 mr-2" /> View Profile
+                     </DropdownMenuItem>
+                     <DropdownMenuItem onClick={() => { setEditingEmployee(emp); setDialogOpen(true); }}>
+                       <Pencil className="w-3.5 h-3.5 mr-2" /> Edit
+                     </DropdownMenuItem>
+                     {!onboardings.find(o => o.employee_id === emp.id) && (
+                       <DropdownMenuItem onClick={() => { setEmployeeToOnboard(emp); setOnboardingDialogOpen(true); }}>
+                         <CheckSquare className="w-3.5 h-3.5 mr-2" /> Start Onboarding
+                       </DropdownMenuItem>
+                     )}
+                     <DropdownMenuItem onClick={() => { setAvailEmployee(emp); setAvailDialogOpen(true); }}>
+                       <CalendarCheck className="w-3.5 h-3.5 mr-2" /> Set Availability
+                     </DropdownMenuItem>
+                     <DropdownMenuItem
+                       className="text-red-600"
+                       onClick={() => deleteEmployee.mutate(emp.id)}
+                     >
+                       <Trash2 className="w-3.5 h-3.5 mr-2" /> Delete
+                     </DropdownMenuItem>
+                   </DropdownMenuContent>
                 </DropdownMenu>
               </div>
               <div className="mt-4 flex items-center gap-2 flex-wrap">
@@ -211,10 +262,15 @@ export default function Employees() {
                   </div>
                 )}
                 {availabilities.find(a => a.employee_id === emp.id) && (
-                  <div className="flex items-center gap-2 text-xs text-green-600 mt-1">
-                    <CalendarCheck className="w-3 h-3" /> Availability set
-                  </div>
-                )}
+                   <div className="flex items-center gap-2 text-xs text-green-600 mt-1">
+                     <CalendarCheck className="w-3 h-3" /> Availability set
+                   </div>
+                 )}
+                 {onboardings.find(o => o.employee_id === emp.id) && (
+                   <div className="flex items-center gap-2 text-xs text-blue-600 mt-1">
+                     <CheckSquare className="w-3 h-3" /> Onboarding: {onboardings.find(o => o.employee_id === emp.id).status}
+                   </div>
+                 )}
               </div>
             </Card>
           </motion.div>
@@ -243,25 +299,33 @@ export default function Employees() {
       />
 
       {/* Profile Dialog */}
-      <Dialog open={!!selectedProfile} onOpenChange={() => setSelectedProfile(null)}>
-        <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
-          <DialogHeader>
-            <DialogTitle>Employee Profile</DialogTitle>
-          </DialogHeader>
-          {selectedProfile && (
-            <EmployeeProfile
-              employee={selectedProfile}
-              shifts={shifts}
-              onEdit={() => {
-                setEditingEmployee(selectedProfile);
-                setDialogOpen(true);
-                setSelectedProfile(null);
-              }}
-              onClose={() => setSelectedProfile(null)}
-            />
-          )}
-        </DialogContent>
-      </Dialog>
-    </div>
-  );
+       <Dialog open={!!selectedProfile} onOpenChange={() => setSelectedProfile(null)}>
+         <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
+           <DialogHeader>
+             <DialogTitle>Employee Profile</DialogTitle>
+           </DialogHeader>
+           {selectedProfile && (
+             <EmployeeProfile
+               employee={selectedProfile}
+               shifts={shifts}
+               onEdit={() => {
+                 setEditingEmployee(selectedProfile);
+                 setDialogOpen(true);
+                 setSelectedProfile(null);
+               }}
+               onClose={() => setSelectedProfile(null)}
+             />
+           )}
+         </DialogContent>
+       </Dialog>
+
+       {/* Onboarding Dialog */}
+       <StartOnboardingDialog
+         open={onboardingDialogOpen}
+         onOpenChange={setOnboardingDialogOpen}
+         employee={employeeToOnboard}
+         onConfirm={(data) => createOnboarding.mutate(data)}
+       />
+      </div>
+      );
 }
