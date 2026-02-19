@@ -81,11 +81,15 @@ export default function TimeOff() {
   const filtered = tab === "all" ? requests : requests.filter((r) => r.status === tab);
 
   return (
-    <div className="p-4 lg:p-6 space-y-5 max-w-5xl mx-auto">
+    <div className="p-4 lg:p-8 space-y-6 max-w-5xl mx-auto">
+      <div>
+        <h1 className="text-5xl font-extrabold text-gray-900 tracking-tight">Time Off</h1>
+        <p className="text-gray-400 mt-2 text-lg">Review and manage employee time off requests</p>
+      </div>
       {/* Toolbar */}
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
         <Tabs value={tab} onValueChange={setTab}>
-          <TabsList className="bg-slate-100">
+          <TabsList className="bg-gray-100 rounded-full p-1">
             <TabsTrigger value="all" className="text-xs">All</TabsTrigger>
             <TabsTrigger value="pending" className="text-xs">Pending</TabsTrigger>
             <TabsTrigger value="approved" className="text-xs">Approved</TabsTrigger>
