@@ -177,7 +177,17 @@ export default function TimeOff() {
                       </p>
                       <p className="text-xs text-slate-500">
                         {req.start_date} → {req.end_date}
+                        {req.is_partial_day && (
+                          <span className="ml-1 text-gray-400">
+                            ({req.partial_start_time}–{req.partial_end_time})
+                          </span>
+                        )}
                       </p>
+                      {req.is_recurring && (
+                        <p className="text-xs text-blue-600 font-medium">
+                          Recurring: {req.recurrence_pattern}
+                        </p>
+                      )}
                       {req.reason && (
                         <p className="text-xs text-slate-400 mt-0.5 truncate">{req.reason}</p>
                       )}
