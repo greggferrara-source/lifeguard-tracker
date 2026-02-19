@@ -86,6 +86,11 @@ export default function Layout({ children, currentPageName }) {
                         {unresolvedAlerts > 9 ? "9+" : unresolvedAlerts}
                       </span>
                     )}
+                    {item.badge === "swaps" && pendingSwaps > 0 && (
+                      <span className="absolute -top-0.5 -right-0.5 bg-orange-500 text-white text-[9px] font-bold rounded-full w-4 h-4 flex items-center justify-center">
+                        {pendingSwaps > 9 ? "9+" : pendingSwaps}
+                      </span>
+                    )}
                   </Link>
                 );
               })}
