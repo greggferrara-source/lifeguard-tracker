@@ -131,7 +131,7 @@ export default function Schedule() {
   };
 
   return (
-    <div className="p-4 lg:p-6 space-y-5 max-w-full">
+    <div className="p-4 lg:p-6 space-y-5 max-w-full bg-white min-h-screen">
       {/* Toolbar */}
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
         <div className="flex items-center gap-2 flex-wrap">
