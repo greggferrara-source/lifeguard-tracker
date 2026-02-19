@@ -78,7 +78,7 @@ export default function Notifications() {
       </div>
 
       <Tabs value={tab} onValueChange={setTab}>
-        <TabsList className="bg-slate-100">
+        <TabsList className="bg-gray-100 rounded-full p-1">
           <TabsTrigger value="all" className="text-xs">All</TabsTrigger>
           <TabsTrigger value="email" className="text-xs">Email</TabsTrigger>
           <TabsTrigger value="sms" className="text-xs">SMS</TabsTrigger>
