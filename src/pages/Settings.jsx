@@ -23,6 +23,14 @@ export default function Settings() {
   const [form, setForm] = useState({ name: "", start_time: "09:00", end_time: "17:00", location_id: "", days_of_week: [], notes: "" });
   const [testResult, setTestResult] = useState(null);
   const [testing, setTesting] = useState(false);
+  const [alertSettings, setAlertSettings] = useState({
+    understaffing: true,
+    conflicts: true,
+    cert_expiry: true,
+    shift_reminders: true,
+    shift_notifications: true,
+  });
+  const [settingsId, setSettingsId] = useState(null);
 
   const { data: templates = [] } = useQuery({
     queryKey: ["templates"],
