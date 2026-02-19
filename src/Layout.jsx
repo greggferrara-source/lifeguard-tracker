@@ -129,6 +129,9 @@ export default function Layout({ children, currentPageName }) {
                   {item.badge === "alerts" && unresolvedAlerts > 0 && (
                     <span className="ml-auto bg-red-500 text-white text-[10px] font-bold rounded-full px-1.5">{unresolvedAlerts}</span>
                   )}
+                  {item.badge === "swaps" && pendingSwaps > 0 && (
+                    <span className="ml-auto bg-orange-500 text-white text-[10px] font-bold rounded-full px-1.5">{pendingSwaps}</span>
+                  )}
                 </Link>
               );
             })}
