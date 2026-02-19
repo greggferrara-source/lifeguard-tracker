@@ -50,7 +50,7 @@ export default function Layout({ children, currentPageName }) {
   const pendingSwaps = swapRequests.filter(s => s.status === "pending_employee" || s.status === "pending_manager").length;
 
   return (
-    <div className="min-h-screen bg-white" style={{ fontFamily: "'Inter', 'Helvetica Neue', Arial, sans-serif" }}>
+    <div className="min-h-screen bg-white" style={{ fontFamily: "'Inter', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', sans-serif" }}>
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
         :root {
@@ -61,40 +61,40 @@ export default function Layout({ children, currentPageName }) {
       `}</style>
 
       {/* Top Nav */}
-      <header className="border-b border-gray-100 bg-white sticky top-0 z-40">
-        <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16">
+      <header className="bg-white border-b border-gray-200 sticky top-0 z-40">
+        <div className="max-w-7xl mx-auto px-6 py-5">
+          <div className="flex items-center justify-between">
             {/* Logo */}
-            <Link to={createPageUrl("Dashboard")} className="flex items-center gap-2.5 group">
-              <div className="w-8 h-8 rounded-lg bg-[#1a9c5b] flex items-center justify-center shadow-sm">
-                <Shield className="w-4 h-4 text-white" />
+            <Link to={createPageUrl("Dashboard")} className="flex items-center gap-3 group">
+              <div className="w-10 h-10 rounded-lg bg-[#1a9c5b] flex items-center justify-center">
+                <Shield className="w-5 h-5 text-white" />
               </div>
-              <span className="font-bold text-gray-900 text-lg tracking-tight">ShiftGuard</span>
+              <span className="font-bold text-xl text-gray-900">ShiftGuard</span>
             </Link>
 
             {/* Desktop Nav */}
-            <nav className="hidden xl:flex items-center gap-0.5">
+            <nav className="hidden lg:flex items-center gap-1">
               {navItems.map((item) => {
                 const isActive = currentPageName === item.page;
                 return (
                   <Link
                     key={item.page}
                     to={createPageUrl(item.page)}
-                    className={`relative flex items-center gap-1.5 px-3 py-2 rounded-lg text-sm font-medium transition-all duration-150 ${
+                    className={`relative flex items-center gap-2 px-4 py-2.5 rounded-lg text-sm font-medium transition-colors ${
                       isActive
-                        ? "bg-[#f0faf5] text-[#1a9c5b]"
-                        : "text-gray-500 hover:text-gray-900 hover:bg-gray-50"
+                        ? "text-[#1a9c5b] bg-[#f0faf5]"
+                        : "text-gray-700 hover:text-gray-900"
                     }`}
                   >
                     <item.icon className="w-4 h-4" />
                     {item.name}
                     {item.badge === "alerts" && unresolvedAlerts > 0 && (
-                      <span className="ml-0.5 bg-red-500 text-white text-[9px] font-bold rounded-full w-4 h-4 flex items-center justify-center">
+                      <span className="ml-1 bg-red-500 text-white text-xs font-bold rounded-full w-4 h-4 flex items-center justify-center">
                         {unresolvedAlerts > 9 ? "9+" : unresolvedAlerts}
                       </span>
                     )}
                     {item.badge === "swaps" && pendingSwaps > 0 && (
-                      <span className="ml-0.5 bg-orange-500 text-white text-[9px] font-bold rounded-full w-4 h-4 flex items-center justify-center">
+                      <span className="ml-1 bg-orange-500 text-white text-xs font-bold rounded-full w-4 h-4 flex items-center justify-center">
                         {pendingSwaps > 9 ? "9+" : pendingSwaps}
                       </span>
                     )}
@@ -107,7 +107,7 @@ export default function Layout({ children, currentPageName }) {
             <Button
               variant="ghost"
               size="icon"
-              className="xl:hidden"
+              className="lg:hidden text-gray-700"
               onClick={() => setMobileOpen(!mobileOpen)}
             >
               {mobileOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
@@ -117,7 +117,7 @@ export default function Layout({ children, currentPageName }) {
 
         {/* Mobile Nav */}
         {mobileOpen && (
-          <div className="xl:hidden border-t border-gray-100 bg-white px-4 py-3 space-y-1">
+          <div className="lg:hidden border-t border-gray-200 bg-white px-6 py-4 space-y-2">
             {navItems.map((item) => {
               const isActive = currentPageName === item.page;
               return (
@@ -125,19 +125,19 @@ export default function Layout({ children, currentPageName }) {
                   key={item.page}
                   to={createPageUrl(item.page)}
                   onClick={() => setMobileOpen(false)}
-                  className={`flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-medium transition-all ${
+                  className={`flex items-center gap-3 px-4 py-2.5 rounded-lg text-sm font-medium transition-colors ${
                     isActive
-                      ? "bg-[#f0faf5] text-[#1a9c5b]"
-                      : "text-gray-600 hover:bg-gray-50"
+                      ? "text-[#1a9c5b] bg-[#f0faf5]"
+                      : "text-gray-700 hover:text-gray-900"
                   }`}
                 >
                   <item.icon className="w-4 h-4" />
                   {item.name}
                   {item.badge === "alerts" && unresolvedAlerts > 0 && (
-                    <span className="ml-auto bg-red-500 text-white text-[10px] font-bold rounded-full px-1.5">{unresolvedAlerts}</span>
+                    <span className="ml-auto bg-red-500 text-white text-xs font-bold rounded-full px-2">{unresolvedAlerts}</span>
                   )}
                   {item.badge === "swaps" && pendingSwaps > 0 && (
-                    <span className="ml-auto bg-orange-500 text-white text-[10px] font-bold rounded-full px-1.5">{pendingSwaps}</span>
+                    <span className="ml-auto bg-orange-500 text-white text-xs font-bold rounded-full px-2">{pendingSwaps}</span>
                   )}
                 </Link>
               );
@@ -147,7 +147,7 @@ export default function Layout({ children, currentPageName }) {
       </header>
 
       {/* Page Content */}
-      <main>
+      <main className="bg-white">
         {children}
       </main>
     </div>
