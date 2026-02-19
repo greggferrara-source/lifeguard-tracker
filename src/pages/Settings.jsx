@@ -209,8 +209,8 @@ export default function Settings() {
             </div>
           </div>
           <DialogFooter>
-            <Button variant="outline" onClick={() => setTemplateOpen(false)}>Cancel</Button>
-            <Button className="bg-cyan-600 hover:bg-cyan-700" onClick={handleSave}>{editingTemplate ? "Update" : "Create"}</Button>
+            <Button variant="outline" className="rounded-full" onClick={() => setTemplateOpen(false)}>Cancel</Button>
+            <Button className="bg-[#1a9c5b] hover:bg-[#158a4e] rounded-full" onClick={handleSave}>{editingTemplate ? "Update" : "Create"}</Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>
