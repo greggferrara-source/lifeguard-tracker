@@ -16,6 +16,9 @@ export default function Schedule() {
   const [weekStart, setWeekStart] = useState(startOfWeek(new Date(), { weekStartsOn: 0 }));
   const [view, setView] = useState("location"); // "location" | "employee"
   const [dialogOpen, setDialogOpen] = useState(false);
+  const [recurringOpen, setRecurringOpen] = useState(false);
+  const [swapOpen, setSwapOpen] = useState(false);
+  const [swapShift, setSwapShift] = useState(null);
   const [selectedShift, setSelectedShift] = useState(null);
   const [defaultDate, setDefaultDate] = useState("");
   const [defaultLocationId, setDefaultLocationId] = useState("");
