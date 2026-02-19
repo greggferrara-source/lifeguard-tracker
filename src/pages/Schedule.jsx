@@ -99,6 +99,37 @@ export default function Schedule() {
     }
   };
 
+  const handleRecurringSave = async (shiftList) => {
+    await Promise.all(shiftList.map(s => base44.entities.Shift.create(s)));
+    queryClient.invalidateQueries({ queryKey: ["shifts"] });
+    setRecurringOpen(false);
+  };
+
+  const handleSwapSubmit = async (swapData) => {
+    const user = await base44.auth.me();
+    const me = employees.find(e => e.email === user?.email);
+    const created = await base44.entities.ShiftSwapRequest.create({
+      ...swapData,
+      requester_employee_id: me?.id || swapData.requester_employee_id,
+      requester_employee_name: me ? `${me.first_name} ${me.last_name}` : swapData.requester_employee_name,
+    });
+    await base44.functions.invoke("shiftSwapNotify", { swap_request_id: created.id, action: "new_request" });
+    setSwapOpen(false);
+  };
+
+  // Availability conflict check for schedule grid
+  const getAvailabilityWarning = (employeeId, dateStr) => {
+    const avail = availabilities.find(a => a.employee_id === employeeId);
+    if (!avail) return null;
+    // Check unavailable periods
+    for (const p of (avail.unavailable_periods || [])) {
+      if (p.start_date && p.end_date && dateStr >= p.start_date && dateStr <= p.end_date) {
+        return `Unavailable: ${p.reason || "blocked period"}`;
+      }
+    }
+    return null;
+  };
+
   return (
     <div className="p-4 lg:p-6 space-y-5 max-w-full">
       {/* Toolbar */}
