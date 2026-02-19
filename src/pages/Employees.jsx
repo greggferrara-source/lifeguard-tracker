@@ -218,6 +218,13 @@ export default function Employees() {
         employee={editingEmployee}
         onSave={handleSave}
       />
+      <AvailabilityDialog
+        open={availDialogOpen}
+        onOpenChange={setAvailDialogOpen}
+        employee={availEmployee}
+        availability={availabilities.find(a => a.employee_id === availEmployee?.id)}
+        onSave={(data) => saveAvailability.mutate(data)}
+      />
     </div>
   );
 }
