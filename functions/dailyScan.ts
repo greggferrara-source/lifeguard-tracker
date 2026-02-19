@@ -43,30 +43,31 @@ Deno.serve(async (req) => {
     }
 
     // 2. Scan shift conflicts for today
-    if (isEnabled("conflicts"))
-    const todayShifts = shifts.filter(s => s.date === today && s.employee_id && s.status !== "cancelled");
-    const byEmployee = {};
-    for (const s of todayShifts) {
-      if (!byEmployee[s.employee_id]) byEmployee[s.employee_id] = [];
-      byEmployee[s.employee_id].push(s);
-    }
-    for (const [empId, empShifts] of Object.entries(byEmployee)) {
-      if (empShifts.length > 1) {
-        for (let i = 0; i < empShifts.length; i++) {
-          for (let j = i + 1; j < empShifts.length; j++) {
-            const a = empShifts[i], b = empShifts[j];
-            if (a.start_time < b.end_time && a.end_time > b.start_time) {
-              await base44.asServiceRole.entities.Alert.create({
-                type: "conflict",
-                severity: "critical",
-                title: `Shift Conflict: ${a.employee_name}`,
-                message: `${a.employee_name} has overlapping shifts on ${today}.`,
-                date: today,
-                employee_id: empId,
-                employee_name: a.employee_name,
-                resolved: false
-              });
-              results.alerts_created++;
+    if (isEnabled("conflicts")) {
+      const todayShifts = shifts.filter(s => s.date === today && s.employee_id && s.status !== "cancelled");
+      const byEmployee = {};
+      for (const s of todayShifts) {
+        if (!byEmployee[s.employee_id]) byEmployee[s.employee_id] = [];
+        byEmployee[s.employee_id].push(s);
+      }
+      for (const [empId, empShifts] of Object.entries(byEmployee)) {
+        if (empShifts.length > 1) {
+          for (let i = 0; i < empShifts.length; i++) {
+            for (let j = i + 1; j < empShifts.length; j++) {
+              const a = empShifts[i], b = empShifts[j];
+              if (a.start_time < b.end_time && a.end_time > b.start_time) {
+                await base44.asServiceRole.entities.Alert.create({
+                  type: "conflict",
+                  severity: "critical",
+                  title: `Shift Conflict: ${a.employee_name}`,
+                  message: `${a.employee_name} has overlapping shifts on ${today}.`,
+                  date: today,
+                  employee_id: empId,
+                  employee_name: a.employee_name,
+                  resolved: false
+                });
+                results.alerts_created++;
+              }
             }
           }
         }
