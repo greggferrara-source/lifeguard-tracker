@@ -88,17 +88,17 @@ export default function Notifications() {
         </TabsList>
       </Tabs>
 
-      <div className="space-y-2">
-        {isLoading && <p className="text-center text-sm text-slate-400 py-8">Loading...</p>}
+      <div className="space-y-3">
+        {isLoading && <p className="text-center text-sm text-gray-400 py-8">Loading...</p>}
         {!isLoading && filtered.length === 0 && (
-          <div className="text-center py-14 text-slate-400">
-            <Mail className="w-10 h-10 mx-auto mb-3 opacity-40" />
-            <p className="font-medium">No notifications yet</p>
+          <div className="text-center py-20 bg-gray-50 rounded-2xl">
+            <Mail className="w-10 h-10 mx-auto mb-3 text-gray-300" />
+            <p className="font-medium text-gray-400">No notifications yet</p>
           </div>
         )}
         {filtered.map((n, i) => (
           <motion.div key={n.id} initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: i * 0.02 }}>
-            <Card className="p-3 border-0 shadow-sm">
+            <Card className="p-4 border border-gray-100 shadow-none rounded-xl">
               <div className="flex items-start gap-3">
                 <div className={`mt-0.5 flex-shrink-0 ${n.type === "sms" ? "text-purple-500" : "text-cyan-500"}`}>
                   {n.type === "sms" ? <MessageSquare className="w-4 h-4" /> : <Mail className="w-4 h-4" />}
