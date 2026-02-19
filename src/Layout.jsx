@@ -40,6 +40,7 @@ const navItems = [
   { name: "Employees", icon: Users, page: "Employees" },
   { name: "Locations", icon: MapPin, page: "Locations" },
   { name: "Time Off", icon: Clock, page: "TimeOff" },
+  { name: "My Availability", icon: Clock, page: "MyAvailability" },
   { name: "Shift Swaps", icon: ArrowLeftRight, page: "ShiftSwaps", badge: "swaps" },
   { name: "Alerts", icon: AlertTriangle, page: "Alerts", badge: "alerts" },
   { name: "Reports", icon: BarChart2, page: "Reports" },
