@@ -1,7 +1,7 @@
 import React from "react";
 import { format, isSameDay } from "date-fns";
 import { motion } from "framer-motion";
-import { AlertTriangle, User } from "lucide-react";
+import { AlertTriangle, ArrowLeftRight } from "lucide-react";
 
 const SHIFT_COLORS = [
   "#0ea5e9","#10b981","#8b5cf6","#f59e0b","#ef4444",
@@ -20,7 +20,18 @@ function hasConflict(shift, allShifts) {
   );
 }
 
-export default function EmployeeView({ shifts, employees, days, onShiftClick }) {
+function getUnavailableReason(employeeId, dateStr, availabilities) {
+  const avail = availabilities?.find(a => a.employee_id === employeeId);
+  if (!avail) return null;
+  for (const p of (avail.unavailable_periods || [])) {
+    if (p.start_date && p.end_date && dateStr >= p.start_date && dateStr <= p.end_date) {
+      return p.reason || "Unavailable";
+    }
+  }
+  return null;
+}
+
+export default function EmployeeView({ shifts, employees, days, availabilities = [], onShiftClick, onSwapClick }) {
   const activeEmployees = employees.filter(e => e.status === "active");
 
   return (
