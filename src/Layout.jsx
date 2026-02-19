@@ -43,7 +43,13 @@ export default function Layout({ children, currentPageName }) {
     queryFn: () => base44.entities.Alert.list("-created_date", 100),
     refetchInterval: 60000,
   });
+  const { data: swapRequests = [] } = useQuery({
+    queryKey: ["shift-swaps"],
+    queryFn: () => base44.entities.ShiftSwapRequest.list("-created_date", 100),
+    refetchInterval: 60000,
+  });
   const unresolvedAlerts = alerts.filter(a => !a.resolved).length;
+  const pendingSwaps = swapRequests.filter(s => s.status === "pending_employee" || s.status === "pending_manager").length;
 
   return (
     <div className="min-h-screen bg-white font-sans">
