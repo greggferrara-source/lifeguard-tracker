@@ -14,6 +14,9 @@ import { format } from "date-fns";
 import { motion } from "framer-motion";
 import TimeOffDialog from "@/components/timeoff/TimeOffDialog";
 import TeamAvailabilityView from "@/components/timeoff/TeamAvailabilityView";
+import TimeOffCalendarView from "@/components/timeoff/TimeOffCalendarView";
+import { useState as useStateCalendar } from "react";
+import { addMonths, subMonths } from "date-fns";
 
 const statusStyles = {
   pending: { badge: "bg-amber-100 text-amber-700", icon: Clock },
@@ -26,6 +29,8 @@ export default function TimeOff() {
   const [tab, setTab] = useState("all");
   const [dialogOpen, setDialogOpen] = useState(false);
   const [showAvailability, setShowAvailability] = useState(false);
+  const [showCalendar, setShowCalendar] = useState(false);
+  const [calendarDate, setCalendarDate] = useStateCalendar(new Date());
   const [availabilityRange, setAvailabilityRange] = useState({
     start: "",
     end: "",
@@ -93,6 +98,15 @@ export default function TimeOff() {
         </Tabs>
         <div className="flex gap-2">
           <Button
+            onClick={() => setShowCalendar(!showCalendar)}
+            variant="outline"
+            size="sm"
+            className="rounded-full"
+          >
+            <Eye className="w-4 h-4 mr-1" />
+            Calendar View
+          </Button>
+          <Button
             onClick={() => setShowAvailability(!showAvailability)}
             variant="outline"
             size="sm"
@@ -111,6 +125,36 @@ export default function TimeOff() {
           </Button>
         </div>
       </div>
+
+      {/* Calendar View */}
+      {showCalendar && (
+        <div className="space-y-3">
+          <div className="flex items-center justify-between">
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => setCalendarDate(subMonths(calendarDate, 1))}
+            >
+              ← Previous
+            </Button>
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => setCalendarDate(new Date())}
+            >
+              Today
+            </Button>
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => setCalendarDate(addMonths(calendarDate, 1))}
+            >
+              Next →
+            </Button>
+          </div>
+          <TimeOffCalendarView requests={requests} currentDate={calendarDate} />
+        </div>
+      )}
 
       {/* Team Availability View */}
       {showAvailability && (
