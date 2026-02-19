@@ -43,6 +43,11 @@ export default function Schedule() {
     queryFn: () => base44.entities.ShiftTemplate.list(),
   });
 
+  const { data: availabilities = [] } = useQuery({
+    queryKey: ["availabilities"],
+    queryFn: () => base44.entities.EmployeeAvailability.list(),
+  });
+
   const createShift = useMutation({
     mutationFn: (data) => base44.entities.Shift.create(data),
     onSuccess: () => { queryClient.invalidateQueries({ queryKey: ["shifts"] }); setDialogOpen(false); },
