@@ -8,6 +8,7 @@ import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell, Legend } from "recharts";
 import { format, startOfWeek, endOfWeek, addDays, startOfMonth, endOfMonth, parseISO } from "date-fns";
 import { Download, Users, Clock, MapPin, TrendingUp } from "lucide-react";
+import DocumentGenerator from "@/components/reports/DocumentGenerator";
 
 const COLORS = ["#0ea5e9", "#10b981", "#8b5cf6", "#f59e0b", "#ef4444", "#ec4899", "#6366f1"];
 
