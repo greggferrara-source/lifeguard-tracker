@@ -76,34 +76,36 @@ export default function Employees() {
   );
 
   return (
-    // redesigned below
-    <div className="p-4 lg:p-6 space-y-5 max-w-7xl mx-auto">
-      {/* Toolbar */}
-      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
-        <div className="relative w-full sm:w-72">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
-          <Input
-            placeholder="Search employees..."
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-            className="pl-9 h-9 bg-white"
-          />
+    <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-8">
+      {/* Header */}
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+        <div>
+          <h1 className="text-4xl font-bold text-gray-900">Employees</h1>
+          <p className="text-gray-500 mt-2">{employees.length} team member{employees.length !== 1 ? "s" : ""}</p>
         </div>
-        <Button
-          onClick={() => {
-            setEditingEmployee(null);
-            setDialogOpen(true);
-          }}
-          className="bg-cyan-600 hover:bg-cyan-700"
-          size="sm"
-        >
-          <Plus className="w-4 h-4 mr-1" />
-          Add Employee
-        </Button>
+        <div className="flex items-center gap-3 w-full sm:w-auto">
+          <div className="relative flex-1 sm:w-64">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+            <Input
+              placeholder="Search..."
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              className="pl-9 rounded-full border-gray-200"
+            />
+          </div>
+          <Button
+            onClick={() => { setEditingEmployee(null); setDialogOpen(true); }}
+            className="bg-[#1a9c5b] hover:bg-[#158a4e] rounded-full flex-shrink-0"
+            size="sm"
+          >
+            <Plus className="w-4 h-4 mr-1" />
+            Add Employee
+          </Button>
+        </div>
       </div>
 
       {/* Grid */}
-      <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+      <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
         {filtered.map((emp, i) => (
           <motion.div
             key={emp.id}
@@ -111,7 +113,7 @@ export default function Employees() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: i * 0.03 }}
           >
-            <Card className="p-4 border-0 shadow-sm hover:shadow-md transition-shadow group">
+            <Card className="p-5 border border-gray-100 shadow-none rounded-2xl hover:border-gray-200 transition-colors group">
               <div className="flex items-start justify-between">
                 <div className="flex items-center gap-3">
                   <div
