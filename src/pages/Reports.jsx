@@ -183,8 +183,8 @@ export default function Reports() {
       </div>
 
       {/* Employee Hours Table */}
-      <Card className="p-5 border-0 shadow-sm">
-        <h3 className="text-sm font-semibold text-slate-900 mb-4">Employee Hours & Pay Summary</h3>
+      <Card className="p-6 border border-gray-100 shadow-none rounded-2xl">
+        <h3 className="text-xl font-bold text-gray-900 mb-6">Employee Hours & Pay Summary</h3>
         <div className="overflow-x-auto">
           <table className="w-full text-sm">
             <thead>
