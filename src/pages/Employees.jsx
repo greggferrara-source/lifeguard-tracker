@@ -152,23 +152,23 @@ export default function Employees() {
                   </DropdownMenuContent>
                 </DropdownMenu>
               </div>
-              <div className="mt-3 flex items-center gap-2 flex-wrap">
-                <Badge variant="secondary" className={`text-[10px] ${statusStyles[emp.status] || ""}`}>
+              <div className="mt-4 flex items-center gap-2 flex-wrap">
+                <Badge variant="secondary" className={`text-xs rounded-full ${statusStyles[emp.status] || ""}`}>
                   {emp.status}
                 </Badge>
                 {emp.hourly_rate && (
-                  <Badge variant="outline" className="text-[10px]">${emp.hourly_rate}/hr</Badge>
+                  <Badge variant="outline" className="text-xs rounded-full">${emp.hourly_rate}/hr</Badge>
                 )}
               </div>
-              <div className="mt-3 space-y-1">
+              <div className="mt-3 space-y-1.5">
                 {emp.email && (
-                  <div className="flex items-center gap-2 text-xs text-slate-500">
-                    <Mail className="w-3 h-3" /> {emp.email}
+                  <div className="flex items-center gap-2 text-sm text-gray-500">
+                    <Mail className="w-3.5 h-3.5" /> {emp.email}
                   </div>
                 )}
                 {emp.phone && (
-                  <div className="flex items-center gap-2 text-xs text-slate-500">
-                    <Phone className="w-3 h-3" /> {emp.phone}
+                  <div className="flex items-center gap-2 text-sm text-gray-500">
+                    <Phone className="w-3.5 h-3.5" /> {emp.phone}
                   </div>
                 )}
               </div>
