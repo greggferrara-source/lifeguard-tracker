@@ -125,8 +125,8 @@ export default function Reports() {
 
       {/* Charts Row 1 */}
       <div className="grid lg:grid-cols-2 gap-5">
-        <Card className="p-5 border-0 shadow-sm">
-          <h3 className="text-sm font-semibold text-slate-900 mb-4">Daily Shift Coverage (This Week)</h3>
+        <Card className="p-6 border border-gray-100 shadow-none rounded-2xl">
+          <h3 className="text-base font-semibold text-gray-900 mb-5">Daily Shift Coverage (This Week)</h3>
           <ResponsiveContainer width="100%" height={200}>
             <BarChart data={dailyData}>
               <CartesianGrid strokeDasharray="3 3" stroke="#f1f5f9" />
