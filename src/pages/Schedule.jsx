@@ -5,12 +5,13 @@ import { format, startOfWeek, addDays, addWeeks, subWeeks, isSameDay } from "dat
 import { DragDropContext } from "@hello-pangea/dnd";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { ChevronLeft, ChevronRight, Plus, CalendarDays, MapPin, Users, AlertTriangle, Repeat, ArrowLeftRight } from "lucide-react";
+import { ChevronLeft, ChevronRight, Plus, CalendarDays, MapPin, Users, AlertTriangle, Repeat, ArrowLeftRight, Sparkles } from "lucide-react";
 import ScheduleGrid from "@/components/schedule/ScheduleGrid";
 import EmployeeView from "@/components/schedule/EmployeeView";
 import ShiftDialog from "@/components/schedule/ShiftDialog";
 import RecurringShiftDialog from "@/components/schedule/RecurringShiftDialog";
 import ShiftSwapDialog from "@/components/schedule/ShiftSwapDialog";
+import RecommendationsPanel from "@/components/schedule/RecommendationsPanel";
 
 export default function Schedule() {
   const queryClient = useQueryClient();
@@ -25,6 +26,8 @@ export default function Schedule() {
   const [defaultLocationId, setDefaultLocationId] = useState("");
   const [currentUser, setCurrentUser] = useState(null);
   const [canDragDrop, setCanDragDrop] = useState(false);
+  const [recommendations, setRecommendations] = useState([]);
+  const [recommendationsLoading, setRecommendationsLoading] = useState(false);
 
   const days = Array.from({ length: 7 }, (_, i) => addDays(weekStart, i));
   const weekDates = days.map(d => format(d, "yyyy-MM-dd"));
@@ -174,6 +177,38 @@ export default function Schedule() {
     return null;
   };
 
+  // Get AI recommendations
+  const handleGetRecommendations = async () => {
+    setRecommendationsLoading(true);
+    try {
+      const openShifts = weekShifts.filter(s => s.status === "open" || !s.employee_id);
+      const response = await base44.functions.invoke("getShiftRecommendations", {
+        startDate: weekDates[0],
+        endDate: weekDates[6],
+        openShifts,
+      });
+      setRecommendations(response.recommendations || []);
+    } catch (error) {
+      console.error("Error getting recommendations:", error);
+      setRecommendations([]);
+    } finally {
+      setRecommendationsLoading(false);
+    }
+  };
+
+  const handleApplyRecommendation = async (rec) => {
+    const shift = weekShifts.find(s => s.id === rec.shift_id);
+    if (shift) {
+      await updateShift.mutate({
+        id: shift.id,
+        data: { ...shift, employee_id: rec.employee_id },
+      });
+      setRecommendations(recommendations.filter(r => r.shift_id !== rec.shift_id));
+    }
+  };
+
+  const openShiftsCount = weekShifts.filter(s => s.status === "open" || !s.employee_id).length;
+
   return (
     <DragDropContext onDragEnd={handleDragEnd}>
       <div className="p-4 lg:p-8 space-y-5 max-w-full bg-white min-h-screen">
@@ -222,6 +257,15 @@ export default function Schedule() {
             <Repeat className="w-4 h-4 mr-1" /> Recurring
           </Button>
           <Button
+            variant="outline"
+            size="sm"
+            onClick={handleGetRecommendations}
+            disabled={recommendationsLoading}
+            title="Get AI recommendations for open shifts"
+          >
+            <Sparkles className="w-4 h-4 mr-1" /> {recommendationsLoading ? "Analyzing..." : "AI Suggestions"}
+          </Button>
+          <Button
             onClick={() => {
               setSelectedShift(null);
               setDefaultDate(format(new Date(), "yyyy-MM-dd"));
@@ -233,6 +277,16 @@ export default function Schedule() {
           </Button>
         </div>
       </div>
+
+      {/* Recommendations Panel */}
+      {(recommendations.length > 0 || recommendationsLoading) && (
+        <RecommendationsPanel
+          recommendations={recommendations}
+          onApply={handleApplyRecommendation}
+          isLoading={recommendationsLoading}
+          openShiftsCount={openShiftsCount}
+        />
+      )}
 
       {/* Grid */}
       {activeLocations.length === 0 ? (
