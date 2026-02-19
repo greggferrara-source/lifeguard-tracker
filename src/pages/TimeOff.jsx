@@ -5,30 +5,15 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
 import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogFooter,
-} from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import {
   Tabs,
   TabsList,
   TabsTrigger,
 } from "@/components/ui/tabs";
-import { Plus, Check, X, Clock } from "lucide-react";
+import { Plus, Check, X, Clock, Eye } from "lucide-react";
 import { format } from "date-fns";
 import { motion } from "framer-motion";
+import TimeOffDialog from "@/components/timeoff/TimeOffDialog";
+import TeamAvailabilityView from "@/components/timeoff/TeamAvailabilityView";
 
 const statusStyles = {
   pending: { badge: "bg-amber-100 text-amber-700", icon: Clock },
@@ -40,11 +25,10 @@ export default function TimeOff() {
   const queryClient = useQueryClient();
   const [tab, setTab] = useState("all");
   const [dialogOpen, setDialogOpen] = useState(false);
-  const [form, setForm] = useState({
-    employee_id: "",
-    start_date: "",
-    end_date: "",
-    reason: "",
+  const [showAvailability, setShowAvailability] = useState(false);
+  const [availabilityRange, setAvailabilityRange] = useState({
+    start: "",
+    end: "",
   });
 
   const { data: requests = [] } = useQuery({
@@ -59,21 +43,32 @@ export default function TimeOff() {
 
   const createRequest = useMutation({
     mutationFn: (data) => base44.entities.TimeOffRequest.create(data),
-    onSuccess: () => {
+    onSuccess: async () => {
       queryClient.invalidateQueries({ queryKey: ["timeoff-all"] });
       setDialogOpen(false);
+      await base44.functions.invoke("timeOffNotifications", {
+        timeoff_request_id: "new",
+        action: "submitted",
+      });
     },
   });
 
   const updateRequest = useMutation({
     mutationFn: ({ id, data }) => base44.entities.TimeOffRequest.update(id, data),
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: ["timeoff-all"] }),
+    onSuccess: async (data, variables) => {
+      queryClient.invalidateQueries({ queryKey: ["timeoff-all"] });
+      const action = variables.data.status === "approved" ? "approved" : "denied";
+      await base44.functions.invoke("timeOffNotifications", {
+        timeoff_request_id: variables.id,
+        action,
+      });
+    },
   });
 
-  const handleCreate = () => {
-    const emp = employees.find((e) => e.id === form.employee_id);
+  const handleSubmit = async (formData) => {
+    const emp = employees.find((e) => e.id === formData.employee_id);
     createRequest.mutate({
-      ...form,
+      ...formData,
       employee_name: emp ? `${emp.first_name} ${emp.last_name}` : "",
     });
   };
@@ -96,18 +91,61 @@ export default function TimeOff() {
             <TabsTrigger value="denied" className="text-xs">Denied</TabsTrigger>
           </TabsList>
         </Tabs>
-        <Button
-          onClick={() => {
-            setForm({ employee_id: "", start_date: "", end_date: "", reason: "" });
-            setDialogOpen(true);
-          }}
-          className="bg-[#1a9c5b] hover:bg-[#158a4e] rounded-full"
-          size="sm"
-        >
-          <Plus className="w-4 h-4 mr-1" />
-          New Request
-        </Button>
+        <div className="flex gap-2">
+          <Button
+            onClick={() => setShowAvailability(!showAvailability)}
+            variant="outline"
+            size="sm"
+            className="rounded-full"
+          >
+            <Eye className="w-4 h-4 mr-1" />
+            Team Availability
+          </Button>
+          <Button
+            onClick={() => setDialogOpen(true)}
+            className="bg-[#1a9c5b] hover:bg-[#158a4e] rounded-full"
+            size="sm"
+          >
+            <Plus className="w-4 h-4 mr-1" />
+            New Request
+          </Button>
+        </div>
       </div>
+
+      {/* Team Availability View */}
+      {showAvailability && (
+        <div className="space-y-3">
+          <div className="grid grid-cols-2 gap-3">
+            <div>
+              <label className="text-xs font-semibold text-gray-700">Start Date</label>
+              <input
+                type="date"
+                value={availabilityRange.start}
+                onChange={(e) =>
+                  setAvailabilityRange({ ...availabilityRange, start: e.target.value })
+                }
+                className="w-full mt-1 px-3 py-2 border border-gray-200 rounded-lg text-sm"
+              />
+            </div>
+            <div>
+              <label className="text-xs font-semibold text-gray-700">End Date</label>
+              <input
+                type="date"
+                value={availabilityRange.end}
+                onChange={(e) =>
+                  setAvailabilityRange({ ...availabilityRange, end: e.target.value })
+                }
+                className="w-full mt-1 px-3 py-2 border border-gray-200 rounded-lg text-sm"
+              />
+            </div>
+          </div>
+          <TeamAvailabilityView
+            requests={requests}
+            employees={employees}
+            dateRange={availabilityRange}
+          />
+        </div>
+      )}
 
       {/* Requests List */}
       <div className="space-y-3">
@@ -189,68 +227,13 @@ export default function TimeOff() {
       </div>
 
       {/* Create Dialog */}
-      <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
-        <DialogContent className="sm:max-w-md">
-          <DialogHeader>
-            <DialogTitle>New Time Off Request</DialogTitle>
-          </DialogHeader>
-          <div className="space-y-4 py-2">
-            <div>
-              <Label className="text-xs">Employee</Label>
-              <Select
-                value={form.employee_id}
-                onValueChange={(v) => setForm({ ...form, employee_id: v })}
-              >
-                <SelectTrigger>
-                  <SelectValue placeholder="Select employee" />
-                </SelectTrigger>
-                <SelectContent>
-                  {employees
-                    .filter((e) => e.status === "active")
-                    .map((e) => (
-                      <SelectItem key={e.id} value={e.id}>
-                        {e.first_name} {e.last_name}
-                      </SelectItem>
-                    ))}
-                </SelectContent>
-              </Select>
-            </div>
-            <div className="grid grid-cols-2 gap-3">
-              <div>
-                <Label className="text-xs">Start Date</Label>
-                <Input
-                  type="date"
-                  value={form.start_date}
-                  onChange={(e) => setForm({ ...form, start_date: e.target.value })}
-                />
-              </div>
-              <div>
-                <Label className="text-xs">End Date</Label>
-                <Input
-                  type="date"
-                  value={form.end_date}
-                  onChange={(e) => setForm({ ...form, end_date: e.target.value })}
-                />
-              </div>
-            </div>
-            <div>
-              <Label className="text-xs">Reason</Label>
-              <Textarea
-                value={form.reason}
-                onChange={(e) => setForm({ ...form, reason: e.target.value })}
-                placeholder="Optional reason..."
-                rows={2}
-              />
-            </div>
-          </div>
-          <DialogFooter>
-            <Button variant="outline" onClick={() => setDialogOpen(false)}>Cancel</Button>
-            <Button onClick={handleCreate} className="bg-[#1a9c5b] hover:bg-[#158a4e] rounded-full">
-              Submit Request
-            </Button>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
+      <TimeOffDialog
+        open={dialogOpen}
+        onOpenChange={setDialogOpen}
+        employees={employees}
+        onSubmit={handleSubmit}
+        isLoading={createRequest.isPending}
+      />
     </div>
   );
 }
