@@ -151,15 +151,15 @@ export default function Settings() {
             </Card>
           ))}
 
-          <Card className="p-5 border-0 shadow-sm border-l-4 border-l-cyan-500">
-            <h3 className="font-semibold text-sm text-slate-900 mb-2">Manual Scan</h3>
-            <p className="text-xs text-slate-500 mb-4">Run a full scan immediately to detect understaffing, conflicts, and cert expiry issues.</p>
+          <Card className="p-6 border-2 border-[#1a9c5b]/20 shadow-none rounded-2xl bg-[#1a9c5b]/5">
+            <h3 className="font-bold text-gray-900 text-lg mb-2">Manual Scan</h3>
+            <p className="text-sm text-gray-500 mb-5">Run a full scan immediately to detect understaffing, conflicts, and cert expiry issues.</p>
             {testResult && (
-              <div className="mb-4 p-3 bg-emerald-50 rounded-lg border border-emerald-200 text-xs text-emerald-800">
+              <div className="mb-5 p-4 bg-white rounded-xl border border-[#1a9c5b]/30 text-sm text-[#1a9c5b] font-medium">
                 ✅ Scan complete: {testResult.alerts_created} alert(s) created · {testResult.reminders_sent} reminder(s) sent
               </div>
             )}
-            <Button size="sm" className="bg-cyan-600 hover:bg-cyan-700" onClick={handleTestScan} disabled={testing}>
+            <Button size="sm" className="bg-[#1a9c5b] hover:bg-[#158a4e] rounded-full" onClick={handleTestScan} disabled={testing}>
               {testing ? "Scanning..." : "Run Full Scan Now"}
             </Button>
           </Card>
