@@ -1,0 +1,192 @@
+import React, { useState } from "react";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { base44 } from "@/api/base44Client";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Badge } from "@/components/ui/badge";
+import { Card } from "@/components/ui/card";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { Plus, Search, MoreHorizontal, Pencil, Trash2, Phone, Mail } from "lucide-react";
+import { motion } from "framer-motion";
+import EmployeeDialog from "@/components/employees/EmployeeDialog";
+
+const roleLabels = {
+  lifeguard: "Lifeguard",
+  head_lifeguard: "Head Lifeguard",
+  supervisor: "Supervisor",
+  manager: "Manager",
+};
+
+const statusStyles = {
+  active: "bg-emerald-100 text-emerald-700",
+  inactive: "bg-slate-100 text-slate-500",
+  on_leave: "bg-amber-100 text-amber-700",
+};
+
+export default function Employees() {
+  const queryClient = useQueryClient();
+  const [search, setSearch] = useState("");
+  const [dialogOpen, setDialogOpen] = useState(false);
+  const [editingEmployee, setEditingEmployee] = useState(null);
+
+  const { data: employees = [], isLoading } = useQuery({
+    queryKey: ["employees"],
+    queryFn: () => base44.entities.Employee.list(),
+  });
+
+  const createEmployee = useMutation({
+    mutationFn: (data) => base44.entities.Employee.create(data),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["employees"] });
+      setDialogOpen(false);
+    },
+  });
+
+  const updateEmployee = useMutation({
+    mutationFn: ({ id, data }) => base44.entities.Employee.update(id, data),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["employees"] });
+      setDialogOpen(false);
+    },
+  });
+
+  const deleteEmployee = useMutation({
+    mutationFn: (id) => base44.entities.Employee.delete(id),
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: ["employees"] }),
+  });
+
+  const handleSave = (formData) => {
+    if (editingEmployee) {
+      updateEmployee.mutate({ id: editingEmployee.id, data: formData });
+    } else {
+      createEmployee.mutate(formData);
+    }
+  };
+
+  const filtered = employees.filter(
+    (e) =>
+      `${e.first_name} ${e.last_name} ${e.email} ${e.role}`
+        .toLowerCase()
+        .includes(search.toLowerCase())
+  );
+
+  return (
+    <div className="p-4 lg:p-6 space-y-5 max-w-7xl mx-auto">
+      {/* Toolbar */}
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+        <div className="relative w-full sm:w-72">
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
+          <Input
+            placeholder="Search employees..."
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            className="pl-9 h-9 bg-white"
+          />
+        </div>
+        <Button
+          onClick={() => {
+            setEditingEmployee(null);
+            setDialogOpen(true);
+          }}
+          className="bg-cyan-600 hover:bg-cyan-700"
+          size="sm"
+        >
+          <Plus className="w-4 h-4 mr-1" />
+          Add Employee
+        </Button>
+      </div>
+
+      {/* Grid */}
+      <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        {filtered.map((emp, i) => (
+          <motion.div
+            key={emp.id}
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: i * 0.03 }}
+          >
+            <Card className="p-4 border-0 shadow-sm hover:shadow-md transition-shadow group">
+              <div className="flex items-start justify-between">
+                <div className="flex items-center gap-3">
+                  <div
+                    className="w-10 h-10 rounded-xl flex items-center justify-center text-white font-bold text-sm shadow-sm"
+                    style={{ backgroundColor: emp.color || "#0ea5e9" }}
+                  >
+                    {(emp.first_name?.[0] || "")}{(emp.last_name?.[0] || "")}
+                  </div>
+                  <div>
+                    <p className="font-semibold text-slate-900 text-sm">
+                      {emp.first_name} {emp.last_name}
+                    </p>
+                    <p className="text-xs text-slate-500">{roleLabels[emp.role] || emp.role}</p>
+                  </div>
+                </div>
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      className="h-7 w-7 opacity-0 group-hover:opacity-100 transition-opacity"
+                    >
+                      <MoreHorizontal className="w-4 h-4" />
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent align="end">
+                    <DropdownMenuItem onClick={() => { setEditingEmployee(emp); setDialogOpen(true); }}>
+                      <Pencil className="w-3.5 h-3.5 mr-2" /> Edit
+                    </DropdownMenuItem>
+                    <DropdownMenuItem
+                      className="text-red-600"
+                      onClick={() => deleteEmployee.mutate(emp.id)}
+                    >
+                      <Trash2 className="w-3.5 h-3.5 mr-2" /> Delete
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              </div>
+              <div className="mt-3 flex items-center gap-2 flex-wrap">
+                <Badge variant="secondary" className={`text-[10px] ${statusStyles[emp.status] || ""}`}>
+                  {emp.status}
+                </Badge>
+                {emp.hourly_rate && (
+                  <Badge variant="outline" className="text-[10px]">${emp.hourly_rate}/hr</Badge>
+                )}
+              </div>
+              <div className="mt-3 space-y-1">
+                {emp.email && (
+                  <div className="flex items-center gap-2 text-xs text-slate-500">
+                    <Mail className="w-3 h-3" /> {emp.email}
+                  </div>
+                )}
+                {emp.phone && (
+                  <div className="flex items-center gap-2 text-xs text-slate-500">
+                    <Phone className="w-3 h-3" /> {emp.phone}
+                  </div>
+                )}
+              </div>
+            </Card>
+          </motion.div>
+        ))}
+      </div>
+
+      {filtered.length === 0 && !isLoading && (
+        <div className="text-center py-16 text-slate-400">
+          <p className="font-medium">No employees found</p>
+          <p className="text-sm mt-1">Add your first team member to get started</p>
+        </div>
+      )}
+
+      <EmployeeDialog
+        open={dialogOpen}
+        onOpenChange={setDialogOpen}
+        employee={editingEmployee}
+        onSave={handleSave}
+      />
+    </div>
+  );
+}
