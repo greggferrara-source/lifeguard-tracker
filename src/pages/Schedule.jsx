@@ -4,10 +4,12 @@ import { base44 } from "@/api/base44Client";
 import { format, startOfWeek, addDays, addWeeks, subWeeks, isSameDay } from "date-fns";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { ChevronLeft, ChevronRight, Plus, CalendarDays, MapPin, Users, AlertTriangle } from "lucide-react";
+import { ChevronLeft, ChevronRight, Plus, CalendarDays, MapPin, Users, AlertTriangle, Repeat, ArrowLeftRight } from "lucide-react";
 import ScheduleGrid from "@/components/schedule/ScheduleGrid";
 import EmployeeView from "@/components/schedule/EmployeeView";
 import ShiftDialog from "@/components/schedule/ShiftDialog";
+import RecurringShiftDialog from "@/components/schedule/RecurringShiftDialog";
+import ShiftSwapDialog from "@/components/schedule/ShiftSwapDialog";
 
 export default function Schedule() {
   const queryClient = useQueryClient();
