@@ -42,6 +42,23 @@ export default function Employees() {
     queryFn: () => base44.entities.Employee.list(),
   });
 
+  const { data: availabilities = [] } = useQuery({
+    queryKey: ["availabilities"],
+    queryFn: () => base44.entities.EmployeeAvailability.list(),
+  });
+
+  const saveAvailability = useMutation({
+    mutationFn: async (data) => {
+      const existing = availabilities.find(a => a.employee_id === data.employee_id);
+      if (existing) return base44.entities.EmployeeAvailability.update(existing.id, data);
+      return base44.entities.EmployeeAvailability.create(data);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["availabilities"] });
+      setAvailDialogOpen(false);
+    },
+  });
+
   const createEmployee = useMutation({
     mutationFn: (data) => base44.entities.Employee.create(data),
     onSuccess: () => {
