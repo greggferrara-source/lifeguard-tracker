@@ -150,9 +150,16 @@ export default function ShiftSwaps() {
 
   return (
     <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-14 space-y-8">
-      <div>
-        <h1 className="text-5xl font-extrabold text-gray-900 tracking-tight">Shift Swaps</h1>
-        <p className="text-gray-400 mt-2 text-lg">Manage shift swap requests and approvals</p>
+      <div className="flex items-start justify-between gap-4 flex-wrap">
+        <div>
+          <h1 className="text-5xl font-extrabold text-gray-900 tracking-tight">Shift Swaps</h1>
+          <p className="text-gray-400 mt-2 text-lg">Manage shift swap requests and approvals</p>
+        </div>
+        {myEmployee && (
+          <Button className="bg-[#1a9c5b] hover:bg-[#158a4e] gap-2" onClick={() => setRequestDialogOpen(true)}>
+            <Plus className="w-4 h-4" /> Request Swap
+          </Button>
+        )}
       </div>
 
       <Tabs value={tab} onValueChange={setTab}>
