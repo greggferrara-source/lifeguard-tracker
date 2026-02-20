@@ -70,6 +70,25 @@ const moreNavItems = [
 
 export default function Layout({ children, currentPageName }) {
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth < 768);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  // Map regular pages to mobile pages
+  const mobilePageMap = {
+    "Schedule": "MobileSchedule",
+    "Employees": "MobileEmployees",
+    "TimeOff": "MobileTimeOff",
+  };
+
+  // Redirect to mobile page if on mobile
+  if (isMobile && mobilePageMap[currentPageName]) {
+    return <MobileLayout currentPageName={currentPageName}>{children}</MobileLayout>;
+  }
 
   const { data: alerts = [] } = useQuery({
     queryKey: ["alerts"],
