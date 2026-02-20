@@ -23,8 +23,8 @@ import {
   Play,
   MoreVertical,
   Zap,
-  CreditCard,
-} from "lucide-react";
+  CreditCard } from
+"lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -32,41 +32,41 @@ import {
   DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuLabel,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+  DropdownMenuTrigger } from
+"@/components/ui/dropdown-menu";
 import { useQuery } from "@tanstack/react-query";
 import { base44 } from "@/api/base44Client";
 
 const primaryNavItems = [
-  { name: "Schedule", icon: CalendarDays, page: "Schedule" },
-  { name: "Employees", icon: Users, page: "Employees" },
-  { name: "Locations", icon: MapPin, page: "Locations" },
-];
+{ name: "Schedule", icon: CalendarDays, page: "Schedule" },
+{ name: "Employees", icon: Users, page: "Employees" },
+{ name: "Locations", icon: MapPin, page: "Locations" }];
+
 
 const moreNavItems = [
-  { name: "Dashboard", icon: LayoutDashboard, page: "Dashboard" },
-  { name: "Employee Hub", icon: LayoutDashboard, page: "EmployeeDashboard", submenu: [
-    { name: "My Availability", icon: Clock, page: "MyAvailability" },
-    { name: "Time Off", icon: Clock, page: "TimeOff" },
-    { name: "Shift Swaps", icon: ArrowLeftRight, page: "ShiftSwaps", badge: "swaps" },
-    { name: "Onboarding", icon: Users, page: "EmployeeOnboarding" },
-  ]},
-  { name: "Setup Wizard", icon: Users, page: "SetupWizard" },
-  { name: "Onboarding Dashboard", icon: Users, page: "OnboardingDashboard" },
-  { name: "Employee Directory", icon: Users, page: "EmployeeDirectory" },
-  { name: "Billing", icon: CreditCard, page: "BillingDashboard" },
-  { name: "Certifications", icon: Shield, page: "Certifications" },
-  { name: "Assignments", icon: BarChart2, page: "Assignments" },
-  { name: "Chemical Logs", icon: BarChart2, page: "ChemicalLogs" },
-  { name: "Maintenance", icon: BarChart2, page: "MaintenanceReports" },
-  { name: "Patron Counts", icon: Users, page: "PatronCounts" },
-  { name: "Inspections", icon: BarChart2, page: "Inspections" },
-  { name: "Alerts", icon: AlertTriangle, page: "Alerts", badge: "alerts" },
-  { name: "Reports", icon: BarChart2, page: "Reports" },
-  { name: "Pricing & Plans", icon: Zap, page: "Pricing" },
-  { name: "Notifications", icon: MessageSquare, page: "Notifications" },
-  { name: "Settings", icon: Settings, page: "Settings" },
-];
+{ name: "Dashboard", icon: LayoutDashboard, page: "Dashboard" },
+{ name: "Employee Hub", icon: LayoutDashboard, page: "EmployeeDashboard", submenu: [
+  { name: "My Availability", icon: Clock, page: "MyAvailability" },
+  { name: "Time Off", icon: Clock, page: "TimeOff" },
+  { name: "Shift Swaps", icon: ArrowLeftRight, page: "ShiftSwaps", badge: "swaps" },
+  { name: "Onboarding", icon: Users, page: "EmployeeOnboarding" }]
+},
+{ name: "Setup Wizard", icon: Users, page: "SetupWizard" },
+{ name: "Onboarding Dashboard", icon: Users, page: "OnboardingDashboard" },
+{ name: "Employee Directory", icon: Users, page: "EmployeeDirectory" },
+{ name: "Billing", icon: CreditCard, page: "BillingDashboard" },
+{ name: "Certifications", icon: Shield, page: "Certifications" },
+{ name: "Assignments", icon: BarChart2, page: "Assignments" },
+{ name: "Chemical Logs", icon: BarChart2, page: "ChemicalLogs" },
+{ name: "Maintenance", icon: BarChart2, page: "MaintenanceReports" },
+{ name: "Patron Counts", icon: Users, page: "PatronCounts" },
+{ name: "Inspections", icon: BarChart2, page: "Inspections" },
+{ name: "Alerts", icon: AlertTriangle, page: "Alerts", badge: "alerts" },
+{ name: "Reports", icon: BarChart2, page: "Reports" },
+{ name: "Pricing & Plans", icon: Zap, page: "Pricing" },
+{ name: "Notifications", icon: MessageSquare, page: "Notifications" },
+{ name: "Settings", icon: Settings, page: "Settings" }];
+
 
 export default function Layout({ children, currentPageName }) {
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -82,7 +82,7 @@ export default function Layout({ children, currentPageName }) {
   const mobilePageMap = {
     "Schedule": "MobileSchedule",
     "Employees": "MobileEmployees",
-    "TimeOff": "MobileTimeOff",
+    "TimeOff": "MobileTimeOff"
   };
 
   // Redirect to mobile page if on mobile
@@ -93,15 +93,15 @@ export default function Layout({ children, currentPageName }) {
   const { data: alerts = [] } = useQuery({
     queryKey: ["alerts"],
     queryFn: () => base44.entities.Alert.list("-created_date", 100),
-    refetchInterval: 60000,
+    refetchInterval: 60000
   });
   const { data: swapRequests = [] } = useQuery({
     queryKey: ["shift-swaps"],
     queryFn: () => base44.entities.ShiftSwapRequest.list("-created_date", 100),
-    refetchInterval: 60000,
+    refetchInterval: 60000
   });
-  const unresolvedAlerts = alerts.filter(a => !a.resolved).length;
-  const pendingSwaps = swapRequests.filter(s => s.status === "pending_employee" || s.status === "pending_manager").length;
+  const unresolvedAlerts = alerts.filter((a) => !a.resolved).length;
+  const pendingSwaps = swapRequests.filter((s) => s.status === "pending_employee" || s.status === "pending_manager").length;
 
   return (
     <div className="min-h-screen bg-white" style={{ fontFamily: "'Inter', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', sans-serif" }}>
@@ -123,28 +123,28 @@ export default function Layout({ children, currentPageName }) {
               <div className="w-10 h-10 rounded-lg bg-[#1a9c5b] flex items-center justify-center">
                 <Shield className="w-5 h-5 text-white" />
               </div>
-              <span className="font-bold text-xl text-gray-900">LifeGuard Tracker</span>
+              <span className="font-bold text-xl text-gray-900">LifeGuard Tracker
+              </span>
             </Link>
 
             {/* Desktop Nav */}
             <nav className="hidden lg:flex items-center gap-1">
-              {primaryNavItems.map((item) => {
-                const isActive = currentPageName === item.page;
-                return (
-                  <Link
-                    key={item.page}
-                    to={createPageUrl(item.page)}
-                    className={`relative flex items-center gap-2 px-4 py-2.5 rounded-lg text-sm font-medium transition-colors ${
-                      isActive
-                        ? "text-[#1a9c5b] bg-[#f0faf5]"
-                        : "text-gray-700 hover:text-gray-900"
-                    }`}
-                  >
+              {primaryNavItems.map((item) => {const isActive = currentPageName === item.page;
+                  return (
+                    <Link
+                      key={item.page}
+                      to={createPageUrl(item.page)}
+                      className={`relative flex items-center gap-2 px-4 py-2.5 rounded-lg text-sm font-medium transition-colors ${
+                      isActive ?
+                      "text-[#1a9c5b] bg-[#f0faf5]" :
+                      "text-gray-700 hover:text-gray-900"}`
+                      }>
+
                     <item.icon className="w-4 h-4" />
                     {item.name}
-                  </Link>
-                );
-              })}
+                  </Link>);
+
+                })}
 
               {/* More Menu */}
               <DropdownMenu>
@@ -152,48 +152,48 @@ export default function Layout({ children, currentPageName }) {
                   <Button variant="ghost" className="text-gray-700 hover:text-gray-900 gap-1 text-sm font-medium px-4 py-2.5">
                     <MoreVertical className="w-4 h-4" />
                     More
-                    {(unresolvedAlerts > 0 || pendingSwaps > 0) && (
-                      <span className="ml-1 bg-red-500 text-white text-xs font-bold rounded-full w-4 h-4 flex items-center justify-center">
+                    {(unresolvedAlerts > 0 || pendingSwaps > 0) &&
+                    <span className="ml-1 bg-red-500 text-white text-xs font-bold rounded-full w-4 h-4 flex items-center justify-center">
                         {unresolvedAlerts + pendingSwaps > 9 ? "9+" : unresolvedAlerts + pendingSwaps}
                       </span>
-                    )}
+                    }
                   </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end" className="w-56">
-                  {moreNavItems.map((item) => (
-                    <React.Fragment key={item.page}>
-                      {item.submenu ? (
-                        <>
+                  {moreNavItems.map((item) =>
+                  <React.Fragment key={item.page}>
+                      {item.submenu ?
+                    <>
                           <DropdownMenuLabel className="flex items-center gap-2 px-2 py-1.5">
                             <item.icon className="w-4 h-4" />
                             <span>{item.name}</span>
                           </DropdownMenuLabel>
-                          {item.submenu.map((subitem) => (
-                            <DropdownMenuItem key={subitem.page} asChild>
+                          {item.submenu.map((subitem) =>
+                      <DropdownMenuItem key={subitem.page} asChild>
                               <Link to={createPageUrl(subitem.page)} className="flex items-center gap-2 ml-2">
                                 <subitem.icon className="w-4 h-4" />
                                 <span>{subitem.name}</span>
-                                {subitem.badge === "swaps" && pendingSwaps > 0 && (
-                                  <span className="ml-auto bg-orange-500 text-white text-xs font-bold rounded-full px-1.5">{pendingSwaps}</span>
-                                )}
+                                {subitem.badge === "swaps" && pendingSwaps > 0 &&
+                          <span className="ml-auto bg-orange-500 text-white text-xs font-bold rounded-full px-1.5">{pendingSwaps}</span>
+                          }
                               </Link>
                             </DropdownMenuItem>
-                          ))}
+                      )}
                           <DropdownMenuSeparator />
-                        </>
-                      ) : (
-                        <DropdownMenuItem asChild>
+                        </> :
+
+                    <DropdownMenuItem asChild>
                           <Link to={createPageUrl(item.page)} className="flex items-center gap-2">
                             <item.icon className="w-4 h-4" />
                             <span>{item.name}</span>
-                            {item.badge === "alerts" && unresolvedAlerts > 0 && (
-                              <span className="ml-auto bg-red-500 text-white text-xs font-bold rounded-full px-1.5">{unresolvedAlerts}</span>
-                            )}
+                            {item.badge === "alerts" && unresolvedAlerts > 0 &&
+                        <span className="ml-auto bg-red-500 text-white text-xs font-bold rounded-full px-1.5">{unresolvedAlerts}</span>
+                        }
                           </Link>
                         </DropdownMenuItem>
-                      )}
+                    }
                     </React.Fragment>
-                  ))}
+                  )}
                   <DropdownMenuSeparator />
                   <DropdownMenuLabel className="text-xs font-semibold text-gray-500">Help & Info</DropdownMenuLabel>
                   <DropdownMenuItem asChild>
@@ -223,61 +223,61 @@ export default function Layout({ children, currentPageName }) {
               variant="ghost"
               size="icon"
               className="lg:hidden text-gray-700"
-              onClick={() => setMobileOpen(!mobileOpen)}
-            >
+              onClick={() => setMobileOpen(!mobileOpen)}>
+
               {mobileOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
             </Button>
           </div>
         </div>
 
         {/* Mobile Nav */}
-        {mobileOpen && (
-          <div className="lg:hidden border-t border-gray-200 bg-white px-6 py-4 space-y-2">
+        {mobileOpen &&
+        <div className="lg:hidden border-t border-gray-200 bg-white px-6 py-4 space-y-2">
             {[...primaryNavItems, ...moreNavItems].map((item) => {
-              const isActive = currentPageName === item.page;
-              return (
-                <React.Fragment key={item.page}>
-                  {item.submenu ? (
-                    <>
+            const isActive = currentPageName === item.page;
+            return (
+              <React.Fragment key={item.page}>
+                  {item.submenu ?
+                <>
                       <div className={`flex items-center gap-3 px-4 py-2.5 rounded-lg text-sm font-medium text-gray-700`}>
                         <item.icon className="w-4 h-4" />
                         {item.name}
                       </div>
-                      {item.submenu.map((subitem) => (
-                        <Link
-                          key={subitem.page}
-                          to={createPageUrl(subitem.page)}
-                          onClick={() => setMobileOpen(false)}
-                          className="flex items-center gap-3 px-8 py-2.5 rounded-lg text-sm text-gray-700 hover:bg-gray-50"
-                        >
+                      {item.submenu.map((subitem) =>
+                  <Link
+                    key={subitem.page}
+                    to={createPageUrl(subitem.page)}
+                    onClick={() => setMobileOpen(false)}
+                    className="flex items-center gap-3 px-8 py-2.5 rounded-lg text-sm text-gray-700 hover:bg-gray-50">
+
                           <subitem.icon className="w-4 h-4" />
                           {subitem.name}
-                          {subitem.badge === "swaps" && pendingSwaps > 0 && (
-                            <span className="ml-auto bg-orange-500 text-white text-xs font-bold rounded-full px-2">{pendingSwaps}</span>
-                          )}
+                          {subitem.badge === "swaps" && pendingSwaps > 0 &&
+                    <span className="ml-auto bg-orange-500 text-white text-xs font-bold rounded-full px-2">{pendingSwaps}</span>
+                    }
                         </Link>
-                      ))}
-                    </>
-                  ) : (
-                    <Link
-                      to={createPageUrl(item.page)}
-                      onClick={() => setMobileOpen(false)}
-                      className={`flex items-center gap-3 px-4 py-2.5 rounded-lg text-sm font-medium transition-colors ${
-                        isActive
-                          ? "text-[#1a9c5b] bg-[#f0faf5]"
-                          : "text-gray-700 hover:text-gray-900"
-                      }`}
-                    >
+                  )}
+                    </> :
+
+                <Link
+                  to={createPageUrl(item.page)}
+                  onClick={() => setMobileOpen(false)}
+                  className={`flex items-center gap-3 px-4 py-2.5 rounded-lg text-sm font-medium transition-colors ${
+                  isActive ?
+                  "text-[#1a9c5b] bg-[#f0faf5]" :
+                  "text-gray-700 hover:text-gray-900"}`
+                  }>
+
                       <item.icon className="w-4 h-4" />
                       {item.name}
-                      {item.badge === "alerts" && unresolvedAlerts > 0 && (
-                        <span className="ml-auto bg-red-500 text-white text-xs font-bold rounded-full px-2">{unresolvedAlerts}</span>
-                      )}
+                      {item.badge === "alerts" && unresolvedAlerts > 0 &&
+                  <span className="ml-auto bg-red-500 text-white text-xs font-bold rounded-full px-2">{unresolvedAlerts}</span>
+                  }
                     </Link>
-                  )}
-                </React.Fragment>
-              );
-            })}
+                }
+                </React.Fragment>);
+
+          })}
             <div className="border-t border-gray-200 pt-2 mt-2">
               <DropdownMenuLabel className="text-xs font-semibold text-gray-500 px-4">Help & Info</DropdownMenuLabel>
               <Link to={createPageUrl("Docs")} onClick={() => setMobileOpen(false)} className="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 rounded-lg">
@@ -302,13 +302,13 @@ export default function Layout({ children, currentPageName }) {
               </Link>
             </div>
           </div>
-        )}
+        }
       </header>
 
       {/* Page Content */}
       <main className="bg-white">
         {children}
       </main>
-    </div>
-  );
+    </div>);
+
 }
