@@ -35,6 +35,7 @@ const plans = [
     name: "Pro",
     priceKey: "pro",
     price: { monthly: 129, annual: 99 },
+    yearlyDiscount: 23,
     description: "For growing aquatic programs with multiple areas.",
     badge: "Most Popular",
     color: "border-[#1a9c5b]",
