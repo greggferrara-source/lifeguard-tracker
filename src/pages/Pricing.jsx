@@ -177,8 +177,8 @@ export default function Pricing() {
                   ${annual ? plan.price.annual : plan.price.monthly}
                 </span>
                 <span className="text-gray-400 ml-1">/month</span>
-                {annual && (
-                  <p className="text-xs text-[#1a9c5b] mt-1 font-medium">Billed annually · save ${(plan.price.monthly - plan.price.annual) * 12}/yr</p>
+                {annual && plan.yearlyDiscount && (
+                  <p className="text-xs text-[#1a9c5b] mt-1 font-medium">Billed annually · save {plan.yearlyDiscount}%</p>
                 )}
               </div>
 
