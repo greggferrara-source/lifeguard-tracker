@@ -31,7 +31,7 @@ export default function MobileLayout({ children, currentPageName }) {
             <div className="w-8 h-8 rounded-lg bg-[#1a9c5b] flex items-center justify-center">
               <span className="text-white font-bold text-sm">SG</span>
             </div>
-            <span className="font-bold text-sm text-gray-900">ShiftGuard</span>
+            <span className="font-bold text-sm text-gray-900">LifeGuard Tracker</span>
           </Link>
           <Button
             variant="ghost"
