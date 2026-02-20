@@ -95,6 +95,11 @@ export default function Layout({ children, currentPageName }) {
     return <MobileLayout currentPageName={currentPageName}>{children}</MobileLayout>;
   }
 
+  const { data: user } = useQuery({
+    queryKey: ["user"],
+    queryFn: () => base44.auth.me()
+  });
+
   const { data: alerts = [] } = useQuery({
     queryKey: ["alerts"],
     queryFn: () => base44.entities.Alert.list("-created_date", 100),
@@ -105,8 +110,15 @@ export default function Layout({ children, currentPageName }) {
     queryFn: () => base44.entities.ShiftSwapRequest.list("-created_date", 100),
     refetchInterval: 60000
   });
+  const { data: notifications = [] } = useQuery({
+    queryKey: ["notifications"],
+    queryFn: () => base44.entities.Notification.list("-created_date", 100),
+    refetchInterval: 30000
+  });
+  
   const unresolvedAlerts = alerts.filter((a) => !a.resolved).length;
   const pendingSwaps = swapRequests.filter((s) => s.status === "pending_employee" || s.status === "pending_manager").length;
+  const unreadNotifications = notifications.filter((n) => n.user_email === user?.email && !n.read).length;
 
   return (
     <div className="min-h-screen bg-white" style={{ fontFamily: "'Inter', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', sans-serif" }}>
