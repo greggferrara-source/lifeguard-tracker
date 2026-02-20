@@ -65,6 +65,12 @@ import Privacy from './pages/Privacy';
 import Contact from './pages/Contact';
 import Docs from './pages/Docs';
 import Tutorials from './pages/Tutorials';
+import EmployeeDashboard from './pages/EmployeeDashboard';
+import ChemicalLogs from './pages/ChemicalLogs';
+import MaintenanceReports from './pages/MaintenanceReports';
+import PatronCounts from './pages/PatronCounts';
+import Assignments from './pages/Assignments';
+import Inspections from './pages/Inspections';
 import __Layout from './Layout.jsx';
 
 
@@ -87,6 +93,12 @@ export const PAGES = {
     "Contact": Contact,
     "Docs": Docs,
     "Tutorials": Tutorials,
+    "EmployeeDashboard": EmployeeDashboard,
+    "ChemicalLogs": ChemicalLogs,
+    "MaintenanceReports": MaintenanceReports,
+    "PatronCounts": PatronCounts,
+    "Assignments": Assignments,
+    "Inspections": Inspections,
 }
 
 export const pagesConfig = {
