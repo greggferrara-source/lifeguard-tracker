@@ -250,6 +250,76 @@ export default function ShiftSwaps() {
         })}
       </div>
 
+      {/* Employee: Request Swap Dialog */}
+      <Dialog open={requestDialogOpen} onOpenChange={setRequestDialogOpen}>
+        <DialogContent className="sm:max-w-md">
+          <DialogHeader>
+            <DialogTitle className="flex items-center gap-2"><ArrowLeftRight className="w-4 h-4" /> Request Shift Swap</DialogTitle>
+          </DialogHeader>
+          <div className="space-y-4 py-2">
+            <div>
+              <Label className="text-xs font-semibold text-slate-500 uppercase tracking-wide">Your Shift</Label>
+              <Select value={reqMyShiftId} onValueChange={setReqMyShiftId}>
+                <SelectTrigger className="mt-1">
+                  <SelectValue placeholder="Choose one of your upcoming shifts…" />
+                </SelectTrigger>
+                <SelectContent>
+                  {myShifts.map(s => (
+                    <SelectItem key={s.id} value={s.id}>
+                      {s.date} · {s.start_time}–{s.end_time} @ {s.location_name}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+              {myShiftObj && (
+                <div className="mt-2 p-3 bg-blue-50 border border-blue-100 rounded-xl text-xs text-blue-700 space-y-0.5">
+                  <p className="flex items-center gap-1"><Calendar className="w-3 h-3" /> {myShiftObj.date}</p>
+                  <p className="flex items-center gap-1"><Clock className="w-3 h-3" /> {myShiftObj.start_time}–{myShiftObj.end_time}</p>
+                  <p className="flex items-center gap-1"><MapPin className="w-3 h-3" /> {myShiftObj.location_name}</p>
+                </div>
+              )}
+            </div>
+            <div>
+              <Label className="text-xs font-semibold text-slate-700">Swap With</Label>
+              <Select value={reqTargetShiftId} onValueChange={setReqTargetShiftId}>
+                <SelectTrigger className="mt-1">
+                  <SelectValue placeholder="Choose a shift to swap with…" />
+                </SelectTrigger>
+                <SelectContent className="max-h-64">
+                  {otherShifts.map(s => {
+                    const emp = empMap[s.employee_id];
+                    return (
+                      <SelectItem key={s.id} value={s.id}>
+                        <span className="font-medium">{emp ? `${emp.first_name} ${emp.last_name}` : "?"}</span>
+                        <span className="text-slate-500 ml-2">{s.date} {s.start_time}–{s.end_time} @ {s.location_name}</span>
+                      </SelectItem>
+                    );
+                  })}
+                </SelectContent>
+              </Select>
+              {targetShiftObj && (
+                <div className="mt-2 p-3 bg-green-50 border border-green-100 rounded-xl text-xs text-green-700 space-y-0.5">
+                  <p className="font-semibold text-green-900">{targetEmp ? `${targetEmp.first_name} ${targetEmp.last_name}` : ""}</p>
+                  <p className="flex items-center gap-1"><Calendar className="w-3 h-3" /> {targetShiftObj.date}</p>
+                  <p className="flex items-center gap-1"><Clock className="w-3 h-3" /> {targetShiftObj.start_time}–{targetShiftObj.end_time}</p>
+                  <p className="flex items-center gap-1"><MapPin className="w-3 h-3" /> {targetShiftObj.location_name}</p>
+                </div>
+              )}
+            </div>
+            <div>
+              <Label className="text-xs font-semibold text-slate-700">Message (optional)</Label>
+              <Textarea value={reqMessage} onChange={e => setReqMessage(e.target.value)} placeholder="Explain why you'd like to swap…" rows={2} className="mt-1" />
+            </div>
+          </div>
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setRequestDialogOpen(false)}>Cancel</Button>
+            <Button disabled={!reqMyShiftId || !reqTargetShiftId || createSwap.isPending} onClick={handleRequestSubmit} className="bg-[#1a9c5b] hover:bg-[#158a4e]">
+              Send Swap Request
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
       {/* Manager approval dialog */}
       <Dialog open={managerDialogOpen} onOpenChange={setManagerDialogOpen}>
         <DialogContent className="sm:max-w-md">
