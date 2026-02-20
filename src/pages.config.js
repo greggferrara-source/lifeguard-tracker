@@ -74,6 +74,7 @@ import Terms from './pages/Terms';
 import TimeOff from './pages/TimeOff';
 import Tutorials from './pages/Tutorials';
 import SetupWizard from './pages/SetupWizard';
+import BillingDashboard from './pages/BillingDashboard';
 import __Layout from './Layout.jsx';
 
 
@@ -105,6 +106,7 @@ export const PAGES = {
     "TimeOff": TimeOff,
     "Tutorials": Tutorials,
     "SetupWizard": SetupWizard,
+    "BillingDashboard": BillingDashboard,
 }
 
 export const pagesConfig = {
