@@ -16,17 +16,17 @@ export default function Terms() {
 
         <section className="space-y-3">
           <h2 className="text-xl font-semibold text-gray-900">1. Acceptance of Terms</h2>
-          <p>By accessing or using ShiftGuard ("the Service"), you agree to be bound by these Terms of Service. If you do not agree to these terms, you may not use the Service. These terms apply to all users, including administrators, managers, and employees.</p>
+          <p>By accessing or using LifeGuard Tracker ("the Service"), you agree to be bound by these Terms of Service. If you do not agree to these terms, you may not use the Service. These terms apply to all users, including administrators, managers, and employees.</p>
         </section>
 
         <section className="space-y-3">
           <h2 className="text-xl font-semibold text-gray-900">2. Description of Service</h2>
-          <p>ShiftGuard is a workforce management platform designed for aquatic and outdoor recreation facilities. The Service provides tools for employee scheduling, shift management, time-off tracking, onboarding, and related workforce operations.</p>
+          <p>LifeGuard Tracker is a workforce management platform designed for aquatic and outdoor recreation facilities. The Service provides tools for employee scheduling, shift management, time-off tracking, onboarding, and related workforce operations.</p>
         </section>
 
         <section className="space-y-3">
           <h2 className="text-xl font-semibold text-gray-900">3. Account Responsibilities</h2>
-          <p>You are responsible for maintaining the confidentiality of your account credentials. You agree to notify us immediately of any unauthorized use of your account. ShiftGuard is not liable for any loss resulting from unauthorized access to your account.</p>
+          <p>You are responsible for maintaining the confidentiality of your account credentials. You agree to notify us immediately of any unauthorized use of your account. LifeGuard Tracker is not liable for any loss resulting from unauthorized access to your account.</p>
           <p>Administrators are responsible for managing employee access levels and ensuring that user permissions are appropriately assigned within their organization.</p>
         </section>
 
@@ -44,7 +44,7 @@ export default function Terms() {
 
         <section className="space-y-3">
           <h2 className="text-xl font-semibold text-gray-900">5. Employee Data</h2>
-          <p>Organizations using ShiftGuard are responsible for obtaining appropriate consent from their employees before inputting personal data into the platform. This includes but is not limited to contact information, certifications, availability, and scheduling data.</p>
+          <p>Organizations using LifeGuard Tracker are responsible for obtaining appropriate consent from their employees before inputting personal data into the platform. This includes but is not limited to contact information, certifications, availability, and scheduling data.</p>
         </section>
 
         <section className="space-y-3">
@@ -54,7 +54,7 @@ export default function Terms() {
 
         <section className="space-y-3">
           <h2 className="text-xl font-semibold text-gray-900">7. Limitation of Liability</h2>
-          <p>ShiftGuard is provided "as is" without warranties of any kind. To the maximum extent permitted by law, ShiftGuard shall not be liable for any indirect, incidental, or consequential damages arising from your use of the Service, including but not limited to staffing errors, missed shifts, or scheduling conflicts.</p>
+          <p>LifeGuard Tracker is provided "as is" without warranties of any kind. To the maximum extent permitted by law, LifeGuard Tracker shall not be liable for any indirect, incidental, or consequential damages arising from your use of the Service, including but not limited to staffing errors, missed shifts, or scheduling conflicts.</p>
         </section>
 
         <section className="space-y-3">
