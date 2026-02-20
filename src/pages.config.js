@@ -48,57 +48,59 @@
  * The mainPage value must match a key in the PAGES object exactly.
  */
 import Alerts from './pages/Alerts';
+import Assignments from './pages/Assignments';
+import ChemicalLogs from './pages/ChemicalLogs';
+import Contact from './pages/Contact';
 import Dashboard from './pages/Dashboard';
+import Docs from './pages/Docs';
+import EmployeeDashboard from './pages/EmployeeDashboard';
 import EmployeeOnboarding from './pages/EmployeeOnboarding';
 import Employees from './pages/Employees';
+import Inspections from './pages/Inspections';
 import Locations from './pages/Locations';
+import MaintenanceReports from './pages/MaintenanceReports';
 import MyAvailability from './pages/MyAvailability';
 import Notifications from './pages/Notifications';
+import PatronCounts from './pages/PatronCounts';
 import Payroll from './pages/Payroll';
+import Privacy from './pages/Privacy';
 import Reports from './pages/Reports';
 import Schedule from './pages/Schedule';
 import Settings from './pages/Settings';
 import ShiftSwaps from './pages/ShiftSwaps';
-import TimeOff from './pages/TimeOff';
 import Terms from './pages/Terms';
-import Privacy from './pages/Privacy';
-import Contact from './pages/Contact';
-import Docs from './pages/Docs';
+import TimeOff from './pages/TimeOff';
 import Tutorials from './pages/Tutorials';
-import EmployeeDashboard from './pages/EmployeeDashboard';
-import ChemicalLogs from './pages/ChemicalLogs';
-import MaintenanceReports from './pages/MaintenanceReports';
-import PatronCounts from './pages/PatronCounts';
-import Assignments from './pages/Assignments';
-import Inspections from './pages/Inspections';
+import Certifications from './pages/Certifications';
 import __Layout from './Layout.jsx';
 
 
 export const PAGES = {
     "Alerts": Alerts,
+    "Assignments": Assignments,
+    "ChemicalLogs": ChemicalLogs,
+    "Contact": Contact,
     "Dashboard": Dashboard,
+    "Docs": Docs,
+    "EmployeeDashboard": EmployeeDashboard,
     "EmployeeOnboarding": EmployeeOnboarding,
     "Employees": Employees,
+    "Inspections": Inspections,
     "Locations": Locations,
+    "MaintenanceReports": MaintenanceReports,
     "MyAvailability": MyAvailability,
     "Notifications": Notifications,
+    "PatronCounts": PatronCounts,
     "Payroll": Payroll,
+    "Privacy": Privacy,
     "Reports": Reports,
     "Schedule": Schedule,
     "Settings": Settings,
     "ShiftSwaps": ShiftSwaps,
-    "TimeOff": TimeOff,
     "Terms": Terms,
-    "Privacy": Privacy,
-    "Contact": Contact,
-    "Docs": Docs,
+    "TimeOff": TimeOff,
     "Tutorials": Tutorials,
-    "EmployeeDashboard": EmployeeDashboard,
-    "ChemicalLogs": ChemicalLogs,
-    "MaintenanceReports": MaintenanceReports,
-    "PatronCounts": PatronCounts,
-    "Assignments": Assignments,
-    "Inspections": Inspections,
+    "Certifications": Certifications,
 }
 
 export const pagesConfig = {
