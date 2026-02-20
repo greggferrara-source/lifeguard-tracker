@@ -51,6 +51,8 @@ const moreNavItems = [
     { name: "Onboarding", icon: Users, page: "EmployeeOnboarding" },
   ]},
   { name: "Setup Wizard", icon: Users, page: "SetupWizard" },
+  { name: "Onboarding Dashboard", icon: Users, page: "OnboardingDashboard" },
+  { name: "Employee Directory", icon: Users, page: "EmployeeDirectory" },
   { name: "Billing", icon: CreditCard, page: "BillingDashboard" },
   { name: "Certifications", icon: Shield, page: "Certifications" },
   { name: "Assignments", icon: BarChart2, page: "Assignments" },
