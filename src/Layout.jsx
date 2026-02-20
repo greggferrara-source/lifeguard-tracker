@@ -38,6 +38,7 @@ const navItems = [
   { name: "Dashboard", icon: LayoutDashboard, page: "Dashboard" },
   { name: "Schedule", icon: CalendarDays, page: "Schedule" },
   { name: "Employees", icon: Users, page: "Employees" },
+  { name: "Onboarding", icon: Users, page: "EmployeeOnboarding" },
   { name: "Locations", icon: MapPin, page: "Locations" },
   { name: "Time Off", icon: Clock, page: "TimeOff" },
   { name: "My Availability", icon: Clock, page: "MyAvailability" },
