@@ -12,8 +12,8 @@ const tutorials = [
     badge: "bg-green-100 text-green-700",
     videos: [
       {
-        title: "ShiftGuard Overview & Setup",
-        description: "A complete walkthrough of ShiftGuard — from adding your first employee to publishing your first schedule.",
+        title: "LifeGuard Tracker Overview & Setup",
+        description: "A complete walkthrough of LifeGuard Tracker — from adding your first employee to publishing your first schedule.",
         duration: "8 min",
         thumbnail: "https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=600&q=80",
         url: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
@@ -131,7 +131,7 @@ export default function Tutorials() {
       <div>
         <Link to={createPageUrl("Dashboard")} className="text-sm text-[#1a9c5b] hover:underline">← Back to Dashboard</Link>
         <h1 className="text-4xl font-bold text-gray-900 mt-4">Video Tutorials</h1>
-        <p className="text-gray-500 mt-2">{totalVideos} videos to help you get the most out of ShiftGuard</p>
+        <p className="text-gray-500 mt-2">{totalVideos} videos to help you get the most out of LifeGuard Tracker</p>
       </div>
 
       <div className="relative">

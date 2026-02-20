@@ -17,7 +17,7 @@ export default function Contact() {
     e.preventDefault();
     setLoading(true);
     await base44.integrations.Core.SendEmail({
-      to: "support@shiftguard.app",
+      to: "support@lifeguardtracker.app",
       subject: `[Support] ${form.subject}`,
       body: `From: ${form.name} (${form.email})\n\n${form.message}`,
     });
@@ -61,8 +61,8 @@ export default function Contact() {
               <Mail className="w-5 h-5 text-purple-600" />
             </div>
             <p className="font-semibold text-gray-900">Email Support</p>
-            <p className="text-sm text-gray-500">support@shiftguard.app</p>
-            <a href="mailto:support@shiftguard.app" className="text-sm text-[#1a9c5b] hover:underline font-medium">Send Email →</a>
+            <p className="text-sm text-gray-500">support@lifeguardtracker.app</p>
+            <a href="mailto:support@lifeguardtracker.app" className="text-sm text-[#1a9c5b] hover:underline font-medium">Send Email →</a>
           </CardContent>
         </Card>
       </div>
