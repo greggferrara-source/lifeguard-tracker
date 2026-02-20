@@ -142,16 +142,22 @@ export default function Layout({ children, currentPageName }) {
                   <DropdownMenuSeparator />
                   <DropdownMenuLabel className="text-xs font-semibold text-gray-500">Help & Info</DropdownMenuLabel>
                   <DropdownMenuItem asChild>
-                    <a href="https://docs.shiftguard.local" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2">
+                    <Link to={createPageUrl("Docs")} className="flex items-center gap-2">
                       <BookOpen className="w-4 h-4" />
                       <span>Documentation</span>
-                    </a>
+                    </Link>
                   </DropdownMenuItem>
                   <DropdownMenuItem asChild>
-                    <a href="https://shiftguard.local/contact" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2">
+                    <Link to={createPageUrl("Tutorials")} className="flex items-center gap-2">
+                      <Play className="w-4 h-4" />
+                      <span>Video Tutorials</span>
+                    </Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem asChild>
+                    <Link to={createPageUrl("Contact")} className="flex items-center gap-2">
                       <Mail className="w-4 h-4" />
                       <span>Contact Support</span>
-                    </a>
+                    </Link>
                   </DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
