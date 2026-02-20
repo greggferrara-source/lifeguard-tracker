@@ -44,7 +44,9 @@ const primaryNavItems = [
 const moreNavItems = [
   { name: "Dashboard", icon: LayoutDashboard, page: "Dashboard" },
   { name: "Employee Hub", icon: LayoutDashboard, page: "EmployeeDashboard" },
+  { name: "Setup Wizard", icon: Users, page: "SetupWizard" },
   { name: "Onboarding", icon: Users, page: "EmployeeOnboarding" },
+  { name: "Billing", icon: CreditCard, page: "BillingDashboard" },
   { name: "Time Off", icon: Clock, page: "TimeOff" },
   { name: "My Availability", icon: Clock, page: "MyAvailability" },
   { name: "Shift Swaps", icon: ArrowLeftRight, page: "ShiftSwaps", badge: "swaps" },
