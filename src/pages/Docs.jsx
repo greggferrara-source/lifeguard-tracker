@@ -187,6 +187,94 @@ Alerts are only visible to Admin users.`
       },
     ]
   },
+  {
+    section: "Certifications",
+    color: "bg-teal-50 border-teal-200",
+    badge: "bg-teal-100 text-teal-700",
+    articles: [
+      {
+        title: "Uploading Your Certification",
+        content: `Employees can upload their own certifications directly in ShiftGuard.
+
+1. Go to **More → Certifications**
+2. Click **Upload Certification**
+3. Select the certification type (CPR, Lifeguard, First Aid, etc.) or enter a custom name
+4. Enter the issuing organization, issue date, and expiry date
+5. Upload the certificate file (PDF or image)
+6. Click **Submit for Review**
+
+Your certification will appear as **Pending Review** until a manager approves it.`
+      },
+      {
+        title: "Manager: Reviewing Certifications",
+        content: `Managers and admins can review and approve employee certifications.
+
+1. Go to **More → Certifications**
+2. Click the **Pending** tab to see all submissions awaiting review
+3. Click **Review** on any certification
+4. Optionally click **View Certificate File** to inspect the uploaded document
+5. Add notes if needed, then click **Approve** or **Reject**
+
+Employees will see their certification status updated immediately.`
+      },
+      {
+        title: "Expiry Notifications",
+        content: `ShiftGuard automatically sends email reminders for expiring certifications.
+
+- **30-day warning**: Sent to the employee and all managers
+- **7-day urgent warning**: Sent to the employee
+
+You can also see all expiring certs at a glance on the **Expiring** tab in the Certifications page.
+
+The system runs this check daily at 8am and automatically marks certifications as **Expired** once their date passes.`
+      },
+    ]
+  },
+  {
+    section: "Support",
+    color: "bg-slate-50 border-slate-200",
+    badge: "bg-slate-100 text-slate-700",
+    articles: [
+      {
+        title: "Getting Help & Support",
+        content: `ShiftGuard offers multiple ways to get help:
+
+**In-App Support:**
+- Go to **More → Contact Support** to send a message to our team
+- Browse **More → Documentation** (this page) for step-by-step guides
+- Watch **More → Video Tutorials** for visual walkthroughs
+
+**Email Support:**
+- Reach us at support@shiftguard.app
+- Response time: within 1 business day
+
+**Priority Support (Enterprise):**
+- Dedicated account manager
+- Phone support during business hours
+- Custom onboarding assistance`
+      },
+      {
+        title: "Frequently Asked Questions",
+        content: `**How do I reset an employee's password?**
+ShiftGuard uses your organization's login system. Contact your IT admin or the employee can use the "Forgot Password" link on the login page.
+
+**Can employees access ShiftGuard on mobile?**
+Yes! ShiftGuard is fully responsive and works on any smartphone or tablet browser.
+
+**What happens when a certification expires?**
+The certification is automatically marked as Expired, the employee loses their "certified" status for scheduling purposes, and both the employee and managers receive email reminders before it expires.
+
+**How do I export schedule data?**
+Go to **Reports** and use the **Document Generator** to export shift reports as PDF.
+
+**Can I set up recurring shifts?**
+Yes — when creating a shift on the Schedule page, you can set it as recurring (daily, weekly, etc.) with an end date.
+
+**How are shift conflicts detected?**
+The system automatically flags when an employee is scheduled for overlapping shifts, or is scheduled during approved time off.`
+      },
+    ]
+  },
 ];
 
 export default function Docs() {

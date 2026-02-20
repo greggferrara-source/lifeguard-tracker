@@ -4,6 +4,7 @@ import { createPageUrl } from "../utils";
 import { useQuery } from "@tanstack/react-query";
 import { base44 } from "@/api/base44Client";
 import { Button } from "@/components/ui/button";
+import DashboardFooter from "@/components/dashboard/DashboardFooter";
 import {
   CalendarDays,
   Clock,
