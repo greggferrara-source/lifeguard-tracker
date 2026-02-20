@@ -49,12 +49,14 @@
  */
 import Alerts from './pages/Alerts';
 import Assignments from './pages/Assignments';
+import BillingDashboard from './pages/BillingDashboard';
 import Certifications from './pages/Certifications';
 import ChemicalLogs from './pages/ChemicalLogs';
 import Contact from './pages/Contact';
 import Dashboard from './pages/Dashboard';
 import Docs from './pages/Docs';
 import EmployeeDashboard from './pages/EmployeeDashboard';
+import EmployeeDirectory from './pages/EmployeeDirectory';
 import EmployeeOnboarding from './pages/EmployeeOnboarding';
 import Employees from './pages/Employees';
 import Inspections from './pages/Inspections';
@@ -62,6 +64,7 @@ import Locations from './pages/Locations';
 import MaintenanceReports from './pages/MaintenanceReports';
 import MyAvailability from './pages/MyAvailability';
 import Notifications from './pages/Notifications';
+import OnboardingDashboard from './pages/OnboardingDashboard';
 import PatronCounts from './pages/PatronCounts';
 import Payroll from './pages/Payroll';
 import Pricing from './pages/Pricing';
@@ -69,26 +72,26 @@ import Privacy from './pages/Privacy';
 import Reports from './pages/Reports';
 import Schedule from './pages/Schedule';
 import Settings from './pages/Settings';
+import SetupWizard from './pages/SetupWizard';
 import ShiftSwaps from './pages/ShiftSwaps';
 import Terms from './pages/Terms';
 import TimeOff from './pages/TimeOff';
 import Tutorials from './pages/Tutorials';
-import SetupWizard from './pages/SetupWizard';
-import BillingDashboard from './pages/BillingDashboard';
-import OnboardingDashboard from './pages/OnboardingDashboard';
-import EmployeeDirectory from './pages/EmployeeDirectory';
+import MobileSchedule from './pages/MobileSchedule';
 import __Layout from './Layout.jsx';
 
 
 export const PAGES = {
     "Alerts": Alerts,
     "Assignments": Assignments,
+    "BillingDashboard": BillingDashboard,
     "Certifications": Certifications,
     "ChemicalLogs": ChemicalLogs,
     "Contact": Contact,
     "Dashboard": Dashboard,
     "Docs": Docs,
     "EmployeeDashboard": EmployeeDashboard,
+    "EmployeeDirectory": EmployeeDirectory,
     "EmployeeOnboarding": EmployeeOnboarding,
     "Employees": Employees,
     "Inspections": Inspections,
@@ -96,6 +99,7 @@ export const PAGES = {
     "MaintenanceReports": MaintenanceReports,
     "MyAvailability": MyAvailability,
     "Notifications": Notifications,
+    "OnboardingDashboard": OnboardingDashboard,
     "PatronCounts": PatronCounts,
     "Payroll": Payroll,
     "Pricing": Pricing,
@@ -103,14 +107,12 @@ export const PAGES = {
     "Reports": Reports,
     "Schedule": Schedule,
     "Settings": Settings,
+    "SetupWizard": SetupWizard,
     "ShiftSwaps": ShiftSwaps,
     "Terms": Terms,
     "TimeOff": TimeOff,
     "Tutorials": Tutorials,
-    "SetupWizard": SetupWizard,
-    "BillingDashboard": BillingDashboard,
-    "OnboardingDashboard": OnboardingDashboard,
-    "EmployeeDirectory": EmployeeDirectory,
+    "MobileSchedule": MobileSchedule,
 }
 
 export const pagesConfig = {
