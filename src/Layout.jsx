@@ -139,18 +139,38 @@ export default function Layout({ children, currentPageName }) {
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end" className="w-56">
                   {moreNavItems.map((item) => (
-                    <DropdownMenuItem key={item.page} asChild>
-                      <Link to={createPageUrl(item.page)} className="flex items-center gap-2">
-                        <item.icon className="w-4 h-4" />
-                        <span>{item.name}</span>
-                        {item.badge === "alerts" && unresolvedAlerts > 0 && (
-                          <span className="ml-auto bg-red-500 text-white text-xs font-bold rounded-full px-1.5">{unresolvedAlerts}</span>
-                        )}
-                        {item.badge === "swaps" && pendingSwaps > 0 && (
-                          <span className="ml-auto bg-orange-500 text-white text-xs font-bold rounded-full px-1.5">{pendingSwaps}</span>
-                        )}
-                      </Link>
-                    </DropdownMenuItem>
+                    <React.Fragment key={item.page}>
+                      {item.submenu ? (
+                        <>
+                          <DropdownMenuLabel className="flex items-center gap-2 px-2 py-1.5">
+                            <item.icon className="w-4 h-4" />
+                            <span>{item.name}</span>
+                          </DropdownMenuLabel>
+                          {item.submenu.map((subitem) => (
+                            <DropdownMenuItem key={subitem.page} asChild>
+                              <Link to={createPageUrl(subitem.page)} className="flex items-center gap-2 ml-2">
+                                <subitem.icon className="w-4 h-4" />
+                                <span>{subitem.name}</span>
+                                {subitem.badge === "swaps" && pendingSwaps > 0 && (
+                                  <span className="ml-auto bg-orange-500 text-white text-xs font-bold rounded-full px-1.5">{pendingSwaps}</span>
+                                )}
+                              </Link>
+                            </DropdownMenuItem>
+                          ))}
+                          <DropdownMenuSeparator />
+                        </>
+                      ) : (
+                        <DropdownMenuItem asChild>
+                          <Link to={createPageUrl(item.page)} className="flex items-center gap-2">
+                            <item.icon className="w-4 h-4" />
+                            <span>{item.name}</span>
+                            {item.badge === "alerts" && unresolvedAlerts > 0 && (
+                              <span className="ml-auto bg-red-500 text-white text-xs font-bold rounded-full px-1.5">{unresolvedAlerts}</span>
+                            )}
+                          </Link>
+                        </DropdownMenuItem>
+                      )}
+                    </React.Fragment>
                   ))}
                   <DropdownMenuSeparator />
                   <DropdownMenuLabel className="text-xs font-semibold text-gray-500">Help & Info</DropdownMenuLabel>
