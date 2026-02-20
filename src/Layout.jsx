@@ -50,6 +50,7 @@ const moreNavItems = [
   { name: "Messages", icon: MessageSquare, page: "Messages" },
   { name: "Channels", icon: Users, page: "Channels" }]
 },
+{ name: "Payroll Integrations", icon: BarChart2, page: "PayrollIntegrations" },
 { name: "Employee Hub", icon: LayoutDashboard, page: "EmployeeDashboard", submenu: [
   { name: "My Availability", icon: Clock, page: "MyAvailability" },
   { name: "Time Off", icon: Clock, page: "TimeOff" },
@@ -69,7 +70,6 @@ const moreNavItems = [
 { name: "Alerts", icon: AlertTriangle, page: "Alerts", badge: "alerts" },
 { name: "Reports", icon: BarChart2, page: "Reports" },
 { name: "Pricing & Plans", icon: Zap, page: "Pricing" },
-{ name: "Payroll Integrations", icon: BarChart2, page: "PayrollIntegrations" },
 { name: "Notifications", icon: MessageSquare, page: "Notifications" },
 { name: "Settings", icon: Settings, page: "Settings" }];
 
