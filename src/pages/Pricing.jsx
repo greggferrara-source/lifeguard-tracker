@@ -195,9 +195,19 @@ export default function Pricing() {
                 ))}
               </ul>
 
-              <Button className={`w-full rounded-xl h-11 font-semibold ${plan.btnClass}`}>
-                {plan.name === "Enterprise" ? "Contact Sales" : "Start Free Trial"}
-                <ArrowRight className="w-4 h-4 ml-1" />
+              <Button
+                className={`w-full rounded-xl h-11 font-semibold ${plan.btnClass}`}
+                onClick={() => handleCheckout(plan)}
+                disabled={loadingPlan === plan.priceKey}
+              >
+                {loadingPlan === plan.priceKey ? (
+                  <Loader2 className="w-4 h-4 animate-spin" />
+                ) : (
+                  <>
+                    {plan.name === "Enterprise" ? "Contact Sales" : "Start Free Trial"}
+                    <ArrowRight className="w-4 h-4 ml-1" />
+                  </>
+                )}
               </Button>
             </div>
           ))}
