@@ -3,7 +3,8 @@ import { Link } from "react-router-dom";
 import { createPageUrl } from "@/utils";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { CheckCircle2, Shield, Zap, Users, ArrowRight, MessageSquare, Phone, Mail } from "lucide-react";
+import { base44 } from "@/api/base44Client";
+import { CheckCircle2, Shield, Zap, Users, ArrowRight, MessageSquare, Phone, Mail, Loader2 } from "lucide-react";
 
 const plans = [
   {
