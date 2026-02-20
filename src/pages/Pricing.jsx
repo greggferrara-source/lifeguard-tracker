@@ -100,6 +100,32 @@ const supportPlans = [
 
 export default function Pricing() {
   const [annual, setAnnual] = useState(false);
+  const [loadingPlan, setLoadingPlan] = useState(null);
+
+  const handleCheckout = async (plan) => {
+    if (plan.name === "Enterprise") {
+      window.location.href = createPageUrl("Contact");
+      return;
+    }
+
+    // Block checkout inside iframe (preview mode)
+    if (window.self !== window.top) {
+      alert("Checkout is only available from the published app, not the preview.");
+      return;
+    }
+
+    setLoadingPlan(plan.priceKey);
+    const priceId = PRICE_IDS[plan.priceKey][annual ? "annual" : "monthly"];
+    const res = await base44.functions.invoke("createCheckout", {
+      price_id: priceId,
+      success_url: window.location.origin + createPageUrl("Dashboard"),
+      cancel_url: window.location.origin + createPageUrl("Pricing"),
+    });
+    if (res.data?.url) {
+      window.location.href = res.data.url;
+    }
+    setLoadingPlan(null);
+  };
 
   return (
     <div className="bg-white">
