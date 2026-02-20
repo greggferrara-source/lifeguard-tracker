@@ -65,6 +65,41 @@ export default function EmployeeDashboard() {
     onSuccess: () => queryClient.invalidateQueries({ queryKey: ["clock-entries-today"] }),
   });
 
+  const { data: employees = [] } = useQuery({
+    queryKey: ["employees"],
+    queryFn: () => base44.entities.Employee.list(),
+  });
+
+  const isAdminOrManager = user?.role === "admin" || user?.role === "manager";
+
+  // Admin clock-in/out on behalf of an employee
+  const [adminClockOpen, setAdminClockOpen] = useState(false);
+  const [adminEmpId, setAdminEmpId] = useState("");
+  const [adminLocationId, setAdminLocationId] = useState("");
+
+  const adminClockIn = useMutation({
+    mutationFn: () => {
+      const emp = employees.find(e => e.id === adminEmpId);
+      return base44.entities.ClockEntry.create({
+        employee_id: adminEmpId,
+        employee_name: emp ? `${emp.first_name} ${emp.last_name}` : "",
+        location_id: adminLocationId,
+        location_name: locations.find(l => l.id === adminLocationId)?.name,
+        clock_in: new Date().toISOString(),
+        status: "clocked_in",
+      });
+    },
+    onSuccess: () => { queryClient.invalidateQueries({ queryKey: ["clock-entries-today"] }); setAdminClockOpen(false); setAdminEmpId(""); setAdminLocationId(""); },
+  });
+
+  const adminClockOut = useMutation({
+    mutationFn: (entry) => {
+      const mins = Math.round((new Date() - new Date(entry.clock_in)) / 60000);
+      return base44.entities.ClockEntry.update(entry.id, { clock_out: new Date().toISOString(), status: "clocked_out", total_minutes: mins });
+    },
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: ["clock-entries-today"] }),
+  });
+
   const [clockLocationId, setClockLocationId] = useState("");
 
   const quickLinks = [
