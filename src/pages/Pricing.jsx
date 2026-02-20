@@ -150,7 +150,7 @@ export default function Pricing() {
             onClick={() => setAnnual(true)}
             className={`px-5 py-2 rounded-full text-sm font-medium transition-all ${annual ? "bg-white shadow text-gray-900" : "text-gray-500"}`}
           >
-            Annual <span className="text-[#1a9c5b] ml-1 text-xs font-semibold">Save 25%</span>
+            Annual <span className="text-[#1a9c5b] ml-1 text-xs font-semibold">Save 20-23%</span>
           </button>
         </div>
       </section>
