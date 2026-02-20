@@ -6,9 +6,16 @@ import { Badge } from "@/components/ui/badge";
 import { base44 } from "@/api/base44Client";
 import { CheckCircle2, Shield, Zap, Users, ArrowRight, MessageSquare, Phone, Mail, Loader2 } from "lucide-react";
 
+const PRICE_IDS = {
+  starter: { monthly: "price_1T2yQALh9OReCjM34tKxdG3o", annual: "price_1T2yQELh9OReCjM3L0Nb4i21" },
+  pro:     { monthly: "price_1T2yQALh9OReCjM3gA5eNZwa", annual: "price_1T2yQELh9OReCjM3o5Sh70fs" },
+  enterprise: { monthly: "price_1T2yQALh9OReCjM34CmkxdY0", annual: "price_1T2yQELh9OReCjM3dGD6fKRh" },
+};
+
 const plans = [
   {
     name: "Starter",
+    priceKey: "starter",
     price: { monthly: 49, annual: 39 },
     description: "Perfect for small facilities with one location.",
     badge: null,
