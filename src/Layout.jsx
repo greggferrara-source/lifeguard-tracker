@@ -21,6 +21,7 @@ import {
   FileText,
   Play,
   MoreVertical,
+  Zap,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
