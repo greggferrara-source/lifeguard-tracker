@@ -78,47 +78,26 @@ export default function EmployeeOnboarding() {
   const pausedOnboardings = onboardings.filter((o) => o.status === "paused");
 
   return (
-    <div className="p-4 lg:p-8 space-y-6 max-w-6xl mx-auto bg-white min-h-screen">
+    <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-14 space-y-8">
       {/* Header */}
-      <div className="border-b pb-6">
-        <h1 className="text-3xl font-bold text-gray-900">Employee Onboarding</h1>
-        <p className="text-gray-600 mt-1">Manage and track new hire onboarding progress</p>
+      <div>
+        <h1 className="text-5xl font-extrabold text-gray-900 tracking-tight">Onboarding</h1>
+        <p className="text-gray-400 mt-2 text-lg">Track new hire progress from day one</p>
       </div>
 
       {/* Stats */}
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-        <Card>
-          <CardHeader className="pb-3">
-            <CardTitle className="text-sm font-medium text-gray-600">In Progress</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <p className="text-2xl font-bold text-blue-600">{inProgressOnboardings.length}</p>
-          </CardContent>
-        </Card>
-        <Card>
-          <CardHeader className="pb-3">
-            <CardTitle className="text-sm font-medium text-gray-600">Completed</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <p className="text-2xl font-bold text-green-600">{completedOnboardings.length}</p>
-          </CardContent>
-        </Card>
-        <Card>
-          <CardHeader className="pb-3">
-            <CardTitle className="text-sm font-medium text-gray-600">Paused</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <p className="text-2xl font-bold text-amber-600">{pausedOnboardings.length}</p>
-          </CardContent>
-        </Card>
-        <Card>
-          <CardHeader className="pb-3">
-            <CardTitle className="text-sm font-medium text-gray-600">Total</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <p className="text-2xl font-bold text-gray-900">{onboardings.length}</p>
-          </CardContent>
-        </Card>
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+        {[
+          { label: "In Progress", value: inProgressOnboardings.length, color: "text-blue-600" },
+          { label: "Completed", value: completedOnboardings.length, color: "text-green-600" },
+          { label: "Paused", value: pausedOnboardings.length, color: "text-amber-600" },
+          { label: "Total", value: onboardings.length, color: "text-gray-900" },
+        ].map((s, i) => (
+          <div key={i} className="bg-gray-50 rounded-2xl p-5">
+            <p className={`text-3xl font-bold ${s.color}`}>{s.value}</p>
+            <p className="text-xs text-gray-500 mt-1">{s.label}</p>
+          </div>
+        ))}
       </div>
 
       {/* Tabs */}
