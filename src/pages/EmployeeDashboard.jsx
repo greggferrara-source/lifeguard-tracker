@@ -224,6 +224,71 @@ export default function EmployeeDashboard() {
         </Card>
       )}
 
+      {/* Admin: Clock Employees In/Out */}
+      {isAdminOrManager && (
+        <Card className="border-blue-200 bg-blue-50">
+          <CardHeader className="pb-3">
+            <CardTitle className="text-base flex items-center gap-2">
+              <UserCheck className="w-4 h-4 text-blue-600" /> Clock Employees In / Out
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-3">
+            {/* Currently clocked in employees */}
+            {clockEntries.length > 0 && (
+              <div className="space-y-2">
+                {clockEntries.map(entry => (
+                  <div key={entry.id} className="flex items-center justify-between bg-white rounded-lg px-3 py-2 text-sm border border-blue-100">
+                    <div className="flex items-center gap-2">
+                      <div className="w-2 h-2 rounded-full bg-green-500" />
+                      <span className="font-medium text-gray-900">{entry.employee_name}</span>
+                      <span className="text-gray-500">{entry.location_name}</span>
+                    </div>
+                    <Button size="sm" variant="outline" className="text-red-600 border-red-200 hover:bg-red-50 h-7 text-xs"
+                      onClick={() => adminClockOut.mutate(entry)} disabled={adminClockOut.isPending}>
+                      <LogOut className="w-3 h-3 mr-1" /> Clock Out
+                    </Button>
+                  </div>
+                ))}
+              </div>
+            )}
+            <Button size="sm" className="bg-blue-600 hover:bg-blue-700 gap-2" onClick={() => setAdminClockOpen(true)}>
+              <LogIn className="w-3 h-3" /> Clock In an Employee
+            </Button>
+          </CardContent>
+        </Card>
+      )}
+
+      {/* Admin Clock In Dialog */}
+      <Dialog open={adminClockOpen} onOpenChange={setAdminClockOpen}>
+        <DialogContent className="max-w-sm">
+          <DialogHeader><DialogTitle>Clock In Employee</DialogTitle></DialogHeader>
+          <div className="space-y-4">
+            <div>
+              <label className="text-sm font-medium text-gray-700">Employee</label>
+              <select value={adminEmpId} onChange={e => setAdminEmpId(e.target.value)} className="w-full mt-1 px-3 py-2 border border-gray-200 rounded-lg text-sm">
+                <option value="">Select employee...</option>
+                {employees.filter(e => !clockEntries.find(c => c.employee_id === e.id)).map(e => (
+                  <option key={e.id} value={e.id}>{e.first_name} {e.last_name}</option>
+                ))}
+              </select>
+            </div>
+            <div>
+              <label className="text-sm font-medium text-gray-700">Location</label>
+              <select value={adminLocationId} onChange={e => setAdminLocationId(e.target.value)} className="w-full mt-1 px-3 py-2 border border-gray-200 rounded-lg text-sm">
+                <option value="">Select location...</option>
+                {locations.map(l => <option key={l.id} value={l.id}>{l.name}</option>)}
+              </select>
+            </div>
+            <div className="flex gap-2 justify-end">
+              <Button variant="outline" onClick={() => setAdminClockOpen(false)}>Cancel</Button>
+              <Button className="bg-[#1a9c5b] hover:bg-[#158a4e]" disabled={!adminEmpId || !adminLocationId || adminClockIn.isPending} onClick={() => adminClockIn.mutate()}>
+                Clock In
+              </Button>
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
+
       {/* Quick Actions Grid */}
       <div>
         <p className="text-sm font-semibold text-gray-500 uppercase tracking-wide mb-3">Quick Actions</p>
