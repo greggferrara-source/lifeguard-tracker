@@ -8,37 +8,37 @@ import { CheckCircle2, ArrowRight } from "lucide-react";
 const payrollProviders = [
   {
     name: "Gusto",
-    logo: "https://images.ctfassets.net/c7lxnbtvvcxm/4OFWZN5VJZBKm8K0eK6cIa/11f4cd6c61e07c0c6cb0f018e0a97c06/Gusto_Wordmark_Blue.svg",
+    logo: "https://cdn.worldvectorlogo.com/logos/gusto.svg",
     description: "Modern, user-friendly payroll and HR software for small and mid-size businesses",
     features: ["Payroll Processing", "Tax Filing", "Benefits Admin", "Time Tracking"]
   },
   {
     name: "ADP",
-    logo: "https://www.adp.com/-/media/images/pages/business/payroll-and-hr/resources/adp-payroll-processing.svg",
+    logo: "https://cdn.worldvectorlogo.com/logos/adp-1.svg",
     description: "Enterprise-grade payroll and workforce management solutions",
     features: ["Payroll Processing", "Tax Compliance", "Workforce Analytics", "Benefits Management"]
   },
   {
     name: "Paychex",
-    logo: "https://www.paychex.com/content/dam/paychex/us/en-us/images/logos/paychex-logo.svg",
+    logo: "https://cdn.worldvectorlogo.com/logos/paychex.svg",
     description: "Complete payroll, HR, and benefits solutions for businesses",
     features: ["Payroll Services", "HR Administration", "Compliance", "Employee Benefits"]
   },
   {
     name: "BambooHR",
-    logo: "https://www.bamboohr.com/bamboo-logo.svg",
+    logo: "https://cdn.worldvectorlogo.com/logos/bamboohr.svg",
     description: "Human resources software designed for small and medium businesses",
     features: ["HR Management", "Time Off Tracking", "Performance Reviews", "Document Management"]
   },
   {
     name: "Rippling",
-    logo: "https://www.rippling.com/images/rippling-logo.svg",
+    logo: "https://cdn.worldvectorlogo.com/logos/rippling.svg",
     description: "All-in-one HR, IT, and Finance platform for modern organizations",
     features: ["Payroll & Expenses", "People Operations", "IT Management", "Security"]
   },
   {
     name: "Workday",
-    logo: "https://www.workday.com/content/dam/web-assets/images/social/workday-logo-facebook.jpg",
+    logo: "https://cdn.worldvectorlogo.com/logos/workday.svg",
     description: "Enterprise cloud applications for finance and human resources",
     features: ["Financial Planning", "Payroll", "Talent Management", "Analytics"]
   }
