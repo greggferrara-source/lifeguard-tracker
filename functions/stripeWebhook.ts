@@ -1,7 +1,11 @@
 import Stripe from "npm:stripe@14";
 import { createClientFromRequest } from "npm:@base44/sdk@0.8.6";
 
-const stripe = new Stripe(Deno.env.get("STRIPE_SECRET_KEY"));
+const stripeKey = Deno.env.get("STRIPE_SECRET_KEY");
+if (!stripeKey || !stripeKey.startsWith("sk_")) {
+  console.error("Invalid Stripe key in webhook handler");
+}
+const stripe = new Stripe(stripeKey);
 
 Deno.serve(async (req) => {
   const body = await req.text();

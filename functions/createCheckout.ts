@@ -1,10 +1,15 @@
 import Stripe from "npm:stripe@14";
 import { createClientFromRequest } from "npm:@base44/sdk@0.8.6";
 
-const stripe = new Stripe(Deno.env.get("STRIPE_SECRET_KEY"));
-
 Deno.serve(async (req) => {
   try {
+    const stripeKey = Deno.env.get("STRIPE_SECRET_KEY");
+    if (!stripeKey || !stripeKey.startsWith("sk_")) {
+      console.error("Invalid or missing STRIPE_SECRET_KEY");
+      return Response.json({ error: "Stripe not configured properly" }, { status: 500 });
+    }
+
+    const stripe = new Stripe(stripeKey);
     const base44 = createClientFromRequest(req);
     const user = await base44.auth.me();
     if (!user) {
@@ -34,7 +39,7 @@ Deno.serve(async (req) => {
     console.log("Checkout session created:", session.id, "for user:", user.email);
     return Response.json({ url: session.url, session_id: session.id });
   } catch (error) {
-    console.error("Checkout error:", error.message);
+    console.error("Checkout error:", error.message, error.status);
     return Response.json({ error: error.message }, { status: 500 });
   }
 });
