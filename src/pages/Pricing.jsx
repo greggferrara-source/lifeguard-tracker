@@ -58,8 +58,8 @@ const plans = [
   {
     name: "Enterprise",
     priceKey: "enterprise",
-    price: { monthly: 299, annual: 239 },
-    yearlyDiscount: 20,
+    price: { monthly: 299, annual: 224 },
+    yearlyDiscount: 25,
     description: "For large facilities, parks departments, and waterparks.",
     badge: "Full Suite",
     color: "border-gray-200",
