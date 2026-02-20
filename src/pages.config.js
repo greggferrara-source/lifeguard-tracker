@@ -79,6 +79,7 @@ import TimeOff from './pages/TimeOff';
 import Tutorials from './pages/Tutorials';
 import MobileSchedule from './pages/MobileSchedule';
 import MobileEmployees from './pages/MobileEmployees';
+import MobileTimeOff from './pages/MobileTimeOff';
 import __Layout from './Layout.jsx';
 
 
@@ -115,6 +116,7 @@ export const PAGES = {
     "Tutorials": Tutorials,
     "MobileSchedule": MobileSchedule,
     "MobileEmployees": MobileEmployees,
+    "MobileTimeOff": MobileTimeOff,
 }
 
 export const pagesConfig = {
