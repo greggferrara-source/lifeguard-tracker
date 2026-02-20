@@ -7,9 +7,9 @@ import { base44 } from "@/api/base44Client";
 import { CheckCircle2, Shield, Zap, Users, ArrowRight, MessageSquare, Phone, Mail, Loader2 } from "lucide-react";
 
 const PRICE_IDS = {
-  starter: { monthly: "price_1T2yQALh9OReCjM34tKxdG3o", annual: "price_1T2yQELh9OReCjM3L0Nb4i21" },
-  pro:     { monthly: "price_1T2yQALh9OReCjM3gA5eNZwa", annual: "price_1T2yQELh9OReCjM3o5Sh70fs" },
-  enterprise: { monthly: "price_1T2yQALh9OReCjM34CmkxdY0", annual: "price_1T2yQELh9OReCjM3dGD6fKRh" },
+  starter: { monthly: "price_1T31vqJz3753BrBcR6JitqR6", annual: "price_1T31vqJz3753BrBcUNtRXIfx" },
+  pro:     { monthly: "price_1T31vqJz3753BrBc5to85m1z", annual: "price_1T31vqJz3753BrBcmeWqkKRI" },
+  enterprise: { monthly: "price_1T31vrJz3753BrBccB0BhD1Y", annual: "price_1T31vrJz3753BrBcIWbkLAymm" },
 };
 
 const plans = [
