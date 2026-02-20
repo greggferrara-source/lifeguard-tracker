@@ -10,7 +10,8 @@ import {
 } from "@/components/ui/dialog";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
-import { ArrowLeftRight, CheckCircle2, XCircle, Clock, Calendar, MapPin } from "lucide-react";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { ArrowLeftRight, CheckCircle2, XCircle, Clock, Calendar, MapPin, Plus } from "lucide-react";
 import { format } from "date-fns";
 
 const statusConfig = {
