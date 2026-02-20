@@ -5,9 +5,9 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Plus, Send } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import ChannelDialog from "@/components/communications/ChannelDialog";
-import ChannelList from "@/components/communications/ChannelList";
-import ChannelChat from "@/components/communications/ChannelChat";
+import ChannelDialog from "@/components/communications/ChannelDialog.js";
+import ChannelList from "@/components/communications/ChannelList.js";
+import ChannelChat from "@/components/communications/ChannelChat.js";
 
 export default function Channels() {
   const [selectedChannel, setSelectedChannel] = useState(null);
