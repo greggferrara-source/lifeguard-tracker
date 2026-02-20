@@ -86,6 +86,7 @@ import Terms from './pages/Terms';
 import TimeOff from './pages/TimeOff';
 import Tutorials from './pages/Tutorials';
 import Compliance from './pages/Compliance';
+import Billing from './pages/Billing';
 import __Layout from './Layout.jsx';
 
 
@@ -129,6 +130,7 @@ export const PAGES = {
     "TimeOff": TimeOff,
     "Tutorials": Tutorials,
     "Compliance": Compliance,
+    "Billing": Billing,
 }
 
 export const pagesConfig = {
