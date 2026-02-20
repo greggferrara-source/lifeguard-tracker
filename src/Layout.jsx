@@ -45,6 +45,11 @@ const primaryNavItems = [
 
 const moreNavItems = [
 { name: "Dashboard", icon: LayoutDashboard, page: "Dashboard" },
+{ name: "Communications", icon: MessageSquare, page: "Announcements", submenu: [
+  { name: "Announcements", icon: AlertTriangle, page: "Announcements" },
+  { name: "Messages", icon: MessageSquare, page: "Messages" },
+  { name: "Channels", icon: Users, page: "Channels" }]
+},
 { name: "Employee Hub", icon: LayoutDashboard, page: "EmployeeDashboard", submenu: [
   { name: "My Availability", icon: Clock, page: "MyAvailability" },
   { name: "Time Off", icon: Clock, page: "TimeOff" },
