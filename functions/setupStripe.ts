@@ -1,98 +1,116 @@
+import Stripe from 'npm:stripe@16.0.0';
 import { createClientFromRequest } from 'npm:@base44/sdk@0.8.6';
-import Stripe from 'npm:stripe@17.14.0';
 
-const stripe = new Stripe(Deno.env.get("STRIPE_SECRET_KEY"));
-
-const plans = [
-  {
-    id: "starter",
-    name: "Starter Plan",
-    prices: {
-      monthly: { amount: 4900, interval: "month" },
-      annual: { amount: 39 * 12 * 100, interval: "year" }
-    }
-  },
-  {
-    id: "pro",
-    name: "Pro Plan",
-    prices: {
-      monthly: { amount: 12900, interval: "month" },
-      annual: { amount: 99 * 12 * 100, interval: "year" }
-    }
-  },
-  {
-    id: "enterprise",
-    name: "Enterprise Plan",
-    prices: {
-      monthly: { amount: 29900, interval: "month" },
-      annual: { amount: 239 * 12 * 100, interval: "year" }
-    }
-  }
-];
+const stripe = new Stripe(Deno.env.get('STRIPE_SECRET_KEY'));
 
 Deno.serve(async (req) => {
   try {
     const base44 = createClientFromRequest(req);
     const user = await base44.auth.me();
 
-    if (!user || user.role !== 'admin') {
+    if (user?.role !== 'admin') {
       return Response.json({ error: 'Forbidden: Admin access required' }, { status: 403 });
     }
 
-    const results = {};
+    console.log('Starting Stripe setup...');
 
-    for (const plan of plans) {
-      try {
-        // Create product
-        const product = await stripe.products.create({
-          id: plan.id,
-          name: plan.name,
-          type: "service"
-        });
-
-        results[plan.id] = { product: product.id, prices: {} };
-
-        // Create monthly price
-        const monthlyPrice = await stripe.prices.create({
-          product: product.id,
-          unit_amount: plan.prices.monthly.amount,
-          currency: "usd",
-          recurring: {
-            interval: plan.prices.monthly.interval,
-            interval_count: 1
-          }
-        });
-
-        results[plan.id].prices.monthly = monthlyPrice.id;
-
-        // Create annual price
-        const annualPrice = await stripe.prices.create({
-          product: product.id,
-          unit_amount: plan.prices.annual.amount,
-          currency: "usd",
-          recurring: {
-            interval: plan.prices.annual.interval,
-            interval_count: 1
-          }
-        });
-
-        results[plan.id].prices.annual = annualPrice.id;
-
-      } catch (error) {
-        console.error(`Error creating plan ${plan.id}:`, error.message);
-        results[plan.id] = { error: error.message };
-      }
-    }
-
-    return Response.json({
-      success: true,
-      message: "Stripe products and prices created successfully",
-      results,
-      nextSteps: "Update the PRICE_IDS object in pages/Pricing.jsx with the price IDs above"
+    // Create Starter plan product
+    const starterProduct = await stripe.products.create({
+      name: 'Starter Plan',
+      description: 'Basic lifeguard scheduling for small teams',
     });
 
+    const starterMonthly = await stripe.prices.create({
+      product: starterProduct.id,
+      unit_amount: 2900,
+      currency: 'usd',
+      recurring: {
+        interval: 'month',
+      },
+    });
+
+    const starterAnnual = await stripe.prices.create({
+      product: starterProduct.id,
+      unit_amount: 29000,
+      currency: 'usd',
+      recurring: {
+        interval: 'year',
+      },
+    });
+
+    // Create Pro plan product
+    const proProduct = await stripe.products.create({
+      name: 'Pro Plan',
+      description: 'Advanced scheduling with analytics and reporting',
+    });
+
+    const proMonthly = await stripe.prices.create({
+      product: proProduct.id,
+      unit_amount: 9900,
+      currency: 'usd',
+      recurring: {
+        interval: 'month',
+      },
+    });
+
+    const proAnnual = await stripe.prices.create({
+      product: proProduct.id,
+      unit_amount: 99000,
+      currency: 'usd',
+      recurring: {
+        interval: 'year',
+      },
+    });
+
+    // Create Enterprise plan product
+    const enterpriseProduct = await stripe.products.create({
+      name: 'Enterprise Plan',
+      description: 'Custom solutions for large organizations',
+    });
+
+    const enterpriseMonthly = await stripe.prices.create({
+      product: enterpriseProduct.id,
+      unit_amount: 49900,
+      currency: 'usd',
+      recurring: {
+        interval: 'month',
+      },
+    });
+
+    const enterpriseAnnual = await stripe.prices.create({
+      product: enterpriseProduct.id,
+      unit_amount: 499000,
+      currency: 'usd',
+      recurring: {
+        interval: 'year',
+      },
+    });
+
+    const result = {
+      success: true,
+      products: {
+        starter: {
+          id: starterProduct.id,
+          monthly: starterMonthly.id,
+          annual: starterAnnual.id,
+        },
+        pro: {
+          id: proProduct.id,
+          monthly: proMonthly.id,
+          annual: proAnnual.id,
+        },
+        enterprise: {
+          id: enterpriseProduct.id,
+          monthly: enterpriseMonthly.id,
+          annual: enterpriseAnnual.id,
+        },
+      },
+    };
+
+    console.log('Stripe setup completed:', JSON.stringify(result, null, 2));
+    return Response.json(result);
   } catch (error) {
-    console.error("Setup error:", error.message);
+    console.error('Stripe setup error:', error.message);
     return Response.json({ error: error.message }, { status: 500 });
   }
 });
