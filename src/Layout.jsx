@@ -93,7 +93,7 @@ export default function Layout({ children, currentPageName }) {
 
             {/* Desktop Nav */}
             <nav className="hidden lg:flex items-center gap-1">
-              {navItems.map((item) => {
+              {primaryNavItems.map((item) => {
                 const isActive = currentPageName === item.page;
                 return (
                   <Link
@@ -107,30 +107,40 @@ export default function Layout({ children, currentPageName }) {
                   >
                     <item.icon className="w-4 h-4" />
                     {item.name}
-                    {item.badge === "alerts" && unresolvedAlerts > 0 && (
-                      <span className="ml-1 bg-red-500 text-white text-xs font-bold rounded-full w-4 h-4 flex items-center justify-center">
-                        {unresolvedAlerts > 9 ? "9+" : unresolvedAlerts}
-                      </span>
-                    )}
-                    {item.badge === "swaps" && pendingSwaps > 0 && (
-                      <span className="ml-1 bg-orange-500 text-white text-xs font-bold rounded-full w-4 h-4 flex items-center justify-center">
-                        {pendingSwaps > 9 ? "9+" : pendingSwaps}
-                      </span>
-                    )}
                   </Link>
                 );
               })}
 
-              {/* Info Menu */}
+              {/* More Menu */}
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                  <Button variant="ghost" size="icon" className="text-gray-700 hover:text-gray-900">
-                    <HelpCircle className="w-4 h-4" />
+                  <Button variant="ghost" className="text-gray-700 hover:text-gray-900 gap-1 text-sm font-medium px-4 py-2.5">
+                    <MoreVertical className="w-4 h-4" />
+                    More
+                    {(unresolvedAlerts > 0 || pendingSwaps > 0) && (
+                      <span className="ml-1 bg-red-500 text-white text-xs font-bold rounded-full w-4 h-4 flex items-center justify-center">
+                        {unresolvedAlerts + pendingSwaps > 9 ? "9+" : unresolvedAlerts + pendingSwaps}
+                      </span>
+                    )}
                   </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end" className="w-56">
-                  <DropdownMenuLabel className="text-xs font-semibold text-gray-500">Help & Info</DropdownMenuLabel>
+                  {moreNavItems.map((item) => (
+                    <DropdownMenuItem key={item.page} asChild>
+                      <Link to={createPageUrl(item.page)} className="flex items-center gap-2">
+                        <item.icon className="w-4 h-4" />
+                        <span>{item.name}</span>
+                        {item.badge === "alerts" && unresolvedAlerts > 0 && (
+                          <span className="ml-auto bg-red-500 text-white text-xs font-bold rounded-full px-1.5">{unresolvedAlerts}</span>
+                        )}
+                        {item.badge === "swaps" && pendingSwaps > 0 && (
+                          <span className="ml-auto bg-orange-500 text-white text-xs font-bold rounded-full px-1.5">{pendingSwaps}</span>
+                        )}
+                      </Link>
+                    </DropdownMenuItem>
+                  ))}
                   <DropdownMenuSeparator />
+                  <DropdownMenuLabel className="text-xs font-semibold text-gray-500">Help & Info</DropdownMenuLabel>
                   <DropdownMenuItem asChild>
                     <a href="https://docs.shiftguard.local" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2">
                       <BookOpen className="w-4 h-4" />
@@ -138,30 +148,9 @@ export default function Layout({ children, currentPageName }) {
                     </a>
                   </DropdownMenuItem>
                   <DropdownMenuItem asChild>
-                    <a href="https://youtube.com" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2">
-                      <Play className="w-4 h-4" />
-                      <span>Video Tutorials</span>
-                    </a>
-                  </DropdownMenuItem>
-                  <DropdownMenuSeparator />
-                  <DropdownMenuLabel className="text-xs font-semibold text-gray-500">Contact & Legal</DropdownMenuLabel>
-                  <DropdownMenuSeparator />
-                  <DropdownMenuItem asChild>
                     <a href="https://shiftguard.local/contact" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2">
                       <Mail className="w-4 h-4" />
                       <span>Contact Support</span>
-                    </a>
-                  </DropdownMenuItem>
-                  <DropdownMenuItem asChild>
-                    <a href="https://shiftguard.local/terms" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2">
-                      <FileText className="w-4 h-4" />
-                      <span>Terms of Service</span>
-                    </a>
-                  </DropdownMenuItem>
-                  <DropdownMenuItem asChild>
-                    <a href="https://shiftguard.local/privacy" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2">
-                      <FileText className="w-4 h-4" />
-                      <span>Privacy Policy</span>
                     </a>
                   </DropdownMenuItem>
                 </DropdownMenuContent>
