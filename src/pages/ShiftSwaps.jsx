@@ -28,6 +28,12 @@ export default function ShiftSwaps() {
   const [managerDialogOpen, setManagerDialogOpen] = useState(false);
   const [selectedSwap, setSelectedSwap] = useState(null);
   const [managerNotes, setManagerNotes] = useState("");
+  const [requestDialogOpen, setRequestDialogOpen] = useState(false);
+  const [reqMyShiftId, setReqMyShiftId] = useState("");
+  const [reqTargetShiftId, setReqTargetShiftId] = useState("");
+  const [reqMessage, setReqMessage] = useState("");
+
+  const { data: user } = useQuery({ queryKey: ["me"], queryFn: () => base44.auth.me() });
 
   const { data: swaps = [] } = useQuery({
     queryKey: ["shift-swaps"],
@@ -38,6 +44,54 @@ export default function ShiftSwaps() {
     queryKey: ["employees"],
     queryFn: () => base44.entities.Employee.list(),
   });
+
+  const { data: allShifts = [] } = useQuery({
+    queryKey: ["shifts-upcoming"],
+    queryFn: () => base44.entities.Shift.list("-date", 500),
+  });
+
+  const isManagerOrAdmin = user?.role === "admin" || user?.role === "manager";
+
+  // Shifts belonging to current user (match by email via employee records)
+  const myEmployee = employees.find(e => e.email === user?.email);
+  const today = new Date().toISOString().split("T")[0];
+  const myShifts = allShifts.filter(s => s.employee_id === myEmployee?.id && s.date >= today && s.status === "scheduled");
+  const otherShifts = allShifts.filter(s => s.employee_id && s.employee_id !== myEmployee?.id && s.date >= today && s.status === "scheduled");
+  const empMap = Object.fromEntries(employees.map(e => [e.id, e]));
+
+  const myShiftObj = myShifts.find(s => s.id === reqMyShiftId);
+  const targetShiftObj = otherShifts.find(s => s.id === reqTargetShiftId);
+  const targetEmp = targetShiftObj ? empMap[targetShiftObj.employee_id] : null;
+
+  const createSwap = useMutation({
+    mutationFn: (data) => base44.entities.ShiftSwapRequest.create(data),
+    onSuccess: async (newSwap) => {
+      queryClient.invalidateQueries({ queryKey: ["shift-swaps"] });
+      await base44.functions.invoke("shiftSwapNotify", { swap_request_id: newSwap.id, action: "new_request" });
+      setRequestDialogOpen(false);
+      setReqMyShiftId(""); setReqTargetShiftId(""); setReqMessage("");
+    },
+  });
+
+  const handleRequestSubmit = () => {
+    if (!myShiftObj || !targetShiftObj || !myEmployee) return;
+    createSwap.mutate({
+      requester_employee_id: myEmployee.id,
+      requester_employee_name: `${myEmployee.first_name} ${myEmployee.last_name}`,
+      requester_shift_id: myShiftObj.id,
+      requester_shift_date: myShiftObj.date,
+      requester_shift_time: `${myShiftObj.start_time}–${myShiftObj.end_time}`,
+      requester_shift_location: myShiftObj.location_name,
+      target_employee_id: targetShiftObj.employee_id,
+      target_employee_name: `${targetEmp?.first_name || ""} ${targetEmp?.last_name || ""}`.trim(),
+      target_shift_id: targetShiftObj.id,
+      target_shift_date: targetShiftObj.date,
+      target_shift_time: `${targetShiftObj.start_time}–${targetShiftObj.end_time}`,
+      target_shift_location: targetShiftObj.location_name,
+      requester_message: reqMessage,
+      status: "pending_employee",
+    });
+  };
 
   const updateSwap = useMutation({
     mutationFn: ({ id, data }) => base44.entities.ShiftSwapRequest.update(id, data),
