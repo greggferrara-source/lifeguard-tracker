@@ -72,6 +72,7 @@ import Terms from './pages/Terms';
 import TimeOff from './pages/TimeOff';
 import Tutorials from './pages/Tutorials';
 import Certifications from './pages/Certifications';
+import Pricing from './pages/Pricing';
 import __Layout from './Layout.jsx';
 
 
@@ -101,6 +102,7 @@ export const PAGES = {
     "TimeOff": TimeOff,
     "Tutorials": Tutorials,
     "Certifications": Certifications,
+    "Pricing": Pricing,
 }
 
 export const pagesConfig = {
