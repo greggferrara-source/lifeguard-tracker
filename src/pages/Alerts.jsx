@@ -59,7 +59,7 @@ export default function AlertsPage() {
   const { data: alerts = [], isLoading } = useQuery({
     queryKey: ["alerts"],
     queryFn: () => base44.entities.Alert.list("-created_date", 200),
-    refetchInterval: 30000,
+    refetchInterval: 120000,
   });
 
   const resolveAlert = useMutation({

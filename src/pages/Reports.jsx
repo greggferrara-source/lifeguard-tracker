@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { base44 } from "@/api/base44Client";
 import { Card } from "@/components/ui/card";
@@ -30,12 +30,12 @@ export default function Reports() {
   const [tab, setTab] = useState("month");
 
   const { data: employees = [] } = useQuery({ queryKey: ["employees"], queryFn: () => base44.entities.Employee.list() });
-  const { data: shifts = [] } = useQuery({ queryKey: ["shifts"], queryFn: () => base44.entities.Shift.list("-date", 1000) });
+  const { data: shifts = [] } = useQuery({ queryKey: ["shifts"], queryFn: () => base44.entities.Shift.list("-date", 300) });
   const { data: locations = [] } = useQuery({ queryKey: ["locations"], queryFn: () => base44.entities.Location.list() });
-  const { data: clockEntries = [] } = useQuery({ queryKey: ["clock-entries"], queryFn: () => base44.entities.ClockEntry.list("-clock_in", 1000) });
-  const { data: maintenance = [] } = useQuery({ queryKey: ["maintenance"], queryFn: () => base44.entities.MaintenanceReport.list("-date", 500) });
-  const { data: inspections = [] } = useQuery({ queryKey: ["inspections"], queryFn: () => base44.entities.InspectionReport.list("-date", 500) });
-  const { data: chemicalLogs = [] } = useQuery({ queryKey: ["chemical-logs"], queryFn: () => base44.entities.ChemicalLog.list("-date", 500) });
+  const { data: clockEntries = [] } = useQuery({ queryKey: ["clock-entries"], queryFn: () => base44.entities.ClockEntry.list("-clock_in", 300) });
+  const { data: maintenance = [] } = useQuery({ queryKey: ["maintenance"], queryFn: () => base44.entities.MaintenanceReport.list("-date", 200) });
+  const { data: inspections = [] } = useQuery({ queryKey: ["inspections"], queryFn: () => base44.entities.InspectionReport.list("-date", 200) });
+  const { data: chemicalLogs = [] } = useQuery({ queryKey: ["chemical-logs"], queryFn: () => base44.entities.ChemicalLog.list("-date", 200) });
 
   // Schedule report range helpers
   const weekStart = startOfWeek(today, { weekStartsOn: 0 });
@@ -47,50 +47,54 @@ export default function Reports() {
   const monthStartStr = format(monthStart, "yyyy-MM-dd");
   const monthEndStr = format(monthEnd, "yyyy-MM-dd");
 
-  const rangeShifts = shifts.filter(s => {
-    const inRange = tab === "week" ? (s.date >= weekStartStr && s.date <= weekEndStr) : (s.date >= monthStartStr && s.date <= monthEndStr);
-    return inRange;
-  });
-
-  function calcHours(s) {
+  const calcHours = (s) => {
     if (!s.start_time || !s.end_time) return 0;
     const [sh, sm] = s.start_time.split(":").map(Number);
     const [eh, em] = s.end_time.split(":").map(Number);
     return Math.max(0, (eh + em / 60) - (sh + sm / 60));
-  }
+  };
 
-  const hoursByEmployee = {};
-  for (const s of rangeShifts.filter(s => s.employee_id && s.status !== "cancelled")) {
-    if (!hoursByEmployee[s.employee_name]) hoursByEmployee[s.employee_name] = 0;
-    hoursByEmployee[s.employee_name] += calcHours(s);
-  }
-  const employeeData = Object.entries(hoursByEmployee).map(([name, hours]) => ({ name: name.split(" ")[0], hours: parseFloat(hours.toFixed(1)) })).sort((a, b) => b.hours - a.hours).slice(0, 10);
+  const { rangeShifts, employeeData, locationData, statusData, dailyData, payroll, totalHours, openShiftCount, fillRate } = useMemo(() => {
+    const filtered = shifts.filter(s => {
+      const inRange = tab === "week" ? (s.date >= weekStartStr && s.date <= weekEndStr) : (s.date >= monthStartStr && s.date <= monthEndStr);
+      return inRange;
+    });
 
-  const shiftsByLocation = {};
-  for (const s of rangeShifts.filter(s => s.status !== "cancelled")) {
-    if (!shiftsByLocation[s.location_name]) shiftsByLocation[s.location_name] = 0;
-    shiftsByLocation[s.location_name]++;
-  }
-  const locationData = Object.entries(shiftsByLocation).map(([name, count]) => ({ name, count }));
+    const hoursByEmp = {};
+    for (const s of filtered.filter(s => s.employee_id && s.status !== "cancelled")) {
+      if (!hoursByEmp[s.employee_name]) hoursByEmp[s.employee_name] = 0;
+      hoursByEmp[s.employee_name] += calcHours(s);
+    }
+    const empData = Object.entries(hoursByEmp).map(([name, hours]) => ({ name: name.split(" ")[0], hours: parseFloat(hours.toFixed(1)) })).sort((a, b) => b.hours - a.hours).slice(0, 10);
 
-  const statusCount = {};
-  for (const s of rangeShifts) statusCount[s.status] = (statusCount[s.status] || 0) + 1;
-  const statusData = Object.entries(statusCount).filter(([, v]) => v > 0).map(([name, value]) => ({ name, value }));
+    const byLoc = {};
+    for (const s of filtered.filter(s => s.status !== "cancelled")) {
+      if (!byLoc[s.location_name]) byLoc[s.location_name] = 0;
+      byLoc[s.location_name]++;
+    }
+    const locData = Object.entries(byLoc).map(([name, count]) => ({ name, count }));
 
-  const dailyData = Array.from({ length: 7 }, (_, i) => {
-    const d = addDays(weekStart, i);
-    const dateStr = format(d, "yyyy-MM-dd");
-    const dayShifts = shifts.filter(s => s.date === dateStr && s.status !== "cancelled");
-    return { day: format(d, "EEE"), scheduled: dayShifts.filter(s => s.status === "scheduled").length, open: dayShifts.filter(s => s.status === "open").length };
-  });
+    const statCount = {};
+    for (const s of filtered) statCount[s.status] = (statCount[s.status] || 0) + 1;
+    const statData = Object.entries(statCount).filter(([, v]) => v > 0).map(([name, value]) => ({ name, value }));
 
-  const payroll = rangeShifts.filter(s => s.employee_id && s.status !== "cancelled").reduce((sum, s) => {
-    const emp = employees.find(e => e.id === s.employee_id);
-    return sum + calcHours(s) * (emp?.hourly_rate || 0);
-  }, 0);
-  const totalHours = rangeShifts.filter(s => s.employee_id && s.status !== "cancelled").reduce((sum, s) => sum + calcHours(s), 0);
-  const openShiftCount = rangeShifts.filter(s => s.status === "open").length;
-  const fillRate = rangeShifts.length > 0 ? Math.round(((rangeShifts.length - openShiftCount) / rangeShifts.length) * 100) : 0;
+    const daily = Array.from({ length: 7 }, (_, i) => {
+      const d = addDays(weekStart, i);
+      const dateStr = format(d, "yyyy-MM-dd");
+      const dayShifts = shifts.filter(s => s.date === dateStr && s.status !== "cancelled");
+      return { day: format(d, "EEE"), scheduled: dayShifts.filter(s => s.status === "scheduled").length, open: dayShifts.filter(s => s.status === "open").length };
+    });
+
+    const pr = filtered.filter(s => s.employee_id && s.status !== "cancelled").reduce((sum, s) => {
+      const emp = employees.find(e => e.id === s.employee_id);
+      return sum + calcHours(s) * (emp?.hourly_rate || 0);
+    }, 0);
+    const totHours = filtered.filter(s => s.employee_id && s.status !== "cancelled").reduce((sum, s) => sum + calcHours(s), 0);
+    const openCount = filtered.filter(s => s.status === "open").length;
+    const fill = filtered.length > 0 ? Math.round(((filtered.length - openCount) / filtered.length) * 100) : 0;
+
+    return { rangeShifts: filtered, employeeData: empData, locationData: locData, statusData: statData, dailyData: daily, payroll: pr, totalHours: totHours, openShiftCount: openCount, fillRate: fill };
+  }, [shifts, tab, weekStartStr, weekEndStr, monthStartStr, monthEndStr, employees, weekStart]);
 
   const locFilterId = locationFilter === "all" ? null : locationFilter;
 

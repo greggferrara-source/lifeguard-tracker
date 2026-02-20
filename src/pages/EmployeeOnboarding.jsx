@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { base44 } from "@/api/base44Client";
 import { Button } from "@/components/ui/button";
@@ -73,9 +73,14 @@ export default function EmployeeOnboarding() {
   };
 
   const isManager = user?.role === "admin" || user?.role === "manager";
-  const inProgressOnboardings = onboardings.filter((o) => o.status === "in_progress");
-  const completedOnboardings = onboardings.filter((o) => o.status === "completed");
-  const pausedOnboardings = onboardings.filter((o) => o.status === "paused");
+  
+  const { inProgressOnboardings, completedOnboardings, pausedOnboardings } = useMemo(() => {
+    return {
+      inProgressOnboardings: onboardings.filter((o) => o.status === "in_progress"),
+      completedOnboardings: onboardings.filter((o) => o.status === "completed"),
+      pausedOnboardings: onboardings.filter((o) => o.status === "paused"),
+    };
+  }, [onboardings]);
 
   return (
     <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-14 space-y-8">

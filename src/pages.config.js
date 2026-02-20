@@ -49,6 +49,7 @@
  */
 import Alerts from './pages/Alerts';
 import Assignments from './pages/Assignments';
+import Certifications from './pages/Certifications';
 import ChemicalLogs from './pages/ChemicalLogs';
 import Contact from './pages/Contact';
 import Dashboard from './pages/Dashboard';
@@ -63,6 +64,7 @@ import MyAvailability from './pages/MyAvailability';
 import Notifications from './pages/Notifications';
 import PatronCounts from './pages/PatronCounts';
 import Payroll from './pages/Payroll';
+import Pricing from './pages/Pricing';
 import Privacy from './pages/Privacy';
 import Reports from './pages/Reports';
 import Schedule from './pages/Schedule';
@@ -71,14 +73,13 @@ import ShiftSwaps from './pages/ShiftSwaps';
 import Terms from './pages/Terms';
 import TimeOff from './pages/TimeOff';
 import Tutorials from './pages/Tutorials';
-import Certifications from './pages/Certifications';
-import Pricing from './pages/Pricing';
 import __Layout from './Layout.jsx';
 
 
 export const PAGES = {
     "Alerts": Alerts,
     "Assignments": Assignments,
+    "Certifications": Certifications,
     "ChemicalLogs": ChemicalLogs,
     "Contact": Contact,
     "Dashboard": Dashboard,
@@ -93,6 +94,7 @@ export const PAGES = {
     "Notifications": Notifications,
     "PatronCounts": PatronCounts,
     "Payroll": Payroll,
+    "Pricing": Pricing,
     "Privacy": Privacy,
     "Reports": Reports,
     "Schedule": Schedule,
@@ -101,8 +103,6 @@ export const PAGES = {
     "Terms": Terms,
     "TimeOff": TimeOff,
     "Tutorials": Tutorials,
-    "Certifications": Certifications,
-    "Pricing": Pricing,
 }
 
 export const pagesConfig = {
