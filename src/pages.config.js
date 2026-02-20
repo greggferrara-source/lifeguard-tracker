@@ -84,6 +84,7 @@ import Home from './pages/Home';
 import Announcements from './pages/Announcements';
 import Messages from './pages/Messages';
 import Channels from './pages/Channels';
+import PayrollIntegrations from './pages/PayrollIntegrations';
 import __Layout from './Layout.jsx';
 
 
@@ -125,6 +126,7 @@ export const PAGES = {
     "Announcements": Announcements,
     "Messages": Messages,
     "Channels": Channels,
+    "PayrollIntegrations": PayrollIntegrations,
 }
 
 export const pagesConfig = {

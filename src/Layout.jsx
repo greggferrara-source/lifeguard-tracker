@@ -69,6 +69,7 @@ const moreNavItems = [
 { name: "Alerts", icon: AlertTriangle, page: "Alerts", badge: "alerts" },
 { name: "Reports", icon: BarChart2, page: "Reports" },
 { name: "Pricing & Plans", icon: Zap, page: "Pricing" },
+{ name: "Payroll Integrations", icon: BarChart2, page: "PayrollIntegrations" },
 { name: "Notifications", icon: MessageSquare, page: "Notifications" },
 { name: "Settings", icon: Settings, page: "Settings" }];
 
