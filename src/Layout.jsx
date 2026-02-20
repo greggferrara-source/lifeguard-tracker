@@ -55,6 +55,7 @@ const moreNavItems = [
   { name: "Inspections", icon: BarChart2, page: "Inspections" },
   { name: "Alerts", icon: AlertTriangle, page: "Alerts", badge: "alerts" },
   { name: "Reports", icon: BarChart2, page: "Reports" },
+  { name: "Pricing", icon: BarChart2, page: "Pricing" },
   { name: "Notifications", icon: MessageSquare, page: "Notifications" },
   { name: "Settings", icon: Settings, page: "Settings" },
 ];
