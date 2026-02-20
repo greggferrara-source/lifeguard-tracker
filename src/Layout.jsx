@@ -44,33 +44,30 @@ const primaryNavItems = [
 
 
 const moreNavItems = [
-{ name: "Dashboard", icon: LayoutDashboard, page: "Dashboard" },
 { name: "Communications", icon: MessageSquare, page: "Announcements", submenu: [
   { name: "Announcements", icon: AlertTriangle, page: "Announcements" },
   { name: "Messages", icon: MessageSquare, page: "Messages" },
   { name: "Channels", icon: Users, page: "Channels" }]
 },
-{ name: "Payroll Integrations", icon: BarChart2, page: "PayrollIntegrations" },
-{ name: "Employee Hub", icon: LayoutDashboard, page: "EmployeeDashboard", submenu: [
+{ name: "Employee Hub", icon: Users, page: "EmployeeDashboard", submenu: [
+  { name: "Directory", icon: Users, page: "EmployeeDirectory" },
   { name: "My Availability", icon: Clock, page: "MyAvailability" },
   { name: "Time Off", icon: Clock, page: "TimeOff" },
   { name: "Shift Swaps", icon: ArrowLeftRight, page: "ShiftSwaps", badge: "swaps" },
   { name: "Onboarding", icon: Users, page: "EmployeeOnboarding" }]
 },
-{ name: "Setup Wizard", icon: Users, page: "SetupWizard" },
-{ name: "Onboarding Dashboard", icon: Users, page: "OnboardingDashboard" },
-{ name: "Employee Directory", icon: Users, page: "EmployeeDirectory" },
-{ name: "Billing", icon: CreditCard, page: "BillingDashboard" },
-{ name: "Certifications", icon: Shield, page: "Certifications" },
-{ name: "Assignments", icon: BarChart2, page: "Assignments" },
-{ name: "Chemical Logs", icon: BarChart2, page: "ChemicalLogs" },
-{ name: "Maintenance", icon: BarChart2, page: "MaintenanceReports" },
-{ name: "Patron Counts", icon: Users, page: "PatronCounts" },
-{ name: "Inspections", icon: BarChart2, page: "Inspections" },
+{ name: "Operations", icon: BarChart2, page: "MaintenanceReports", submenu: [
+  { name: "Certifications", icon: Shield, page: "Certifications" },
+  { name: "Assignments", icon: BarChart2, page: "Assignments" },
+  { name: "Chemical Logs", icon: BarChart2, page: "ChemicalLogs" },
+  { name: "Maintenance", icon: BarChart2, page: "MaintenanceReports" },
+  { name: "Patron Counts", icon: Users, page: "PatronCounts" },
+  { name: "Inspections", icon: BarChart2, page: "Inspections" }]
+},
+{ name: "Payroll Integrations", icon: BarChart2, page: "PayrollIntegrations" },
 { name: "Alerts", icon: AlertTriangle, page: "Alerts", badge: "alerts" },
+{ name: "Billing", icon: CreditCard, page: "BillingDashboard" },
 { name: "Reports", icon: BarChart2, page: "Reports" },
-{ name: "Pricing & Plans", icon: Zap, page: "Pricing" },
-{ name: "Notifications", icon: MessageSquare, page: "Notifications" },
 { name: "Settings", icon: Settings, page: "Settings" }];
 
 

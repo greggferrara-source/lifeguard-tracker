@@ -48,9 +48,11 @@
  * The mainPage value must match a key in the PAGES object exactly.
  */
 import Alerts from './pages/Alerts';
+import Announcements from './pages/Announcements';
 import Assignments from './pages/Assignments';
 import BillingDashboard from './pages/BillingDashboard';
 import Certifications from './pages/Certifications';
+import Channels from './pages/Channels';
 import ChemicalLogs from './pages/ChemicalLogs';
 import Contact from './pages/Contact';
 import Dashboard from './pages/Dashboard';
@@ -59,14 +61,20 @@ import EmployeeDashboard from './pages/EmployeeDashboard';
 import EmployeeDirectory from './pages/EmployeeDirectory';
 import EmployeeOnboarding from './pages/EmployeeOnboarding';
 import Employees from './pages/Employees';
+import Home from './pages/Home';
 import Inspections from './pages/Inspections';
 import Locations from './pages/Locations';
 import MaintenanceReports from './pages/MaintenanceReports';
+import Messages from './pages/Messages';
+import MobileEmployees from './pages/MobileEmployees';
+import MobileSchedule from './pages/MobileSchedule';
+import MobileTimeOff from './pages/MobileTimeOff';
 import MyAvailability from './pages/MyAvailability';
 import Notifications from './pages/Notifications';
 import OnboardingDashboard from './pages/OnboardingDashboard';
 import PatronCounts from './pages/PatronCounts';
 import Payroll from './pages/Payroll';
+import PayrollIntegrations from './pages/PayrollIntegrations';
 import Pricing from './pages/Pricing';
 import Privacy from './pages/Privacy';
 import Reports from './pages/Reports';
@@ -77,22 +85,16 @@ import ShiftSwaps from './pages/ShiftSwaps';
 import Terms from './pages/Terms';
 import TimeOff from './pages/TimeOff';
 import Tutorials from './pages/Tutorials';
-import MobileSchedule from './pages/MobileSchedule';
-import MobileEmployees from './pages/MobileEmployees';
-import MobileTimeOff from './pages/MobileTimeOff';
-import Home from './pages/Home';
-import Announcements from './pages/Announcements';
-import Messages from './pages/Messages';
-import Channels from './pages/Channels';
-import PayrollIntegrations from './pages/PayrollIntegrations';
 import __Layout from './Layout.jsx';
 
 
 export const PAGES = {
     "Alerts": Alerts,
+    "Announcements": Announcements,
     "Assignments": Assignments,
     "BillingDashboard": BillingDashboard,
     "Certifications": Certifications,
+    "Channels": Channels,
     "ChemicalLogs": ChemicalLogs,
     "Contact": Contact,
     "Dashboard": Dashboard,
@@ -101,14 +103,20 @@ export const PAGES = {
     "EmployeeDirectory": EmployeeDirectory,
     "EmployeeOnboarding": EmployeeOnboarding,
     "Employees": Employees,
+    "Home": Home,
     "Inspections": Inspections,
     "Locations": Locations,
     "MaintenanceReports": MaintenanceReports,
+    "Messages": Messages,
+    "MobileEmployees": MobileEmployees,
+    "MobileSchedule": MobileSchedule,
+    "MobileTimeOff": MobileTimeOff,
     "MyAvailability": MyAvailability,
     "Notifications": Notifications,
     "OnboardingDashboard": OnboardingDashboard,
     "PatronCounts": PatronCounts,
     "Payroll": Payroll,
+    "PayrollIntegrations": PayrollIntegrations,
     "Pricing": Pricing,
     "Privacy": Privacy,
     "Reports": Reports,
@@ -119,14 +127,6 @@ export const PAGES = {
     "Terms": Terms,
     "TimeOff": TimeOff,
     "Tutorials": Tutorials,
-    "MobileSchedule": MobileSchedule,
-    "MobileEmployees": MobileEmployees,
-    "MobileTimeOff": MobileTimeOff,
-    "Home": Home,
-    "Announcements": Announcements,
-    "Messages": Messages,
-    "Channels": Channels,
-    "PayrollIntegrations": PayrollIntegrations,
 }
 
 export const pagesConfig = {
