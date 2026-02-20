@@ -55,6 +55,7 @@ const plans = [
   },
   {
     name: "Enterprise",
+    priceKey: "enterprise",
     price: { monthly: 299, annual: 239 },
     description: "For large facilities, parks departments, and waterparks.",
     badge: "Full Suite",
