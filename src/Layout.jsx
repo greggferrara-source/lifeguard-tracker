@@ -34,12 +34,15 @@ import {
 import { useQuery } from "@tanstack/react-query";
 import { base44 } from "@/api/base44Client";
 
-const navItems = [
-  { name: "Dashboard", icon: LayoutDashboard, page: "Dashboard" },
+const primaryNavItems = [
   { name: "Schedule", icon: CalendarDays, page: "Schedule" },
   { name: "Employees", icon: Users, page: "Employees" },
-  { name: "Onboarding", icon: Users, page: "EmployeeOnboarding" },
   { name: "Locations", icon: MapPin, page: "Locations" },
+];
+
+const moreNavItems = [
+  { name: "Dashboard", icon: LayoutDashboard, page: "Dashboard" },
+  { name: "Onboarding", icon: Users, page: "EmployeeOnboarding" },
   { name: "Time Off", icon: Clock, page: "TimeOff" },
   { name: "My Availability", icon: Clock, page: "MyAvailability" },
   { name: "Shift Swaps", icon: ArrowLeftRight, page: "ShiftSwaps", badge: "swaps" },

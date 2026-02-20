@@ -48,35 +48,35 @@
  * The mainPage value must match a key in the PAGES object exactly.
  */
 import Alerts from './pages/Alerts';
+import Dashboard from './pages/Dashboard';
+import EmployeeOnboarding from './pages/EmployeeOnboarding';
 import Employees from './pages/Employees';
 import Locations from './pages/Locations';
+import MyAvailability from './pages/MyAvailability';
 import Notifications from './pages/Notifications';
+import Payroll from './pages/Payroll';
 import Reports from './pages/Reports';
 import Schedule from './pages/Schedule';
 import Settings from './pages/Settings';
 import ShiftSwaps from './pages/ShiftSwaps';
 import TimeOff from './pages/TimeOff';
-import Dashboard from './pages/Dashboard';
-import MyAvailability from './pages/MyAvailability';
-import Payroll from './pages/Payroll';
-import EmployeeOnboarding from './pages/EmployeeOnboarding';
 import __Layout from './Layout.jsx';
 
 
 export const PAGES = {
     "Alerts": Alerts,
+    "Dashboard": Dashboard,
+    "EmployeeOnboarding": EmployeeOnboarding,
     "Employees": Employees,
     "Locations": Locations,
+    "MyAvailability": MyAvailability,
     "Notifications": Notifications,
+    "Payroll": Payroll,
     "Reports": Reports,
     "Schedule": Schedule,
     "Settings": Settings,
     "ShiftSwaps": ShiftSwaps,
     "TimeOff": TimeOff,
-    "Dashboard": Dashboard,
-    "MyAvailability": MyAvailability,
-    "Payroll": Payroll,
-    "EmployeeOnboarding": EmployeeOnboarding,
 }
 
 export const pagesConfig = {
