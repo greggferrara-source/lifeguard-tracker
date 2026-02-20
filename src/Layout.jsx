@@ -47,6 +47,7 @@ const moreNavItems = [
   { name: "Time Off", icon: Clock, page: "TimeOff" },
   { name: "My Availability", icon: Clock, page: "MyAvailability" },
   { name: "Shift Swaps", icon: ArrowLeftRight, page: "ShiftSwaps", badge: "swaps" },
+  { name: "Certifications", icon: Shield, page: "Certifications" },
   { name: "Assignments", icon: BarChart2, page: "Assignments" },
   { name: "Chemical Logs", icon: BarChart2, page: "ChemicalLogs" },
   { name: "Maintenance", icon: BarChart2, page: "MaintenanceReports" },
