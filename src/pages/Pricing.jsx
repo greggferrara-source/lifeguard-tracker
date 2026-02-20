@@ -16,7 +16,8 @@ const plans = [
   {
     name: "Starter",
     priceKey: "starter",
-    price: { monthly: 49, annual: 39 },
+    price: { monthly: 49, annual: 37 },
+    yearlyDiscount: 25,
     description: "Perfect for small facilities with one location.",
     badge: null,
     color: "border-gray-200",
