@@ -15,7 +15,7 @@ export default function Privacy() {
 
         <section className="space-y-3">
           <h2 className="text-xl font-semibold text-gray-900">1. Information We Collect</h2>
-          <p>ShiftGuard collects the following types of information:</p>
+          <p>LifeGuard Tracker collects the following types of information:</p>
           <ul className="list-disc pl-6 space-y-2">
             <li><strong>Account data:</strong> Name, email address, and role when you register.</li>
             <li><strong>Employee data:</strong> Information entered by administrators including contact details, certifications, availability, and scheduling history.</li>
@@ -28,7 +28,7 @@ export default function Privacy() {
           <h2 className="text-xl font-semibold text-gray-900">2. How We Use Your Information</h2>
           <p>We use collected information to:</p>
           <ul className="list-disc pl-6 space-y-2">
-            <li>Provide and improve the ShiftGuard service</li>
+            <li>Provide and improve the LifeGuard Tracker service</li>
             <li>Send scheduling notifications, shift reminders, and alerts</li>
             <li>Support administrators in managing their workforce</li>
             <li>Analyze usage patterns to improve the platform</li>
@@ -57,18 +57,18 @@ export default function Privacy() {
 
         <section className="space-y-3">
           <h2 className="text-xl font-semibold text-gray-900">6. Employee Rights</h2>
-          <p>Employees whose data is stored in ShiftGuard have the right to:</p>
+          <p>Employees whose data is stored in LifeGuard Tracker have the right to:</p>
           <ul className="list-disc pl-6 space-y-2">
             <li>Access the personal information held about them</li>
             <li>Request corrections to inaccurate data</li>
             <li>Request deletion of their data (subject to legal obligations)</li>
           </ul>
-          <p>To exercise these rights, contact your organization's ShiftGuard administrator or reach out to us directly.</p>
+          <p>To exercise these rights, contact your organization's LifeGuard Tracker administrator or reach out to us directly.</p>
         </section>
 
         <section className="space-y-3">
           <h2 className="text-xl font-semibold text-gray-900">7. Cookies</h2>
-          <p>ShiftGuard uses essential cookies to maintain your session and preferences. We do not use advertising or tracking cookies.</p>
+          <p>LifeGuard Tracker uses essential cookies to maintain your session and preferences. We do not use advertising or tracking cookies.</p>
         </section>
 
         <section className="space-y-3">
