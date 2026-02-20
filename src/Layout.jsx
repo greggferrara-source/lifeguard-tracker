@@ -44,13 +44,14 @@ const primaryNavItems = [
 
 const moreNavItems = [
   { name: "Dashboard", icon: LayoutDashboard, page: "Dashboard" },
-  { name: "Employee Hub", icon: LayoutDashboard, page: "EmployeeDashboard" },
+  { name: "Employee Hub", icon: LayoutDashboard, page: "EmployeeDashboard", submenu: [
+    { name: "My Availability", icon: Clock, page: "MyAvailability" },
+    { name: "Time Off", icon: Clock, page: "TimeOff" },
+    { name: "Shift Swaps", icon: ArrowLeftRight, page: "ShiftSwaps", badge: "swaps" },
+    { name: "Onboarding", icon: Users, page: "EmployeeOnboarding" },
+  ]},
   { name: "Setup Wizard", icon: Users, page: "SetupWizard" },
-  { name: "Onboarding", icon: Users, page: "EmployeeOnboarding" },
   { name: "Billing", icon: CreditCard, page: "BillingDashboard" },
-  { name: "Time Off", icon: Clock, page: "TimeOff" },
-  { name: "My Availability", icon: Clock, page: "MyAvailability" },
-  { name: "Shift Swaps", icon: ArrowLeftRight, page: "ShiftSwaps", badge: "swaps" },
   { name: "Certifications", icon: Shield, page: "Certifications" },
   { name: "Assignments", icon: BarChart2, page: "Assignments" },
   { name: "Chemical Logs", icon: BarChart2, page: "ChemicalLogs" },
