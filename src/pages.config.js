@@ -59,6 +59,7 @@ import TimeOff from './pages/TimeOff';
 import Dashboard from './pages/Dashboard';
 import MyAvailability from './pages/MyAvailability';
 import Payroll from './pages/Payroll';
+import EmployeeOnboarding from './pages/EmployeeOnboarding';
 import __Layout from './Layout.jsx';
 
 
@@ -75,6 +76,7 @@ export const PAGES = {
     "Dashboard": Dashboard,
     "MyAvailability": MyAvailability,
     "Payroll": Payroll,
+    "EmployeeOnboarding": EmployeeOnboarding,
 }
 
 export const pagesConfig = {
