@@ -172,7 +172,7 @@ export default function Layout({ children, currentPageName }) {
         {/* Mobile Nav */}
         {mobileOpen && (
           <div className="lg:hidden border-t border-gray-200 bg-white px-6 py-4 space-y-2">
-            {navItems.map((item) => {
+            {[...primaryNavItems, ...moreNavItems].map((item) => {
               const isActive = currentPageName === item.page;
               return (
                 <Link
