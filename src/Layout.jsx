@@ -214,25 +214,46 @@ export default function Layout({ children, currentPageName }) {
             {[...primaryNavItems, ...moreNavItems].map((item) => {
               const isActive = currentPageName === item.page;
               return (
-                <Link
-                  key={item.page}
-                  to={createPageUrl(item.page)}
-                  onClick={() => setMobileOpen(false)}
-                  className={`flex items-center gap-3 px-4 py-2.5 rounded-lg text-sm font-medium transition-colors ${
-                    isActive
-                      ? "text-[#1a9c5b] bg-[#f0faf5]"
-                      : "text-gray-700 hover:text-gray-900"
-                  }`}
-                >
-                  <item.icon className="w-4 h-4" />
-                  {item.name}
-                  {item.badge === "alerts" && unresolvedAlerts > 0 && (
-                    <span className="ml-auto bg-red-500 text-white text-xs font-bold rounded-full px-2">{unresolvedAlerts}</span>
+                <React.Fragment key={item.page}>
+                  {item.submenu ? (
+                    <>
+                      <div className={`flex items-center gap-3 px-4 py-2.5 rounded-lg text-sm font-medium text-gray-700`}>
+                        <item.icon className="w-4 h-4" />
+                        {item.name}
+                      </div>
+                      {item.submenu.map((subitem) => (
+                        <Link
+                          key={subitem.page}
+                          to={createPageUrl(subitem.page)}
+                          onClick={() => setMobileOpen(false)}
+                          className="flex items-center gap-3 px-8 py-2.5 rounded-lg text-sm text-gray-700 hover:bg-gray-50"
+                        >
+                          <subitem.icon className="w-4 h-4" />
+                          {subitem.name}
+                          {subitem.badge === "swaps" && pendingSwaps > 0 && (
+                            <span className="ml-auto bg-orange-500 text-white text-xs font-bold rounded-full px-2">{pendingSwaps}</span>
+                          )}
+                        </Link>
+                      ))}
+                    </>
+                  ) : (
+                    <Link
+                      to={createPageUrl(item.page)}
+                      onClick={() => setMobileOpen(false)}
+                      className={`flex items-center gap-3 px-4 py-2.5 rounded-lg text-sm font-medium transition-colors ${
+                        isActive
+                          ? "text-[#1a9c5b] bg-[#f0faf5]"
+                          : "text-gray-700 hover:text-gray-900"
+                      }`}
+                    >
+                      <item.icon className="w-4 h-4" />
+                      {item.name}
+                      {item.badge === "alerts" && unresolvedAlerts > 0 && (
+                        <span className="ml-auto bg-red-500 text-white text-xs font-bold rounded-full px-2">{unresolvedAlerts}</span>
+                      )}
+                    </Link>
                   )}
-                  {item.badge === "swaps" && pendingSwaps > 0 && (
-                    <span className="ml-auto bg-orange-500 text-white text-xs font-bold rounded-full px-2">{pendingSwaps}</span>
-                  )}
-                </Link>
+                </React.Fragment>
               );
             })}
             <div className="border-t border-gray-200 pt-2 mt-2">
