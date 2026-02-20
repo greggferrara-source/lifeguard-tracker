@@ -4,8 +4,8 @@ import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { Button } from "@/components/ui/button";
 import { Plus, Trash2, Archive } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import AnnouncementDialog from "@/components/communications/AnnouncementDialog.js";
-import AnnouncementCard from "@/components/communications/AnnouncementCard.js";
+import AnnouncementDialog from "@/components/communications/AnnouncementDialog";
+import AnnouncementCard from "@/components/communications/AnnouncementCard";
 
 export default function Announcements() {
   const [showDialog, setShowDialog] = useState(false);

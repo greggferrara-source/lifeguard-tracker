@@ -5,8 +5,8 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Send } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import ConversationList from "@/components/communications/ConversationList.js";
-import ChatWindow from "@/components/communications/ChatWindow.js";
+import ConversationList from "@/components/communications/ConversationList";
+import ChatWindow from "@/components/communications/ChatWindow";
 
 export default function Messages() {
   const [selectedRecipient, setSelectedRecipient] = useState(null);
