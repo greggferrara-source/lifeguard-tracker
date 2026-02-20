@@ -73,6 +73,7 @@ import ShiftSwaps from './pages/ShiftSwaps';
 import Terms from './pages/Terms';
 import TimeOff from './pages/TimeOff';
 import Tutorials from './pages/Tutorials';
+import SetupWizard from './pages/SetupWizard';
 import __Layout from './Layout.jsx';
 
 
@@ -103,6 +104,7 @@ export const PAGES = {
     "Terms": Terms,
     "TimeOff": TimeOff,
     "Tutorials": Tutorials,
+    "SetupWizard": SetupWizard,
 }
 
 export const pagesConfig = {
