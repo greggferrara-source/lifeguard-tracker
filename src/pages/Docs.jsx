@@ -13,11 +13,11 @@ const docs = [
     badge: "bg-green-100 text-green-700",
     articles: [
       {
-        title: "Welcome to ShiftGuard",
+        title: "Welcome to LifeGuard Tracker",
         icon: null,
-        content: `ShiftGuard is an all-in-one workforce management platform built for aquatic facilities, pools, beaches, and waterparks.
+        content: `LifeGuard Tracker is an all-in-one workforce management platform built for aquatic facilities, pools, beaches, and waterparks.
 
-**What you can do with ShiftGuard:**
+**What you can do with LifeGuard Tracker:**
 - Build and manage weekly schedules for your lifeguards and staff
 - Track employee certifications and get expiry alerts
 - Manage time-off requests with an approval workflow
@@ -25,7 +25,7 @@ const docs = [
 - Onboard new hires with structured checklists
 - Send automated notifications for shift reminders and alerts
 
-**Who uses ShiftGuard:**
+**Who uses LifeGuard Tracker:**
 - **Admins** have full access to all features including payroll, reports, and settings
 - **Managers** can create and manage schedules, approve time off, and handle onboarding
 - **Employees** can view their schedule, submit time-off requests, and request shift swaps`
@@ -81,7 +81,7 @@ Templates save time when your schedule follows a repeating pattern.`
       },
       {
         title: "AI Scheduling Assistant",
-        content: `ShiftGuard includes an AI assistant that can suggest shift assignments based on employee availability, certifications, and hours.
+        content: `LifeGuard Tracker includes an AI assistant that can suggest shift assignments based on employee availability, certifications, and hours.
 
 1. Click **AI Suggest** on the Schedule page
 2. The AI will analyze your team and recommend assignments
@@ -163,7 +163,7 @@ If tasks have due dates, overdue tasks will be flagged in red.`
     articles: [
       {
         title: "Running an Alert Scan",
-        content: `ShiftGuard can automatically detect scheduling issues.
+        content: `LifeGuard Tracker can automatically detect scheduling issues.
 
 1. Go to **More → Alerts**
 2. Click **Run Scan**
@@ -194,7 +194,7 @@ Alerts are only visible to Admin users.`
     articles: [
       {
         title: "Uploading Your Certification",
-        content: `Employees can upload their own certifications directly in ShiftGuard.
+        content: `Employees can upload their own certifications directly in LifeGuard Tracker.
 
 1. Go to **More → Certifications**
 2. Click **Upload Certification**
@@ -219,7 +219,7 @@ Employees will see their certification status updated immediately.`
       },
       {
         title: "Expiry Notifications",
-        content: `ShiftGuard automatically sends email reminders for expiring certifications.
+        content: `LifeGuard Tracker automatically sends email reminders for expiring certifications.
 
 - **30-day warning**: Sent to the employee and all managers
 - **7-day urgent warning**: Sent to the employee
@@ -237,7 +237,7 @@ The system runs this check daily at 8am and automatically marks certifications a
     articles: [
       {
         title: "Getting Help & Support",
-        content: `ShiftGuard offers multiple ways to get help:
+        content: `LifeGuard Tracker offers multiple ways to get help:
 
 **In-App Support:**
 - Go to **More → Contact Support** to send a message to our team
@@ -256,10 +256,10 @@ The system runs this check daily at 8am and automatically marks certifications a
       {
         title: "Frequently Asked Questions",
         content: `**How do I reset an employee's password?**
-ShiftGuard uses your organization's login system. Contact your IT admin or the employee can use the "Forgot Password" link on the login page.
+LifeGuard Tracker uses your organization's login system. Contact your IT admin or the employee can use the "Forgot Password" link on the login page.
 
-**Can employees access ShiftGuard on mobile?**
-Yes! ShiftGuard is fully responsive and works on any smartphone or tablet browser.
+**Can employees access LifeGuard Tracker on mobile?**
+Yes! LifeGuard Tracker is fully responsive and works on any smartphone or tablet browser.
 
 **What happens when a certification expires?**
 The certification is automatically marked as Expired, the employee loses their "certified" status for scheduling purposes, and both the employee and managers receive email reminders before it expires.
@@ -316,7 +316,7 @@ export default function Docs() {
       <div>
         <Link to={createPageUrl("Dashboard")} className="text-sm text-[#1a9c5b] hover:underline">← Back to Dashboard</Link>
         <h1 className="text-4xl font-bold text-gray-900 mt-4">Documentation</h1>
-        <p className="text-gray-500 mt-2">Everything you need to know about using ShiftGuard</p>
+        <p className="text-gray-500 mt-2">Everything you need to know about using LifeGuard Tracker</p>
       </div>
 
       <div className="relative">
