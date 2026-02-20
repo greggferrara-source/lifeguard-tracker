@@ -386,6 +386,8 @@ export default function Dashboard() {
           </Button>
         </Link>
       </section>
+
+      <DashboardFooter />
     </div>
   );
 }
