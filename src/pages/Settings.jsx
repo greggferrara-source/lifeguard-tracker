@@ -17,6 +17,7 @@ import { Plus, Trash2, CheckCircle2, Clock, Edit, AlertTriangle } from "lucide-r
 import { motion } from "framer-motion";
 import InviteEmployees from "@/components/settings/InviteEmployees";
 import DataDeletion from "@/components/settings/DataDeletion";
+import RosterImport from "@/components/settings/RosterImport";
 
 export default function Settings() {
   const queryClient = useQueryClient();
