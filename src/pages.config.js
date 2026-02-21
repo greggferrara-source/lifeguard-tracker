@@ -50,10 +50,12 @@
 import Alerts from './pages/Alerts';
 import Announcements from './pages/Announcements';
 import Assignments from './pages/Assignments';
+import Billing from './pages/Billing';
 import BillingDashboard from './pages/BillingDashboard';
 import Certifications from './pages/Certifications';
 import Channels from './pages/Channels';
 import ChemicalLogs from './pages/ChemicalLogs';
+import Compliance from './pages/Compliance';
 import Contact from './pages/Contact';
 import Dashboard from './pages/Dashboard';
 import Docs from './pages/Docs';
@@ -85,8 +87,6 @@ import ShiftSwaps from './pages/ShiftSwaps';
 import Terms from './pages/Terms';
 import TimeOff from './pages/TimeOff';
 import Tutorials from './pages/Tutorials';
-import Compliance from './pages/Compliance';
-import Billing from './pages/Billing';
 import __Layout from './Layout.jsx';
 
 
@@ -94,10 +94,12 @@ export const PAGES = {
     "Alerts": Alerts,
     "Announcements": Announcements,
     "Assignments": Assignments,
+    "Billing": Billing,
     "BillingDashboard": BillingDashboard,
     "Certifications": Certifications,
     "Channels": Channels,
     "ChemicalLogs": ChemicalLogs,
+    "Compliance": Compliance,
     "Contact": Contact,
     "Dashboard": Dashboard,
     "Docs": Docs,
@@ -129,8 +131,6 @@ export const PAGES = {
     "Terms": Terms,
     "TimeOff": TimeOff,
     "Tutorials": Tutorials,
-    "Compliance": Compliance,
-    "Billing": Billing,
 }
 
 export const pagesConfig = {

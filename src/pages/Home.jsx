@@ -369,7 +369,7 @@ export default function Home() {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-5">
             {[
               { label: "Community Pools", img: "https://images.unsplash.com/photo-1575505586569-646b2ca898fc?w=400&h=280&fit=crop" },
-              { label: "Water Parks", img: "https://images.unsplash.com/photo-1541692641319-981cc79ee10a?w=400&h=280&fit=crop" },
+              { label: "Water Parks", img: "https://images.unsplash.com/photo-1582719508461-905c673771fd?w=400&h=280&fit=crop" },
               { label: "Beach & Lakes", img: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=400&h=280&fit=crop" },
               { label: "Recreation Centers", img: "https://images.unsplash.com/photo-1571019613914-85f342c6a11e?w=400&h=280&fit=crop" },
             ].map((ind) => (
