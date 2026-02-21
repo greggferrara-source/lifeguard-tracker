@@ -333,15 +333,15 @@ export default function Home() {
       </section>
 
       {/* ── Features Grid ── */}
-      <section id="features" className="px-6 py-20 bg-gray-50 border-t border-gray-100">
+      <section id="features" className="px-4 sm:px-6 py-14 sm:py-20 bg-gray-50 border-t border-gray-100">
         <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-14">
-            <h2 className="text-4xl font-extrabold text-gray-900 mb-4">Everything your facility needs</h2>
-            <p className="text-lg text-gray-500 max-w-xl mx-auto">
+          <div className="text-center mb-10 sm:mb-14">
+            <h2 className="text-3xl sm:text-4xl font-extrabold text-gray-900 mb-4">Everything your facility needs</h2>
+            <p className="text-base sm:text-lg text-gray-500 max-w-xl mx-auto">
               One platform to replace the spreadsheets, group texts, and paper logs.
             </p>
           </div>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
             {features.map((f) => (
               <div
                 key={f.title}
