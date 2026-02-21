@@ -70,7 +70,9 @@ const moreNavItems = [
 { name: "Alerts", icon: AlertTriangle, page: "Alerts", badge: "alerts" },
 { name: "Billing", icon: CreditCard, page: "Billing" },
 { name: "Reports", icon: BarChart2, page: "Reports" },
-{ name: "Settings", icon: Settings, page: "Settings" }];
+{ name: "Settings", icon: Settings, page: "Settings" },
+{ name: "Error Logs", icon: AlertTriangle, page: "ErrorLogs" },
+{ name: "Admin Setup", icon: LayoutDashboard, page: "AdminSetup" }];
 
 
 export default function Layout({ children, currentPageName }) {
