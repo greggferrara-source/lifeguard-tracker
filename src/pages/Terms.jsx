@@ -1,7 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { createPageUrl } from "@/utils";
-import { Shield } from "lucide-react";
 
 export default function Terms() {
   return (
@@ -12,59 +11,57 @@ export default function Terms() {
         <p className="text-gray-500 mt-2">Last updated: February 2026</p>
       </div>
 
-      <div className="prose prose-gray max-w-none space-y-8 text-gray-700 leading-relaxed">
-
+      <div className="space-y-8 text-gray-700 leading-relaxed">
         <section className="space-y-3">
-          <h2 className="text-xl font-semibold text-gray-900">1. Acceptance of Terms</h2>
-          <p>By accessing or using LifeGuard Tracker ("the Service"), you agree to be bound by these Terms of Service. If you do not agree to these terms, you may not use the Service. These terms apply to all users, including administrators, managers, and employees.</p>
+          <h2 className="text-xl font-semibold text-gray-900">1. Agreement to Terms</h2>
+          <p>By accessing and using LifeGuard Tracker, you accept and agree to be bound by the terms and provision of this agreement. If you do not agree to abide by the above, please do not use this service.</p>
         </section>
 
         <section className="space-y-3">
-          <h2 className="text-xl font-semibold text-gray-900">2. Description of Service</h2>
-          <p>LifeGuard Tracker is a workforce management platform designed for aquatic and outdoor recreation facilities. The Service provides tools for employee scheduling, shift management, time-off tracking, onboarding, and related workforce operations.</p>
-        </section>
-
-        <section className="space-y-3">
-          <h2 className="text-xl font-semibold text-gray-900">3. Account Responsibilities</h2>
-          <p>You are responsible for maintaining the confidentiality of your account credentials. You agree to notify us immediately of any unauthorized use of your account. LifeGuard Tracker is not liable for any loss resulting from unauthorized access to your account.</p>
-          <p>Administrators are responsible for managing employee access levels and ensuring that user permissions are appropriately assigned within their organization.</p>
-        </section>
-
-        <section className="space-y-3">
-          <h2 className="text-xl font-semibold text-gray-900">4. Acceptable Use</h2>
-          <p>You agree not to use the Service to:</p>
-          <ul className="list-disc pl-6 space-y-1">
-            <li>Violate any applicable laws or regulations</li>
-            <li>Transmit any harmful, offensive, or disruptive content</li>
-            <li>Attempt to gain unauthorized access to any systems or data</li>
-            <li>Interfere with or disrupt the integrity or performance of the Service</li>
-            <li>Harvest or collect personal information of other users without consent</li>
+          <h2 className="text-xl font-semibold text-gray-900">2. Use License</h2>
+          <p>Permission is granted to temporarily download one copy of the materials (information or software) on LifeGuard Tracker for personal, non-commercial transitory viewing only. This is the grant of a license, not a transfer of title, and under this license you may not:</p>
+          <ul className="list-disc pl-6 space-y-2">
+            <li>Modifying or copying the materials</li>
+            <li>Using the materials for any commercial purpose or for any public display</li>
+            <li>Attempting to decompile or reverse engineer any software contained on the service</li>
+            <li>Removing any copyright or other proprietary notations from the materials</li>
+            <li>Transferring the materials to another person or "mirroring" the materials on any other server</li>
           </ul>
         </section>
 
         <section className="space-y-3">
-          <h2 className="text-xl font-semibold text-gray-900">5. Employee Data</h2>
-          <p>Organizations using LifeGuard Tracker are responsible for obtaining appropriate consent from their employees before inputting personal data into the platform. This includes but is not limited to contact information, certifications, availability, and scheduling data.</p>
+          <h2 className="text-xl font-semibold text-gray-900">3. Disclaimer</h2>
+          <p>The materials on LifeGuard Tracker are provided on an 'as is' basis. LifeGuard Tracker makes no warranties, expressed or implied, and hereby disclaims and negates all other warranties including, without limitation, implied warranties or conditions of merchantability, fitness for a particular purpose, or non-infringement of intellectual property or other violation of rights.</p>
         </section>
 
         <section className="space-y-3">
-          <h2 className="text-xl font-semibold text-gray-900">6. Service Availability</h2>
-          <p>We strive to maintain high availability but do not guarantee uninterrupted access to the Service. We may perform scheduled or emergency maintenance that temporarily affects availability. We will make reasonable efforts to notify users in advance of planned downtime.</p>
+          <h2 className="text-xl font-semibold text-gray-900">4. Limitations</h2>
+          <p>In no event shall LifeGuard Tracker or its suppliers be liable for any damages (including, without limitation, damages for loss of data or profit, or due to business interruption,) arising out of the use or inability to use the materials on LifeGuard Tracker, even if LifeGuard Tracker or a LifeGuard Tracker authorized representative has been notified orally or in writing of the possibility of such damage.</p>
         </section>
 
         <section className="space-y-3">
-          <h2 className="text-xl font-semibold text-gray-900">7. Limitation of Liability</h2>
-          <p>LifeGuard Tracker is provided "as is" without warranties of any kind. To the maximum extent permitted by law, LifeGuard Tracker shall not be liable for any indirect, incidental, or consequential damages arising from your use of the Service, including but not limited to staffing errors, missed shifts, or scheduling conflicts.</p>
+          <h2 className="text-xl font-semibold text-gray-900">5. Accuracy of Materials</h2>
+          <p>The materials appearing on LifeGuard Tracker could include technical, typographical, or photographic errors. LifeGuard Tracker does not warrant that any of the materials on our website are accurate, complete, or current. LifeGuard Tracker may make changes to the materials contained on our website at any time without notice.</p>
         </section>
 
         <section className="space-y-3">
-          <h2 className="text-xl font-semibold text-gray-900">8. Changes to Terms</h2>
-          <p>We may update these terms from time to time. Continued use of the Service after changes constitutes acceptance of the updated terms. We will notify users of significant changes via email or in-app notification.</p>
+          <h2 className="text-xl font-semibold text-gray-900">6. Links</h2>
+          <p>LifeGuard Tracker has not reviewed all of the sites linked to its website and is not responsible for the contents of any such linked site. The inclusion of any link does not imply endorsement by LifeGuard Tracker of the site. Use of any such linked website is at the user's own risk.</p>
         </section>
 
         <section className="space-y-3">
-          <h2 className="text-xl font-semibold text-gray-900">9. Contact</h2>
-          <p>For questions about these Terms of Service, please <Link to={createPageUrl("Contact")} className="text-[#1a9c5b] hover:underline">contact our support team</Link>.</p>
+          <h2 className="text-xl font-semibold text-gray-900">7. Modifications</h2>
+          <p>LifeGuard Tracker may revise these terms of service for our website at any time without notice. By using this website, you are agreeing to be bound by the then current version of these terms of service.</p>
+        </section>
+
+        <section className="space-y-3">
+          <h2 className="text-xl font-semibold text-gray-900">8. Governing Law</h2>
+          <p>These terms and conditions are governed by and construed in accordance with the laws of the United States, and you irrevocably submit to the exclusive jurisdiction of the courts in that location.</p>
+        </section>
+
+        <section className="space-y-3">
+          <h2 className="text-xl font-semibold text-gray-900">9. Contact Information</h2>
+          <p>If you have any questions about these Terms of Service, please <Link to={createPageUrl("Contact")} className="text-[#1a9c5b] hover:underline">contact our team</Link>.</p>
         </section>
       </div>
     </div>
