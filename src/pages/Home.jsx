@@ -546,11 +546,11 @@ export default function Home() {
       {/* ── Demo Video Modal ── */}
       {showDemoModal && (
         <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 px-4"
+          className="fixed inset-0 z-50 flex items-end sm:items-center justify-center bg-black/70 px-0 sm:px-4"
           onClick={() => setShowDemoModal(false)}
         >
           <div
-            className="relative w-full max-w-3xl bg-black rounded-2xl overflow-hidden shadow-2xl"
+            className="relative w-full sm:max-w-3xl bg-black rounded-t-2xl sm:rounded-2xl overflow-hidden shadow-2xl"
             onClick={(e) => e.stopPropagation()}
           >
             <button
