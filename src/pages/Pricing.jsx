@@ -60,15 +60,15 @@ const plans = [
   {
     name: "Enterprise",
     priceKey: "enterprise",
-    price: { monthly: 1.99, annual: 1.99 },
+    price: { monthly: 2.49, annual: 2.49 },
     yearlyDiscount: null,
     description: "For large facilities, parks departments, and waterparks.",
     badge: "Full Suite",
     color: "border-gray-200",
     btnClass: "bg-gray-900 hover:bg-gray-800 text-white",
-    userRange: "500+ users",
+    userRange: "250+ users",
     features: [
-      "500+ users",
+      "250+ users",
       "Unlimited locations",
       "Everything in Pro",
       "Full payroll module",
