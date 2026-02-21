@@ -46,7 +46,7 @@ Deno.serve(async (req) => {
       },
     });
 
-    console.log("Checkout session created:", session.id, "for user:", user.email);
+    console.log(`Checkout session created: ${session.id} (${planLabel}) for ${user.email}`);
     return Response.json({ url: session.url, session_id: session.id });
   } catch (error) {
     console.error("Checkout error:", error.message, error.status);
