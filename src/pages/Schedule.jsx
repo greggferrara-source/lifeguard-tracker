@@ -61,9 +61,12 @@ export default function Schedule() {
       try {
         const user = await base44.auth.me();
         setCurrentUser(user);
-        setCanDragDrop(user?.role === "admin" || user?.role === "manager");
+        // Only enable drag-drop on mobile/touch devices
+        const isTouchDevice = () => window.matchMedia("(hover: none)").matches || navigator.maxTouchPoints > 0;
+        setCanDragDrop((user?.role === "admin" || user?.role === "manager") && isTouchDevice());
       } catch (e) {
-        setCanDragDrop(true);
+        const isTouchDevice = () => window.matchMedia("(hover: none)").matches || navigator.maxTouchPoints > 0;
+        setCanDragDrop(isTouchDevice());
       }
     };
     getUserData();
