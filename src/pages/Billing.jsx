@@ -232,6 +232,14 @@ export default function Billing() {
                 </div>
               )}
 
+              {/* Pause resumes info */}
+              {status === "paused" && subscription.pause_resumes_at && (
+                <div className="flex items-center gap-2 p-3 bg-amber-50 border border-amber-200 rounded-lg text-sm text-amber-800">
+                  <Clock className="w-4 h-4 flex-shrink-0" />
+                  Auto-resumes on {formatDate(subscription.pause_resumes_at)}
+                </div>
+              )}
+
               {/* Actions */}
               <div className="flex flex-col sm:flex-row gap-3 pt-4 border-t border-gray-200">
                 <Button variant="outline" className="flex items-center gap-2">
@@ -239,11 +247,70 @@ export default function Billing() {
                   Update Payment Method
                 </Button>
                 {status === "active" && (
+                  <Button
+                    variant="outline"
+                    className="flex items-center gap-2 text-amber-600 hover:bg-amber-50 border-amber-300"
+                    onClick={() => setShowPauseDialog(true)}
+                  >
+                    <PauseCircle className="w-4 h-4" />
+                    Pause for Offseason
+                  </Button>
+                )}
+                {status === "paused" && (
+                  <Button
+                    variant="outline"
+                    className="flex items-center gap-2 text-green-700 hover:bg-green-50 border-green-300"
+                    onClick={handleResume}
+                    disabled={pauseLoading}
+                  >
+                    {pauseLoading ? <Loader2 className="w-4 h-4 animate-spin" /> : <PlayCircle className="w-4 h-4" />}
+                    Resume Subscription
+                  </Button>
+                )}
+                {(status === "active" || status === "paused") && (
                   <Button variant="outline" className="text-red-600 hover:bg-red-50">
                     Cancel Subscription
                   </Button>
                 )}
               </div>
+
+              {/* Pause Dialog */}
+              {showPauseDialog && (
+                <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50 p-4">
+                  <div className="bg-white rounded-2xl shadow-xl p-6 w-full max-w-md">
+                    <h3 className="text-lg font-bold text-gray-900 mb-2">Pause Subscription</h3>
+                    <p className="text-sm text-gray-600 mb-4">
+                      Your subscription will be paused immediately. No charges will occur while paused.
+                      When you resume, billing will be <strong>prorated</strong> — you'll only pay for the days you use.
+                    </p>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                      Auto-resume date (optional)
+                    </label>
+                    <input
+                      type="date"
+                      value={resumeDate}
+                      onChange={(e) => setResumeDate(e.target.value)}
+                      min={new Date().toISOString().split("T")[0]}
+                      className="w-full h-10 px-3 border border-gray-200 rounded-lg text-sm mb-4 focus:outline-none focus:ring-2 focus:ring-[#1a9c5b]/30"
+                    />
+                    <p className="text-xs text-gray-500 mb-5">
+                      Leave blank to resume manually from this page whenever you're ready for next season.
+                    </p>
+                    <div className="flex gap-3">
+                      <Button variant="outline" onClick={() => setShowPauseDialog(false)} className="flex-1">
+                        Cancel
+                      </Button>
+                      <Button
+                        onClick={handlePause}
+                        disabled={pauseLoading}
+                        className="flex-1 bg-amber-500 hover:bg-amber-600 text-white"
+                      >
+                        {pauseLoading ? <Loader2 className="w-4 h-4 animate-spin" /> : "Confirm Pause"}
+                      </Button>
+                    </div>
+                  </div>
+                </div>
+              )}
             </CardContent>
           </Card>
         ) : (
