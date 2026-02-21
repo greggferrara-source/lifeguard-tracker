@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { base44 } from "@/api/base44Client";
 import { CheckCircle2, Shield, Zap, Users, ArrowRight, MessageSquare, Phone, Mail, Loader2, PauseCircle } from "lucide-react";
+import { toast } from "sonner";
 
 const PRICE_IDS = {
   starter: { monthly: "price_1T31vqJz3753BrBcR6JitqR6", annual: "price_1T31vqJz3753BrBcUNtRXIfx" },
@@ -112,21 +113,28 @@ export default function Pricing() {
 
     // Block checkout inside iframe (preview mode)
     if (window.self !== window.top) {
-      alert("Checkout is only available from the published app, not the preview.");
+      toast.error("Checkout is only available from the published app, not the preview.");
       return;
     }
 
     setLoadingPlan(plan.priceKey);
-    const priceId = PRICE_IDS[plan.priceKey][annual ? "annual" : "monthly"];
-    const res = await base44.functions.invoke("createCheckout", {
-      price_id: priceId,
-      success_url: window.location.origin + createPageUrl("Dashboard"),
-      cancel_url: window.location.origin + createPageUrl("Pricing"),
-    });
-    if (res.data?.url) {
-      window.location.href = res.data.url;
+    try {
+      const res = await base44.functions.invoke("createCheckout", {
+        price_id: PRICE_IDS[plan.priceKey][annual ? "annual" : "monthly"],
+        success_url: window.location.origin + createPageUrl("Dashboard"),
+        cancel_url: window.location.origin + createPageUrl("Pricing"),
+      });
+      if (res.data?.url) {
+        window.location.href = res.data.url;
+      } else {
+        toast.error(res.data?.error || "Failed to start checkout. Please try again.");
+      }
+    } catch (error) {
+      toast.error("Unable to process checkout. Please check your connection and try again.");
+      console.error("Checkout error:", error);
+    } finally {
+      setLoadingPlan(null);
     }
-    setLoadingPlan(null);
   };
 
   return (
