@@ -30,6 +30,21 @@ export default function Billing() {
     enabled: !!user?.email
   });
 
+  const handlePause = async () => {
+    setPauseLoading(true);
+    await base44.functions.invoke("pauseSubscription", { action: "pause", resume_date: resumeDate || undefined });
+    await queryClient.invalidateQueries({ queryKey: ["subscription"] });
+    setShowPauseDialog(false);
+    setPauseLoading(false);
+  };
+
+  const handleResume = async () => {
+    setPauseLoading(true);
+    await base44.functions.invoke("pauseSubscription", { action: "resume" });
+    await queryClient.invalidateQueries({ queryKey: ["subscription"] });
+    setPauseLoading(false);
+  };
+
   const statusConfig = {
     active: {
       icon: CheckCircle2,
