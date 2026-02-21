@@ -148,28 +148,28 @@ export default function Home() {
 
       {/* ── Main Nav ── */}
       <header className="sticky top-0 z-50 bg-white border-b border-gray-100 shadow-sm">
-        <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4 flex items-center justify-between">
           {/* Logo */}
-          <div className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-lg bg-[#1a9c5b] flex items-center justify-center">
+          <div className="flex items-center gap-2 sm:gap-3 min-w-0">
+            <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-lg bg-[#1a9c5b] flex-shrink-0 flex items-center justify-center">
               <Shield className="w-4 h-4 text-white" />
             </div>
-            <div>
-              <span className="font-bold text-lg text-gray-900 leading-none block">LifeGuard Tracker</span>
-              <span className="text-[10px] text-gray-400 leading-none tracking-wide uppercase">Aquatic Workforce Management</span>
+            <div className="min-w-0">
+              <span className="font-bold text-base sm:text-lg text-gray-900 leading-none block truncate">LifeGuard Tracker</span>
+              <span className="text-[9px] sm:text-[10px] text-gray-400 leading-none tracking-wide uppercase hidden sm:block">Aquatic Workforce Management</span>
             </div>
           </div>
 
           {/* Desktop Nav */}
-          <nav className="hidden md:flex items-center gap-8 text-sm font-medium text-gray-600">
+          <nav className="hidden lg:flex items-center gap-8 text-sm font-medium text-gray-600">
             <a href="#features" className="hover:text-gray-900 transition-colors">Features</a>
             <a href="#benefits" className="hover:text-gray-900 transition-colors">Benefits</a>
             <a href="#testimonials" className="hover:text-gray-900 transition-colors">Industries</a>
             <Link to={createPageUrl("Pricing")} className="hover:text-gray-900 transition-colors">Pricing</Link>
           </nav>
 
-          {/* CTAs */}
-          <div className="hidden md:flex items-center gap-3">
+          {/* Desktop CTAs */}
+          <div className="hidden lg:flex items-center gap-3">
             <Button
               variant="outline"
               onClick={handleSignIn}
@@ -186,21 +186,33 @@ export default function Home() {
             </Button>
           </div>
 
-          {/* Mobile menu toggle */}
-          <button className="md:hidden p-2" onClick={() => setMobileMenuOpen(!mobileMenuOpen)}>
-            {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
-          </button>
+          {/* Mobile: CTA + menu toggle */}
+          <div className="flex lg:hidden items-center gap-2">
+            <Button
+              onClick={handleSignIn}
+              className="bg-[#1a9c5b] hover:bg-[#158a4e] text-white font-bold text-xs h-8 px-3 rounded-md"
+            >
+              Try Free
+            </Button>
+            <button className="p-2 rounded-md hover:bg-gray-100 active:bg-gray-200 transition-colors" onClick={() => setMobileMenuOpen(!mobileMenuOpen)}>
+              {mobileMenuOpen ? <X className="w-5 h-5 text-gray-700" /> : <Menu className="w-5 h-5 text-gray-700" />}
+            </button>
+          </div>
         </div>
 
         {/* Mobile menu */}
         {mobileMenuOpen && (
-          <div className="md:hidden border-t border-gray-100 px-6 py-4 space-y-3 bg-white">
-            <a href="#features" className="block text-sm text-gray-700 py-1">Features</a>
-            <a href="#benefits" className="block text-sm text-gray-700 py-1">Benefits</a>
-            <Link to={createPageUrl("Pricing")} className="block text-sm text-gray-700 py-1">Pricing</Link>
-            <div className="flex gap-3 pt-2">
-              <Button variant="outline" onClick={handleSignIn} className="flex-1 border-2 border-gray-800 text-gray-800 font-bold text-sm">Try It Free</Button>
-              <Button onClick={() => setShowDemoModal(true)} className="flex-1 bg-gray-900 text-white font-bold text-sm">Watch Demo</Button>
+          <div className="lg:hidden border-t border-gray-100 px-4 py-4 space-y-1 bg-white shadow-lg">
+            <a href="#features" onClick={() => setMobileMenuOpen(false)} className="block text-sm text-gray-700 py-3 px-2 rounded-lg hover:bg-gray-50 active:bg-gray-100">Features</a>
+            <a href="#benefits" onClick={() => setMobileMenuOpen(false)} className="block text-sm text-gray-700 py-3 px-2 rounded-lg hover:bg-gray-50 active:bg-gray-100">Benefits</a>
+            <Link to={createPageUrl("Pricing")} onClick={() => setMobileMenuOpen(false)} className="block text-sm text-gray-700 py-3 px-2 rounded-lg hover:bg-gray-50 active:bg-gray-100">Pricing</Link>
+            <div className="pt-3 border-t border-gray-100 mt-2">
+              <button onClick={() => { setMobileMenuOpen(false); setShowDemoModal(true); }} className="w-full flex items-center justify-center gap-2 py-3 text-sm font-bold text-gray-700 border-2 border-gray-300 rounded-lg mb-2 active:bg-gray-50">
+                <Play className="w-4 h-4" /> Watch a Demo
+              </button>
+              <button onClick={() => { setMobileMenuOpen(false); handleSignIn(); }} className="w-full py-3 text-sm font-bold text-white bg-[#1a9c5b] rounded-lg active:bg-[#158a4e]">
+                Sign In / Sign Up
+              </button>
             </div>
           </div>
         )}
