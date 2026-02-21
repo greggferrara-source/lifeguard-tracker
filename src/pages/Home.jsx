@@ -249,8 +249,8 @@ export default function Home() {
           </div>
           <div className="rounded-2xl overflow-hidden shadow-lg h-64 sm:h-80">
             <img
-              src="https://images.unsplash.com/photo-1575505586569-646b2ca898fc?w=600&h=500&fit=crop&crop=center"
-              alt="Indoor aquatic facility"
+              src="https://images.unsplash.com/photo-1519315901367-f34ff9154487?w=600&h=500&fit=crop&crop=center"
+              alt="Lifeguard watching pool"
               className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
             />
           </div>
