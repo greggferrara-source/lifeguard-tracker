@@ -67,7 +67,7 @@ const moreNavItems = [
 { name: "Payroll Integrations", icon: BarChart2, page: "PayrollIntegrations" },
 { name: "Compliance", icon: Shield, page: "Compliance" },
 { name: "Alerts", icon: AlertTriangle, page: "Alerts", badge: "alerts" },
-{ name: "Billing", icon: CreditCard, page: "BillingDashboard" },
+{ name: "Billing", icon: CreditCard, page: "Billing" },
 { name: "Reports", icon: BarChart2, page: "Reports" },
 { name: "Settings", icon: Settings, page: "Settings" }];
 
