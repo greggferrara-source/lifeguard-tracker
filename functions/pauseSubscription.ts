@@ -45,18 +45,31 @@ Deno.serve(async (req) => {
       return Response.json({ success: true, status: "paused", resumes_at: resume_date });
 
     } else if (action === "resume") {
-      // Remove pause, Stripe will prorate the next invoice
+      // Restore original plan from metadata or fetch from Stripe
+      const originalPlan = stripeSub.metadata?.original_plan || sub.plan_name;
+      const priceIdMap = {
+        "starter": "price_1T36VDJz3753BrBcNxC9VWyP",
+        "pro": "price_1T36XcJz3753BrBckBFQkPAN",
+        "enterprise": "price_1T36YxJz3753BrBcqEQlI8jL"
+      };
+      const originalPriceId = priceIdMap[originalPlan] || priceIdMap["starter"];
+
       const updated = await stripe.subscriptions.update(sub.stripe_subscription_id, {
-        pause_collection: "",
+        items: {
+          0: {
+            price: originalPriceId,
+          },
+        },
         proration_behavior: "create_prorations",
       });
 
       await base44.entities.UserSubscription.update(sub.id, {
         status: "active",
         pause_resumes_at: null,
+        plan_name: originalPlan,
       });
 
-      console.log("Subscription resumed for user:", user.email);
+      console.log("Subscription resumed for user:", user.email, "plan:", originalPlan);
       return Response.json({ success: true, status: "active" });
     }
 
