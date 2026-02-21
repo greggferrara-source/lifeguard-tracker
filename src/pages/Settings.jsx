@@ -185,8 +185,11 @@ export default function Settings() {
       )}
 
       {tab === "team" && (
-        <div className="space-y-6">
+        <div className="space-y-8">
           <InviteEmployees />
+          <div className="border-t border-gray-200 pt-8">
+            <RosterImport />
+          </div>
         </div>
       )}
 
