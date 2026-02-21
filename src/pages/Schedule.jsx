@@ -140,7 +140,7 @@ export default function Schedule() {
 
   const handleDragEnd = async (result) => {
     const { source, destination, draggableId } = result;
-    if (!destination || !canDragDrop) return;
+    if (!destination) return;
     
     const shift = shifts.find(s => s.id === draggableId);
     if (!shift) return;
