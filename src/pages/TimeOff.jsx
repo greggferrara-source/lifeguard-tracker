@@ -36,6 +36,11 @@ export default function TimeOff() {
     end: "",
   });
 
+    const { data: user } = useQuery({
+    queryKey: ["me"],
+    queryFn: () => base44.auth.me(),
+  });
+
   const { data: requests = [] } = useQuery({
     queryKey: ["timeoff-all"],
     queryFn: () => base44.entities.TimeOffRequest.list("-created_date", 200),
@@ -45,6 +50,9 @@ export default function TimeOff() {
     queryKey: ["employees"],
     queryFn: () => base44.entities.Employee.list(),
   });
+
+  const isAdminOrManager = user?.role === "admin" || user?.role === "manager";
+  const myId = employees.find(e => e.email === user?.email)?.id;
 
   const createRequest = useMutation({
     mutationFn: (data) => base44.entities.TimeOffRequest.create(data),
@@ -78,7 +86,11 @@ export default function TimeOff() {
     });
   };
 
-  const filtered = tab === "all" ? requests : requests.filter((r) => r.status === tab);
+  const filtered = tab === "all"
+    ? isAdminOrManager ? requests : requests.filter(r => r.employee_id === myId)
+    : isAdminOrManager 
+      ? requests.filter(r => r.status === tab)
+      : requests.filter(r => r.employee_id === myId && r.status === tab);
 
   return (
     <div className="p-4 lg:p-8 space-y-6 max-w-5xl mx-auto">
@@ -115,14 +127,16 @@ export default function TimeOff() {
             <Eye className="w-4 h-4 mr-1" />
             Team Availability
           </Button>
-          <Button
-            onClick={() => setDialogOpen(true)}
-            className="bg-[#1a9c5b] hover:bg-[#158a4e] rounded-full"
-            size="sm"
-          >
-            <Plus className="w-4 h-4 mr-1" />
-            New Request
-          </Button>
+          {myId && (
+            <Button
+              onClick={() => setDialogOpen(true)}
+              className="bg-[#1a9c5b] hover:bg-[#158a4e] rounded-full"
+              size="sm"
+            >
+              <Plus className="w-4 h-4 mr-1" />
+              New Request
+            </Button>
+          )}
         </div>
       </div>
 
@@ -242,35 +256,35 @@ export default function TimeOff() {
                       <StatusIcon className="w-3 h-3 mr-1" />
                       {req.status}
                     </Badge>
-                    {req.status === "pending" && (
-                      <div className="flex gap-1">
-                        <Button
-                          variant="ghost"
-                          size="icon"
-                          className="h-7 w-7 text-emerald-600 hover:bg-emerald-50"
-                          onClick={() =>
-                            updateRequest.mutate({
-                              id: req.id,
-                              data: { status: "approved" },
-                            })
-                          }
-                        >
-                          <Check className="w-4 h-4" />
-                        </Button>
-                        <Button
-                          variant="ghost"
-                          size="icon"
-                          className="h-7 w-7 text-red-500 hover:bg-red-50"
-                          onClick={() =>
-                            updateRequest.mutate({
-                              id: req.id,
-                              data: { status: "denied" },
-                            })
-                          }
-                        >
-                          <X className="w-4 h-4" />
-                        </Button>
-                      </div>
+                    {req.status === "pending" && isAdminOrManager && (
+                    <div className="flex gap-1">
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        className="h-7 w-7 text-emerald-600 hover:bg-emerald-50"
+                        onClick={() =>
+                          updateRequest.mutate({
+                            id: req.id,
+                            data: { status: "approved" },
+                          })
+                        }
+                      >
+                        <Check className="w-4 h-4" />
+                      </Button>
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        className="h-7 w-7 text-red-500 hover:bg-red-50"
+                        onClick={() =>
+                          updateRequest.mutate({
+                            id: req.id,
+                            data: { status: "denied" },
+                          })
+                        }
+                      >
+                        <X className="w-4 h-4" />
+                      </Button>
+                    </div>
                     )}
                   </div>
                 </div>
