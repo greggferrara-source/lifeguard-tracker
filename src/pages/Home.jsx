@@ -121,6 +121,7 @@ export default function Home() {
   const navigate = useNavigate();
   const [checking, setChecking] = useState(true);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [showDemoModal, setShowDemoModal] = useState(false);
 
   useEffect(() => {
     base44.auth.isAuthenticated().then((auth) => {
