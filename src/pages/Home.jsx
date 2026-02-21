@@ -135,7 +135,7 @@ export default function Home() {
   if (checking) return null;
 
   return (
-    <div className="bg-white min-h-screen" style={{ fontFamily: "'Inter', -apple-system, sans-serif" }}>
+    <div className="bg-white min-h-screen" style={{ fontFamily: "'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif", WebkitTextSizeAdjust: "100%" }}>
 
       {/* ── Top utility bar ── */}
       <div className="hidden sm:flex justify-end items-center gap-5 px-8 py-2 text-xs text-gray-500 border-b border-gray-100 bg-white">
