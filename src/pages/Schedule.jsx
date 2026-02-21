@@ -29,6 +29,7 @@ export default function Schedule() {
   const [canDragDrop, setCanDragDrop] = useState(false);
   const [recommendations, setRecommendations] = useState([]);
   const [recommendationsLoading, setRecommendationsLoading] = useState(false);
+  const [suggestionsOpen, setSuggestionsOpen] = useState(false);
 
   const days = Array.from({ length: 7 }, (_, i) => addDays(weekStart, i));
   const weekDates = days.map(d => format(d, "yyyy-MM-dd"));
