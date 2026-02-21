@@ -386,13 +386,13 @@ export default function Home() {
       </section>
 
       {/* ── Industry Section ── */}
-      <section className="px-6 py-16 bg-gray-50 border-t border-gray-100">
+      <section className="px-4 sm:px-6 py-12 sm:py-16 bg-gray-50 border-t border-gray-100">
         <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-12">
-            <h2 className="text-4xl font-extrabold text-gray-900 mb-4">Built for Every Aquatic Facility</h2>
-            <p className="text-lg text-gray-500 max-w-xl mx-auto">From community pools to water parks — LifeGuard Tracker works everywhere.</p>
+          <div className="text-center mb-8 sm:mb-12">
+            <h2 className="text-3xl sm:text-4xl font-extrabold text-gray-900 mb-4">Built for Every Aquatic Facility</h2>
+            <p className="text-base sm:text-lg text-gray-500 max-w-xl mx-auto">From community pools to water parks — LifeGuard Tracker works everywhere.</p>
           </div>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-5">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-5">
             {[
               { label: "Community Pools", img: "https://images.unsplash.com/photo-1575505586569-646b2ca898fc?w=400&h=280&fit=crop" },
               { label: "Water Parks", img: "https://images.unsplash.com/photo-1582719508461-905c673771fd?w=400&h=280&fit=crop" },
