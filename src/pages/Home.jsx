@@ -44,7 +44,7 @@ const benefits = [
     title: "Coordinate Your Entire Aquatic Team Instantly",
     body: "Send pool closures, weather alerts, chemical level updates, and shift changes directly to your guards in seconds. With built-in announcements and direct messaging, your team is always informed — from the head lifeguard to seasonal staff.",
     stat: "Instant communication across all your pools and locations.",
-    img: "https://images.unsplash.com/photo-1504swimmers-team?w=700&h=500&fit=crop&crop=center",
+    img: "https://images.unsplash.com/photo-1571019613914-85f342c6a11e?w=700&h=500&fit=crop&crop=center",
     imgAlt: "Aquatic team coordination",
     reverse: false,
   },
