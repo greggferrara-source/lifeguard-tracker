@@ -175,7 +175,7 @@ export default function Layout({ children, currentPageName }) {
                     }
                   </Button>
                 </DropdownMenuTrigger>
-                <DropdownMenuContent align="end" className="w-56">
+                <DropdownMenuContent align="end" className="w-56 max-h-[80vh] overflow-y-auto">
                   {moreNavItems.map((item) => {
                     if (item.submenu) {
                       return (
