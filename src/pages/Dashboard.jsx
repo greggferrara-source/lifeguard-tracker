@@ -355,6 +355,30 @@ made simple.
         </Link>
       </section>
 
+      {/* Quick Stats */}
+      <section className="px-6 py-16 max-w-6xl mx-auto border-t border-gray-200">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+          <div className="text-center py-8">
+            <div className="text-4xl font-bold text-gray-900 mb-2">{activeEmployees}</div>
+            <p className="text-gray-600">Active Team Members</p>
+          </div>
+          <div className="text-center py-8">
+            <div className="text-4xl font-bold text-gray-900 mb-2">{openShifts}</div>
+            <p className="text-gray-600">Open Shifts</p>
+          </div>
+          <div className="text-center py-8">
+            <div className="text-4xl font-bold text-gray-900 mb-2">{pendingTimeOff}</div>
+            <p className="text-gray-600">Time Off Requests</p>
+          </div>
+          {isAdmin &&
+            <div className="text-center py-8">
+              <div className="text-4xl font-bold text-red-600 mb-2">{unresolvedAlerts}</div>
+              <p className="text-gray-600">Unresolved Alerts</p>
+            </div>
+          }
+        </div>
+      </section>
+
       <DashboardFooter />
     </div>);
 
