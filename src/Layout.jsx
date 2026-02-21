@@ -184,6 +184,8 @@ export default function Layout({ children, currentPageName }) {
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end" className="w-56 max-h-[80vh] overflow-y-auto">
                   {moreNavItems.map((item) => {
+                    if (item.roles && !item.roles.includes(user?.role)) return null;
+                    
                     if (item.submenu) {
                       return (
                         <div key={item.page}>
