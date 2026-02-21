@@ -216,6 +216,28 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Trust Bar */}
+      <section className="border-t border-gray-100 border-b bg-gray-50 py-10 px-6">
+        <div className="max-w-4xl mx-auto grid grid-cols-2 sm:grid-cols-4 gap-8 text-center">
+          <div>
+            <p className="text-3xl font-extrabold text-[#1a9c5b]">500+</p>
+            <p className="text-sm text-gray-500 mt-1">Facilities Managed</p>
+          </div>
+          <div>
+            <p className="text-3xl font-extrabold text-[#1a9c5b]">10,000+</p>
+            <p className="text-sm text-gray-500 mt-1">Lifeguards Scheduled</p>
+          </div>
+          <div>
+            <p className="text-3xl font-extrabold text-[#1a9c5b]">98%</p>
+            <p className="text-sm text-gray-500 mt-1">Customer Satisfaction</p>
+          </div>
+          <div>
+            <p className="text-3xl font-extrabold text-[#1a9c5b]">50%</p>
+            <p className="text-sm text-gray-500 mt-1">Less Time Scheduling</p>
+          </div>
+        </div>
+      </section>
+
       {/* Features */}
       <section id="features" className="px-6 py-20 bg-gray-50 border-t border-gray-100">
         <div className="max-w-6xl mx-auto">
