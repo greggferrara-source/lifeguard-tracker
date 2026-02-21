@@ -16,11 +16,20 @@ Deno.serve(async (req) => {
       return Response.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    const { price_id, success_url, cancel_url } = await req.json();
+    const { price_id, success_url, cancel_url, plan } = await req.json();
 
     if (!price_id) {
       return Response.json({ error: "price_id is required" }, { status: 400 });
     }
+
+    // Map price_id to plan for transaction tracking
+    const priceMap = {
+      'price_1QqglnEQXZ5k6pTKIoQpJEI4': 'enterprise_monthly',
+      'price_1QqglnEQXZ5k6pTKu8M8M2Bz': 'enterprise_annual',
+      'price_1QqglnEQXZ5k6pTKL7hN3X5e': 'pro_monthly',
+      'price_1QqglnEQXZ5k6pTKv5wK4Y9j': 'pro_annual',
+    };
+    const planLabel = plan || priceMap[price_id] || 'unknown';
 
     const session = await stripe.checkout.sessions.create({
       mode: "subscription",
