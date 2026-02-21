@@ -68,7 +68,7 @@ export default function ScheduleGrid({ shifts, locations, days, onShiftClick, on
                   const dayShifts = shifts.filter(s => s.date === dateStr && s.location_id === location.id);
                   const droppableId = `${location.id}-${dateStr}`;
                   return (
-                    <Droppable key={dayIdx} droppableId={droppableId} isDropDisabled={!canDragDrop}>
+                    <Droppable key={dayIdx} droppableId={droppableId}>
                       {(provided, snapshot) => (
                         <td
                           ref={provided.innerRef}
