@@ -8,6 +8,11 @@ import { base44 } from "@/api/base44Client";
 import { CheckCircle2, AlertCircle, Clock, CreditCard, Download, ArrowRight, PauseCircle, PlayCircle, Loader2 } from "lucide-react";
 
 export default function Billing() {
+  const [pauseLoading, setPauseLoading] = useState(false);
+  const [resumeDate, setResumeDate] = useState("");
+  const [showPauseDialog, setShowPauseDialog] = useState(false);
+  const queryClient = useQueryClient();
+
   const { data: user } = useQuery({
     queryKey: ["user"],
     queryFn: () => base44.auth.me()
