@@ -1,24 +1,18 @@
 import React, { useState, useMemo } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { base44 } from "@/api/base44Client";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
 import { format, differenceInDays } from "date-fns";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
-import { Plus, Clock, AlertCircle } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Plus, Clock, Calendar, Check, X, AlertCircle } from "lucide-react";
 import TimeOffDialog from "@/components/timeoff/TimeOffDialog";
 
-const statusStyles = {
-  pending: "bg-yellow-100 text-yellow-700",
-  approved: "bg-green-100 text-green-700",
-  denied: "bg-red-100 text-red-700",
+const statusConfig = {
+  pending:  { label: "Pending",  bg: "bg-amber-100",  text: "text-amber-700",  dot: "bg-amber-400" },
+  approved: { label: "Approved", bg: "bg-emerald-100", text: "text-emerald-700", dot: "bg-emerald-400" },
+  denied:   { label: "Denied",   bg: "bg-red-100",    text: "text-red-700",    dot: "bg-red-400" },
 };
+
+function haptic() { if (navigator.vibrate) navigator.vibrate(8); }
 
 export default function MobileTimeOff() {
   const queryClient = useQueryClient();
@@ -26,47 +20,14 @@ export default function MobileTimeOff() {
   const [selectedRequest, setSelectedRequest] = useState(null);
   const [filterStatus, setFilterStatus] = useState("pending");
 
-  const { data: requests = [] } = useQuery({
-    queryKey: ["time-off-requests"],
-    queryFn: () => base44.entities.TimeOffRequest.list("-created_date", 200),
-  });
+  const { data: requests = [] } = useQuery({ queryKey: ["time-off-requests"], queryFn: () => base44.entities.TimeOffRequest.list("-created_date", 200) });
+  const { data: user } = useQuery({ queryKey: ["current-user"], queryFn: () => base44.auth.me() });
+  const { data: employees = [] } = useQuery({ queryKey: ["employees"], queryFn: () => base44.entities.Employee.list() });
 
-  const { data: user } = useQuery({
-    queryKey: ["current-user"],
-    queryFn: () => base44.auth.me(),
-  });
-
-  const { data: employees = [] } = useQuery({
-    queryKey: ["employees"],
-    queryFn: () => base44.entities.Employee.list(),
-  });
-
-  const createRequest = useMutation({
-    mutationFn: (data) => base44.entities.TimeOffRequest.create(data),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["time-off-requests"] });
-      setDialogOpen(false);
-      setSelectedRequest(null);
-    },
-  });
-
-  const updateRequest = useMutation({
-    mutationFn: ({ id, data }) => base44.entities.TimeOffRequest.update(id, data),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["time-off-requests"] });
-      setDialogOpen(false);
-    },
-  });
+  const createRequest = useMutation({ mutationFn: (data) => base44.entities.TimeOffRequest.create(data), onSuccess: () => { queryClient.invalidateQueries({ queryKey: ["time-off-requests"] }); setDialogOpen(false); setSelectedRequest(null); } });
+  const updateRequest = useMutation({ mutationFn: ({ id, data }) => base44.entities.TimeOffRequest.update(id, data), onSuccess: () => { queryClient.invalidateQueries({ queryKey: ["time-off-requests"] }); setDialogOpen(false); } });
 
   const isManager = user?.role === "admin" || user?.role === "manager";
-
-  const filtered = useMemo(() => {
-    let result = requests;
-    if (filterStatus !== "all") {
-      result = result.filter((r) => r.status === filterStatus);
-    }
-    return result;
-  }, [requests, filterStatus]);
 
   const stats = {
     pending: requests.filter((r) => r.status === "pending").length,
@@ -74,173 +35,137 @@ export default function MobileTimeOff() {
     denied: requests.filter((r) => r.status === "denied").length,
   };
 
+  const filtered = useMemo(() => {
+    if (filterStatus === "all") return requests;
+    return requests.filter((r) => r.status === filterStatus);
+  }, [requests, filterStatus]);
+
   const handleSave = (formData) => {
-    if (selectedRequest) {
-      updateRequest.mutate({ id: selectedRequest.id, data: formData });
-    } else {
-      createRequest.mutate(formData);
-    }
+    if (selectedRequest) updateRequest.mutate({ id: selectedRequest.id, data: formData });
+    else createRequest.mutate(formData);
   };
 
   return (
-    <div className="px-4 py-4 space-y-4 pb-24">
+    <div className="flex flex-col h-full bg-gray-50 pb-24">
       {/* Header */}
-      <div>
-        <h1 className="text-2xl font-bold text-gray-900">Time Off</h1>
-        <p className="text-sm text-gray-500">Manage time off requests</p>
-      </div>
-
-      {/* Stats */}
-      <div className="grid grid-cols-3 gap-2">
-        {[
-          { label: "Pending", value: stats.pending, color: "text-yellow-600" },
-          { label: "Approved", value: stats.approved, color: "text-green-600" },
-          { label: "Denied", value: stats.denied, color: "text-red-600" },
-        ].map((s, i) => (
-          <Card key={i} className="border-gray-200">
-            <CardContent className="pt-3 pb-3 text-center">
-              <p className={`text-lg font-bold ${s.color}`}>{s.value}</p>
-              <p className="text-[10px] text-gray-500 mt-1">{s.label}</p>
-            </CardContent>
-          </Card>
-        ))}
-      </div>
-
-      {/* Action Button */}
-      {!isManager && (
-        <Button
-          onClick={() => {
-            setSelectedRequest(null);
-            setDialogOpen(true);
-          }}
-          className="w-full bg-[#1a9c5b] hover:bg-[#158a4e]"
-        >
-          <Plus className="w-4 h-4 mr-2" /> Request Time Off
-        </Button>
-      )}
-
-      {/* Filter Tabs */}
-      {isManager && (
-        <div className="flex gap-2 overflow-x-auto">
-          {[
-            { label: "Pending", value: "pending" },
-            { label: "Approved", value: "approved" },
-            { label: "Denied", value: "denied" },
-            { label: "All", value: "all" },
-          ].map((tab) => (
+      <div className="bg-white px-4 pt-4 pb-4 shadow-sm">
+        <div className="flex items-center justify-between mb-4">
+          <div>
+            <h1 className="text-xl font-bold text-gray-900">Time Off</h1>
+            <p className="text-sm text-gray-400">Manage requests</p>
+          </div>
+          {!isManager && (
             <button
-              key={tab.value}
-              onClick={() => setFilterStatus(tab.value)}
-              className={`px-3 py-1.5 rounded-full text-xs font-medium whitespace-nowrap transition-colors ${
-                filterStatus === tab.value
-                  ? "bg-[#1a9c5b] text-white"
-                  : "bg-gray-100 text-gray-700"
-              }`}
+              onClick={() => { haptic(); setSelectedRequest(null); setDialogOpen(true); }}
+              className="w-11 h-11 bg-[#1a9c5b] rounded-full flex items-center justify-center shadow-lg active:scale-95 transition-transform"
             >
-              {tab.label}
+              <Plus className="w-5 h-5 text-white" />
             </button>
-          ))}
+          )}
         </div>
-      )}
 
-      {/* Requests List */}
-      <div className="space-y-3">
-        {filtered.length === 0 ? (
-          <Card>
-            <CardContent className="pt-8 pb-8 text-center">
-              <p className="text-gray-500 text-sm">No time off requests</p>
-            </CardContent>
-          </Card>
-        ) : (
-          filtered.map((req) => {
-            const daysRequested = differenceInDays(new Date(req.end_date), new Date(req.start_date)) + 1;
-
+        {/* Stats pills */}
+        <div className="flex gap-2">
+          {[
+            { label: "Pending", value: stats.pending, status: "pending" },
+            { label: "Approved", value: stats.approved, status: "approved" },
+            { label: "Denied", value: stats.denied, status: "denied" },
+          ].map((s) => {
+            const cfg = statusConfig[s.status];
+            const isActive = filterStatus === s.status;
             return (
-              <Card
-                key={req.id}
-                className="cursor-pointer hover:shadow-md transition-shadow"
-                onClick={() => {
-                  setSelectedRequest(req);
-                  setDialogOpen(true);
-                }}
+              <button
+                key={s.status}
+                onClick={() => { haptic(); setFilterStatus(isActive ? "all" : s.status); }}
+                className={`flex-1 py-2.5 rounded-xl transition-all active:scale-95 ${isActive ? cfg.bg : "bg-gray-100"}`}
               >
-                <CardContent className="pt-4">
-                  <div className="space-y-2">
-                    <div className="flex items-start justify-between">
-                      <div>
-                        <p className="font-semibold text-gray-900">{req.employee_name}</p>
-                        <p className="text-xs text-gray-500">
-                          {format(new Date(req.start_date), "MMM d")} –{" "}
-                          {format(new Date(req.end_date), "MMM d")}
-                        </p>
-                      </div>
-                      <Badge className={`text-xs rounded-full ${statusStyles[req.status]}`}>
-                        {req.status}
-                      </Badge>
-                    </div>
-
-                    <div className="flex items-center gap-2 text-xs text-gray-600">
-                      <Clock className="w-3 h-3" />
-                      {daysRequested} day{daysRequested !== 1 ? "s" : ""}
-                    </div>
-
-                    {req.reason && (
-                      <p className="text-xs text-gray-600 line-clamp-2">{req.reason}</p>
-                    )}
-
-                    {req.is_partial_day && (
-                      <div className="flex items-center gap-2 text-xs text-amber-600">
-                        <AlertCircle className="w-3 h-3" />
-                        Partial day: {req.partial_start_time} – {req.partial_end_time}
-                      </div>
-                    )}
-
-                    {isManager && req.status === "pending" && (
-                      <div className="flex gap-2 pt-2">
-                        <Button
-                          size="sm"
-                          className="flex-1 text-xs bg-green-600 hover:bg-green-700"
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            updateRequest.mutate({
-                              id: req.id,
-                              data: { status: "approved" },
-                            });
-                          }}
-                        >
-                          Approve
-                        </Button>
-                        <Button
-                          size="sm"
-                          variant="outline"
-                          className="flex-1 text-xs text-red-600 hover:text-red-700"
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            updateRequest.mutate({
-                              id: req.id,
-                              data: { status: "denied" },
-                            });
-                          }}
-                        >
-                          Deny
-                        </Button>
-                      </div>
-                    )}
-                  </div>
-                </CardContent>
-              </Card>
+                <p className={`text-lg font-bold ${isActive ? cfg.text : "text-gray-500"}`}>{s.value}</p>
+                <p className={`text-[10px] font-medium ${isActive ? cfg.text : "text-gray-400"}`}>{s.label}</p>
+              </button>
             );
-          })
-        )}
+          })}
+        </div>
       </div>
 
-      <TimeOffDialog
-        open={dialogOpen}
-        onOpenChange={setDialogOpen}
-        request={selectedRequest}
-        employees={employees}
-        onSave={handleSave}
-      />
+      {/* List */}
+      <div className="flex-1 overflow-auto px-4 pt-4 space-y-3">
+        <AnimatePresence mode="wait">
+          {filtered.length === 0 ? (
+            <motion.div
+              key="empty"
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="flex flex-col items-center justify-center py-20 text-center"
+            >
+              <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mb-4">
+                <Calendar className="w-7 h-7 text-gray-300" />
+              </div>
+              <p className="font-semibold text-gray-400">No requests</p>
+            </motion.div>
+          ) : (
+            <motion.div key="list" initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-3">
+              {filtered.map((req) => {
+                const daysCount = differenceInDays(new Date(req.end_date), new Date(req.start_date)) + 1;
+                const cfg = statusConfig[req.status] || statusConfig.pending;
+
+                return (
+                  <motion.button
+                    key={req.id}
+                    layout
+                    initial={{ opacity: 0, y: 8 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    onClick={() => { haptic(); setSelectedRequest(req); setDialogOpen(true); }}
+                    className="w-full text-left bg-white rounded-2xl shadow-sm border border-gray-100 p-4 active:scale-[0.98] transition-transform"
+                  >
+                    <div className="flex items-start justify-between gap-3">
+                      <div className="flex-1 min-w-0">
+                        <p className="font-semibold text-gray-900 text-sm truncate">{req.employee_name || "Unknown"}</p>
+                        <div className="flex items-center gap-1.5 mt-1">
+                          <Calendar className="w-3.5 h-3.5 text-gray-400" />
+                          <p className="text-xs text-gray-500">
+                            {format(new Date(req.start_date), "MMM d")} – {format(new Date(req.end_date), "MMM d")}
+                            <span className="ml-1 text-gray-400">({daysCount}d)</span>
+                          </p>
+                        </div>
+                        {req.reason && <p className="text-xs text-gray-400 mt-1.5 line-clamp-1">{req.reason}</p>}
+                        {req.is_partial_day && (
+                          <div className="flex items-center gap-1 mt-1 text-xs text-amber-600">
+                            <AlertCircle className="w-3 h-3" />
+                            {req.partial_start_time} – {req.partial_end_time}
+                          </div>
+                        )}
+                      </div>
+                      <span className={`flex-shrink-0 text-[11px] font-bold px-2.5 py-1 rounded-full ${cfg.bg} ${cfg.text}`}>
+                        {cfg.label}
+                      </span>
+                    </div>
+
+                    {/* Manager quick actions */}
+                    {isManager && req.status === "pending" && (
+                      <div className="flex gap-2 mt-3 pt-3 border-t border-gray-100">
+                        <button
+                          onClick={(e) => { e.stopPropagation(); haptic(); updateRequest.mutate({ id: req.id, data: { status: "approved" } }); }}
+                          className="flex-1 flex items-center justify-center gap-1.5 py-2 bg-emerald-50 text-emerald-700 text-xs font-semibold rounded-xl active:scale-95 transition-transform"
+                        >
+                          <Check className="w-3.5 h-3.5" /> Approve
+                        </button>
+                        <button
+                          onClick={(e) => { e.stopPropagation(); haptic(); updateRequest.mutate({ id: req.id, data: { status: "denied" } }); }}
+                          className="flex-1 flex items-center justify-center gap-1.5 py-2 bg-red-50 text-red-600 text-xs font-semibold rounded-xl active:scale-95 transition-transform"
+                        >
+                          <X className="w-3.5 h-3.5" /> Deny
+                        </button>
+                      </div>
+                    )}
+                  </motion.button>
+                );
+              })}
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
+
+      <TimeOffDialog open={dialogOpen} onOpenChange={setDialogOpen} request={selectedRequest} employees={employees} onSave={handleSave} />
     </div>
   );
 }

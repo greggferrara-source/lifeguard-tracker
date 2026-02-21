@@ -1,32 +1,17 @@
 import React, { useState, useMemo } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { base44 } from "@/api/base44Client";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
-import { Search, Plus, Mail, Phone } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Search, Plus, Mail, Phone, ChevronRight } from "lucide-react";
 import EmployeeDialog from "@/components/employees/EmployeeDialog";
 import EmployeeProfile from "@/components/employees/EmployeeProfile";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 
-const roleLabels = {
-  lifeguard: "Lifeguard",
-  head_lifeguard: "Head Lifeguard",
-  supervisor: "Supervisor",
-  manager: "Manager",
-};
+const roleLabels = { lifeguard: "Lifeguard", head_lifeguard: "Head LG", supervisor: "Supervisor", manager: "Manager" };
+const statusDot = { active: "bg-emerald-400", inactive: "bg-gray-300", on_leave: "bg-amber-400" };
 
-const statusStyles = {
-  active: "bg-emerald-100 text-emerald-700",
-  inactive: "bg-slate-100 text-slate-500",
-  on_leave: "bg-amber-100 text-amber-700",
-};
+function haptic() { if (navigator.vibrate) navigator.vibrate(8); }
 
 export default function MobileEmployees() {
   const queryClient = useQueryClient();
@@ -35,198 +20,121 @@ export default function MobileEmployees() {
   const [editingEmployee, setEditingEmployee] = useState(null);
   const [selectedProfile, setSelectedProfile] = useState(null);
 
-  const { data: employees = [] } = useQuery({
-    queryKey: ["employees"],
-    queryFn: () => base44.entities.Employee.list(),
-  });
+  const { data: employees = [] } = useQuery({ queryKey: ["employees"], queryFn: () => base44.entities.Employee.list() });
+  const { data: shifts = [] } = useQuery({ queryKey: ["shifts"], queryFn: () => base44.entities.Shift.list("-created_date", 500) });
 
-  const { data: shifts = [] } = useQuery({
-    queryKey: ["shifts"],
-    queryFn: () => base44.entities.Shift.list("-created_date", 500),
-  });
-
-  const createEmployee = useMutation({
-    mutationFn: (data) => base44.entities.Employee.create(data),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["employees"] });
-      setDialogOpen(false);
-    },
-  });
-
-  const updateEmployee = useMutation({
-    mutationFn: ({ id, data }) => base44.entities.Employee.update(id, data),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["employees"] });
-      setDialogOpen(false);
-    },
-  });
-
-  const deleteEmployee = useMutation({
-    mutationFn: (id) => base44.entities.Employee.delete(id),
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: ["employees"] }),
-  });
+  const createEmployee = useMutation({ mutationFn: (data) => base44.entities.Employee.create(data), onSuccess: () => { queryClient.invalidateQueries({ queryKey: ["employees"] }); setDialogOpen(false); } });
+  const updateEmployee = useMutation({ mutationFn: ({ id, data }) => base44.entities.Employee.update(id, data), onSuccess: () => { queryClient.invalidateQueries({ queryKey: ["employees"] }); setDialogOpen(false); } });
+  const deleteEmployee = useMutation({ mutationFn: (id) => base44.entities.Employee.delete(id), onSuccess: () => queryClient.invalidateQueries({ queryKey: ["employees"] }) });
 
   const filtered = useMemo(() => {
     if (!search) return employees;
-    const searchLower = search.toLowerCase();
-    return employees.filter((e) =>
-      `${e.first_name} ${e.last_name} ${e.email} ${e.phone || ""}`.toLowerCase().includes(searchLower)
-    );
+    const q = search.toLowerCase();
+    return employees.filter((e) => `${e.first_name} ${e.last_name} ${e.email || ""} ${e.phone || ""}`.toLowerCase().includes(q));
   }, [employees, search]);
 
+  const grouped = useMemo(() => {
+    const g = {};
+    filtered.forEach((e) => {
+      const letter = (e.first_name?.[0] || "#").toUpperCase();
+      if (!g[letter]) g[letter] = [];
+      g[letter].push(e);
+    });
+    return Object.entries(g).sort(([a], [b]) => a.localeCompare(b));
+  }, [filtered]);
+
   const handleSave = (formData) => {
-    if (editingEmployee) {
-      updateEmployee.mutate({ id: editingEmployee.id, data: formData });
-    } else {
-      createEmployee.mutate(formData);
-    }
+    if (editingEmployee) updateEmployee.mutate({ id: editingEmployee.id, data: formData });
+    else createEmployee.mutate(formData);
   };
 
   return (
-    <div className="px-4 py-4 space-y-4 pb-24">
-      {/* Header */}
-      <div>
-        <h1 className="text-2xl font-bold text-gray-900">Employees</h1>
-        <p className="text-sm text-gray-500">{employees.length} team members</p>
-      </div>
-
-      {/* Search and Add */}
-      <div className="space-y-2">
+    <div className="flex flex-col h-full bg-gray-50 pb-24">
+      {/* Sticky Search Header */}
+      <div className="bg-white px-4 pt-4 pb-3 shadow-sm">
+        <div className="flex items-center justify-between mb-3">
+          <div>
+            <h1 className="text-xl font-bold text-gray-900">Team</h1>
+            <p className="text-sm text-gray-400">{employees.length} members</p>
+          </div>
+          <button
+            onClick={() => { haptic(); setEditingEmployee(null); setDialogOpen(true); }}
+            className="w-11 h-11 bg-[#1a9c5b] rounded-full flex items-center justify-center shadow-lg active:scale-95 transition-transform"
+          >
+            <Plus className="w-5 h-5 text-white" />
+          </button>
+        </div>
         <div className="relative">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
-          <Input
-            placeholder="Search..."
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none" />
+          <input
+            type="search"
+            placeholder="Search team..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="pl-9 text-sm"
+            className="w-full pl-9 pr-4 py-2.5 bg-gray-100 rounded-xl text-sm text-gray-900 placeholder-gray-400 border-none outline-none focus:ring-2 focus:ring-[#1a9c5b]/30"
           />
         </div>
-        <Button
-          onClick={() => {
-            setEditingEmployee(null);
-            setDialogOpen(true);
-          }}
-          className="w-full bg-[#1a9c5b] hover:bg-[#158a4e]"
-        >
-          <Plus className="w-4 h-4 mr-2" /> Add Employee
-        </Button>
       </div>
 
-      {/* Employees List */}
-      <div className="space-y-3">
+      {/* List */}
+      <div className="flex-1 overflow-auto">
         {filtered.length === 0 ? (
-          <Card>
-            <CardContent className="pt-8 pb-8 text-center">
-              <p className="text-gray-500 text-sm">No employees found</p>
-            </CardContent>
-          </Card>
+          <div className="flex flex-col items-center justify-center py-20 text-center">
+            <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mb-4">
+              <Search className="w-7 h-7 text-gray-300" />
+            </div>
+            <p className="font-semibold text-gray-400">No employees found</p>
+          </div>
         ) : (
-          filtered.map((emp) => (
-            <Card
-              key={emp.id}
-              className="cursor-pointer hover:shadow-md transition-shadow"
-              onClick={() => setSelectedProfile(emp)}
-            >
-              <CardContent className="pt-4">
-                <div className="space-y-2">
-                  <div className="flex items-start gap-3">
-                    <div
-                      className="w-10 h-10 rounded-full flex items-center justify-center text-white font-bold text-sm flex-shrink-0"
-                      style={{ backgroundColor: emp.color || "#0ea5e9" }}
-                    >
-                      {(emp.first_name?.[0] || "")}{(emp.last_name?.[0] || "")}
+          grouped.map(([letter, emps]) => (
+            <div key={letter}>
+              <div className="px-4 py-1.5 bg-gray-50 sticky top-0 z-10">
+                <span className="text-xs font-bold text-gray-400 tracking-widest">{letter}</span>
+              </div>
+              <div className="bg-white divide-y divide-gray-100">
+                {emps.map((emp) => (
+                  <motion.button
+                    key={emp.id}
+                    layout
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    onClick={() => { haptic(); setSelectedProfile(emp); }}
+                    className="w-full text-left px-4 py-3 flex items-center gap-3 active:bg-gray-50 transition-colors"
+                  >
+                    {/* Avatar */}
+                    <div className="relative flex-shrink-0">
+                      <div
+                        className="w-11 h-11 rounded-full flex items-center justify-center text-white text-sm font-bold"
+                        style={{ backgroundColor: emp.color || "#1a9c5b" }}
+                      >
+                        {emp.first_name?.[0]}{emp.last_name?.[0]}
+                      </div>
+                      <span className={`absolute bottom-0 right-0 w-3 h-3 rounded-full border-2 border-white ${statusDot[emp.status] || "bg-gray-300"}`} />
                     </div>
+                    {/* Info */}
                     <div className="flex-1 min-w-0">
-                      <p className="font-semibold text-gray-900 truncate">
-                        {emp.first_name} {emp.last_name}
-                      </p>
-                      <p className="text-xs text-gray-500">{roleLabels[emp.role]}</p>
+                      <p className="font-semibold text-gray-900 text-sm">{emp.first_name} {emp.last_name}</p>
+                      <p className="text-xs text-gray-400">{roleLabels[emp.role] || emp.role}</p>
                     </div>
-                  </div>
-
-                  <div className="flex gap-2 flex-wrap">
-                    <Badge
-                      variant="secondary"
-                      className={`text-xs rounded-full ${statusStyles[emp.status] || ""}`}
-                    >
-                      {emp.status}
-                    </Badge>
-                    {emp.hourly_rate && (
-                      <Badge variant="outline" className="text-xs rounded-full">
-                        ${emp.hourly_rate}/hr
-                      </Badge>
-                    )}
-                  </div>
-
-                  {emp.email && (
-                    <div className="flex items-center gap-2 text-xs text-gray-600">
-                      <Mail className="w-3 h-3" />
-                      <a href={`mailto:${emp.email}`} className="truncate">
-                        {emp.email}
-                      </a>
-                    </div>
-                  )}
-
-                  {emp.phone && (
-                    <div className="flex items-center gap-2 text-xs text-gray-600">
-                      <Phone className="w-3 h-3" />
-                      <a href={`tel:${emp.phone}`}>{emp.phone}</a>
-                    </div>
-                  )}
-
-                  <div className="flex gap-2 pt-2">
-                    <Button
-                      size="sm"
-                      variant="outline"
-                      className="flex-1 text-xs"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        setEditingEmployee(emp);
-                        setDialogOpen(true);
-                      }}
-                    >
-                      Edit
-                    </Button>
-                    <Button
-                      size="sm"
-                      variant="outline"
-                      className="flex-1 text-xs text-red-600 hover:text-red-700"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        deleteEmployee.mutate(emp.id);
-                      }}
-                    >
-                      Delete
-                    </Button>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
+                    <ChevronRight className="w-4 h-4 text-gray-300 flex-shrink-0" />
+                  </motion.button>
+                ))}
+              </div>
+            </div>
           ))
         )}
       </div>
 
-      <EmployeeDialog
-        open={dialogOpen}
-        onOpenChange={setDialogOpen}
-        employee={editingEmployee}
-        onSave={handleSave}
-      />
+      <EmployeeDialog open={dialogOpen} onOpenChange={setDialogOpen} employee={editingEmployee} onSave={handleSave} />
 
       <Dialog open={!!selectedProfile} onOpenChange={() => setSelectedProfile(null)}>
         <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
-          <DialogHeader>
-            <DialogTitle>Employee Profile</DialogTitle>
-          </DialogHeader>
+          <DialogHeader><DialogTitle>Employee Profile</DialogTitle></DialogHeader>
           {selectedProfile && (
             <EmployeeProfile
               employee={selectedProfile}
               shifts={shifts}
-              onEdit={() => {
-                setEditingEmployee(selectedProfile);
-                setDialogOpen(true);
-                setSelectedProfile(null);
-              }}
+              onEdit={() => { setEditingEmployee(selectedProfile); setDialogOpen(true); setSelectedProfile(null); }}
               onClose={() => setSelectedProfile(null)}
             />
           )}

@@ -1,217 +1,193 @@
 import React, { useState, useMemo } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { base44 } from "@/api/base44Client";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { format, startOfWeek, addDays, subDays, isSameDay } from "date-fns";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogDescription,
-} from "@/components/ui/dialog";
-import { ChevronLeft, ChevronRight, Plus, AlertCircle } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+import { ChevronLeft, ChevronRight, Plus, MapPin, Clock, User } from "lucide-react";
 import ShiftDialog from "@/components/schedule/ShiftDialog";
+
+const statusColors = {
+  scheduled: "#1a9c5b",
+  open: "#f59e0b",
+  completed: "#6b7280",
+  cancelled: "#ef4444",
+  no_show: "#7c3aed",
+};
+
+function haptic() {
+  if (navigator.vibrate) navigator.vibrate(8);
+}
 
 export default function MobileSchedule() {
   const queryClient = useQueryClient();
   const [date, setDate] = useState(new Date());
   const [dialogOpen, setDialogOpen] = useState(false);
   const [selectedShift, setSelectedShift] = useState(null);
-  const [defaultLocationId, setDefaultLocationId] = useState("");
 
   const dateStr = format(date, "yyyy-MM-dd");
   const weekStart = startOfWeek(date, { weekStartsOn: 0 });
   const days = Array.from({ length: 7 }, (_, i) => addDays(weekStart, i));
 
-  const { data: shifts = [] } = useQuery({
-    queryKey: ["shifts"],
-    queryFn: () => base44.entities.Shift.list("-date", 500),
-  });
+  const { data: shifts = [] } = useQuery({ queryKey: ["shifts"], queryFn: () => base44.entities.Shift.list("-date", 500) });
+  const { data: employees = [] } = useQuery({ queryKey: ["employees"], queryFn: () => base44.entities.Employee.list() });
+  const { data: locations = [] } = useQuery({ queryKey: ["locations"], queryFn: () => base44.entities.Location.list() });
 
-  const { data: employees = [] } = useQuery({
-    queryKey: ["employees"],
-    queryFn: () => base44.entities.Employee.list(),
-  });
+  const updateShift = useMutation({ mutationFn: ({ id, data }) => base44.entities.Shift.update(id, data), onSuccess: () => { queryClient.invalidateQueries({ queryKey: ["shifts"] }); setDialogOpen(false); } });
+  const createShift = useMutation({ mutationFn: (data) => base44.entities.Shift.create(data), onSuccess: () => { queryClient.invalidateQueries({ queryKey: ["shifts"] }); setDialogOpen(false); } });
+  const deleteShift = useMutation({ mutationFn: (id) => base44.entities.Shift.delete(id), onSuccess: () => queryClient.invalidateQueries({ queryKey: ["shifts"] }) });
 
-  const { data: locations = [] } = useQuery({
-    queryKey: ["locations"],
-    queryFn: () => base44.entities.Location.list(),
-  });
-
-  const updateShift = useMutation({
-    mutationFn: ({ id, data }) => base44.entities.Shift.update(id, data),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["shifts"] });
-      setDialogOpen(false);
-    },
-  });
-
-  const createShift = useMutation({
-    mutationFn: (data) => base44.entities.Shift.create(data),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["shifts"] });
-      setDialogOpen(false);
-    },
-  });
-
-  const deleteShift = useMutation({
-    mutationFn: (id) => base44.entities.Shift.delete(id),
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: ["shifts"] }),
-  });
-
-  const dayShifts = useMemo(
-    () => shifts.filter((s) => s.date === dateStr),
-    [shifts, dateStr]
-  );
-
-  const handleSave = (formData) => {
-    if (selectedShift) {
-      updateShift.mutate({ id: selectedShift.id, data: formData });
-    } else {
-      createShift.mutate(formData);
-    }
-  };
-
+  const dayShifts = useMemo(() => shifts.filter((s) => s.date === dateStr), [shifts, dateStr]);
   const activeLocations = locations.filter((l) => l.status === "active" || !l.status);
 
+  const handleSave = (formData) => {
+    if (selectedShift) updateShift.mutate({ id: selectedShift.id, data: formData });
+    else createShift.mutate(formData);
+  };
+
+  const shiftsByLocation = useMemo(() => {
+    const grouped = {};
+    dayShifts.forEach((s) => {
+      const key = s.location_id || "unassigned";
+      if (!grouped[key]) grouped[key] = [];
+      grouped[key].push(s);
+    });
+    return grouped;
+  }, [dayShifts]);
+
   return (
-    <div className="px-4 py-4 space-y-4 pb-24">
-      {/* Header */}
-      <div>
-        <h1 className="text-2xl font-bold text-gray-900">Schedule</h1>
-        <p className="text-sm text-gray-500">{format(date, "EEEE, MMMM d")}</p>
-      </div>
+    <div className="flex flex-col h-full bg-gray-50 pb-24">
+      {/* Date Header */}
+      <div className="bg-white px-4 pt-4 pb-2 shadow-sm">
+        <div className="flex items-center justify-between mb-3">
+          <div>
+            <h1 className="text-xl font-bold text-gray-900">{format(date, "EEEE")}</h1>
+            <p className="text-sm text-gray-400">{format(date, "MMMM d, yyyy")}</p>
+          </div>
+          <button
+            onClick={() => { haptic(); setSelectedShift(null); setDialogOpen(true); }}
+            className="w-11 h-11 bg-[#1a9c5b] rounded-full flex items-center justify-center shadow-lg active:scale-95 transition-transform"
+          >
+            <Plus className="w-5 h-5 text-white" />
+          </button>
+        </div>
 
-      {/* Date Navigation */}
-      <div className="flex items-center justify-between gap-2">
-        <Button
-          variant="outline"
-          size="icon"
-          className="h-8 w-8"
-          onClick={() => setDate(subDays(date, 1))}
-        >
-          <ChevronLeft className="w-4 h-4" />
-        </Button>
-
-        <div className="flex-1 flex gap-1 overflow-x-auto">
+        {/* Week Strip */}
+        <div className="flex gap-1.5 pb-2">
           {days.map((day, i) => {
             const isSelected = isSameDay(day, date);
             const isToday = isSameDay(day, new Date());
+            const hasShifts = shifts.some((s) => s.date === format(day, "yyyy-MM-dd"));
             return (
               <button
                 key={i}
-                onClick={() => setDate(day)}
-                className={`flex-1 min-w-[50px] py-2 rounded-lg text-center transition-colors ${
-                  isSelected
-                    ? "bg-[#1a9c5b] text-white"
-                    : isToday
-                    ? "bg-blue-50 text-blue-600 border border-blue-200"
-                    : "bg-gray-50 text-gray-600"
+                onClick={() => { haptic(); setDate(day); }}
+                className={`flex-1 py-2 rounded-xl text-center transition-all active:scale-95 ${
+                  isSelected ? "bg-[#1a9c5b] shadow-sm" : isToday ? "bg-[#f0faf5]" : "bg-transparent"
                 }`}
               >
-                <div className="text-xs font-semibold">{format(day, "EEE")}</div>
-                <div className="text-sm font-bold">{format(day, "d")}</div>
+                <div className={`text-[10px] font-semibold uppercase tracking-wide ${isSelected ? "text-white/80" : "text-gray-400"}`}>
+                  {format(day, "EEE")}
+                </div>
+                <div className={`text-base font-bold ${isSelected ? "text-white" : isToday ? "text-[#1a9c5b]" : "text-gray-700"}`}>
+                  {format(day, "d")}
+                </div>
+                {hasShifts && (
+                  <div className={`w-1.5 h-1.5 rounded-full mx-auto mt-0.5 ${isSelected ? "bg-white/60" : "bg-[#1a9c5b]"}`} />
+                )}
               </button>
             );
           })}
         </div>
-
-        <Button
-          variant="outline"
-          size="icon"
-          className="h-8 w-8"
-          onClick={() => setDate(addDays(date, 1))}
-        >
-          <ChevronRight className="w-4 h-4" />
-        </Button>
       </div>
 
-      {/* Add Shift Button */}
-      <Button
-        onClick={() => {
-          setSelectedShift(null);
-          setDefaultLocationId(activeLocations[0]?.id || "");
-          setDialogOpen(true);
-        }}
-        className="w-full bg-[#1a9c5b] hover:bg-[#158a4e]"
-      >
-        <Plus className="w-4 h-4 mr-2" /> Add Shift
-      </Button>
-
-      {/* Shifts List */}
-      <div className="space-y-3">
-        {dayShifts.length === 0 ? (
-          <Card>
-            <CardContent className="pt-8 pb-8 text-center">
-              <p className="text-gray-500 text-sm">No shifts scheduled for this day</p>
-            </CardContent>
-          </Card>
-        ) : (
-          dayShifts.map((shift) => {
-            const employee = employees.find((e) => e.id === shift.employee_id);
-            const location = locations.find((l) => l.id === shift.location_id);
-            const isOpen = !shift.employee_id || shift.status === "open";
-
-            return (
-              <Card
-                key={shift.id}
-                className="cursor-pointer hover:shadow-md transition-shadow border-l-4"
-                style={{ borderLeftColor: shift.color || "#1a9c5b" }}
-                onClick={() => {
-                  setSelectedShift(shift);
-                  setDialogOpen(true);
-                }}
-              >
-                <CardContent className="pt-4">
-                  <div className="space-y-2">
-                    <div className="flex items-start justify-between">
-                      <div>
-                        <p className="font-semibold text-gray-900">
-                          {employee ? `${employee.first_name} ${employee.last_name}` : "OPEN"}
-                        </p>
-                        <p className="text-sm text-gray-500">{location?.name}</p>
+      {/* Shifts */}
+      <div className="flex-1 overflow-auto px-4 pt-4 space-y-4">
+        <AnimatePresence mode="wait">
+          {dayShifts.length === 0 ? (
+            <motion.div
+              key="empty"
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="flex flex-col items-center justify-center py-20 text-center"
+            >
+              <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mb-4">
+                <Clock className="w-7 h-7 text-gray-300" />
+              </div>
+              <p className="font-semibold text-gray-400">No shifts today</p>
+              <p className="text-sm text-gray-300 mt-1">Tap + to add one</p>
+            </motion.div>
+          ) : (
+            <motion.div key="list" initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-3">
+              {Object.entries(shiftsByLocation).map(([locId, locShifts]) => {
+                const loc = locations.find((l) => l.id === locId);
+                return (
+                  <div key={locId}>
+                    {loc && (
+                      <div className="flex items-center gap-1.5 mb-2 px-1">
+                        <MapPin className="w-3.5 h-3.5 text-gray-400" />
+                        <span className="text-xs font-semibold text-gray-500 uppercase tracking-wide">{loc.name}</span>
                       </div>
-                      {isOpen && (
-                        <Badge className="bg-amber-100 text-amber-700 text-xs">Open</Badge>
-                      )}
-                    </div>
-                    <p className="text-sm font-medium text-gray-600">
-                      {shift.start_time} – {shift.end_time}
-                    </p>
-                    <div className="flex gap-2 pt-2">
-                      <Button
-                        size="sm"
-                        variant="outline"
-                        className="flex-1 text-xs"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          setSelectedShift(shift);
-                          setDialogOpen(true);
-                        }}
-                      >
-                        Edit
-                      </Button>
-                      <Button
-                        size="sm"
-                        variant="outline"
-                        className="flex-1 text-xs text-red-600 hover:text-red-700"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          deleteShift.mutate(shift.id);
-                        }}
-                      >
-                        Delete
-                      </Button>
+                    )}
+                    <div className="space-y-2">
+                      {locShifts.map((shift) => {
+                        const emp = employees.find((e) => e.id === shift.employee_id);
+                        const isOpen = !shift.employee_id || shift.status === "open";
+                        const accentColor = shift.color || statusColors[shift.status] || "#1a9c5b";
+
+                        return (
+                          <motion.button
+                            key={shift.id}
+                            layout
+                            initial={{ opacity: 0, y: 8 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            onClick={() => { haptic(); setSelectedShift(shift); setDialogOpen(true); }}
+                            className="w-full text-left bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden active:scale-[0.98] transition-transform"
+                          >
+                            <div className="flex items-stretch">
+                              {/* Color bar */}
+                              <div className="w-1 rounded-l-2xl flex-shrink-0" style={{ backgroundColor: accentColor }} />
+                              <div className="flex-1 px-4 py-3 flex items-center gap-3">
+                                {/* Avatar */}
+                                {emp ? (
+                                  <div
+                                    className="w-10 h-10 rounded-full flex-shrink-0 flex items-center justify-center text-white text-sm font-bold"
+                                    style={{ backgroundColor: emp.color || accentColor }}
+                                  >
+                                    {emp.first_name?.[0]}{emp.last_name?.[0]}
+                                  </div>
+                                ) : (
+                                  <div className="w-10 h-10 rounded-full flex-shrink-0 flex items-center justify-center bg-amber-100">
+                                    <User className="w-5 h-5 text-amber-500" />
+                                  </div>
+                                )}
+                                {/* Info */}
+                                <div className="flex-1 min-w-0">
+                                  <p className="font-semibold text-gray-900 text-sm truncate">
+                                    {emp ? `${emp.first_name} ${emp.last_name}` : "Open Shift"}
+                                  </p>
+                                  <p className="text-xs text-gray-400 mt-0.5">
+                                    {shift.start_time} – {shift.end_time}
+                                  </p>
+                                </div>
+                                {/* Badge */}
+                                {isOpen && (
+                                  <span className="text-[11px] font-bold bg-amber-100 text-amber-700 px-2 py-1 rounded-full flex-shrink-0">
+                                    Open
+                                  </span>
+                                )}
+                              </div>
+                            </div>
+                          </motion.button>
+                        );
+                      })}
                     </div>
                   </div>
-                </CardContent>
-              </Card>
-            );
-          })
-        )}
+                );
+              })}
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
 
       <ShiftDialog
@@ -225,7 +201,7 @@ export default function MobileSchedule() {
         onSave={handleSave}
         onDelete={(id) => deleteShift.mutate(id)}
         defaultDate={dateStr}
-        defaultLocationId={defaultLocationId}
+        defaultLocationId={activeLocations[0]?.id || ""}
       />
     </div>
   );
