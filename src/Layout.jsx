@@ -227,12 +227,20 @@ export default function Layout({ children, currentPageName }) {
                     </Link>
                   </DropdownMenuItem>
                   <DropdownMenuItem asChild>
-                    <Link to={createPageUrl("Contact")} className="flex items-center gap-2">
-                      <Mail className="w-4 h-4" />
-                      <span>Contact Support</span>
-                    </Link>
+                   <Link to={createPageUrl("Contact")} className="flex items-center gap-2">
+                     <Mail className="w-4 h-4" />
+                     <span>Contact Support</span>
+                   </Link>
                   </DropdownMenuItem>
-                </DropdownMenuContent>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem
+                   onClick={() => base44.auth.logout(createPageUrl("Home"))}
+                   className="flex items-center gap-2 text-red-600 focus:text-red-600 cursor-pointer"
+                  >
+                   <LogOut className="w-4 h-4" />
+                   <span>Log Out</span>
+                  </DropdownMenuItem>
+                  </DropdownMenuContent>
               </DropdownMenu>
             </nav>
 
