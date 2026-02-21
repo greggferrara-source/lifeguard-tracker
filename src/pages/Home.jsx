@@ -15,6 +15,7 @@ import {
   MessageSquare,
   Menu,
   X,
+  Play,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
