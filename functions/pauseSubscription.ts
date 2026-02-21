@@ -22,22 +22,26 @@ Deno.serve(async (req) => {
     if (!stripeSub) return Response.json({ error: "Subscription not found in Stripe" }, { status: 404 });
 
     if (action === "pause") {
-      // Stripe doesn't have a native "pause" — we use pause_collection to stop billing.
-      // Proration is handled automatically when they resume (Stripe bills for the partial period used).
+      // Switch to offseason pricing ($0.99/month) instead of pausing billing
+      const offseasonPriceId = "price_1T36r1Jz3753BrBcoPODSgiL";
+      
       const updated = await stripe.subscriptions.update(sub.stripe_subscription_id, {
-        pause_collection: {
-          behavior: "void", // Voids invoices while paused (no charge, no credit)
-          resumes_at: resume_date ? Math.floor(new Date(resume_date).getTime() / 1000) : undefined,
+        items: {
+          0: {
+            price: offseasonPriceId,
+          },
         },
+        proration_behavior: "create_prorations",
       });
 
       // Update local record
       await base44.entities.UserSubscription.update(sub.id, {
         status: "paused",
         pause_resumes_at: resume_date || null,
+        plan_name: "offseason",
       });
 
-      console.log("Subscription paused for user:", user.email, "resumes:", resume_date || "manually");
+      console.log("Subscription switched to offseason pricing for user:", user.email, "resumes:", resume_date || "manually");
       return Response.json({ success: true, status: "paused", resumes_at: resume_date });
 
     } else if (action === "resume") {
