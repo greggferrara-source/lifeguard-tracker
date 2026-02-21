@@ -282,8 +282,8 @@ export default function Home() {
       </section>
 
       {/* ── Stats Bar ── */}
-      <section className="border-t border-b border-gray-100 bg-gray-50 py-12 px-6">
-        <div className="max-w-5xl mx-auto grid grid-cols-2 sm:grid-cols-4 gap-8 text-center">
+      <section className="border-t border-b border-gray-100 bg-gray-50 py-10 sm:py-12 px-4 sm:px-6">
+        <div className="max-w-5xl mx-auto grid grid-cols-2 sm:grid-cols-4 gap-6 sm:gap-8 text-center">
           {stats.map((s) => (
             <div key={s.label}>
               <p className="text-4xl font-extrabold text-[#1a9c5b]">{s.value}</p>
