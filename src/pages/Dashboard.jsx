@@ -70,6 +70,24 @@ export default function Dashboard() {
 
   const isAdmin = user?.role === "admin";
 
+  // Show setup wizard for new admins who haven't completed onboarding
+  const { data: onboardingStatus } = useQuery({
+    queryKey: ["onboarding-status"],
+    queryFn: async () => {
+      const u = await base44.auth.me().catch(() => null);
+      if (!u?.email) return null;
+      const results = await base44.entities.OnboardingStatus.filter({ user_email: u.email });
+      return results[0] || null;
+    },
+    enabled: isAdmin,
+  });
+
+  const isNewUser = isAdmin && onboardingStatus === null && employees.length === 0 && locations.length === 0;
+  if (isNewUser) {
+    window.location.href = createPageUrl("SetupWizard");
+    return null;
+  }
+
   return (
     <div className="bg-white">
       {/* Trial + Push banners */}
