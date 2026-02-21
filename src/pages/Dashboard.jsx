@@ -72,6 +72,12 @@ export default function Dashboard() {
 
   return (
     <div className="bg-white">
+      {/* Trial + Push banners */}
+      <div className="max-w-6xl mx-auto px-6 pt-4 space-y-2">
+        <TrialBanner user={user} subscription={subscription} />
+        <PushNotificationPrompt />
+      </div>
+
       {/* Hero Section */}
       <section className="px-6 py-20 sm:py-28 max-w-6xl mx-auto text-center">
         <h1 className="text-5xl sm:text-6xl font-bold text-gray-900 leading-tight mb-6">Lifeguard scheduling
