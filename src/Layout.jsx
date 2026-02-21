@@ -73,7 +73,7 @@ const moreNavItems = [
 { name: "Reports", icon: BarChart2, page: "Reports", roles: ["admin", "site_owner", "manager"] },
 { name: "Settings", icon: Settings, page: "Settings", roles: ["admin", "site_owner"] },
 { name: "Error Logs", icon: AlertTriangle, page: "ErrorLogs", roles: ["admin", "site_owner"] },
-{ name: "Admin Setup", icon: LayoutDashboard, page: "AdminSetup", roles: ["site_owner"] }];
+{ name: "Admin Setup", icon: LayoutDashboard, page: "AdminSetup", roles: ["admin", "site_owner"] }];
 
 
 export default function Layout({ children, currentPageName }) {
