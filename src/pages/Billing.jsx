@@ -6,6 +6,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { base44 } from "@/api/base44Client";
 import { CheckCircle2, AlertCircle, Clock, CreditCard, Download, ArrowRight, PauseCircle, PlayCircle, Loader2 } from "lucide-react";
+import { toast } from "sonner";
 
 export default function Billing() {
   const [pauseLoading, setPauseLoading] = useState(false);
@@ -32,17 +33,31 @@ export default function Billing() {
 
   const handlePause = async () => {
     setPauseLoading(true);
-    await base44.functions.invoke("pauseSubscription", { action: "pause", resume_date: resumeDate || undefined });
-    await queryClient.invalidateQueries({ queryKey: ["subscription"] });
-    setShowPauseDialog(false);
-    setPauseLoading(false);
+    try {
+      await base44.functions.invoke("pauseSubscription", { action: "pause", resume_date: resumeDate || undefined });
+      await queryClient.invalidateQueries({ queryKey: ["subscription"] });
+      setShowPauseDialog(false);
+      toast.success("Subscription paused successfully. No charges while paused.");
+    } catch (error) {
+      toast.error("Failed to pause subscription. Please try again.");
+      console.error("Pause error:", error);
+    } finally {
+      setPauseLoading(false);
+    }
   };
 
   const handleResume = async () => {
     setPauseLoading(true);
-    await base44.functions.invoke("pauseSubscription", { action: "resume" });
-    await queryClient.invalidateQueries({ queryKey: ["subscription"] });
-    setPauseLoading(false);
+    try {
+      await base44.functions.invoke("pauseSubscription", { action: "resume" });
+      await queryClient.invalidateQueries({ queryKey: ["subscription"] });
+      toast.success("Subscription resumed successfully.");
+    } catch (error) {
+      toast.error("Failed to resume subscription. Please try again.");
+      console.error("Resume error:", error);
+    } finally {
+      setPauseLoading(false);
+    }
   };
 
   const statusConfig = {
