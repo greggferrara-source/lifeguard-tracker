@@ -262,7 +262,7 @@ made simple.
         }
       </section>
 
-      {/* Why ShiftGuard */}
+      {/* Why LifeGuard Tracker */}
       <section className="px-6 py-20 bg-gray-50 border-t border-gray-200">
         <div className="max-w-4xl mx-auto">
           <h2 className="text-4xl font-bold text-gray-900 mb-12 text-center">

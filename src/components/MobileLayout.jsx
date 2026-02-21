@@ -29,7 +29,7 @@ export default function MobileLayout({ children, currentPageName }) {
         <div className="px-4 py-3 flex items-center justify-between">
           <Link to={createPageUrl("Dashboard")} className="flex items-center gap-2">
             <div className="w-8 h-8 rounded-lg bg-[#1a9c5b] flex items-center justify-center">
-              <span className="text-white font-bold text-sm">SG</span>
+              <span className="text-white font-bold text-sm">LT</span>
             </div>
             <span className="font-bold text-sm text-gray-900">LifeGuard Tracker</span>
           </Link>
