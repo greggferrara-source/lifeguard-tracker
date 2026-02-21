@@ -87,6 +87,9 @@ import ShiftSwaps from './pages/ShiftSwaps';
 import Terms from './pages/Terms';
 import TimeOff from './pages/TimeOff';
 import Tutorials from './pages/Tutorials';
+import MobileBilling from './pages/MobileBilling';
+import MobileLocations from './pages/MobileLocations';
+import MobileCertifications from './pages/MobileCertifications';
 import __Layout from './Layout.jsx';
 
 
@@ -131,6 +134,9 @@ export const PAGES = {
     "Terms": Terms,
     "TimeOff": TimeOff,
     "Tutorials": Tutorials,
+    "MobileBilling": MobileBilling,
+    "MobileLocations": MobileLocations,
+    "MobileCertifications": MobileCertifications,
 }
 
 export const pagesConfig = {
