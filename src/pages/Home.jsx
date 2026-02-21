@@ -201,17 +201,17 @@ export default function Home() {
           <img
             src="https://images.unsplash.com/photo-1530549387789-4c1017266635?w=600&h=420&fit=crop&crop=center"
             alt="Lifeguard watching pool"
-            className="rounded-2xl object-cover w-full h-56 sm:h-72"
+            className="rounded-2xl object-cover w-full h-56 sm:h-72 shadow-lg"
           />
           <img
-            src="https://images.unsplash.com/photo-1519861531473-9200262188bf?w=600&h=420&fit=crop&crop=center"
-            alt="Aquatics team"
-            className="rounded-2xl object-cover w-full h-56 sm:h-72 mt-6"
+            src="https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=600&h=420&fit=crop&crop=center"
+            alt="Lifeguard team meeting"
+            className="rounded-2xl object-cover w-full h-56 sm:h-72 mt-6 shadow-lg"
           />
           <img
-            src="https://images.unsplash.com/photo-1596731498067-2dd5d5e1e6b4?w=600&h=420&fit=crop&crop=center"
-            alt="Pool facility"
-            className="rounded-2xl object-cover w-full h-56 sm:h-72"
+            src="https://images.unsplash.com/photo-1575505586569-646b2ca898fc?w=600&h=420&fit=crop&crop=center"
+            alt="Indoor pool facility"
+            className="rounded-2xl object-cover w-full h-56 sm:h-72 shadow-lg"
           />
         </div>
       </section>
