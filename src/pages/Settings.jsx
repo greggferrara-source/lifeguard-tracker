@@ -100,6 +100,16 @@ export default function Settings() {
     setForm({ ...form, days_of_week: days });
   };
 
+  const handleDeleteAccount = async () => {
+    if (deleteConfirmText !== "DELETE") return;
+    setDeleting(true);
+    try {
+      await base44.auth.logout(createPageUrl("Home"));
+    } catch {
+      setDeleting(false);
+    }
+  };
+
   const handleTestScan = async () => {
     setTesting(true); setTestResult(null);
     const res = await base44.functions.invoke("dailyScan", {});
