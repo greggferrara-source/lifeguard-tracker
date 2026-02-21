@@ -223,6 +223,20 @@ export default function Settings() {
         </div>
       )}
 
+      {/* Delete Account Section */}
+      <div className="border-t border-gray-200 pt-8">
+        <h2 className="text-lg font-semibold text-gray-900 mb-1">Danger Zone</h2>
+        <p className="text-sm text-gray-500 mb-4">Irreversible account actions.</p>
+        <Button
+          variant="outline"
+          className="border-red-300 text-red-600 hover:bg-red-50"
+          onClick={() => { setDeleteConfirmText(""); setShowDeleteDialog(true); }}
+        >
+          <Trash2 className="w-4 h-4 mr-2" />
+          Delete Account
+        </Button>
+      </div>
+
       {/* Template Dialog */}
       <Dialog open={templateOpen} onOpenChange={setTemplateOpen}>
         <DialogContent className="sm:max-w-md">
