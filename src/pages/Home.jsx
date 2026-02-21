@@ -342,18 +342,33 @@ export default function Home() {
             </p>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
-            {features.map((f) => (
-              <div
-                key={f.title}
-                className="bg-white rounded-xl border border-gray-200 p-7 hover:shadow-lg hover:border-[#1a9c5b] transition-all group cursor-pointer"
-              >
-                <div className="w-11 h-11 bg-[#f0faf5] group-hover:bg-[#1a9c5b] rounded-xl flex items-center justify-center mb-5 transition-colors">
-                  <f.icon className="w-5 h-5 text-[#1a9c5b] group-hover:text-white transition-colors" />
-                </div>
-                <h3 className="font-bold text-gray-900 mb-2 text-lg">{f.title}</h3>
-                <p className="text-sm text-gray-500 leading-relaxed">{f.desc}</p>
-              </div>
-            ))}
+            {features.map((f) => {
+              // Map feature titles to module IDs
+              const moduleMap = {
+                "Smart Scheduling": "scheduling",
+                "Team Management": "employees",
+                "Time & Attendance": "timeclock",
+                "Compliance & Safety": "alerts",
+                "Reports & Analytics": "reports",
+                "Communications": "reports"
+              };
+              const moduleId = moduleMap[f.title] || "scheduling";
+              return (
+                <Link
+                  key={f.title}
+                  to={createPageUrl("Features") + `/${moduleId}`}
+                  className="block"
+                >
+                  <div className="bg-white rounded-xl border border-gray-200 p-7 hover:shadow-lg hover:border-[#1a9c5b] transition-all group cursor-pointer h-full">
+                    <div className="w-11 h-11 bg-[#f0faf5] group-hover:bg-[#1a9c5b] rounded-xl flex items-center justify-center mb-5 transition-colors">
+                      <f.icon className="w-5 h-5 text-[#1a9c5b] group-hover:text-white transition-colors" />
+                    </div>
+                    <h3 className="font-bold text-gray-900 mb-2 text-lg">{f.title}</h3>
+                    <p className="text-sm text-gray-500 leading-relaxed">{f.desc}</p>
+                  </div>
+                </Link>
+              );
+            })}
           </div>
         </div>
       </section>
