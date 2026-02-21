@@ -138,31 +138,34 @@ export default function Schedule() {
     setSwapOpen(false);
   };
 
-  const handleDragEnd = async (result) => {
+  const handleDragEnd = (result) => {
     const { source, destination, draggableId } = result;
     if (!destination) return;
     
     const shift = shifts.find(s => s.id === draggableId);
     if (!shift) return;
 
-    const [locId, dateStr, _] = source.droppableId.split("-");
-    const [newLocId, newDateStr, __] = destination.droppableId.split("-");
+    const [locId, dateStr] = source.droppableId.split("-");
+    const [newLocId, newDateStr] = destination.droppableId.split("-");
 
     if (view === "location") {
-      const newData = {
-        ...shift,
-        location_id: newLocId,
-        date: newDateStr,
-      };
-      await updateShift.mutate({ id: shift.id, data: newData });
+      updateShift.mutate({
+        id: shift.id,
+        data: {
+          ...shift,
+          location_id: newLocId,
+          date: newDateStr,
+        }
+      });
     } else if (view === "employee") {
-      const empId = newLocId; // In employee view, droppableId is empId-date
-      const newData = {
-        ...shift,
-        employee_id: empId,
-        date: newDateStr,
-      };
-      await updateShift.mutate({ id: shift.id, data: newData });
+      updateShift.mutate({
+        id: shift.id,
+        data: {
+          ...shift,
+          employee_id: newLocId,
+          date: newDateStr,
+        }
+      });
     }
   };
 
