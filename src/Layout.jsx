@@ -87,7 +87,10 @@ export default function Layout({ children, currentPageName }) {
   const mobilePageMap = {
     "Schedule": "MobileSchedule",
     "Employees": "MobileEmployees",
-    "TimeOff": "MobileTimeOff"
+    "TimeOff": "MobileTimeOff",
+    "Billing": "MobileBilling",
+    "Locations": "MobileLocations",
+    "Certifications": "MobileCertifications"
   };
 
   // Redirect to mobile page if on mobile
