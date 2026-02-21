@@ -16,13 +16,27 @@ export default function Contact() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    await base44.integrations.Core.SendEmail({
-      to: "support@lifeguardtracker.app",
-      subject: `[Support] ${form.subject}`,
-      body: `From: ${form.name} (${form.email})\n\n${form.message}`,
-    });
-    setSubmitted(true);
-    setLoading(false);
+    try {
+      // Log feedback
+      await base44.entities.Feedback.create({
+        email: form.email,
+        name: form.name,
+        type: "general",
+        content: form.message,
+        page: "contact",
+      });
+      // Send email
+      await base44.integrations.Core.SendEmail({
+        to: "support@lifeguardtracker.app",
+        subject: `[Support] ${form.subject}`,
+        body: `From: ${form.name} (${form.email})\n\n${form.message}`,
+      });
+      setSubmitted(true);
+    } catch (error) {
+      console.error("Error submitting feedback:", error);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
