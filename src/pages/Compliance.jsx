@@ -278,6 +278,96 @@ export default function Compliance() {
         </div>
       </section>
 
+      {/* Labor Law Alerts Section */}
+      <section className="py-20 px-6 max-w-7xl mx-auto">
+        <div className="mb-12">
+          <h2 className="text-4xl font-bold text-gray-900 mb-4">Location-Based Labor Law Alerts</h2>
+          <p className="text-xl text-gray-600">Stay informed about regulatory changes affecting your facility</p>
+
+          <div className="mt-8 flex gap-4 items-center">
+            <label className="text-sm font-semibold text-gray-700">Select State:</label>
+            <select
+              value={userLocation}
+              onChange={(e) => setUserLocation(e.target.value)}
+              className="px-4 py-2 border border-gray-300 rounded-lg"
+            >
+              {Object.entries(laborLawAlerts).map(([code, data]) => (
+                <option key={code} value={code}>
+                  {data.state}
+                </option>
+              ))}
+            </select>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {laborLawAlerts[userLocation]?.alerts.map((alert, idx) => (
+            <div
+              key={idx}
+              className="bg-yellow-50 border-l-4 border-yellow-400 p-6 rounded-lg hover:shadow-md transition-shadow"
+            >
+              <div className="flex items-start gap-4">
+                <AlertCircle className="w-6 h-6 text-yellow-600 flex-shrink-0 mt-1" />
+                <div className="flex-1">
+                  <h3 className="font-bold text-gray-900 mb-1">{alert.title}</h3>
+                  <p className="text-sm text-gray-700 mb-2">{alert.impact}</p>
+                  <p className="text-xs text-gray-500">Updated: {alert.date}</p>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* Manual Compliance Check Section */}
+      <section className="py-20 px-6 bg-blue-50">
+        <div className="max-w-4xl mx-auto">
+          <div className="bg-white rounded-2xl p-8 shadow-lg">
+            <div className="flex items-start gap-4 mb-6">
+              <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
+                <Zap className="w-6 h-6 text-blue-600" />
+              </div>
+              <div>
+                <h2 className="text-2xl font-bold text-gray-900">Manual Compliance Check</h2>
+                <p className="text-gray-600 mt-1">Trigger an immediate comprehensive compliance audit for your facility</p>
+              </div>
+            </div>
+
+            {checkResult && (
+              <div className={`mb-6 p-4 rounded-lg border-l-4 ${
+                checkResult.status === "pass" ? "bg-green-50 border-green-400" : "bg-yellow-50 border-yellow-400"
+              }`}>
+                <div className="flex items-start gap-3">
+                  <CheckCircle2 className={`w-5 h-5 ${checkResult.status === "pass" ? "text-green-600" : "text-yellow-600"}`} />
+                  <div>
+                    <p className="font-semibold text-gray-900 mb-2">Compliance Check Complete</p>
+                    {checkResult.findings?.map((finding, idx) => (
+                      <div key={idx} className="flex items-center gap-2 text-sm text-gray-700 mb-1">
+                        <CheckCircle2 className="w-4 h-4 text-green-600" />
+                        {finding.category}: {finding.status}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            )}
+
+            <Button
+              onClick={handleComplianceCheck}
+              disabled={checkingCompliance || locations.length === 0}
+              className="bg-blue-600 hover:bg-blue-700 h-12 px-6 text-white font-semibold flex items-center gap-2"
+            >
+              {checkingCompliance ? "Checking..." : "Run Compliance Check"}
+              <Zap className="w-4 h-4" />
+            </Button>
+
+            {locations.length === 0 && (
+              <p className="text-sm text-gray-600 mt-4">Create a location first to run compliance checks</p>
+            )}
+          </div>
+        </div>
+      </section>
+
       {/* CTA Section */}
       <section className="py-20 px-6 bg-gradient-to-r from-blue-600 to-cyan-600">
         <div className="max-w-4xl mx-auto text-center text-white">
@@ -290,12 +380,13 @@ export default function Compliance() {
               Start Free Trial
               <ArrowRight className="w-4 h-4" />
             </Button>
-            <Button
-              variant="outline"
-              className="border-white text-white hover:bg-white/10 h-12 px-8 font-semibold"
-            >
-              Schedule Demo
-            </Button>
+            <Link to={createPageUrl("Pricing")}>
+              <Button
+                className="border-white text-white hover:bg-white/10 h-12 px-8 font-semibold bg-transparent border-2"
+              >
+                View Pricing
+              </Button>
+            </Link>
           </div>
         </div>
       </section>
