@@ -183,6 +183,18 @@ export default function Settings() {
         </div>
       )}
 
+      {tab === "team" && (
+        <div className="space-y-6">
+          <InviteEmployees />
+        </div>
+      )}
+
+      {tab === "privacy" && (
+        <div className="space-y-6">
+          <DataDeletion />
+        </div>
+      )}
+
       {tab === "automation" && (
         <div className="space-y-5">
           <div>
