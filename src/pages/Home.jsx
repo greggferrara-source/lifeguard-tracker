@@ -199,17 +199,17 @@ export default function Home() {
       <section className="px-6 pb-20 max-w-6xl mx-auto">
         <div className="grid grid-cols-3 gap-4 mt-10">
           <img
-            src="https://images.unsplash.com/photo-1560090995-01632a28895b?w=500&h=380&fit=crop"
-            alt="Lifeguard at pool"
+            src="https://images.unsplash.com/photo-1530549387789-4c1017266635?w=600&h=420&fit=crop&crop=center"
+            alt="Lifeguard watching pool"
             className="rounded-2xl object-cover w-full h-56 sm:h-72"
           />
           <img
-            src="https://images.unsplash.com/photo-1544717297-fa95b6ee9643?w=500&h=380&fit=crop"
+            src="https://images.unsplash.com/photo-1519861531473-9200262188bf?w=600&h=420&fit=crop&crop=center"
             alt="Aquatics team"
             className="rounded-2xl object-cover w-full h-56 sm:h-72 mt-6"
           />
           <img
-            src="https://images.unsplash.com/photo-1571902943202-507ec2618e8f?w=500&h=380&fit=crop"
+            src="https://images.unsplash.com/photo-1596731498067-2dd5d5e1e6b4?w=600&h=420&fit=crop&crop=center"
             alt="Pool facility"
             className="rounded-2xl object-cover w-full h-56 sm:h-72"
           />
