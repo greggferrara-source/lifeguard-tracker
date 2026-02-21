@@ -142,21 +142,7 @@ export default function Pricing() {
         <p className="text-xl text-gray-500 max-w-2xl mx-auto mb-10">
           Start free for 14 days. No credit card required. Cancel anytime.
         </p>
-        {/* Toggle */}
-        <div className="inline-flex items-center gap-3 bg-gray-100 rounded-full p-1">
-          <button
-            onClick={() => setAnnual(false)}
-            className={`px-5 py-2 rounded-full text-sm font-medium transition-all ${!annual ? "bg-white shadow text-gray-900" : "text-gray-500"}`}
-          >
-            Monthly
-          </button>
-          <button
-            onClick={() => setAnnual(true)}
-            className={`px-5 py-2 rounded-full text-sm font-medium transition-all ${annual ? "bg-white shadow text-gray-900" : "text-gray-500"}`}
-          >
-            Annual <span className="text-[#1a9c5b] ml-1 text-xs font-semibold">Save 25%</span>
-          </button>
-        </div>
+        <p className="text-gray-500 text-base">Pricing is per user, per month.</p>
       </section>
 
       {/* Plans */}
