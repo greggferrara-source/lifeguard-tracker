@@ -37,6 +37,7 @@ import {
 "@/components/ui/dropdown-menu";
 import { useQuery } from "@tanstack/react-query";
 import { base44 } from "@/api/base44Client";
+import FeedbackWidget from "@/components/FeedbackWidget";
 
 const primaryNavItems = [
 { name: "Schedule", icon: CalendarDays, page: "Schedule" },
@@ -338,6 +339,9 @@ export default function Layout({ children, currentPageName }) {
       <main className="bg-white">
         {children}
       </main>
+
+      {/* Feedback Widget */}
+      <FeedbackWidget />
     </div>);
 
 }
