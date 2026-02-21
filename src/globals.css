@@ -73,25 +73,48 @@ css
   background: hsl(220 13% 65%);
 }
 
-/* Mobile / Android Chrome fixes */
+/* Mobile / Android Chrome / iOS fixes */
 html {
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
   touch-action: manipulation;
+  overscroll-behavior: none;
+}
+
+body {
+  overscroll-behavior: none;
 }
 
 * {
   -webkit-tap-highlight-color: transparent;
 }
 
-button, a, [role="button"] {
+button, a, [role="button"], nav a, nav button {
   touch-action: manipulation;
   cursor: pointer;
+  -webkit-user-select: none;
+  user-select: none;
 }
 
 img {
   max-width: 100%;
   height: auto;
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: 222 47% 8%;
+    --foreground: 0 0% 95%;
+    --card: 222 47% 11%;
+    --card-foreground: 0 0% 95%;
+    --popover: 222 47% 11%;
+    --popover-foreground: 0 0% 95%;
+    --muted: 220 14% 20%;
+    --muted-foreground: 220 9% 60%;
+    --border: 220 13% 20%;
+    --input: 220 13% 20%;
+  }
 }
 
 /* Schedule grid styles */
