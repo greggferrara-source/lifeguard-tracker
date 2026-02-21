@@ -499,7 +499,7 @@ export default function Home() {
       </section>
 
       {/* ── Footer ── */}
-      <footer className="border-t border-gray-100 px-6 py-10 bg-white">
+      <footer className="border-t border-gray-100 px-4 sm:px-6 py-10 bg-white">
         <div className="max-w-6xl mx-auto">
           <div className="flex flex-col sm:flex-row items-start justify-between gap-8 mb-10">
             <div>
