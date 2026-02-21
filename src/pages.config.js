@@ -47,6 +47,7 @@
  *
  * The mainPage value must match a key in the PAGES object exactly.
  */
+import AdminSetup from './pages/AdminSetup';
 import Alerts from './pages/Alerts';
 import Announcements from './pages/Announcements';
 import Assignments from './pages/Assignments';
@@ -63,12 +64,16 @@ import EmployeeDashboard from './pages/EmployeeDashboard';
 import EmployeeDirectory from './pages/EmployeeDirectory';
 import EmployeeOnboarding from './pages/EmployeeOnboarding';
 import Employees from './pages/Employees';
+import ErrorLogs from './pages/ErrorLogs';
 import Home from './pages/Home';
 import Inspections from './pages/Inspections';
 import Locations from './pages/Locations';
 import MaintenanceReports from './pages/MaintenanceReports';
 import Messages from './pages/Messages';
+import MobileBilling from './pages/MobileBilling';
+import MobileCertifications from './pages/MobileCertifications';
 import MobileEmployees from './pages/MobileEmployees';
+import MobileLocations from './pages/MobileLocations';
 import MobileSchedule from './pages/MobileSchedule';
 import MobileTimeOff from './pages/MobileTimeOff';
 import MyAvailability from './pages/MyAvailability';
@@ -87,15 +92,11 @@ import ShiftSwaps from './pages/ShiftSwaps';
 import Terms from './pages/Terms';
 import TimeOff from './pages/TimeOff';
 import Tutorials from './pages/Tutorials';
-import MobileBilling from './pages/MobileBilling';
-import MobileLocations from './pages/MobileLocations';
-import MobileCertifications from './pages/MobileCertifications';
-import ErrorLogs from './pages/ErrorLogs';
-import AdminSetup from './pages/AdminSetup';
 import __Layout from './Layout.jsx';
 
 
 export const PAGES = {
+    "AdminSetup": AdminSetup,
     "Alerts": Alerts,
     "Announcements": Announcements,
     "Assignments": Assignments,
@@ -112,12 +113,16 @@ export const PAGES = {
     "EmployeeDirectory": EmployeeDirectory,
     "EmployeeOnboarding": EmployeeOnboarding,
     "Employees": Employees,
+    "ErrorLogs": ErrorLogs,
     "Home": Home,
     "Inspections": Inspections,
     "Locations": Locations,
     "MaintenanceReports": MaintenanceReports,
     "Messages": Messages,
+    "MobileBilling": MobileBilling,
+    "MobileCertifications": MobileCertifications,
     "MobileEmployees": MobileEmployees,
+    "MobileLocations": MobileLocations,
     "MobileSchedule": MobileSchedule,
     "MobileTimeOff": MobileTimeOff,
     "MyAvailability": MyAvailability,
@@ -136,11 +141,6 @@ export const PAGES = {
     "Terms": Terms,
     "TimeOff": TimeOff,
     "Tutorials": Tutorials,
-    "MobileBilling": MobileBilling,
-    "MobileLocations": MobileLocations,
-    "MobileCertifications": MobileCertifications,
-    "ErrorLogs": ErrorLogs,
-    "AdminSetup": AdminSetup,
 }
 
 export const pagesConfig = {
