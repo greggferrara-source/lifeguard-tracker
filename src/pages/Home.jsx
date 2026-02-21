@@ -138,7 +138,7 @@ export default function Home() {
     <div className="bg-white min-h-screen" style={{ fontFamily: "'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif", WebkitTextSizeAdjust: "100%" }}>
 
       {/* ── Top utility bar ── */}
-      <div className="hidden sm:flex justify-end items-center gap-5 px-8 py-2 text-xs text-gray-500 border-b border-gray-100 bg-white">
+      <div className="hidden lg:flex justify-end items-center gap-5 px-8 py-2 text-xs text-gray-500 border-b border-gray-100 bg-white">
         <a href="mailto:support@lifeguardtracker.app" className="hover:text-gray-900 transition-colors">Support</a>
         <span className="text-gray-300">|</span>
         <Link to={createPageUrl("Contact")} className="hover:text-gray-900 transition-colors">Contact</Link>
