@@ -245,24 +245,33 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ── Hero Image Grid (MakeShift style staggered) ── */}
-      <section className="px-6 pb-16 max-w-6xl mx-auto">
-        <div className="grid grid-cols-3 gap-4">
-          <div className="rounded-2xl overflow-hidden shadow-lg h-64 sm:h-80">
+      {/* ── Hero Image Grid ── */}
+      <section className="px-4 sm:px-6 pb-12 sm:pb-16 max-w-6xl mx-auto">
+        {/* Mobile: single image */}
+        <div className="block sm:hidden rounded-2xl overflow-hidden shadow-lg h-52">
+          <img
+            src="https://images.unsplash.com/photo-1530549387789-4c1017266635?w=800&h=500&fit=crop&crop=center"
+            alt="Lifeguard on duty at pool"
+            className="w-full h-full object-cover"
+          />
+        </div>
+        {/* Tablet+: staggered grid */}
+        <div className="hidden sm:grid grid-cols-3 gap-4">
+          <div className="rounded-2xl overflow-hidden shadow-lg h-64 sm:h-72 lg:h-80">
             <img
               src="https://images.unsplash.com/photo-1530549387789-4c1017266635?w=600&h=500&fit=crop&crop=center"
               alt="Lifeguard on duty at pool"
               className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
             />
           </div>
-          <div className="rounded-2xl overflow-hidden shadow-lg h-64 sm:h-80 mt-10">
+          <div className="rounded-2xl overflow-hidden shadow-lg h-64 sm:h-72 lg:h-80 mt-10">
             <img
               src="https://images.unsplash.com/photo-1560090995-01632a28895b?w=600&h=500&fit=crop&crop=center"
               alt="Aquatics team briefing"
               className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
             />
           </div>
-          <div className="rounded-2xl overflow-hidden shadow-lg h-64 sm:h-80">
+          <div className="rounded-2xl overflow-hidden shadow-lg h-64 sm:h-72 lg:h-80">
             <img
               src="https://images.unsplash.com/photo-1519315901367-f34ff9154487?w=600&h=500&fit=crop&crop=center"
               alt="Lifeguard watching pool"
