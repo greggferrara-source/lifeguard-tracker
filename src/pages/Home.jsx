@@ -219,25 +219,25 @@ export default function Home() {
       </header>
 
       {/* ── HERO ── */}
-      <section className="px-6 pt-20 pb-8 max-w-4xl mx-auto text-center">
-        <h1 className="text-5xl sm:text-6xl lg:text-7xl font-extrabold leading-tight mb-6 tracking-tight">
+      <section className="px-4 sm:px-6 pt-12 sm:pt-20 pb-8 max-w-4xl mx-auto text-center">
+        <h1 className="text-4xl sm:text-5xl lg:text-7xl font-extrabold leading-tight mb-4 sm:mb-6 tracking-tight">
           <span className="text-[#1a9c5b]">Smarter Scheduling,</span><br />
           <span className="text-gray-900">Safer Facilities.</span>
         </h1>
-        <p className="text-xl text-gray-500 max-w-2xl mx-auto mb-10 leading-relaxed">
+        <p className="text-base sm:text-xl text-gray-500 max-w-2xl mx-auto mb-8 sm:mb-10 leading-relaxed px-2">
           Get the right <span className="text-[#1a9c5b] font-semibold">lifeguards</span> in the right <span className="text-gray-800 font-semibold">location</span> at the right <span className="text-[#1a9c5b] font-semibold">time</span>. Purpose-built for aquatic facilities.
         </p>
-        <div className="flex flex-col sm:flex-row gap-4 justify-center">
+        <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center px-4 sm:px-0">
           <Button
             variant="outline"
             onClick={handleSignIn}
-            className="border-2 border-gray-900 text-gray-900 hover:bg-gray-900 hover:text-white px-10 py-6 text-base font-bold rounded-md h-auto transition-all"
+            className="border-2 border-gray-900 text-gray-900 hover:bg-gray-900 hover:text-white px-8 py-5 text-base font-bold rounded-md h-auto transition-all w-full sm:w-auto"
           >
             Try It Free
           </Button>
           <Button
             onClick={() => setShowDemoModal(true)}
-            className="bg-gray-900 hover:bg-[#1a9c5b] text-white px-10 py-6 text-base font-bold rounded-md h-auto transition-all"
+            className="bg-gray-900 hover:bg-[#1a9c5b] text-white px-8 py-5 text-base font-bold rounded-md h-auto transition-all w-full sm:w-auto"
           >
             <Play className="w-4 h-4" />
             Watch a Demo
