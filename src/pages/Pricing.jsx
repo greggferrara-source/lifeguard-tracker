@@ -108,6 +108,8 @@ export default function Pricing() {
   const [annual, setAnnual] = useState(false);
   const [loadingPlan, setLoadingPlan] = useState(null);
 
+  React.useEffect(() => { window.scrollTo(0, 0); }, []);
+
   const handleCheckout = async (plan) => {
     if (plan.name === "Enterprise") {
       window.location.href = createPageUrl("Contact");
