@@ -520,6 +520,43 @@ export default function Home() {
         </div>
       </footer>
 
+      {/* ── Demo Video Modal ── */}
+      {showDemoModal && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 px-4"
+          onClick={() => setShowDemoModal(false)}
+        >
+          <div
+            className="relative w-full max-w-3xl bg-black rounded-2xl overflow-hidden shadow-2xl"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <button
+              onClick={() => setShowDemoModal(false)}
+              className="absolute top-3 right-3 z-10 w-8 h-8 bg-white/20 hover:bg-white/40 rounded-full flex items-center justify-center text-white transition-colors"
+            >
+              <X className="w-4 h-4" />
+            </button>
+            <div className="aspect-video flex items-center justify-center bg-gray-900">
+              <div className="text-center text-white px-8">
+                <div className="w-20 h-20 rounded-full bg-white/10 border-2 border-white/30 flex items-center justify-center mx-auto mb-6">
+                  <Play className="w-8 h-8 text-white ml-1" />
+                </div>
+                <h3 className="text-2xl font-bold mb-3">Demo Video Coming Soon</h3>
+                <p className="text-gray-400 text-sm max-w-sm mx-auto">
+                  We're putting the finishing touches on our product demo. In the meantime, sign up free and explore the app yourself.
+                </p>
+                <button
+                  onClick={() => { setShowDemoModal(false); handleSignIn(); }}
+                  className="mt-6 inline-flex items-center gap-2 bg-[#1a9c5b] hover:bg-[#158a4e] text-white font-bold px-6 py-3 rounded-md transition-colors"
+                >
+                  Try It Free <ArrowRight className="w-4 h-4" />
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
     </div>
   );
 }
