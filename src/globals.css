@@ -69,6 +69,27 @@ css
   background: hsl(220 13% 65%);
 }
 
+/* Mobile / Android Chrome fixes */
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  touch-action: manipulation;
+}
+
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+
+button, a, [role="button"] {
+  touch-action: manipulation;
+  cursor: pointer;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
 /* Schedule grid styles */
 .schedule-grid {
   display: grid;
