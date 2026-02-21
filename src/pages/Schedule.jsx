@@ -12,6 +12,7 @@ import ShiftDialog from "@/components/schedule/ShiftDialog";
 import RecurringShiftDialog from "@/components/schedule/RecurringShiftDialog";
 import ShiftSwapDialog from "@/components/schedule/ShiftSwapDialog";
 import RecommendationsPanel from "@/components/schedule/RecommendationsPanel";
+import ScheduleSuggestionsPanel from "@/components/schedule/ScheduleSuggestionsPanel";
 
 export default function Schedule() {
   const queryClient = useQueryClient();
