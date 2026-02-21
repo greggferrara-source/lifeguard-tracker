@@ -212,7 +212,7 @@ export default function Schedule() {
   const openShiftsCount = weekShifts.filter(s => s.status === "open" || !s.employee_id).length;
 
   return (
-    <DragDropContext onDragEnd={handleDragEnd}>
+    <DragDropContext onDragEnd={handleDragEnd} enableMouseEvents={true}>
       <div className="p-4 lg:p-8 space-y-5 max-w-full bg-white min-h-screen">
       {/* Toolbar */}
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 pb-2 border-b border-gray-100">
