@@ -261,6 +261,14 @@ export default function Schedule() {
           <Button
             variant="outline"
             size="sm"
+            onClick={() => setSuggestionsOpen(true)}
+            title="Generate automated shift schedule"
+          >
+            <Sparkles className="w-4 h-4 mr-1" /> Auto Schedule
+          </Button>
+          <Button
+            variant="outline"
+            size="sm"
             onClick={handleGetRecommendations}
             disabled={recommendationsLoading}
             title="Get AI recommendations for open shifts"
