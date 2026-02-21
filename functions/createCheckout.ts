@@ -40,6 +40,7 @@ Deno.serve(async (req) => {
     return Response.json({ url: session.url, session_id: session.id });
   } catch (error) {
     console.error("Checkout error:", error.message, error.status);
-    return Response.json({ error: error.message }, { status: 500 });
+    console.error("Full error:", error);
+    return Response.json({ error: "Failed to create checkout session. Please try again." }, { status: 500 });
   }
 });

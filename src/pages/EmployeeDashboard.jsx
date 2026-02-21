@@ -35,7 +35,11 @@ export default function EmployeeDashboard() {
 
   const { data: shifts = [] } = useQuery({
     queryKey: ["my-shifts"],
-    queryFn: () => base44.entities.Shift.filter({ date: format(new Date(), "yyyy-MM-dd") }),
+    queryFn: () => base44.entities.Shift.filter({ 
+      employee_id: user?.id,
+      date: format(new Date(), "yyyy-MM-dd") 
+    }),
+    enabled: !!user?.id,
   });
 
   const activeClock = clockEntries.find(e => e.status === "clocked_in");
@@ -224,8 +228,8 @@ export default function EmployeeDashboard() {
         </Card>
       )}
 
-      {/* Admin: Clock Employees In/Out */}
-      {isAdminOrManager && (
+      {/* Admin/Manager: Clock Employees In/Out */}
+      {(user?.role === "admin" || user?.role === "manager") && (
         <Card className="border-blue-200 bg-blue-50">
           <CardHeader className="pb-3">
             <CardTitle className="text-base flex items-center gap-2">

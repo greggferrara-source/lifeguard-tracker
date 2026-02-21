@@ -51,6 +51,11 @@ export default function Dashboard() {
     queryFn: () => base44.entities.TimeOffRequest.list("-created_date", 100)
   });
 
+  const { data: locations = [] } = useQuery({
+    queryKey: ["locations"],
+    queryFn: () => base44.entities.Location.list(),
+  });
+
   const { data: subscription } = useQuery({
     queryKey: ["subscription"],
     queryFn: async () => {
