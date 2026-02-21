@@ -127,11 +127,22 @@ export default function Pricing() {
       if (res.data?.url) {
         window.location.href = res.data.url;
       } else {
-        toast.error(res.data?.error || "Failed to start checkout. Please try again.");
+        const errMsg = res.data?.error || "Failed to start checkout. Please try again.";
+        toast.error(errMsg);
+        // Log checkout error
+        await base44.functions.invoke("logCheckoutError", {
+          error_message: errMsg,
+          price_id: PRICE_IDS[plan.priceKey][annual ? "annual" : "monthly"],
+        });
       }
     } catch (error) {
       toast.error("Unable to process checkout. Please check your connection and try again.");
       console.error("Checkout error:", error);
+      // Log error
+      await base44.functions.invoke("logCheckoutError", {
+        error_message: error.message || "Unknown checkout error",
+        price_id: PRICE_IDS[plan.priceKey][annual ? "annual" : "monthly"],
+      }).catch(() => {});
     } finally {
       setLoadingPlan(null);
     }
