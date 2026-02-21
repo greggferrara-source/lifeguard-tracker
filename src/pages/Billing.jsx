@@ -74,6 +74,13 @@ export default function Billing() {
       label: "Canceled",
       description: "Your subscription has been canceled"
     },
+    paused: {
+      icon: PauseCircle,
+      color: "text-amber-600",
+      bg: "bg-amber-50",
+      label: "Paused",
+      description: "Your subscription is paused — no charges until you resume"
+    },
     trial_expired: {
       icon: AlertCircle,
       color: "text-red-600",
