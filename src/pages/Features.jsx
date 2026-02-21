@@ -1,293 +1,270 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { createPageUrl } from "@/utils";
-import { ArrowRight, Clock, Users, BarChart2, AlertTriangle, Shield, CheckCircle2, Zap, Calendar, Lock, Bell } from "lucide-react";
+import { ArrowRight, Calendar } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 export default function Features() {
   const location = useLocation();
-  const [selectedModule, setSelectedModule] = useState("scheduling");
+  const pathParts = location.pathname.split('/');
+  const module = pathParts[pathParts.length - 1] || "scheduling";
 
   useEffect(() => {
-    // Extract module from URL path (e.g., /features/scheduling -> scheduling)
-    const pathParts = location.pathname.split('/');
-    const moduleParam = pathParts[pathParts.length - 1];
-    if (moduleParam && moduleParam !== 'features' && moduleParam !== '') {
-      setSelectedModule(moduleParam);
-    }
-  }, [location.pathname]);
+    window.scrollTo(0, 0);
+  }, [module]);
 
-  const modules = [
-    {
-      id: "scheduling",
+  const moduleContent = {
+    scheduling: {
       title: "Staff Scheduling",
       subtitle: "Scheduling your staff has never been easier.",
+      quote: "Easy to schedule staff and make new schedules. Summer schedules that used to take me almost TWO DAYS to complete were finished in a FEW HOURS with LifeGuard Tracker.",
       icon: Calendar,
-      color: "from-blue-500 to-blue-600",
-      features: [
+      stats: "10,482,059 shifts scheduled and counting.",
+      sections: [
         {
           title: "Spend Less Time Scheduling",
-          description: "Set up locations, positions, and preferences once. Then quickly import employees via spreadsheet. Summer schedules that used to take days now take hours.",
+          description: "Setting up your staff schedule is quick and easy. Once you set up your locations, positions and preferences (day of week, view mode, etc.), you can quickly import your employees via spreadsheet.",
+          image: "https://images.unsplash.com/photo-1552664730-d307ca884978?w=700&h=500&fit=crop&crop=center",
+          reverse: false,
           highlight: true
+        },
+        {
+          title: "Simple Data Entry",
+          description: "Inviting your employees to LifeGuard Tracker is easy. Once you create their profile, we'll automatically send them an email and text message invitation to log in and get on-boarded straight from their phone!"
         },
         {
           title: "24/7 Mobile Access",
-          description: "Staff access their schedule anytime from their phone, get shift reminders, swap shifts with one click, and sync to Google Calendar and iCloud."
+          description: "Staff are always in-the-know. They can access their schedule anytime from their phone, get reminded about upcoming shifts, and trade shifts with the click of a button. They can even sync their schedule with Google Calendar, iCloud Calendar, and more."
         },
         {
-          title: "Cross-Device Compatibility",
-          description: "Web-based system. No installations needed. Build or adjust schedules on desktop, tablet, or mobile device."
+          title: "Cross-device Compatibility",
+          description: "LifeGuard Tracker is web-based. No need to worry about installation, just open your browser on any desktop, tablet, or mobile device and build or adjust your schedule on the go!"
         },
         {
-          title: "Auto-Schedule Algorithm",
-          description: "Fill unassigned shifts automatically while respecting availability, time off requests, desired hours, and max weekly hours. Then manually adjust as needed."
+          title: "Schedule Notes",
+          description: "Have a special event or just need to let staff know about something important on the schedule? Simply create a schedule note on that day and they'll be able to see the details when they view their schedule on any device."
         },
         {
-          title: "Employee Availability Management",
-          description: "Employees manage their own availability on any device. Automatically integrates with your schedule so you instantly see who can work which shifts."
+          title: "Intelligently Scheduling",
+          description: "Have a 15 year old on your payroll? It's easy to make sure they don't get scheduled outside department of labor rules. Any underage employee (based on their birthdate) is highlighted so you know to take extra precautions when scheduling them. Also, we'll make sure you don't double book employees by alerting you with shift conflicts."
         },
         {
-          title: "Prevent Conflicts & Compliance",
-          description: "Automatically detect underage employees and prevent scheduling outside DOL regulations. Identify shift conflicts before they happen."
+          title: "Always Know Your Schedule",
+          description: "Staff no longer have an excuse for not knowing their schedule. They can view their own schedule on any device, 24/7. The schedule is always up-to-date, so there's no old copies laying around. Staff are even alerted instantly when the schedule is published so they know what shifts they have been assigned!"
+        },
+        {
+          title: "Auto-Schedule",
+          description: "In a hurry? LifeGuard Tracker Auto-Schedule can fill all of your unassigned shifts with eligible employees for you! Simply create your empty schedule and once all your employee availability, time off request, desired hours, and max hours are set, our algorithm does all the heavy lifting.",
+          image: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=700&h=500&fit=crop&crop=center",
+          reverse: true
+        },
+        {
+          title: "Keep Your Schedule Under Control",
+          description: "There's always human factors. For example, you know which employees you can trust opening shifts to, or which lesson instructors are best. Assign your must-haves in the schedule first, then let Auto-Schedule fill in rest of the gaps!"
+        },
+        {
+          title: "Keep It Fair",
+          description: "Auto-Schedule maximizes the availability and desired hours of all employees first. Shifts are spread across all staff up to their desired hours before starting to go up to max weekly hours, so you can keep the schedule fair and consistent across staff."
+        },
+        {
+          title: "Employee Availability",
+          description: "Keeping track of when staff are available to work used to be a pain, but not anymore! You will always know when employees are available, if they have requested time off, so you can quickly build your staff schedule around their needs.",
+          image: "https://images.unsplash.com/photo-1552664730-d307ca884978?w=700&h=500&fit=crop&crop=center",
+          reverse: false
+        },
+        {
+          title: "Up-To-Date Employee Availability",
+          description: "LifeGuard Tracker allows each employee to input and manage their own work availability, on any device. Once they enter their availability, it automatically integrates with the staff schedule so you can quickly see who can and can't work a shift. You can even lock the employee from changing their availability while you schedule, so you don't have to worry about things changing on you!"
+        },
+        {
+          title: "Time Off Requests",
+          description: "Quality of life is directly connected to having healthy time away from work. Handle vacation and time off requests with ease and clear communication.",
+          image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=700&h=500&fit=crop&crop=center",
+          reverse: true
+        },
+        {
+          title: "Simple Vacation & Time Off Management",
+          description: "Employees can make time off requests directly from their mobile device, tablet, or PC. Managers are alerted automatically via text or email for approval. Once approved, employees are automatically alerted that their request was approved or denied. Then this information is logged and integrated into the staff schedule to further identify who is eligible to fill shifts."
+        },
+        {
+          title: "Open Shifts",
+          description: "Have a shift that needs filled? Employees can sign up for open shifts on their own by creating these special shifts on the schedule. Unlike unassigned shifts, published open shifts are visible to any eligible employee and they can sign up with one click while viewing their schedule.",
+          image: "https://images.unsplash.com/photo-1552664730-d307ca884978?w=700&h=500&fit=crop&crop=center",
+          reverse: false
         }
       ]
     },
-    {
-      id: "timeclock",
+    timeclock: {
       title: "Time Clock & Attendance",
-      subtitle: "Time and attendance tracking built with your operation in mind",
-      icon: Clock,
-      color: "from-green-500 to-green-600",
-      features: [
+      subtitle: "Time and attendance tracking built with aquatics in mind",
+      quote: "DigiQuatics makes time cards worlds easier. I shudder to think of my days before DigiQuatics! This not only works for Aquatics but for our entire Recreation Department. It's fantastic!",
+      stats: "3,025,830 clock-ins and counting.",
+      sections: [
         {
-          title: "Multiple Job Titles & Pay Rates",
-          description: "Employees with lifeguard, manager, and instructor roles with different pay rates? No problem. Add multiple positions per employee and track hours by role automatically.",
+          title: "Optimized for staff with multiple job titles",
+          description: "Do you have lifeguards, lesson instructors, managers on duty all with different job codes and pay rates? We've optimized Time Clock just for that. Easily add multiple positions to your employee profile with their job code and pay rate and the software takes care of the rest! No more tallying hours and calculating different pay rates.",
+          image: "https://images.unsplash.com/photo-1552664730-d307ca884978?w=700&h=500&fit=crop&crop=center",
+          reverse: false,
           highlight: true
         },
         {
-          title: "Multi-Facility Clock-In Tracking",
-          description: "Check clock-ins across multiple locations from one dashboard. Get instant notifications when staff don't clock in, so you can follow up immediately."
+          title: "Simple integration for multiple departments outside aquatics",
+          description: "Aquatic centers frequently have other staff that could use a simple time tracking tool as well. LifeGuard Tracker works great for aquatics operations, front desk, instructors, and more. Simply create multiple departments to keep staff separate while centralizing all your time-keeping into one user-friendly platform."
         },
         {
-          title: "GPS Verification",
-          description: "See exactly where staff are when they clock in/out from mobile. Option to require a scheduled shift to clock in, keeping everything accountable."
+          title: "Always make sure your facility is staffed",
+          description: "Having an un-staffed facility is the last thing you want to get a phone call about, especially early in the morning. Get a notification sent instantly to your phone when a staff member doesn't clock in for their shift, so you can follow up and make sure staff are there when they're supposed to be."
         },
         {
-          title: "Labor Cost Tracking",
-          description: "Enter employee pay rates and get instant reports on labor expenses. Two clicks to see how much it costs to run each pool or program."
+          title: "Check clock-ins across multiple facilities from one place",
+          description: "Making sure your staff have shown up when managing multiple facilities isn't easy. You can check your Time Clock dashboard and verify everyone has shown up and clocked in on-site from one screen, giving you peace of mind that all your pools are starting the day off right."
         },
         {
-          title: "Payroll Export",
-          description: "Export timesheets in multiple formats for quick payroll entry. Track to the minute or use rounding options for HR compliance."
+          title: "Ensure staff are actually on-site when they clock in",
+          description: "With GPS timekeeping, you can see exactly where your staff are when they clock in and out from their mobile device. No more guessing games and staff saying they were at the pool when they weren't. LifeGuard Tracker Time Clock Portal allows your staff to quickly clock in on a desktop workstation or on-site tablet."
+        },
+        {
+          title: "Integrates with your payroll process",
+          description: "How much does it cost to staff your swimming pool? Or run a lesson program? Two clicks and you've got those numbers. Simply enter your employee's pay rates for their various positions and reports are one click away.",
+          image: "https://images.unsplash.com/photo-1552664730-d307ca884978?w=700&h=500&fit=crop&crop=center",
+          reverse: true
         }
       ]
     },
-    {
-      id: "reports",
+    reports: {
       title: "Shift Reports & Communications",
       subtitle: "Your one-stop-shop for simple staff communication",
-      icon: AlertTriangle,
-      color: "from-purple-500 to-purple-600",
-      features: [
+      quote: "DigiQuatics has simplified our records and cut down on our paperwork! We love it!",
+      stats: "195,521 shift reports filled out.",
+      sections: [
         {
-          title: "Simple Report Submission",
-          description: "Staff submit shift reports from mobile devices or workstations. Attach incident reports, facility inspections, and documents with one click.",
+          title: "Simple report submission from anywhere",
+          description: "Streamlining communication between staff has never been easier with LifeGuard Tracker. Staff can submit reports from the mobile devices, or workstation tablets and computers. They can even attach documents such as incident reports, facility inspections, and more with the click of a button!",
+          image: "https://images.unsplash.com/photo-1552664730-d307ca884978?w=700&h=500&fit=crop&crop=center",
+          reverse: false,
           highlight: true
         },
         {
-          title: "Instant Notifications",
-          description: "Get automatically notified via email or text when shift reports are submitted. Follow up on accidents or issues immediately."
+          title: "Stay in the loop with instant report notifications",
+          description: "Need to follow up on an accident report that was submitted at another site? Simple. LifeGuard Tracker can automatically notify you via email or text when a shift report is submitted, so follow-up is straightforward and timely."
         },
         {
-          title: "Smart Tagging",
-          description: "Reports are automatically tagged by relevant keywords like 'rescue,' 'training,' or 'incident.' Find related reports instantly by searching tags."
+          title: "Quickly filter and search for past reports",
+          description: "LifeGuard Tracker automatically tags reports based on topics found in the content so you can easily search for them at a later date. Optical character recognition (OCR) is used for intelligent indexing of shift report attachments including PDFs, office documents, and images."
         },
         {
-          title: "OCR & Document Indexing",
-          description: "Handwritten notes on scanned PDFs are searchable. Attachments including images, office documents, and PDFs are automatically indexed for easy retrieval."
+          title: "Smart Tagging automatically categorizes shift reports by topic",
+          description: "Do your reports commonly mentioned keywords in them? It's easy to find shift reports related by topic with smart tags from LifeGuard Tracker. Shift Reports are automatically tagged by relevant keywords so finding reports related to incidents or training is typing a keyword away!"
         }
       ]
     },
-    {
-      id: "employees",
+    employees: {
       title: "Employee Management",
       subtitle: "Your staff. Your way.",
-      icon: Users,
-      color: "from-orange-500 to-orange-600",
-      features: [
+      quote: "LifeGuard Tracker has helped us manage our employees' schedules, certifications, work permits and contact information all in one database.",
+      stats: "122,277 employees managed!",
+      sections: [
         {
-          title: "Comprehensive Employee Profiles",
-          description: "Track everything: address, date of birth, emergency contacts, phone, email, sizing information, and custom fields your organization needs.",
+          title: "Track key employee fields",
+          description: "With LifeGuard Tracker Employee Management you can track key fields for your staff effortlessly. From address and date of birth, to emergency contacts, to sizing information, you can track it all without breaking a sweat.",
+          image: "https://images.unsplash.com/photo-1552664730-d307ca884978?w=700&h=500&fit=crop&crop=center",
+          reverse: false,
           highlight: true
         },
         {
-          title: "Access Controls & Permissions",
-          description: "Assign locations, positions, and access levels per employee. Control which modules staff can view (chemical records, maintenance, etc.)."
+          title: "Access controls done right",
+          description: "Handling a large staff? Or a small staff that requests subs or has time off for school? With LifeGuard Tracker you can simply add the locations and positions each staff member has access to. LifeGuard Tracker can even help you manage the top priority locations and positions an employee has access to."
         },
         {
-          title: "Supervisor Notes & Private Files",
-          description: "Add confidential notes about employees for supervisors only. Upload documents like write-ups, recommendations, and performance files to profiles."
+          title: "Attachments. We got you.",
+          description: "Attach key files to staff profiles so you can stay on top of school schedules, letters of recommendation, and more."
         },
         {
-          title: "Seasonal Staff Management",
-          description: "Built for summer-only and year-round operations. Easily activate/deactivate seasonal staff and handle mass importing/exporting of records."
+          title: "Track supervisor notes and files",
+          description: "Enter notes about employees for private viewing only amongst other supervisors regarding write-ups, interactions, and other key private information so you always know who a staff member truly is. You can even upload documents to their profile for management's eyes only."
         },
         {
-          title: "Certifications Tracking",
-          description: "Monitor certification expiry dates, renewal status, and get alerts when certifications are about to expire. Keep compliance effortless."
-        }
-      ]
-    },
-    {
-      id: "alerts",
-      title: "Alerts & Issue Tracking",
-      subtitle: "Stay on top of operational issues before they become problems",
-      icon: AlertTriangle,
-      color: "from-red-500 to-red-600",
-      features: [
-        {
-          title: "Real-Time Alerts",
-          description: "Get instant notifications for understaffing, scheduling conflicts, certification expirations, and other critical operational issues.",
-          highlight: true
-        },
-        {
-          title: "Staffing Visibility",
-          description: "Always know your coverage status. See which shifts are open, which locations are understaffed, and how many certified guards you have on duty."
-        },
-        {
-          title: "Chemical & Compliance Tracking",
-          description: "Log chemical levels and compliance checks. System flags when levels are out of range or inspections are due."
-        },
-        {
-          title: "Overtime Monitoring",
-          description: "Get alerted when employees approach or exceed their max weekly hours. Prevent costly overtime surprises."
+          title: "Summer only. No problem.",
+          description: "LifeGuard Tracker was designed from the group up for summer only and year-round operations. Easily activate or deactivate seasonal staff, remove staff that are no longer going to return or got let go, and easily handle mass-scale importing and exporting of your staff records."
         }
       ]
     }
-  ];
+  };
 
-  const current = modules.find(m => m.id === selectedModule);
-  const IconComponent = current.icon;
+  const content = moduleContent[module] || moduleContent.scheduling;
+  const Icon = content.icon;
 
   return (
     <div className="bg-white">
       {/* Hero */}
-      <section className="px-6 py-20 max-w-6xl mx-auto text-center">
-        <h1 className="text-5xl sm:text-6xl font-bold text-gray-900 mb-4">Powerful Features Built for Aquatics</h1>
-        <p className="text-xl text-gray-600 max-w-2xl mx-auto">Everything you need to run your facility efficiently. From scheduling to compliance, we've got you covered.</p>
+      <section className="px-6 py-20 max-w-4xl mx-auto text-center">
+        <h1 className="text-5xl sm:text-6xl font-bold text-gray-900 mb-4">{content.title}</h1>
+        <p className="text-xl text-gray-600">{content.subtitle}</p>
       </section>
 
-      {/* Module Selector */}
-      <section className="px-6 py-12 max-w-6xl mx-auto">
-        <div className="grid md:grid-cols-5 gap-3">
-          {modules.map((module) => {
-            const isActive = module.id === selectedModule;
-            return (
-              <button
-                key={module.id}
-                onClick={() => setSelectedModule(module.id)}
-                className={`p-4 rounded-lg border-2 transition-all text-left ${
-                  isActive
-                    ? `border-[#1a9c5b] bg-[#f0faf5]`
-                    : "border-gray-200 hover:border-[#1a9c5b]"
-                }`}
-              >
-                <div className={`w-8 h-8 rounded-lg bg-gradient-to-br ${module.color} flex items-center justify-center mb-2`}>
-                  <module.icon className="w-5 h-5 text-white" />
-                </div>
-                <p className={`font-semibold text-sm ${isActive ? "text-[#1a9c5b]" : "text-gray-900"}`}>
-                  {module.title}
-                </p>
-              </button>
-            );
-          })}
-        </div>
-      </section>
-
-      {/* Module Details */}
-      <section className="px-6 py-16 max-w-6xl mx-auto">
-        <div className="mb-12">
-          <div className="flex items-center gap-4 mb-4">
-            <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${current.color} flex items-center justify-center`}>
-              <IconComponent className="w-7 h-7 text-white" />
-            </div>
-            <div>
-              <h2 className="text-4xl font-bold text-gray-900">{current.title}</h2>
-              <p className="text-lg text-gray-600">{current.subtitle}</p>
-            </div>
+      {/* Testimonial */}
+      {content.quote && (
+        <section className="px-6 py-12 max-w-3xl mx-auto text-center border-b border-gray-200">
+          <p className="text-lg text-gray-700 italic mb-6">"{content.quote}"</p>
+          <div className="flex justify-center gap-1">
+            {[...Array(5)].map((_, i) => (
+              <div key={i} className="w-5 h-5 bg-yellow-400 rounded-full"></div>
+            ))}
           </div>
-        </div>
+        </section>
+      )}
 
-        <div className="space-y-8">
-          {current.features.map((feature, idx) => (
-            <div
-              key={idx}
-              className={`p-8 rounded-xl border ${
-                feature.highlight
-                  ? `border-[#1a9c5b] bg-gradient-to-br from-[#f0faf5] to-white`
-                  : "border-gray-200 bg-white"
-              }`}
-            >
-              <div className="flex items-start gap-4">
-                {feature.highlight && (
-                  <div className="w-6 h-6 rounded-full bg-[#1a9c5b] flex items-center justify-center flex-shrink-0 mt-1">
-                    <CheckCircle2 className="w-4 h-4 text-white" />
+      {/* Features */}
+      <section className="py-20 px-6">
+        <div className="max-w-6xl mx-auto space-y-20">
+          {content.sections.map((section, idx) => (
+            <div key={idx}>
+              <div
+                className={`flex flex-col ${
+                  section.reverse ? "lg:flex-row-reverse" : "lg:flex-row"
+                } items-center gap-12`}
+              >
+                {/* Text */}
+                <div className="w-full lg:w-1/2">
+                  <h2 className="text-3xl font-bold text-gray-900 mb-4">{section.title}</h2>
+                  <p className="text-lg text-gray-600 leading-relaxed">{section.description}</p>
+                </div>
+
+                {/* Image */}
+                {section.image && (
+                  <div className="w-full lg:w-1/2">
+                    <div className="rounded-2xl overflow-hidden shadow-xl">
+                      <img
+                        src={section.image}
+                        alt={section.title}
+                        className="w-full h-96 object-cover"
+                      />
+                    </div>
                   </div>
                 )}
-                <div className="flex-1">
-                  <h3 className="text-xl font-bold text-gray-900 mb-2">{feature.title}</h3>
-                  <p className="text-gray-600 leading-relaxed">{feature.description}</p>
-                </div>
               </div>
+
+              {/* Divider */}
+              {idx < content.sections.length - 1 && (
+                <div className="h-px bg-gray-200 mt-20"></div>
+              )}
             </div>
           ))}
         </div>
       </section>
 
-      {/* Feature Comparison */}
-      <section className="px-6 py-20 bg-gray-50 border-t border-gray-200">
-        <div className="max-w-6xl mx-auto">
-          <h2 className="text-4xl font-bold text-gray-900 mb-4 text-center">What makes us different?</h2>
-          <p className="text-lg text-gray-600 text-center max-w-2xl mx-auto mb-12">
-            We're built specifically for aquatics operations, not just generic workforce management.
-          </p>
-
-          <div className="grid md:grid-cols-3 gap-8">
-            {[
-              {
-                icon: Zap,
-                title: "Fast Setup",
-                description: "Import employees and locations in minutes. Start scheduling immediately without complex configurations."
-              },
-              {
-                icon: Lock,
-                title: "Enterprise Security",
-                description: "Role-based access controls, encrypted data, and compliance with aquatics industry standards."
-              },
-              {
-                icon: Bell,
-                title: "Smart Notifications",
-                description: "Receive alerts for staffing gaps, compliance issues, and operational problems before they impact your facility."
-              }
-            ].map((item, idx) => (
-              <div key={idx} className="bg-white p-8 rounded-xl border border-gray-200">
-                <div className="w-12 h-12 bg-[#f0faf5] rounded-lg flex items-center justify-center mb-4">
-                  <item.icon className="w-6 h-6 text-[#1a9c5b]" />
-                </div>
-                <h3 className="font-bold text-gray-900 mb-2">{item.title}</h3>
-                <p className="text-gray-600 text-sm">{item.description}</p>
-              </div>
-            ))}
+      {/* Stats */}
+      {content.stats && (
+        <section className="px-6 py-16 bg-gray-50 border-t border-gray-200">
+          <div className="max-w-2xl mx-auto text-center">
+            <p className="text-3xl font-bold text-gray-900">{content.stats}</p>
           </div>
-        </div>
-      </section>
+        </section>
+      )}
 
       {/* CTA */}
       <section className="px-6 py-20 max-w-4xl mx-auto text-center">
         <h2 className="text-4xl font-bold text-gray-900 mb-6">Ready to transform your operations?</h2>
-        <p className="text-xl text-gray-600 mb-10 max-w-2xl mx-auto">
-          Join hundreds of aquatic facilities using LifeGuard Tracker to streamline scheduling, time tracking, and compliance.
-        </p>
         <Link to={createPageUrl("Dashboard")}>
           <Button className="bg-[#1a9c5b] hover:bg-[#158a4e] text-white px-8 py-6 text-lg rounded-xl h-auto">
             Get Started
