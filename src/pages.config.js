@@ -90,6 +90,8 @@ import Tutorials from './pages/Tutorials';
 import MobileBilling from './pages/MobileBilling';
 import MobileLocations from './pages/MobileLocations';
 import MobileCertifications from './pages/MobileCertifications';
+import ErrorLogs from './pages/ErrorLogs';
+import AdminSetup from './pages/AdminSetup';
 import __Layout from './Layout.jsx';
 
 
@@ -137,6 +139,8 @@ export const PAGES = {
     "MobileBilling": MobileBilling,
     "MobileLocations": MobileLocations,
     "MobileCertifications": MobileCertifications,
+    "ErrorLogs": ErrorLogs,
+    "AdminSetup": AdminSetup,
 }
 
 export const pagesConfig = {
