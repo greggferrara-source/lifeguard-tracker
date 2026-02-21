@@ -414,16 +414,16 @@ export default function Home() {
       </section>
 
       {/* ── Pricing ── */}
-      <section className="px-6 py-20">
-        <div className="max-w-5xl mx-auto text-center mb-12">
+      <section className="px-4 sm:px-6 py-14 sm:py-20">
+        <div className="max-w-5xl mx-auto text-center mb-10 sm:mb-12">
           <span className="inline-block text-xs font-bold tracking-widest text-[#1a9c5b] uppercase mb-4">PRICING</span>
-          <h2 className="text-4xl font-extrabold text-gray-900 mb-4">Simple, per-user pricing</h2>
-          <p className="text-lg text-gray-500 max-w-xl mx-auto">
+          <h2 className="text-3xl sm:text-4xl font-extrabold text-gray-900 mb-4">Simple, per-user pricing</h2>
+          <p className="text-base sm:text-lg text-gray-500 max-w-xl mx-auto">
             No hidden fees. No long-term contracts. Scale up or down as your team grows.
           </p>
         </div>
 
-        <div className="max-w-5xl mx-auto grid md:grid-cols-3 gap-6 mb-10">
+        <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-5 sm:gap-6 mb-10">
           {plans.map((plan) => (
             <div
               key={plan.name}
