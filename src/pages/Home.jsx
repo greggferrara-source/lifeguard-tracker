@@ -178,10 +178,11 @@ export default function Home() {
               Try It Free
             </Button>
             <Button
-              onClick={handleSignIn}
+              onClick={() => setShowDemoModal(true)}
               className="bg-gray-900 hover:bg-[#1a9c5b] text-white font-bold text-sm h-10 px-5 rounded-md transition-all"
             >
-              Book a Demo
+              <Play className="w-4 h-4" />
+              Watch a Demo
             </Button>
           </div>
 
