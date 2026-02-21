@@ -7,6 +7,12 @@ const twilio_phone_number = Deno.env.get("TWILIO_PHONE_NUMBER");
 Deno.serve(async (req) => {
   try {
     const base44 = createClientFromRequest(req);
+    const user = await base44.auth.me();
+    
+    if (!user || !["admin", "site_owner", "manager"].includes(user.role)) {
+      return Response.json({ error: "Forbidden: Admin access required" }, { status: 403 });
+    }
+
     const { shift_id } = await req.json();
 
     if (!shift_id) {
