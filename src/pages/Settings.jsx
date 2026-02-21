@@ -31,6 +31,9 @@ export default function Settings() {
     shift_notifications: true,
   });
   const [settingsId, setSettingsId] = useState(null);
+  const [showDeleteDialog, setShowDeleteDialog] = useState(false);
+  const [deleteConfirmText, setDeleteConfirmText] = useState("");
+  const [deleting, setDeleting] = useState(false);
 
   const { data: templates = [] } = useQuery({
     queryKey: ["templates"],
