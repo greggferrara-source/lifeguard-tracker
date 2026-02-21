@@ -178,12 +178,10 @@ export default function Pricing() {
               </div>
               <div className="mb-8">
                 <span className="text-5xl font-extrabold text-gray-900">
-                  ${annual ? plan.price.annual : plan.price.monthly}
+                  ${plan.price.monthly}
                 </span>
-                <span className="text-gray-400 ml-1">/month</span>
-                {annual && plan.yearlyDiscount && (
-                  <p className="text-xs text-[#1a9c5b] mt-1 font-medium">Billed annually · save {plan.yearlyDiscount}%</p>
-                )}
+                <span className="text-gray-400 ml-1">/user/month</span>
+                <p className="text-xs text-gray-500 mt-1 font-medium">{plan.userRange}</p>
               </div>
 
               <ul className="space-y-2.5 mb-8 flex-1">
