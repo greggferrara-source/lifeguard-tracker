@@ -131,6 +131,8 @@ export default function Settings() {
         <TabsList className="bg-gray-100 rounded-full p-1">
           <TabsTrigger value="templates" className="rounded-full text-sm">Shift Templates</TabsTrigger>
           <TabsTrigger value="automation" className="rounded-full text-sm">Automation</TabsTrigger>
+          <TabsTrigger value="team" className="rounded-full text-sm">Team</TabsTrigger>
+          <TabsTrigger value="privacy" className="rounded-full text-sm">Privacy</TabsTrigger>
         </TabsList>
       </Tabs>
 
