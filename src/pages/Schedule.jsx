@@ -63,7 +63,7 @@ export default function Schedule() {
         setCurrentUser(user);
         setCanDragDrop(user?.role === "admin" || user?.role === "manager");
       } catch (e) {
-        setCanDragDrop(false);
+        setCanDragDrop(true);
       }
     };
     getUserData();
