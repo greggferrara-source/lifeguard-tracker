@@ -1,11 +1,21 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { Link, useLocation } from "react-router-dom";
 import { createPageUrl } from "@/utils";
 import { ArrowRight, Clock, Users, BarChart2, AlertTriangle, Shield, CheckCircle2, Zap, Calendar, Lock, Bell } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 export default function Features() {
+  const location = useLocation();
   const [selectedModule, setSelectedModule] = useState("scheduling");
+
+  useEffect(() => {
+    // Extract module from URL path (e.g., /features/scheduling -> scheduling)
+    const pathParts = location.pathname.split('/');
+    const moduleParam = pathParts[pathParts.length - 1];
+    if (moduleParam && moduleParam !== 'features' && moduleParam !== '') {
+      setSelectedModule(moduleParam);
+    }
+  }, [location.pathname]);
 
   const modules = [
     {

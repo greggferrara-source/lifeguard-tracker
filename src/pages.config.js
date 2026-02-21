@@ -65,6 +65,7 @@ import EmployeeDirectory from './pages/EmployeeDirectory';
 import EmployeeOnboarding from './pages/EmployeeOnboarding';
 import Employees from './pages/Employees';
 import ErrorLogs from './pages/ErrorLogs';
+import Features from './pages/Features';
 import Home from './pages/Home';
 import Inspections from './pages/Inspections';
 import Locations from './pages/Locations';
@@ -92,7 +93,6 @@ import ShiftSwaps from './pages/ShiftSwaps';
 import Terms from './pages/Terms';
 import TimeOff from './pages/TimeOff';
 import Tutorials from './pages/Tutorials';
-import Features from './pages/Features';
 import __Layout from './Layout.jsx';
 
 
@@ -115,6 +115,7 @@ export const PAGES = {
     "EmployeeOnboarding": EmployeeOnboarding,
     "Employees": Employees,
     "ErrorLogs": ErrorLogs,
+    "Features": Features,
     "Home": Home,
     "Inspections": Inspections,
     "Locations": Locations,
@@ -142,7 +143,6 @@ export const PAGES = {
     "Terms": Terms,
     "TimeOff": TimeOff,
     "Tutorials": Tutorials,
-    "Features": Features,
 }
 
 export const pagesConfig = {
