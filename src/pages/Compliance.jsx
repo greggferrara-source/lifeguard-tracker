@@ -7,9 +7,79 @@ import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { base44 } from "@/api/base44Client";
 import { AlertTriangle, CheckCircle2, FileText, Award, BarChart3, BookOpen, Star, ArrowRight, AlertCircle, Zap } from "lucide-react";
 
+const laborLawAlerts = {
+  "CA": {
+    state: "California",
+    alerts: [
+      { title: "Minimum Wage Increase", date: "2026-01-01", impact: "Minimum wage increased to $17.00/hour" },
+      { title: "Break Period Rules", date: "2025-12-15", impact: "Rest break rules updated for aquatic facilities" }
+    ]
+  },
+  "NY": {
+    state: "New York",
+    alerts: [
+      { title: "Overtime Threshold Update", date: "2026-02-01", impact: "Overtime threshold modified for hospitality workers" },
+      { title: "Safety Certification", date: "2025-11-01", impact: "New lifeguard certification requirements announced" }
+    ]
+  },
+  "TX": {
+    state: "Texas",
+    alerts: [
+      { title: "Worker Classification", date: "2026-01-15", impact: "New rules for independent contractor classification" },
+      { title: "Wage Payment Rules", date: "2025-10-01", impact: "Updated wage payment timing requirements" }
+    ]
+  },
+  "FL": {
+    state: "Florida",
+    alerts: [
+      { title: "ADA Compliance Update", date: "2025-12-01", impact: "New ADA requirements for public aquatic facilities" },
+      { title: "Lifeguard Standards", date: "2025-09-01", impact: "Updated lifeguard staffing standards for beaches" }
+    ]
+  }
+};
+
 export default function Compliance() {
   const [email, setEmail] = useState("");
   const [submitted, setSubmitted] = useState(false);
+  const [userLocation, setUserLocation] = useState("CA");
+  const [checkingCompliance, setCheckingCompliance] = useState(false);
+  const [checkResult, setCheckResult] = useState(null);
+
+  const queryClient = useQueryClient();
+
+  const { data: user } = useQuery({
+    queryKey: ["user"],
+    queryFn: () => base44.auth.me()
+  });
+
+  const { data: locations = [] } = useQuery({
+    queryKey: ["locations"],
+    queryFn: () => base44.entities.Location.list("-created_date", 10)
+  });
+
+  const complianceCheckMutation = useMutation({
+    mutationFn: async (facilityName) => {
+      const response = await base44.functions.invoke("triggerComplianceCheck", {
+        facility_name: facilityName,
+        location_id: locations[0]?.id || null
+      });
+      return response.data;
+    },
+    onSuccess: (data) => {
+      setCheckResult(data);
+      queryClient.invalidateQueries({ queryKey: ["compliance-checks"] });
+      setCheckingCompliance(false);
+    }
+  });
+
+  const handleComplianceCheck = async () => {
+    if (locations.length === 0) {
+      alert("Please create a location first");
+      return;
+    }
+    setCheckingCompliance(true);
+    complianceCheckMutation.mutate(locations[0].name);
+  };
 
   const handleSignup = (e) => {
     e.preventDefault();
