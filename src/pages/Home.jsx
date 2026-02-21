@@ -119,9 +119,24 @@ const plans = [
 ];
 
 export default function Home() {
+  const navigate = useNavigate();
+  const [checking, setChecking] = useState(true);
+
+  useEffect(() => {
+    base44.auth.isAuthenticated().then((auth) => {
+      if (auth) {
+        navigate(createPageUrl("Dashboard"));
+      } else {
+        setChecking(false);
+      }
+    });
+  }, [navigate]);
+
   const handleSignIn = () => {
     base44.auth.redirectToLogin(createPageUrl("Dashboard"));
   };
+
+  if (checking) return null;
 
   return (
     <div className="bg-white min-h-screen">
