@@ -141,6 +141,23 @@ export default function Pricing() {
         <p className="text-gray-500 text-base">Pricing is per user, per month.</p>
       </section>
 
+      {/* Pause Feature Banner */}
+      <section className="px-6 py-12 bg-gradient-to-r from-amber-50 to-orange-50 border-y border-amber-200">
+        <div className="max-w-4xl mx-auto">
+          <div className="flex items-start gap-4">
+            <div className="flex-shrink-0 mt-1">
+              <PauseCircle className="w-6 h-6 text-amber-600" />
+            </div>
+            <div className="flex-1">
+              <h3 className="text-lg font-bold text-gray-900 mb-1">Seasonal Billing Flexibility</h3>
+              <p className="text-gray-700">
+                Pause your subscription during off-season months at no penalty. When you resume, billing is automatically prorated — you pay only for the days you actively use the platform. Perfect for aquatic facilities with seasonal operations.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Plans */}
       <section className="px-6 pb-20 max-w-6xl mx-auto">
         <div className="grid md:grid-cols-3 gap-6">
