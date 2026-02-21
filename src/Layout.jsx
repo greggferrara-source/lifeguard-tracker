@@ -269,6 +269,8 @@ export default function Layout({ children, currentPageName }) {
         <div className="lg:hidden border-t border-gray-200 bg-white px-6 py-4 space-y-2">
             {[...primaryNavItems, ...moreNavItems].map((item) => {
             const isActive = currentPageName === item.page;
+            if (item.roles && !item.roles.includes(user?.role)) return null;
+            
             if (item.submenu) {
               return (
                 <div key={item.page}>
