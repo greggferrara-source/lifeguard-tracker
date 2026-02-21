@@ -78,9 +78,9 @@ export default function ScheduleGrid({ shifts, locations, days, onShiftClick, on
                         >
                           <div className="space-y-1 min-h-[40px]">
                             {dayShifts.map((shift, idx) => {
-                              const conflicted = hasConflict(shift, shifts);
-                              return (
-                                <Draggable key={shift.id} draggableId={shift.id} index={idx} isDragDisabled={!canDragDrop}>
+                               const conflicted = hasConflict(shift, shifts);
+                               return (
+                                 <Draggable key={shift.id} draggableId={`${shift.id}`} index={idx} isDragDisabled={!canDragDrop}>
                                   {(provided, snapshot) => (
                                     <motion.div
                                       ref={provided.innerRef}
