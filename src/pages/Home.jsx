@@ -293,21 +293,21 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ── Benefits (MakeShift alternating layout) ── */}
-      <section id="benefits" className="py-20 px-6">
-        <div className="max-w-6xl mx-auto space-y-24">
-          {benefits.map((b, i) => (
+      {/* ── Benefits ── */}
+      <section id="benefits" className="py-14 sm:py-20 px-4 sm:px-6">
+        <div className="max-w-6xl mx-auto space-y-16 sm:space-y-24">
+          {benefits.map((b) => (
             <div
               key={b.tag}
-              className={`flex flex-col ${b.reverse ? "lg:flex-row-reverse" : "lg:flex-row"} items-center gap-12`}
+              className={`flex flex-col ${b.reverse ? "lg:flex-row-reverse" : "lg:flex-row"} items-center gap-8 sm:gap-12`}
             >
               {/* Image */}
               <div className="w-full lg:w-1/2 relative">
                 <div className="rounded-2xl overflow-hidden shadow-xl">
-                  <img src={b.img} alt={b.imgAlt} className="w-full h-80 object-cover" />
+                  <img src={b.img} alt={b.imgAlt} className="w-full h-56 sm:h-72 lg:h-80 object-cover" />
                 </div>
-                {/* Floating accent card */}
-                <div className={`absolute -bottom-5 ${b.reverse ? "-left-5" : "-right-5"} bg-white rounded-xl shadow-lg p-4 border border-gray-100 max-w-xs hidden sm:block`}>
+                {/* Floating accent card — desktop only */}
+                <div className={`absolute -bottom-5 ${b.reverse ? "-left-5" : "-right-5"} bg-white rounded-xl shadow-lg p-4 border border-gray-100 max-w-xs hidden lg:block`}>
                   <p className="text-xs font-bold text-[#1a9c5b] uppercase tracking-wide mb-1">By the Numbers</p>
                   <p className="text-sm text-gray-700 font-medium leading-snug">{b.stat}</p>
                 </div>
@@ -316,11 +316,13 @@ export default function Home() {
               {/* Text */}
               <div className="w-full lg:w-1/2">
                 <span className="inline-block text-xs font-bold tracking-widest text-[#1a9c5b] uppercase mb-3">{b.tag}</span>
-                <h2 className="text-3xl sm:text-4xl font-extrabold text-gray-900 mb-5 leading-tight">{b.title}</h2>
-                <p className="text-lg text-gray-600 leading-relaxed mb-6">{b.body}</p>
+                <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-gray-900 mb-4 sm:mb-5 leading-tight">{b.title}</h2>
+                <p className="text-base sm:text-lg text-gray-600 leading-relaxed mb-4 sm:mb-6">{b.body}</p>
+                {/* Inline stat on mobile */}
+                <p className="text-sm text-[#1a9c5b] font-semibold mb-4 lg:hidden">{b.stat}</p>
                 <button
                   onClick={handleSignIn}
-                  className="inline-flex items-center gap-2 text-[#1a9c5b] font-bold text-sm hover:gap-3 transition-all"
+                  className="inline-flex items-center gap-2 text-[#1a9c5b] font-bold text-sm"
                 >
                   Learn More <ArrowRight className="w-4 h-4" />
                 </button>
