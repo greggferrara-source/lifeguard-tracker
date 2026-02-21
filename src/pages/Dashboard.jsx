@@ -51,6 +51,16 @@ export default function Dashboard() {
     queryFn: () => base44.entities.TimeOffRequest.list("-created_date", 100)
   });
 
+  const { data: subscription } = useQuery({
+    queryKey: ["subscription"],
+    queryFn: async () => {
+      const u = await base44.auth.me().catch(() => null);
+      if (!u?.email) return null;
+      const results = await base44.entities.UserSubscription.filter({ user_email: u.email });
+      return results[0] || null;
+    }
+  });
+
   const unresolvedAlerts = alerts.filter((a) => !a.resolved).length;
   const pendingTimeOff = timeOffRequests.filter(
     (r) => r.status === "pending"
