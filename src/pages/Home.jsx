@@ -359,12 +359,12 @@ export default function Home() {
       </section>
 
       {/* ── Testimonials ── */}
-      <section id="testimonials" className="px-6 py-20 max-w-6xl mx-auto">
-        <div className="text-center mb-14">
-          <h2 className="text-4xl font-extrabold text-gray-900 mb-4">Trusted by aquatic teams</h2>
-          <p className="text-lg text-gray-500">See what managers and directors are saying.</p>
+      <section id="testimonials" className="px-4 sm:px-6 py-14 sm:py-20 max-w-6xl mx-auto">
+        <div className="text-center mb-10 sm:mb-14">
+          <h2 className="text-3xl sm:text-4xl font-extrabold text-gray-900 mb-4">Trusted by aquatic teams</h2>
+          <p className="text-base sm:text-lg text-gray-500">See what managers and directors are saying.</p>
         </div>
-        <div className="grid md:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-5 sm:gap-8">
           {testimonials.map((t) => (
             <div key={t.name} className="bg-white rounded-2xl border border-gray-200 p-8 shadow-sm hover:shadow-md transition-shadow">
               <div className="flex gap-1 mb-5">
