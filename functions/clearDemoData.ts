@@ -10,6 +10,17 @@ Deno.serve(async (req) => {
       return Response.json({ error: "Unauthorized" }, { status: 401 });
     }
 
+    const { confirm_deletion, confirmation_token } = await req.json();
+    
+    // Require explicit two-step confirmation
+    if (confirm_deletion !== true || confirmation_token !== "CONFIRM_DELETE_ALL_DATA_PERMANENT") {
+      return Response.json({ 
+        error: "Multi-layer confirmation required. Provide confirm_deletion=true and confirmation_token='CONFIRM_DELETE_ALL_DATA_PERMANENT'" 
+      }, { status: 403 });
+    }
+
+    console.log(`WARNING: Admin user ${user.email} initiated full data deletion`);
+
     // Delete all shifts
     const shifts = await base44.entities.Shift.list();
     for (const shift of shifts) {
