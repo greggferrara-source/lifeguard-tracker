@@ -200,7 +200,7 @@ export default function Home() {
             <Link to={createPageUrl("Pricing")} className="block text-sm text-gray-700 py-1">Pricing</Link>
             <div className="flex gap-3 pt-2">
               <Button variant="outline" onClick={handleSignIn} className="flex-1 border-2 border-gray-800 text-gray-800 font-bold text-sm">Try It Free</Button>
-              <Button onClick={handleSignIn} className="flex-1 bg-gray-900 text-white font-bold text-sm">Book Demo</Button>
+              <Button onClick={() => setShowDemoModal(true)} className="flex-1 bg-gray-900 text-white font-bold text-sm">Watch Demo</Button>
             </div>
           </div>
         )}
