@@ -356,7 +356,15 @@ export default function Schedule() {
         employees={employees}
         onSubmit={handleSwapSubmit}
       />
-    </div>
-    </DragDropContext>
-  );
-}
+      {suggestionsOpen && (
+        <ScheduleSuggestionsPanel
+          weekStart={format(weekStart, "yyyy-MM-dd")}
+          locationId=""
+          onAssignments={() => queryClient.invalidateQueries({ queryKey: ["shifts"] })}
+          onClose={() => setSuggestionsOpen(false)}
+        />
+      )}
+      </div>
+      </DragDropContext>
+      );
+      }
