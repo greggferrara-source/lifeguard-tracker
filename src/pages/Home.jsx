@@ -473,24 +473,24 @@ export default function Home() {
       </section>
 
       {/* ── Final CTA Banner ── */}
-      <section className="mx-6 mb-16 rounded-3xl bg-gray-900 px-10 py-16 max-w-6xl lg:mx-auto text-center">
-        <h2 className="text-4xl sm:text-5xl font-extrabold text-white mb-4 leading-tight">
-          Ready to transform how you<br className="hidden sm:block" /> manage your aquatic team?
+      <section className="mx-4 sm:mx-6 mb-12 sm:mb-16 rounded-2xl sm:rounded-3xl bg-gray-900 px-6 sm:px-10 py-12 sm:py-16 max-w-6xl lg:mx-auto text-center">
+        <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white mb-4 leading-tight">
+          Ready to transform how you manage your aquatic team?
         </h2>
-        <p className="text-gray-400 text-lg mb-10 max-w-xl mx-auto">
+        <p className="text-gray-400 text-base sm:text-lg mb-8 sm:mb-10 max-w-xl mx-auto">
           Join hundreds of facilities already running smarter, safer operations with LifeGuard Tracker.
         </p>
-        <div className="flex flex-col sm:flex-row gap-4 justify-center">
+        <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
           <Button
             variant="outline"
             onClick={handleSignIn}
-            className="border-2 border-white text-white bg-transparent hover:bg-white hover:text-gray-900 px-10 py-6 text-base font-bold rounded-md h-auto transition-all"
+            className="border-2 border-white text-white bg-transparent hover:bg-white hover:text-gray-900 px-8 py-5 text-base font-bold rounded-md h-auto transition-all w-full sm:w-auto"
           >
             Try It Free
           </Button>
           <Button
             onClick={() => setShowDemoModal(true)}
-            className="bg-[#1a9c5b] hover:bg-[#158a4e] text-white px-10 py-6 text-base font-bold rounded-md h-auto transition-all"
+            className="bg-[#1a9c5b] hover:bg-[#158a4e] text-white px-8 py-5 text-base font-bold rounded-md h-auto transition-all w-full sm:w-auto"
           >
             <Play className="w-4 h-4" />
             Watch a Demo
