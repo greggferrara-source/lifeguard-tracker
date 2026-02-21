@@ -12,6 +12,18 @@ const PRICE_IDS = {
   enterprise: { monthly: "price_1T31vrJz3753BrBccB0BhD1Y", annual: "price_1T31vrJz3753BrBcIWbkLAymm" },
 };
 
+const sharedFeatures = [
+  "Scheduling & shift management",
+  "Time-off requests & approvals",
+  "Shift swaps & availability",
+  "Chemical & inspection logs",
+  "Certification tracking + expiry alerts",
+  "SMS & email notifications",
+  "Reports & analytics",
+  "AI scheduling assistant",
+  "Up to 10 locations",
+];
+
 const plans = [
   {
     name: "Starter",
@@ -23,15 +35,8 @@ const plans = [
     color: "border-gray-200",
     btnClass: "bg-gray-900 hover:bg-gray-800 text-white",
     userRange: "1–25 users",
-    features: [
-      "1–25 users",
-      "1 location",
-      "Scheduling & shift management",
-      "Basic time-off requests",
-      "Email notifications",
-      "7-day onboarding support",
-    ],
-    notIncluded: ["Chemical & inspection logs", "Payroll module", "AI scheduling", "Priority support"],
+    features: ["1–25 users", ...sharedFeatures],
+    notIncluded: ["Full payroll module", "Custom roles & permissions", "Dedicated account manager", "Priority support"],
   },
   {
     name: "Pro",
@@ -43,19 +48,8 @@ const plans = [
     color: "border-[#1a9c5b]",
     btnClass: "bg-[#1a9c5b] hover:bg-[#158a4e] text-white",
     userRange: "25–249 users",
-    features: [
-      "25–249 users",
-      "Up to 5 locations",
-      "Everything in Starter",
-      "Chemical & inspection logs",
-      "Certification tracking + expiry alerts",
-      "Shift swaps & availability",
-      "SMS & email notifications (Twilio)",
-      "Reports & analytics",
-      "AI scheduling assistant",
-      "30-day onboarding support",
-    ],
-    notIncluded: ["Payroll processing", "Dedicated account manager"],
+    features: ["25–249 users", ...sharedFeatures],
+    notIncluded: ["Full payroll module", "Custom roles & permissions", "Dedicated account manager", "Priority support"],
   },
   {
     name: "Enterprise",
@@ -69,7 +63,7 @@ const plans = [
     userRange: "250+ users",
     features: [
       "250+ users",
-      "Unlimited locations",
+      "10+ locations (unlimited)",
       "Everything in Pro",
       "Full payroll module",
       "Custom roles & permissions",
