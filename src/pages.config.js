@@ -126,6 +126,8 @@ import WeatherAlertsMonitor from './pages/WeatherAlertsMonitor';
 import WorkflowAutomation from './pages/WorkflowAutomation';
 import NotificationPreferences from './pages/NotificationPreferences';
 import ResourceBooking from './pages/ResourceBooking';
+import EmployeeProfile from './pages/EmployeeProfile';
+import EmployeeLocationTracking from './pages/EmployeeLocationTracking';
 import __Layout from './Layout.jsx';
 
 
@@ -209,6 +211,8 @@ export const PAGES = {
     "WorkflowAutomation": WorkflowAutomation,
     "NotificationPreferences": NotificationPreferences,
     "ResourceBooking": ResourceBooking,
+    "EmployeeProfile": EmployeeProfile,
+    "EmployeeLocationTracking": EmployeeLocationTracking,
 }
 
 export const pagesConfig = {
