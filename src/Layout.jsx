@@ -206,87 +206,101 @@ export default function Layout({ children, currentPageName }) {
 
                 })}
 
-              {/* More Menu */}
+              {/* More Menu (all users) */}
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                   <Button variant="ghost" className="text-gray-700 hover:text-gray-900 gap-1 text-sm font-medium px-4 py-2.5">
                     <MoreVertical className="w-4 h-4" />
                     More
-                    {(unresolvedAlerts > 0 || pendingSwaps > 0) &&
-                    <span className="ml-1 bg-red-500 text-white text-xs font-bold rounded-full w-4 h-4 flex items-center justify-center">
-                        {unresolvedAlerts + pendingSwaps > 9 ? "9+" : unresolvedAlerts + pendingSwaps}
+                    {pendingSwaps > 0 &&
+                      <span className="ml-1 bg-red-500 text-white text-xs font-bold rounded-full w-4 h-4 flex items-center justify-center">
+                        {pendingSwaps > 9 ? "9+" : pendingSwaps}
                       </span>
                     }
                   </Button>
                 </DropdownMenuTrigger>
-                <DropdownMenuContent align="end" className="w-56 max-h-[80vh] overflow-y-auto">
-                  {moreNavItems.map((item) => {
-                    if (item.roles && !item.roles.includes(user?.role)) return null;
-                    
-                    if (item.submenu) {
+                <DropdownMenuContent align="end" className="w-52 max-h-[80vh] overflow-y-auto">
+                  {moreNavItems.map((item) => (
+                    <DropdownMenuItem key={item.page} asChild>
+                      <Link to={createPageUrl(item.page)} className="flex items-center gap-2">
+                        <item.icon className="w-4 h-4" />
+                        <span>{item.name}</span>
+                        {item.badge === "swaps" && pendingSwaps > 0 &&
+                          <span className="ml-auto bg-orange-500 text-white text-xs font-bold rounded-full px-1.5">{pendingSwaps}</span>
+                        }
+                      </Link>
+                    </DropdownMenuItem>
+                  ))}
+                  <DropdownMenuSeparator />
+                  <DropdownMenuLabel className="text-xs font-semibold text-gray-500">Help</DropdownMenuLabel>
+                  <DropdownMenuItem asChild>
+                    <Link to={createPageUrl("Docs")} className="flex items-center gap-2"><BookOpen className="w-4 h-4" /><span>Documentation</span></Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem asChild>
+                    <Link to={createPageUrl("Contact")} className="flex items-center gap-2"><Mail className="w-4 h-4" /><span>Contact Support</span></Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem onClick={() => base44.auth.logout(createPageUrl("Home"))} className="flex items-center gap-2 text-red-600 focus:text-red-600 cursor-pointer">
+                    <LogOut className="w-4 h-4" /><span>Log Out</span>
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+
+              {/* Enterprise Menu (admin / site_owner / manager only) */}
+              {enterpriseRoles.includes(user?.role) && (
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button variant="ghost" className="text-gray-700 hover:text-gray-900 gap-1.5 text-sm font-medium px-4 py-2.5 border border-gray-200 rounded-lg">
+                      <Zap className="w-4 h-4 text-[#1a9c5b]" />
+                      Enterprise
+                      {(unresolvedAlerts > 0) &&
+                        <span className="ml-1 bg-red-500 text-white text-xs font-bold rounded-full w-4 h-4 flex items-center justify-center">
+                          {unresolvedAlerts > 9 ? "9+" : unresolvedAlerts}
+                        </span>
+                      }
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent align="end" className="w-60 max-h-[85vh] overflow-y-auto">
+                    <DropdownMenuLabel className="text-xs font-bold text-[#1a9c5b] uppercase tracking-wide px-2 py-1.5">Enterprise Tools</DropdownMenuLabel>
+                    {enterpriseNavItems.map((item) => {
+                      if (item.roles && !item.roles.includes(user?.role)) return null;
+                      if (item.submenu) {
+                        return (
+                          <div key={item.page}>
+                            <DropdownMenuLabel className="flex items-center gap-2 px-2 py-1.5 text-gray-600 font-semibold text-xs mt-1">
+                              <item.icon className="w-3.5 h-3.5" />
+                              <span>{item.name}</span>
+                            </DropdownMenuLabel>
+                            {item.submenu.map((subitem) => (
+                              <DropdownMenuItem key={subitem.page} asChild>
+                                <Link to={createPageUrl(subitem.page)} className="flex items-center gap-2 ml-2">
+                                  <subitem.icon className="w-4 h-4" />
+                                  <span>{subitem.name}</span>
+                                  {subitem.badge === "swaps" && pendingSwaps > 0 &&
+                                    <span className="ml-auto bg-orange-500 text-white text-xs font-bold rounded-full px-1.5">{pendingSwaps}</span>
+                                  }
+                                </Link>
+                              </DropdownMenuItem>
+                            ))}
+                            <DropdownMenuSeparator />
+                          </div>
+                        );
+                      }
                       return (
-                        <div key={item.page}>
-                          <DropdownMenuLabel className="flex items-center gap-2 px-2 py-1.5">
+                        <DropdownMenuItem key={item.page} asChild>
+                          <Link to={createPageUrl(item.page)} className="flex items-center gap-2">
                             <item.icon className="w-4 h-4" />
                             <span>{item.name}</span>
-                          </DropdownMenuLabel>
-                          {item.submenu.map((subitem) =>
-                            <DropdownMenuItem key={subitem.page} asChild>
-                              <Link to={createPageUrl(subitem.page)} className="flex items-center gap-2 ml-2">
-                                <subitem.icon className="w-4 h-4" />
-                                <span>{subitem.name}</span>
-                                {subitem.badge === "swaps" && pendingSwaps > 0 &&
-                                  <span className="ml-auto bg-orange-500 text-white text-xs font-bold rounded-full px-1.5">{pendingSwaps}</span>
-                                }
-                              </Link>
-                            </DropdownMenuItem>
-                          )}
-                          <DropdownMenuSeparator />
-                        </div>
+                            {item.badge === "alerts" && unresolvedAlerts > 0 &&
+                              <span className="ml-auto bg-red-500 text-white text-xs font-bold rounded-full px-1.5">{unresolvedAlerts}</span>
+                            }
+                          </Link>
+                        </DropdownMenuItem>
                       );
-                    }
-                    return (
-                      <DropdownMenuItem key={item.page} asChild>
-                        <Link to={createPageUrl(item.page)} className="flex items-center gap-2">
-                          <item.icon className="w-4 h-4" />
-                          <span>{item.name}</span>
-                          {item.badge === "alerts" && unresolvedAlerts > 0 &&
-                            <span className="ml-auto bg-red-500 text-white text-xs font-bold rounded-full px-1.5">{unresolvedAlerts}</span>
-                          }
-                        </Link>
-                      </DropdownMenuItem>
-                    );
-                  })}
-                  <DropdownMenuSeparator />
-                  <DropdownMenuLabel className="text-xs font-semibold text-gray-500">Help & Info</DropdownMenuLabel>
-                  <DropdownMenuItem asChild>
-                    <Link to={createPageUrl("Docs")} className="flex items-center gap-2">
-                      <BookOpen className="w-4 h-4" />
-                      <span>Documentation</span>
-                    </Link>
-                  </DropdownMenuItem>
-                  <DropdownMenuItem asChild>
-                    <Link to={createPageUrl("Tutorials")} className="flex items-center gap-2">
-                      <Play className="w-4 h-4" />
-                      <span>Video Tutorials</span>
-                    </Link>
-                  </DropdownMenuItem>
-                  <DropdownMenuItem asChild>
-                   <Link to={createPageUrl("Contact")} className="flex items-center gap-2">
-                     <Mail className="w-4 h-4" />
-                     <span>Contact Support</span>
-                   </Link>
-                  </DropdownMenuItem>
-                  <DropdownMenuSeparator />
-                  <DropdownMenuItem
-                   onClick={() => base44.auth.logout(createPageUrl("Home"))}
-                   className="flex items-center gap-2 text-red-600 focus:text-red-600 cursor-pointer"
-                  >
-                   <LogOut className="w-4 h-4" />
-                   <span>Log Out</span>
-                  </DropdownMenuItem>
+                    })}
                   </DropdownMenuContent>
-              </DropdownMenu>
+                </DropdownMenu>
+              )}
             </nav>
 
             {/* Mobile menu button */}
