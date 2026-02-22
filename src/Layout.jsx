@@ -125,6 +125,7 @@ const enterpriseNavItems = [
   { name: "Reports", icon: BarChart2, page: "Reports" },
   { name: "Alerts", icon: AlertTriangle, page: "Alerts", badge: "alerts" },
   // Enterprise-only
+  { name: "Multi-Location Dashboard", icon: Globe, page: "MultiLocationDashboard", enterpriseOnly: true },
   { name: "Payroll Integrations", icon: BarChart2, page: "PayrollIntegrations", enterpriseOnly: true },
   // Owner-only
   { name: "Billing", icon: CreditCard, page: "Billing", ownerOnly: true },
