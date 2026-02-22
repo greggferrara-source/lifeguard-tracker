@@ -194,6 +194,35 @@ export default function Settings() {
         </div>
       )}
 
+      {tab === "integrations" && (
+        <div className="space-y-6">
+          <div>
+            <h2 className="text-lg font-semibold text-gray-900 mb-1">Recommended Partners</h2>
+            <p className="text-sm text-gray-500 mb-4">Tools that complement LifeGuard Tracker.</p>
+          </div>
+          <Card className="p-6 border border-gray-200 shadow-none rounded-2xl">
+            <div className="flex items-start justify-between">
+              <div className="flex-1">
+                <h3 className="font-semibold text-gray-900 mb-1">Pool Test by HydroApps</h3>
+                <p className="text-sm text-gray-600 mb-3">Digital water chemistry logging with instant alerts for out-of-range readings. Syncs with your compliance reports.</p>
+                <div className="flex flex-wrap gap-2">
+                  <Badge variant="outline" className="text-xs">Water Chemistry</Badge>
+                  <Badge variant="outline" className="text-xs">Compliance</Badge>
+                  <Badge variant="outline" className="text-xs">Reporting</Badge>
+                </div>
+              </div>
+              <Button
+                className="bg-[#1a9c5b] hover:bg-[#158a4e] text-white rounded-full ml-4 flex-shrink-0"
+                onClick={() => window.open("https://www.hydroapps.com/view-all-products/pool-test", "_blank")}
+              >
+                Learn More
+                <ExternalLink className="w-4 h-4 ml-2" />
+              </Button>
+            </div>
+          </Card>
+        </div>
+      )}
+
       {tab === "privacy" && (
         <div className="space-y-6">
           <DataDeletion />
