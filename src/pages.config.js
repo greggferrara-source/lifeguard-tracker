@@ -48,8 +48,10 @@
  * The mainPage value must match a key in the PAGES object exactly.
  */
 import AdminSetup from './pages/AdminSetup';
+import AdvancedReporting from './pages/AdvancedReporting';
 import Alerts from './pages/Alerts';
 import Announcements from './pages/Announcements';
+import AssetManagement from './pages/AssetManagement';
 import Assets from './pages/Assets';
 import Assignments from './pages/Assignments';
 import Billing from './pages/Billing';
@@ -60,17 +62,24 @@ import Channels from './pages/Channels';
 import ChecklistDashboard from './pages/ChecklistDashboard';
 import ChemicalLogs from './pages/ChemicalLogs';
 import Compliance from './pages/Compliance';
+import ComplianceAIAdvisor from './pages/ComplianceAIAdvisor';
+import ComplianceAssessmentManager from './pages/ComplianceAssessmentManager';
 import ComplianceDashboard from './pages/ComplianceDashboard';
 import Contact from './pages/Contact';
+import CustomDashboard from './pages/CustomDashboard';
 import Dashboard from './pages/Dashboard';
+import DocsUpdated from './pages/DocsUpdated';
+import DocumentManagement from './pages/DocumentManagement';
 import EmergencyActionPlans from './pages/EmergencyActionPlans';
 import EmployeeDashboard from './pages/EmployeeDashboard';
 import EmployeeDirectory from './pages/EmployeeDirectory';
+import EmployeeManagement from './pages/EmployeeManagement';
 import EmployeeOnboarding from './pages/EmployeeOnboarding';
 import EmployeePerformanceDashboard from './pages/EmployeePerformanceDashboard';
 import Employees from './pages/Employees';
 import ErrorLogs from './pages/ErrorLogs';
 import Features from './pages/Features';
+import GlobalSearch from './pages/GlobalSearch';
 import Home from './pages/Home';
 import IncidentDashboard from './pages/IncidentDashboard';
 import IncidentLogs from './pages/IncidentLogs';
@@ -88,6 +97,7 @@ import MobileSchedule from './pages/MobileSchedule';
 import MobileTimeOff from './pages/MobileTimeOff';
 import MultiLocationDashboard from './pages/MultiLocationDashboard';
 import MyAvailability from './pages/MyAvailability';
+import NotificationCenter from './pages/NotificationCenter';
 import Notifications from './pages/Notifications';
 import OnboardingDashboard from './pages/OnboardingDashboard';
 import OperationalForms from './pages/OperationalForms';
@@ -95,6 +105,7 @@ import PatronCounts from './pages/PatronCounts';
 import PatronManagement from './pages/PatronManagement';
 import Payroll from './pages/Payroll';
 import PayrollIntegrations from './pages/PayrollIntegrations';
+import PoolTestReporting from './pages/PoolTestReporting';
 import Pricing from './pages/Pricing';
 import Privacy from './pages/Privacy';
 import PublicSafetyDashboard from './pages/PublicSafetyDashboard';
@@ -112,25 +123,17 @@ import TrainingDashboard from './pages/TrainingDashboard';
 import Tutorials from './pages/Tutorials';
 import UrgentAlerts from './pages/UrgentAlerts';
 import WeatherAlertsMonitor from './pages/WeatherAlertsMonitor';
-import DocsUpdated from './pages/DocsUpdated';
-import EmployeeManagement from './pages/EmployeeManagement';
-import AssetManagement from './pages/AssetManagement';
-import PoolTestReporting from './pages/PoolTestReporting';
-import ComplianceAssessmentManager from './pages/ComplianceAssessmentManager';
-import NotificationCenter from './pages/NotificationCenter';
-import DocumentManagement from './pages/DocumentManagement';
-import AdvancedReporting from './pages/AdvancedReporting';
-import ComplianceAIAdvisor from './pages/ComplianceAIAdvisor';
 import WorkflowAutomation from './pages/WorkflowAutomation';
-import CustomDashboard from './pages/CustomDashboard';
-import GlobalSearch from './pages/GlobalSearch';
+import NotificationPreferences from './pages/NotificationPreferences';
 import __Layout from './Layout.jsx';
 
 
 export const PAGES = {
     "AdminSetup": AdminSetup,
+    "AdvancedReporting": AdvancedReporting,
     "Alerts": Alerts,
     "Announcements": Announcements,
+    "AssetManagement": AssetManagement,
     "Assets": Assets,
     "Assignments": Assignments,
     "Billing": Billing,
@@ -141,17 +144,24 @@ export const PAGES = {
     "ChecklistDashboard": ChecklistDashboard,
     "ChemicalLogs": ChemicalLogs,
     "Compliance": Compliance,
+    "ComplianceAIAdvisor": ComplianceAIAdvisor,
+    "ComplianceAssessmentManager": ComplianceAssessmentManager,
     "ComplianceDashboard": ComplianceDashboard,
     "Contact": Contact,
+    "CustomDashboard": CustomDashboard,
     "Dashboard": Dashboard,
+    "DocsUpdated": DocsUpdated,
+    "DocumentManagement": DocumentManagement,
     "EmergencyActionPlans": EmergencyActionPlans,
     "EmployeeDashboard": EmployeeDashboard,
     "EmployeeDirectory": EmployeeDirectory,
+    "EmployeeManagement": EmployeeManagement,
     "EmployeeOnboarding": EmployeeOnboarding,
     "EmployeePerformanceDashboard": EmployeePerformanceDashboard,
     "Employees": Employees,
     "ErrorLogs": ErrorLogs,
     "Features": Features,
+    "GlobalSearch": GlobalSearch,
     "Home": Home,
     "IncidentDashboard": IncidentDashboard,
     "IncidentLogs": IncidentLogs,
@@ -169,6 +179,7 @@ export const PAGES = {
     "MobileTimeOff": MobileTimeOff,
     "MultiLocationDashboard": MultiLocationDashboard,
     "MyAvailability": MyAvailability,
+    "NotificationCenter": NotificationCenter,
     "Notifications": Notifications,
     "OnboardingDashboard": OnboardingDashboard,
     "OperationalForms": OperationalForms,
@@ -176,6 +187,7 @@ export const PAGES = {
     "PatronManagement": PatronManagement,
     "Payroll": Payroll,
     "PayrollIntegrations": PayrollIntegrations,
+    "PoolTestReporting": PoolTestReporting,
     "Pricing": Pricing,
     "Privacy": Privacy,
     "PublicSafetyDashboard": PublicSafetyDashboard,
@@ -193,18 +205,8 @@ export const PAGES = {
     "Tutorials": Tutorials,
     "UrgentAlerts": UrgentAlerts,
     "WeatherAlertsMonitor": WeatherAlertsMonitor,
-    "DocsUpdated": DocsUpdated,
-    "EmployeeManagement": EmployeeManagement,
-    "AssetManagement": AssetManagement,
-    "PoolTestReporting": PoolTestReporting,
-    "ComplianceAssessmentManager": ComplianceAssessmentManager,
-    "NotificationCenter": NotificationCenter,
-    "DocumentManagement": DocumentManagement,
-    "AdvancedReporting": AdvancedReporting,
-    "ComplianceAIAdvisor": ComplianceAIAdvisor,
     "WorkflowAutomation": WorkflowAutomation,
-    "CustomDashboard": CustomDashboard,
-    "GlobalSearch": GlobalSearch,
+    "NotificationPreferences": NotificationPreferences,
 }
 
 export const pagesConfig = {
