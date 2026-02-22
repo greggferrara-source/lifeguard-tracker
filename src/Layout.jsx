@@ -255,8 +255,8 @@ export default function Layout({ children, currentPageName }) {
                 </DropdownMenuContent>
               </DropdownMenu>
 
-              {/* Enterprise Menu (admin / site_owner / manager only) */}
-              {enterpriseRoles.includes(user?.role) && (
+              {/* Enterprise Menu (admin / site_owner / enterprise_site_owner only) */}
+              {ENTERPRISE_MENU_ROLES.includes(user?.role) && (
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
                     <Button variant="ghost" className="text-gray-700 hover:text-gray-900 gap-1.5 text-sm font-medium px-4 py-2.5 border border-gray-200 rounded-lg">
