@@ -360,39 +360,30 @@ export default function Home() {
       <section id="features" className="px-4 sm:px-6 py-14 sm:py-20 bg-gray-50 border-t border-gray-100">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-10 sm:mb-14">
+            <span className="inline-block text-xs font-bold tracking-widest text-[#1a9c5b] uppercase mb-3">FULL FEATURE LIST</span>
             <h2 className="text-3xl sm:text-4xl font-extrabold text-gray-900 mb-4">Everything your facility needs</h2>
             <p className="text-base sm:text-lg text-gray-500 max-w-xl mx-auto">
-              One platform to replace the spreadsheets, group texts, and paper logs.
+              One platform to replace the spreadsheets, group texts, and paper logs — 18 purpose-built tools for aquatic professionals.
             </p>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
-            {features.map((f) => {
-              // Map feature titles to module IDs
-              const moduleMap = {
-                "Smart Scheduling": "scheduling",
-                "Team Management": "employees",
-                "Time & Attendance": "timeclock",
-                "Compliance & Safety": "alerts",
-                "Reports & Analytics": "reports",
-                "Communications": "reports"
-              };
-              const moduleId = moduleMap[f.title] || "scheduling";
-              return (
-                <Link
-                  key={f.title}
-                  to={createPageUrl("Features") + `/${moduleId}`}
-                  className="block"
-                >
-                  <div className="bg-white rounded-xl border border-gray-200 p-7 hover:shadow-lg hover:border-[#1a9c5b] transition-all group cursor-pointer h-full">
-                    <div className="w-11 h-11 bg-[#f0faf5] group-hover:bg-[#1a9c5b] rounded-xl flex items-center justify-center mb-5 transition-colors">
-                      <f.icon className="w-5 h-5 text-[#1a9c5b] group-hover:text-white transition-colors" />
-                    </div>
-                    <h3 className="font-bold text-gray-900 mb-2 text-lg">{f.title}</h3>
-                    <p className="text-sm text-gray-500 leading-relaxed">{f.desc}</p>
-                  </div>
-                </Link>
-              );
-            })}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5">
+            {features.map((f) => (
+              <div
+                key={f.title}
+                className="bg-white rounded-xl border border-gray-200 p-6 hover:shadow-lg hover:border-[#1a9c5b] transition-all group cursor-default h-full"
+              >
+                <div className="w-10 h-10 bg-[#f0faf5] group-hover:bg-[#1a9c5b] rounded-lg flex items-center justify-center mb-4 transition-colors">
+                  <f.icon className="w-5 h-5 text-[#1a9c5b] group-hover:text-white transition-colors" />
+                </div>
+                <h3 className="font-bold text-gray-900 mb-1.5 text-base">{f.title}</h3>
+                <p className="text-sm text-gray-500 leading-relaxed">{f.desc}</p>
+              </div>
+            ))}
+          </div>
+          <div className="text-center mt-10">
+            <Button onClick={handleSignIn} className="bg-[#1a9c5b] hover:bg-[#158a4e] text-white font-bold px-8 py-5 rounded-md h-auto text-base">
+              Get Started Free — No Credit Card Required
+            </Button>
           </div>
         </div>
       </section>
