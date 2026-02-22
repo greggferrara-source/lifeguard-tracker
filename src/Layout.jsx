@@ -6,7 +6,7 @@ import {
     LayoutDashboard, CalendarDays, Users, MapPin, Clock, Menu, X, Shield,
     AlertTriangle, ArrowLeftRight, BarChart2, MessageSquare, Settings,
     BookOpen, Mail, Zap, CreditCard, Eye, FileText, LogOut, Globe,
-    ChevronDown, ChevronRight, Bell, Wrench, Droplets, ClipboardList, TrendingDown, Award, Lightbulb,
+    ChevronDown, ChevronRight, Bell, Wrench, Droplets, ClipboardList, TrendingDown, Award, Lightbulb, Search, Layout,
   } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
@@ -86,6 +86,9 @@ const enterpriseGroups = [
       { name: "Alerts", icon: AlertTriangle, page: "Alerts", badge: "alerts" },
       { name: "AI Compliance Advisor", icon: Lightbulb, page: "ComplianceAIAdvisor" },
       { name: "Document Management", icon: FileText, page: "DocumentManagement" },
+      { name: "Workflow Automation", icon: Zap, page: "WorkflowAutomation" },
+      { name: "Global Search", icon: Search, page: "GlobalSearch" },
+      { name: "My Dashboard", icon: Layout, page: "CustomDashboard" },
       { name: "Multi-Location Dashboard", icon: Globe, page: "MultiLocationDashboard", enterpriseOnly: true },
       { name: "Payroll Integrations", icon: BarChart2, page: "PayrollIntegrations", enterpriseOnly: true },
       { name: "Billing", icon: CreditCard, page: "Billing", ownerOnly: true },
