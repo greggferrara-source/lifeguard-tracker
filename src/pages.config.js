@@ -98,6 +98,7 @@ import ShiftSwaps from './pages/ShiftSwaps';
 import Terms from './pages/Terms';
 import TimeOff from './pages/TimeOff';
 import Tutorials from './pages/Tutorials';
+import PublicSafetyDashboard from './pages/PublicSafetyDashboard';
 import __Layout from './Layout.jsx';
 
 
@@ -153,6 +154,7 @@ export const PAGES = {
     "Terms": Terms,
     "TimeOff": TimeOff,
     "Tutorials": Tutorials,
+    "PublicSafetyDashboard": PublicSafetyDashboard,
 }
 
 export const pagesConfig = {
