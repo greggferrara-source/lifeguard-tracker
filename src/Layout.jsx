@@ -76,7 +76,6 @@ const enterpriseGroups = [
     items: [
       { name: "Reports", icon: BarChart2, page: "Reports" },
       { name: "Alerts", icon: AlertTriangle, page: "Alerts", badge: "alerts" },
-      { name: "Urgent Alerts", icon: AlertTriangle, page: "UrgentAlerts" },
       { name: "Multi-Location Dashboard", icon: Globe, page: "MultiLocationDashboard", enterpriseOnly: true },
       { name: "Payroll Integrations", icon: BarChart2, page: "PayrollIntegrations", enterpriseOnly: true },
       { name: "Billing", icon: CreditCard, page: "Billing", ownerOnly: true },
@@ -173,7 +172,7 @@ export default function Layout({ children, currentPageName }) {
                 <button className="flex items-center gap-1.5 px-3 py-1.5 rounded-md text-sm font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-50 transition-colors">
                   <Clock className="w-4 h-4" />Team
                   <ChevronDown className="w-3 h-3 opacity-60" />
-                  {pendingSwaps > 0 && <span className="bg-orange-500 text-white text-xs font-bold rounded-full w-4 h-4 flex items-center justify-center">{pendingSwaps > 9 ? "9+" : pendingSwaps}</span>}
+                  {(pendingSwaps > 0 || unresolvedAlerts > 0) && <span className="bg-orange-500 text-white text-xs font-bold rounded-full w-4 h-4 flex items-center justify-center">{(pendingSwaps + unresolvedAlerts) > 9 ? "9+" : (pendingSwaps + unresolvedAlerts)}</span>}
                 </button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="center" className="w-48">
@@ -185,6 +184,8 @@ export default function Layout({ children, currentPageName }) {
                   </Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem asChild><Link to={createPageUrl("Messages")} className="flex items-center gap-2"><MessageSquare className="w-4 h-4" />Messages</Link></DropdownMenuItem>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem asChild><Link to={createPageUrl("UrgentAlerts")} className="flex items-center gap-2"><AlertTriangle className="w-4 h-4" />Urgent Alerts</Link></DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
 
@@ -287,6 +288,7 @@ export default function Layout({ children, currentPageName }) {
                   {pendingSwaps > 0 && <span className="ml-auto bg-orange-500 text-white text-xs font-bold rounded-full px-1.5">{pendingSwaps}</span>}
                 </Link>
                 <Link to={createPageUrl("Messages")} onClick={close} className="flex items-center gap-2 px-3 py-2 rounded-md text-sm text-gray-700 hover:bg-gray-50"><MessageSquare className="w-4 h-4" />Messages</Link>
+                <Link to={createPageUrl("UrgentAlerts")} onClick={close} className="flex items-center gap-2 px-3 py-2 rounded-md text-sm text-gray-700 hover:bg-gray-50"><AlertTriangle className="w-4 h-4" />Urgent Alerts</Link>
               </MobileSection>
 
               {/* Enterprise collapsible groups */}
