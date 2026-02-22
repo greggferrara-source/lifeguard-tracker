@@ -153,8 +153,7 @@ export default function Reports() {
       {/* SCHEDULE SECTION */}
       {section === "schedule" && (
         <div className="space-y-8">
-          <div className="flex items-center justify-between flex-wrap gap-3">
-            <div className="hidden">{/* DocumentGenerator moved to Export tab */}</div>
+          <div className="flex items-center justify-end flex-wrap gap-3">
             <Tabs value={tab} onValueChange={setTab}>
               <TabsList className="bg-slate-100">
                 <TabsTrigger value="week" className="text-xs">This Week</TabsTrigger>
