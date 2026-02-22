@@ -100,6 +100,9 @@ import TimeOff from './pages/TimeOff';
 import Tutorials from './pages/Tutorials';
 import PublicSafetyDashboard from './pages/PublicSafetyDashboard';
 import OperationalForms from './pages/OperationalForms';
+import MultiLocationDashboard from './pages/MultiLocationDashboard';
+import TrainingDashboard from './pages/TrainingDashboard';
+import EmergencyActionPlans from './pages/EmergencyActionPlans';
 import __Layout from './Layout.jsx';
 
 
@@ -157,6 +160,9 @@ export const PAGES = {
     "Tutorials": Tutorials,
     "PublicSafetyDashboard": PublicSafetyDashboard,
     "OperationalForms": OperationalForms,
+    "MultiLocationDashboard": MultiLocationDashboard,
+    "TrainingDashboard": TrainingDashboard,
+    "EmergencyActionPlans": EmergencyActionPlans,
 }
 
 export const pagesConfig = {
