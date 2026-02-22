@@ -39,23 +39,31 @@ import { useQuery } from "@tanstack/react-query";
 import { base44 } from "@/api/base44Client";
 import FeedbackWidget from "@/components/FeedbackWidget";
 
-const enterpriseRoles = ["admin", "site_owner", "manager"];
+// Role hierarchy:
+// enterprise_site_owner → full access + Enterprise menu
+// site_owner            → full access + Enterprise menu
+// admin                 → management tools + Enterprise menu (no billing/settings/setup/error logs)
+// user                  → basic nav only (schedule, employees, locations, time off, messages)
 
+const ENTERPRISE_MENU_ROLES = ["enterprise_site_owner", "site_owner", "admin"];
+const OWNER_ONLY_ROLES = ["enterprise_site_owner", "site_owner"];
+
+// Shown to ALL roles in the top nav
 const primaryNavItems = [
   { name: "Schedule", icon: CalendarDays, page: "Schedule" },
   { name: "Employees", icon: Users, page: "Employees" },
   { name: "Locations", icon: MapPin, page: "Locations" },
 ];
 
-// Shown to all roles in the "More" dropdown
+// Shown to ALL roles in the "More" dropdown
 const moreNavItems = [
   { name: "Time Off", icon: Clock, page: "TimeOff" },
   { name: "Shift Swaps", icon: ArrowLeftRight, page: "ShiftSwaps", badge: "swaps" },
   { name: "Messages", icon: MessageSquare, page: "Messages" },
-  { name: "Announcements", icon: AlertTriangle, page: "Announcements" },
 ];
 
-// Only shown to admin / site_owner / manager
+// Enterprise menu items — admin/site_owner/enterprise_site_owner only
+// items with `ownerOnly: true` are hidden from plain admin
 const enterpriseNavItems = [
   {
     name: "Compliance",
@@ -106,10 +114,11 @@ const enterpriseNavItems = [
   { name: "Reports", icon: BarChart2, page: "Reports" },
   { name: "Alerts", icon: AlertTriangle, page: "Alerts", badge: "alerts" },
   { name: "Payroll Integrations", icon: BarChart2, page: "PayrollIntegrations" },
-  { name: "Billing", icon: CreditCard, page: "Billing", roles: ["admin", "site_owner"] },
-  { name: "Settings", icon: Settings, page: "Settings", roles: ["admin", "site_owner"] },
-  { name: "Admin Setup", icon: LayoutDashboard, page: "AdminSetup", roles: ["admin", "site_owner"] },
-  { name: "Error Logs", icon: AlertTriangle, page: "ErrorLogs", roles: ["admin", "site_owner"] },
+  // Owner-only items (hidden from plain admin)
+  { name: "Billing", icon: CreditCard, page: "Billing", ownerOnly: true },
+  { name: "Settings", icon: Settings, page: "Settings", ownerOnly: true },
+  { name: "Admin Setup", icon: LayoutDashboard, page: "AdminSetup", ownerOnly: true },
+  { name: "Error Logs", icon: AlertTriangle, page: "ErrorLogs", ownerOnly: true },
 ];
 
 
