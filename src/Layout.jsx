@@ -272,7 +272,8 @@ export default function Layout({ children, currentPageName }) {
                   <DropdownMenuContent align="end" className="w-60 max-h-[85vh] overflow-y-auto">
                     <DropdownMenuLabel className="text-xs font-bold text-[#1a9c5b] uppercase tracking-wide px-2 py-1.5">Enterprise Tools</DropdownMenuLabel>
                     {enterpriseNavItems.map((item) => {
-                      if (item.roles && !item.roles.includes(user?.role)) return null;
+                      // Owner-only items hidden from plain admin
+                      if (item.ownerOnly && !OWNER_ONLY_ROLES.includes(user?.role)) return null;
                       if (item.submenu) {
                         return (
                           <div key={item.page}>
