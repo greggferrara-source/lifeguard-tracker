@@ -107,6 +107,7 @@ import CertComplianceDashboard from './pages/CertComplianceDashboard';
 import StaffingForecast from './pages/StaffingForecast';
 import UrgentAlerts from './pages/UrgentAlerts';
 import MobileGuardDashboard from './pages/MobileGuardDashboard';
+import ShiftPreferencesManager from './pages/ShiftPreferencesManager';
 import __Layout from './Layout.jsx';
 
 
@@ -171,6 +172,7 @@ export const PAGES = {
     "StaffingForecast": StaffingForecast,
     "UrgentAlerts": UrgentAlerts,
     "MobileGuardDashboard": MobileGuardDashboard,
+    "ShiftPreferencesManager": ShiftPreferencesManager,
 }
 
 export const pagesConfig = {
