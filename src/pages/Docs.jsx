@@ -16,23 +16,25 @@ const docs = [
         title: "Welcome to LifeGuard Tracker",
         content: `LifeGuard Tracker is an all-in-one workforce management and safety compliance platform built for aquatic facilities — pools, beaches, waterparks, and recreation centers.
 
-**What you can do with LifeGuard Tracker:**
-- Build and manage weekly schedules for your lifeguards and staff
-- Track employee certifications and get expiry alerts
-- Log incidents, rescues, near-misses, and first aid events with photo attachments
-- Run digital checklists for chemical readings, equipment inspections, and opening/closing procedures
-- Manage chemical logs with automated out-of-range alerts
-- Assign and track facility assets (AEDs, rescue tubes, equipment)
-- Run staff training modules with quizzes and completion tracking
-- Build and distribute Emergency Action Plans for every scenario
-- Manage time-off requests with an approval workflow
-- Send announcements and messages to your whole team
-- Generate reports for compliance, staffing, labor costs, and more
+      **What you can do with LifeGuard Tracker:**
+      - Build and manage weekly schedules with AI-powered shift recommendations
+      - Track employee certifications and get automated expiry alerts
+      - Log incidents, rescues, near-misses, and first aid events with photo attachments and structured follow-up workflows
+      - Run digital checklists for chemical readings, equipment inspections, and opening/closing procedures
+      - Manage chemical logs with automated out-of-range alerts and trend analysis
+      - Assign and track facility assets (AEDs, rescue tubes, equipment) with maintenance scheduling
+      - Run staff training modules with quizzes and completion tracking
+      - Build and distribute Emergency Action Plans for every scenario
+      - Manage time-off requests with an approval workflow
+      - Send announcements and messages to your whole team
+      - Generate professional PDF reports for compliance and regulatory inspections
+      - Integrate with payroll systems (Gusto, ADP, Paychex, BambooHR, Rippling, Workday)
+      - Monitor multi-location compliance and staffing in real-time
 
-**Who uses LifeGuard Tracker:**
-- **Enterprise Site Owners / Admins** — Full access to all features including multi-location dashboards, EAPs, training, payroll integrations, billing, and settings
-- **Site Owners / Admins (Pro)** — Compliance, incident management, operational forms, certifications, reports, alerts, and team tools
-- **Employees** — View schedules, submit time off, log incidents, complete training, and communicate with the team`
+      **Who uses LifeGuard Tracker:**
+      - **Enterprise Site Owners / Admins** — Full access including multi-location dashboards, EAPs, staff training, payroll integrations, compliance analytics, and enterprise billing/settings
+      - **Site Owners / Admins (Pro)** — Compliance, incident management, operational forms, certifications, reports, alerts, team management, and scheduling
+      - **Employees** — View schedules, submit time off, log incidents, complete training, upload certifications, and communicate with team`
       },
       {
         title: "Adding Your First Employee",
