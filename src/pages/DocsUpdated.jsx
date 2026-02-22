@@ -20,6 +20,22 @@ const sections = [
     content: "Intelligent AI system that analyzes facility data to identify potential regulatory violations and compliance gaps. Detects violations against OSHA, MAHC, and ANSI standards. Analyzes trends across Employee Management, Asset Management, Pool Testing, and Compliance modules. Generates confidence-scored insights with severity levels. Provides specific, actionable recommendations for each identified issue with priority levels and effort estimates. Supports manual analysis across all facilities or specific locations. Tracks acknowledged vs. unacknowledged insights for ongoing compliance monitoring. Access via Admin → Reports & Admin → AI Compliance Advisor."
   },
   {
+    title: "Advanced Workflow Automation Engine",
+    content: "Multi-step automated workflows triggered by system events (document uploads, asset status changes, certification expiries). Define custom automation sequences with approval gates requiring manager sign-off. Workflows execute sequentially with error handling and can create tasks, assessments, or notifications. Full execution history tracking with step-by-step result logging. Pause, resume, or retry failed workflows manually. Use case: Upload inspection document → Auto-trigger compliance assessment → Require approval from compliance officer → Create follow-up tasks. Access via Admin → Reports & Admin → Workflow Automation."
+  },
+  {
+    title: "Global Search & Discovery",
+    content: "Lightning-fast full-text search across all facility data in a single interface. Search across assets, documents, compliance records, pool tests, incidents, certifications, and more. Filter results by data type and module for precision. Real-time indexing ensures fresh results. Advanced filtering with date ranges and custom parameters. Bookmark frequent searches. Significantly speeds up data retrieval compared to navigating individual modules. Access via Admin → Reports & Admin → Global Search."
+  },
+  {
+    title: "Customizable User Dashboard",
+    content: "Personalized dashboard allowing users to pin frequently-used modules and reports for instant access. Organize pinned items by category (Operations, Safety, Compliance, Analytics). Drag-and-drop reordering to match your workflow. Multiple layout options (grid, list, compact). Dashboard layout preferences and report shortcuts saved per user. Quick access cards with one-click navigation to key functions. Access via Admin → Reports & Admin → My Dashboard."
+  },
+  {
+    title: "Role-Based Access Control System",
+    content: "Granular permission management with pre-configured roles (Admin, Manager, Lifeguard, Compliance Officer). Define custom permissions for each role at the resource level (create, read, update, delete, approve). Location-based restrictions for multi-facility operations (users can only access own location). Permission enforcement across all modules and APIs. Audit trail of who accessed what and when. Supports delegation of specific permissions without full admin access. Setup via Admin Setup or contact support for custom role configurations."
+  },
+  {
     title: "Comprehensive Compliance Assessment Manager",
     content: "Digital self-assessment and action-planning tool for aquatic operations. Complete assessments across facility maintenance, daily operations, risk management, staff training, and safety teams using standardized questions based on MAHC and aquatic safety best practices. Convert findings into actionable gap tasks assigned to specific staff with accountability tracking. Retest and verify improvements with photo documentation and before/after evidence. Multi-site compliance oversight with radar charts and comparative analysis across locations. Built-in resource library with templates, guidance documents, glossary, and safety references. Track compliance scores over time and maintain audit-ready records of due diligence efforts. Access via Admin → Compliance → Assessment Manager."
   },
