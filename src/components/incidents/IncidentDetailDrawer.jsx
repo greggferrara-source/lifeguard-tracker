@@ -14,6 +14,7 @@ const statusStyle = { open: "bg-red-100 text-red-700", reviewed: "bg-yellow-100 
 
 export default function IncidentDetailDrawer({ incident, onClose }) {
   const qc = useQueryClient();
+  const [tab, setTab] = useState("details");
 
   const updateStatus = useMutation({
     mutationFn: ({ id, status }) => base44.entities.IncidentLog.update(id, { status }),
@@ -32,7 +33,23 @@ export default function IncidentDetailDrawer({ incident, onClose }) {
           </SheetTitle>
         </SheetHeader>
 
-        <div className="mt-4 space-y-5">
+        {/* Tabs */}
+        <div className="mt-4 mb-2">
+          <Tabs value={tab} onValueChange={setTab}>
+            <TabsList className="w-full">
+              <TabsTrigger value="details" className="flex-1 text-xs">Details</TabsTrigger>
+              <TabsTrigger value="followup" className="flex-1 text-xs flex items-center gap-1">
+                <ClipboardList className="w-3 h-3" />
+                Follow-Up
+                {incident.follow_up_required && incident.status !== "closed" && (
+                  <span className="w-1.5 h-1.5 rounded-full bg-orange-400 ml-1" />
+                )}
+              </TabsTrigger>
+            </TabsList>
+          </Tabs>
+        </div>
+
+        {tab === "details" && <div className="space-y-5">
           {/* Badges */}
           <div className="flex gap-2 flex-wrap">
             <Badge className={typeStyle[incident.type]}>{incident.type?.replace("_", " ")}</Badge>
