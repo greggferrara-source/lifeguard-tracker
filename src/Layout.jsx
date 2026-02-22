@@ -76,6 +76,7 @@ const enterpriseGroups = [
     items: [
       { name: "Reports", icon: BarChart2, page: "Reports" },
       { name: "Alerts", icon: AlertTriangle, page: "Alerts", badge: "alerts" },
+      { name: "Urgent Alerts", icon: AlertTriangle, page: "UrgentAlerts" },
       { name: "Multi-Location Dashboard", icon: Globe, page: "MultiLocationDashboard", enterpriseOnly: true },
       { name: "Payroll Integrations", icon: BarChart2, page: "PayrollIntegrations", enterpriseOnly: true },
       { name: "Billing", icon: CreditCard, page: "Billing", ownerOnly: true },
