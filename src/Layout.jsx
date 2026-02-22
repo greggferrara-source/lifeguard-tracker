@@ -25,6 +25,7 @@ import {
   Zap,
   CreditCard,
   Eye,
+  FileText,
   LogOut } from
 "lucide-react";
 import { Button } from "@/components/ui/button";
