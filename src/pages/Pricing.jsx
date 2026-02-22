@@ -9,8 +9,8 @@ import { toast } from "sonner";
 
 const PRICE_IDS = {
   starter: { monthly: "price_1T31vqJz3753BrBcR6JitqR6", annual: "price_1T31vqJz3753BrBcUNtRXIfx" },
-  pro:     { monthly: "price_1T31vqJz3753BrBc5to85m1z", annual: "price_1T31vqJz3753BrBcmeWqkKRI" },
-  enterprise: { monthly: "price_1T31vrJz3753BrBccB0BhD1Y", annual: "price_1T31vrJz3753BrBcIWbkLAymm" },
+  pro:     { monthly: "price_1T3jT0Jz3753BrBcLMTrfkN1", annual: "price_1T3jT0Jz3753BrBcfqmLgReK" },
+  enterprise: { monthly: "price_1T3jT0Jz3753BrBceoHWaLAr", annual: "price_1T3jT0Jz3753BrBcP96qiKow" },
 };
 
 const sharedFeatures = [

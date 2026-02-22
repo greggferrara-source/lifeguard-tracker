@@ -14,7 +14,8 @@ const defaultForm = () => ({
   location_id: "", date: format(new Date(), "yyyy-MM-dd"), time: format(new Date(), "HH:mm"),
   type: "incident", severity: "minor", patron_name: "", patron_age: "",
   description: "", action_taken: "", ems_called: false, patron_transported: false,
-  witnesses: "", follow_up_required: false, follow_up_notes: "", status: "open"
+  witnesses: "", follow_up_required: false, follow_up_notes: "", status: "open",
+  photo_urls: []
 });
 
 export default function LogIncidentForm({ open, onOpenChange }) {
