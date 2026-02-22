@@ -16,8 +16,19 @@ Deno.serve(async (req) => {
 
     const fullName = employee.first_name + ' ' + employee.last_name;
 
-    // Auto-assign tasks based on employee role
-    const tasksByRole = {
+    // Generate tasks based on rules
+    let tasks = [];
+    try {
+      const taskResult = await base44.functions.invoke('generateOnboardingTasks', {
+        employee_id,
+        start_date
+      });
+      tasks = taskResult.data.tasks || [];
+      console.log(`Generated ${tasks.length} tasks from rules`);
+    } catch (error) {
+      console.warn(`Rule-based task generation failed, using fallback: ${error.message}`);
+      // Fallback: Auto-assign tasks based on employee role
+      const tasksByRole = {
       lifeguard: [
         { title: 'IT Setup - Create Account', description: 'Set up employee IT account and email', days: 1 },
         { title: 'Complete HR Paperwork', description: 'Fill out employment forms and tax documents', days: 3 },
@@ -47,16 +58,17 @@ Deno.serve(async (req) => {
       ]
     };
 
-    const roleTasks = tasksByRole[employee.role] || tasksByRole.lifeguard;
-    const tasks = roleTasks.map((task, idx) => ({
-      id: String(idx + 1),
-      title: task.title,
-      description: task.description,
-      due_date: new Date(new Date(start_date).getTime() + task.days * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
-      status: 'pending',
-      assigned_to_email: mentor_email || 'onboarding@company.com',
-      assigned_to_name: 'Onboarding Team'
-    }));
+      const roleTasks = tasksByRole[employee.role] || tasksByRole.lifeguard;
+      tasks = roleTasks.map((task, idx) => ({
+        id: String(idx + 1),
+        title: task.title,
+        description: task.description,
+        due_date: new Date(new Date(start_date).getTime() + task.days * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
+        status: 'pending',
+        assigned_to_email: mentor_email || 'onboarding@company.com',
+        assigned_to_name: 'Onboarding Team'
+      }));
+    }
 
     // Create onboarding workflow
     const workflow = await base44.asServiceRole.entities.OnboardingWorkflow.create({
