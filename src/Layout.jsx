@@ -1,98 +1,48 @@
 import React, { useState, useEffect } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { createPageUrl } from "./utils";
 import MobileLayout from "@/components/MobileLayout";
 import {
-  LayoutDashboard,
-  CalendarDays,
-  Users,
-  MapPin,
-  Clock,
-  Menu,
-  X,
-  Shield,
-  AlertTriangle,
-  ArrowLeftRight,
-  BarChart2,
-  MessageSquare,
-  Settings,
-  HelpCircle,
-  BookOpen,
-  Mail,
-  MoreVertical,
-  Zap,
-  CreditCard,
-  Eye,
-  FileText,
-  LogOut,
-  Globe } from
-"lucide-react";
+  LayoutDashboard, CalendarDays, Users, MapPin, Clock, Menu, X, Shield,
+  AlertTriangle, ArrowLeftRight, BarChart2, MessageSquare, Settings,
+  BookOpen, Mail, Zap, CreditCard, Eye, FileText, LogOut, Globe,
+  ChevronDown, ChevronRight, Bell, Wrench, Droplets, ClipboardList,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuSeparator,
-  DropdownMenuLabel,
-  DropdownMenuTrigger } from
-"@/components/ui/dropdown-menu";
+  DropdownMenu, DropdownMenuContent, DropdownMenuItem,
+  DropdownMenuSeparator, DropdownMenuLabel, DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import { useQuery } from "@tanstack/react-query";
 import { base44 } from "@/api/base44Client";
 import FeedbackWidget from "@/components/FeedbackWidget";
 
-// Role hierarchy:
-// enterprise_site_owner → ALL tools
-// enterprise_admin      → ALL tools except owner-only (billing, settings, admin setup, error logs)
-// site_owner            → Pro tools + owner-only
-// admin                 → Pro tools (no billing/settings/setup/error logs)
-// user                  → Starter only (schedule, employees, locations, time off, shift swaps, messages)
-
 const ENTERPRISE_ROLES = ["enterprise_site_owner", "enterprise_admin"];
 const PRO_AND_ABOVE_ROLES = ["enterprise_site_owner", "enterprise_admin", "site_owner", "admin"];
 const OWNER_ONLY_ROLES = ["enterprise_site_owner", "site_owner"];
-// Combined: anyone who sees the enterprise/pro menu
 const ELEVATED_ROLES = PRO_AND_ABOVE_ROLES;
 
-// Shown to ALL roles in the top nav
-const primaryNavItems = [
-  { name: "Schedule", icon: CalendarDays, page: "Schedule" },
-  { name: "Employees", icon: Users, page: "Employees" },
-  { name: "Locations", icon: MapPin, page: "Locations" },
-];
-
-// Shown to ALL roles in the "More" dropdown
-const moreNavItems = [
-  { name: "Time Off", icon: Clock, page: "TimeOff" },
-  { name: "Shift Swaps", icon: ArrowLeftRight, page: "ShiftSwaps", badge: "swaps" },
-  { name: "Messages", icon: MessageSquare, page: "Messages" },
-];
-
-// Pro menu — site_owner, admin, enterprise_site_owner, enterprise_admin
-// enterpriseOnly: true → only enterprise_site_owner / enterprise_admin
-// ownerOnly: true      → only site_owner / enterprise_site_owner (no plain admin)
-const enterpriseNavItems = [
+// Desktop mega-dropdown groups for the Enterprise menu
+const enterpriseGroups = [
   {
-    name: "Compliance",
+    label: "Compliance",
     icon: Shield,
-    page: "ComplianceDashboard",
-    submenu: [
+    items: [
       { name: "Compliance Dashboard", icon: Shield, page: "ComplianceDashboard" },
-      { name: "Checklist Dashboard", icon: BarChart2, page: "ChecklistDashboard" },
+      { name: "Checklist Dashboard", icon: ClipboardList, page: "ChecklistDashboard" },
       { name: "Incident Management", icon: AlertTriangle, page: "IncidentDashboard" },
       { name: "Incident & Rescue Logs", icon: AlertTriangle, page: "IncidentLogs" },
       { name: "Public Safety Dashboard", icon: Eye, page: "PublicSafetyDashboard", enterpriseOnly: true },
     ],
   },
   {
-    name: "Operations",
-    icon: BarChart2,
-    page: "Assignments",
-    submenu: [
+    label: "Operations",
+    icon: Wrench,
+    items: [
       { name: "Assignments", icon: BarChart2, page: "Assignments" },
-      { name: "Asset Tracking", icon: BarChart2, page: "Assets" },
+      { name: "Asset Tracking", icon: Wrench, page: "Assets" },
       { name: "Patron Counts", icon: Users, page: "PatronCounts" },
-      { name: "Certifications", icon: Shield, page: "Certifications" },
-      { name: "Chemical Logs", icon: BarChart2, page: "ChemicalLogs" },
+      { name: "Chemical Logs", icon: Droplets, page: "ChemicalLogs" },
       { name: "Inspections", icon: BarChart2, page: "Inspections" },
       { name: "Maintenance Reports", icon: BarChart2, page: "MaintenanceReports" },
       { name: "Staff Training", icon: BookOpen, page: "TrainingDashboard" },
@@ -100,40 +50,56 @@ const enterpriseNavItems = [
     ],
   },
   {
-    name: "Communications",
-    icon: MessageSquare,
-    page: "Announcements",
-    submenu: [
-      { name: "Announcements", icon: AlertTriangle, page: "Announcements" },
-      { name: "Channels", icon: Users, page: "Channels" },
-      { name: "Messages", icon: MessageSquare, page: "Messages" },
+    label: "People",
+    icon: Users,
+    items: [
+      { name: "Certifications", icon: Shield, page: "Certifications" },
+      { name: "Directory", icon: Users, page: "EmployeeDirectory" },
+      { name: "My Availability", icon: Clock, page: "MyAvailability" },
+      { name: "Onboarding", icon: LayoutDashboard, page: "EmployeeOnboarding" },
     ],
   },
   {
-    name: "Employee Hub",
-    icon: Users,
-    page: "EmployeeDirectory",
-    submenu: [
-      { name: "Directory", icon: Users, page: "EmployeeDirectory" },
-      { name: "My Availability", icon: Clock, page: "MyAvailability" },
-      { name: "Time Off", icon: Clock, page: "TimeOff" },
-      { name: "Shift Swaps", icon: ArrowLeftRight, page: "ShiftSwaps", badge: "swaps" },
-      { name: "Onboarding", icon: Users, page: "EmployeeOnboarding" },
+    label: "Comms & Forms",
+    icon: MessageSquare,
+    items: [
+      { name: "Announcements", icon: Bell, page: "Announcements" },
+      { name: "Channels", icon: MessageSquare, page: "Channels" },
+      { name: "Operational Forms", icon: FileText, page: "OperationalForms" },
     ],
   },
-  { name: "Operational Forms", icon: FileText, page: "OperationalForms" },
-  { name: "Reports", icon: BarChart2, page: "Reports" },
-  { name: "Alerts", icon: AlertTriangle, page: "Alerts", badge: "alerts" },
-  // Enterprise-only
-  { name: "Multi-Location Dashboard", icon: Globe, page: "MultiLocationDashboard", enterpriseOnly: true },
-  { name: "Payroll Integrations", icon: BarChart2, page: "PayrollIntegrations", enterpriseOnly: true },
-  // Owner-only
-  { name: "Billing", icon: CreditCard, page: "Billing", ownerOnly: true },
-  { name: "Settings", icon: Settings, page: "Settings", ownerOnly: true },
-  { name: "Admin Setup", icon: LayoutDashboard, page: "AdminSetup", ownerOnly: true },
-  { name: "Error Logs", icon: AlertTriangle, page: "ErrorLogs", ownerOnly: true },
+  {
+    label: "Reports & Admin",
+    icon: BarChart2,
+    items: [
+      { name: "Reports", icon: BarChart2, page: "Reports" },
+      { name: "Alerts", icon: AlertTriangle, page: "Alerts", badge: "alerts" },
+      { name: "Multi-Location Dashboard", icon: Globe, page: "MultiLocationDashboard", enterpriseOnly: true },
+      { name: "Payroll Integrations", icon: BarChart2, page: "PayrollIntegrations", enterpriseOnly: true },
+      { name: "Billing", icon: CreditCard, page: "Billing", ownerOnly: true },
+      { name: "Settings", icon: Settings, page: "Settings", ownerOnly: true },
+      { name: "Admin Setup", icon: LayoutDashboard, page: "AdminSetup", ownerOnly: true },
+      { name: "Error Logs", icon: AlertTriangle, page: "ErrorLogs", ownerOnly: true },
+    ],
+  },
 ];
 
+// Mobile collapsible section component
+function MobileSection({ label, icon: Icon, children, defaultOpen = false }) {
+  const [open, setOpen] = useState(defaultOpen);
+  return (
+    <div>
+      <button
+        onClick={() => setOpen(!open)}
+        className="w-full flex items-center justify-between px-4 py-2.5 rounded-lg text-sm font-semibold text-gray-600 hover:bg-gray-50"
+      >
+        <span className="flex items-center gap-2"><Icon className="w-4 h-4" />{label}</span>
+        {open ? <ChevronDown className="w-4 h-4" /> : <ChevronRight className="w-4 h-4" />}
+      </button>
+      {open && <div className="ml-4 border-l border-gray-100 pl-2 mb-1">{children}</div>}
+    </div>
+  );
+}
 
 export default function Layout({ children, currentPageName }) {
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -145,292 +111,225 @@ export default function Layout({ children, currentPageName }) {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  // Map regular pages to mobile pages
   const mobilePageMap = {
-    "Schedule": "MobileSchedule",
-    "Employees": "MobileEmployees",
-    "TimeOff": "MobileTimeOff",
-    "Billing": "MobileBilling",
-    "Locations": "MobileLocations",
-    "Certifications": "MobileCertifications"
+    "Schedule": "MobileSchedule", "Employees": "MobileEmployees",
+    "TimeOff": "MobileTimeOff", "Billing": "MobileBilling",
+    "Locations": "MobileLocations", "Certifications": "MobileCertifications",
   };
 
-  // Redirect to mobile page if on mobile
   if (isMobile && mobilePageMap[currentPageName]) {
     return <MobileLayout currentPageName={currentPageName}>{children}</MobileLayout>;
   }
 
-  const { data: user } = useQuery({
-    queryKey: ["user"],
-    queryFn: () => base44.auth.me()
-  });
+  const { data: user } = useQuery({ queryKey: ["user"], queryFn: () => base44.auth.me() });
+  const { data: alerts = [] } = useQuery({ queryKey: ["alerts"], queryFn: () => base44.entities.Alert.list("-created_date", 100), refetchInterval: 60000 });
+  const { data: swapRequests = [] } = useQuery({ queryKey: ["shift-swaps"], queryFn: () => base44.entities.ShiftSwapRequest.list("-created_date", 100), refetchInterval: 60000 });
 
-  const { data: alerts = [] } = useQuery({
-    queryKey: ["alerts"],
-    queryFn: () => base44.entities.Alert.list("-created_date", 100),
-    refetchInterval: 60000
-  });
-  const { data: swapRequests = [] } = useQuery({
-    queryKey: ["shift-swaps"],
-    queryFn: () => base44.entities.ShiftSwapRequest.list("-created_date", 100),
-    refetchInterval: 60000
-  });
-  const { data: notifications = [] } = useQuery({
-    queryKey: ["notifications"],
-    queryFn: () => base44.entities.Notification.list("-created_date", 100),
-    refetchInterval: 30000
-  });
-  
   const unresolvedAlerts = alerts.filter((a) => !a.resolved).length;
   const pendingSwaps = swapRequests.filter((s) => s.status === "pending_employee" || s.status === "pending_manager").length;
-  const unreadNotifications = notifications.filter((n) => n.user_email === user?.email && !n.read).length;
 
-  // Home page has its own full nav — skip the layout nav entirely
-  if (currentPageName === "Home") {
-    return <>{children}</>;
-  }
+  if (currentPageName === "Home") return <>{children}</>;
+
+  const isElevated = ELEVATED_ROLES.includes(user?.role);
+  const isEnterprise = ENTERPRISE_ROLES.includes(user?.role);
+  const isOwner = OWNER_ONLY_ROLES.includes(user?.role);
+
+  const close = () => setMobileOpen(false);
 
   return (
-    <div className="min-h-screen bg-white" style={{ fontFamily: "'Inter', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', sans-serif" }}>
-      <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
-        :root {
-          --accent: #1a9c5b;
-          --accent-hover: #158a4e;
-          --accent-light: #f0faf5;
-        }
-      `}</style>
+    <div className="min-h-screen bg-white" style={{ fontFamily: "'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" }}>
+      <style>{`@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');`}</style>
 
-      {/* Top Nav */}
       <header className="bg-white border-b border-gray-200 sticky top-0 z-40">
-        <div className="max-w-7xl mx-auto px-6 py-5">
-          <div className="flex items-center justify-between">
-            {/* Logo */}
-            <Link to={createPageUrl("Dashboard")} className="flex items-center gap-3 group">
-              <div className="w-10 h-10 rounded-lg bg-[#1a9c5b] flex items-center justify-center">
-                <Shield className="w-5 h-5 text-white" />
-              </div>
-              <span className="font-bold text-xl text-gray-900">LifeGuard Tracker
-              </span>
-            </Link>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 h-14 flex items-center justify-between gap-4">
 
-            {/* Desktop Nav */}
-            <nav className="hidden lg:flex items-center gap-1">
-              {primaryNavItems.map((item) => {const isActive = currentPageName === item.page;
-                  return (
-                    <Link
-                      key={item.page}
-                      to={createPageUrl(item.page)}
-                      className={`relative flex items-center gap-2 px-4 py-2.5 rounded-lg text-sm font-medium transition-colors ${
-                      isActive ?
-                      "text-[#1a9c5b] bg-[#f0faf5]" :
-                      "text-gray-700 hover:text-gray-900"}`
-                      }>
+          {/* Logo */}
+          <Link to={createPageUrl("Dashboard")} className="flex items-center gap-2.5 shrink-0">
+            <div className="w-8 h-8 rounded-lg bg-[#1a9c5b] flex items-center justify-center">
+              <Shield className="w-4 h-4 text-white" />
+            </div>
+            <span className="font-bold text-base text-gray-900 hidden sm:block">LifeGuard Tracker</span>
+          </Link>
 
-                    <item.icon className="w-4 h-4" />
-                    {item.name}
-                  </Link>);
-
-                })}
-
-              {/* More Menu (all users) */}
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <Button variant="ghost" className="text-gray-700 hover:text-gray-900 gap-1 text-sm font-medium px-4 py-2.5">
-                    <MoreVertical className="w-4 h-4" />
-                    More
-                    {pendingSwaps > 0 &&
-                      <span className="ml-1 bg-red-500 text-white text-xs font-bold rounded-full w-4 h-4 flex items-center justify-center">
-                        {pendingSwaps > 9 ? "9+" : pendingSwaps}
-                      </span>
-                    }
-                  </Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent align="end" className="w-52 max-h-[80vh] overflow-y-auto">
-                  {moreNavItems.map((item) => (
-                    <DropdownMenuItem key={item.page} asChild>
-                      <Link to={createPageUrl(item.page)} className="flex items-center gap-2">
-                        <item.icon className="w-4 h-4" />
-                        <span>{item.name}</span>
-                        {item.badge === "swaps" && pendingSwaps > 0 &&
-                          <span className="ml-auto bg-orange-500 text-white text-xs font-bold rounded-full px-1.5">{pendingSwaps}</span>
-                        }
-                      </Link>
-                    </DropdownMenuItem>
-                  ))}
-                  <DropdownMenuSeparator />
-                  <DropdownMenuLabel className="text-xs font-semibold text-gray-500">Help</DropdownMenuLabel>
-                  <DropdownMenuItem asChild>
-                    <Link to={createPageUrl("Docs")} className="flex items-center gap-2"><BookOpen className="w-4 h-4" /><span>Documentation</span></Link>
-                  </DropdownMenuItem>
-                  <DropdownMenuItem asChild>
-                    <Link to={createPageUrl("Contact")} className="flex items-center gap-2"><Mail className="w-4 h-4" /><span>Contact Support</span></Link>
-                  </DropdownMenuItem>
-                  <DropdownMenuSeparator />
-                  <DropdownMenuItem onClick={() => base44.auth.logout(createPageUrl("Home"))} className="flex items-center gap-2 text-red-600 focus:text-red-600 cursor-pointer">
-                    <LogOut className="w-4 h-4" /><span>Log Out</span>
-                  </DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu>
-
-              {/* Pro/Enterprise Menu */}
-              {ELEVATED_ROLES.includes(user?.role) && (
-                <DropdownMenu>
-                  <DropdownMenuTrigger asChild>
-                    <Button variant="ghost" className="text-gray-700 hover:text-gray-900 gap-1.5 text-sm font-medium px-4 py-2.5 border border-gray-200 rounded-lg">
-                      <Zap className="w-4 h-4 text-[#1a9c5b]" />
-                      Enterprise
-                      {(unresolvedAlerts > 0) &&
-                        <span className="ml-1 bg-red-500 text-white text-xs font-bold rounded-full w-4 h-4 flex items-center justify-center">
-                          {unresolvedAlerts > 9 ? "9+" : unresolvedAlerts}
-                        </span>
-                      }
-                    </Button>
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent align="end" className="w-60 max-h-[85vh] overflow-y-auto">
-                    <DropdownMenuLabel className="text-xs font-bold text-[#1a9c5b] uppercase tracking-wide px-2 py-1.5">Enterprise Tools</DropdownMenuLabel>
-                    {enterpriseNavItems.map((item) => {
-                      if (item.ownerOnly && !OWNER_ONLY_ROLES.includes(user?.role)) return null;
-                      if (item.enterpriseOnly && !ENTERPRISE_ROLES.includes(user?.role)) return null;
-                      if (item.submenu) {
-                        const visibleSubs = item.submenu.filter(s => {
-                          if (s.enterpriseOnly && !ENTERPRISE_ROLES.includes(user?.role)) return false;
-                          return true;
-                        });
-                        if (visibleSubs.length === 0) return null;
-                        return (
-                          <div key={item.page}>
-                            <DropdownMenuLabel className="flex items-center gap-2 px-2 py-1.5 text-gray-600 font-semibold text-xs mt-1">
-                              <item.icon className="w-3.5 h-3.5" />
-                              <span>{item.name}</span>
-                            </DropdownMenuLabel>
-                            {visibleSubs.map((subitem) => (
-                              <DropdownMenuItem key={subitem.page} asChild>
-                                <Link to={createPageUrl(subitem.page)} className="flex items-center gap-2 ml-2">
-                                  <subitem.icon className="w-4 h-4" />
-                                  <span>{subitem.name}</span>
-                                  {subitem.badge === "swaps" && pendingSwaps > 0 &&
-                                    <span className="ml-auto bg-orange-500 text-white text-xs font-bold rounded-full px-1.5">{pendingSwaps}</span>
-                                  }
-                                </Link>
-                              </DropdownMenuItem>
-                            ))}
-                            <DropdownMenuSeparator />
-                          </div>
-                        );
-                      }
-                      return (
-                        <DropdownMenuItem key={item.page} asChild>
-                          <Link to={createPageUrl(item.page)} className="flex items-center gap-2">
-                            <item.icon className="w-4 h-4" />
-                            <span>{item.name}</span>
-                            {item.badge === "alerts" && unresolvedAlerts > 0 &&
-                              <span className="ml-auto bg-red-500 text-white text-xs font-bold rounded-full px-1.5">{unresolvedAlerts}</span>
-                            }
-                          </Link>
-                        </DropdownMenuItem>
-                      );
-                    })}
-                  </DropdownMenuContent>
-                </DropdownMenu>
-              )}
-            </nav>
-
-            {/* Mobile menu button */}
-            <Button
-              variant="ghost"
-              size="icon"
-              className="lg:hidden text-gray-700"
-              onClick={() => setMobileOpen(!mobileOpen)}>
-
-              {mobileOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
-            </Button>
-          </div>
-        </div>
-
-        {/* Mobile Nav */}
-        {mobileOpen && (
-          <div className="lg:hidden border-t border-gray-200 bg-white px-6 py-4 space-y-1">
-            {/* Primary */}
-            {primaryNavItems.map((item) => {
-              const isActive = currentPageName === item.page;
-              return (
-                <Link key={item.page} to={createPageUrl(item.page)} onClick={() => setMobileOpen(false)}
-                  className={`flex items-center gap-3 px-4 py-2.5 rounded-lg text-sm font-medium transition-colors ${isActive ? "text-[#1a9c5b] bg-[#f0faf5]" : "text-gray-700 hover:text-gray-900"}`}>
-                  <item.icon className="w-4 h-4" />{item.name}
-                </Link>
-              );
-            })}
-            {/* Basic more */}
-            {moreNavItems.map((item) => (
-              <Link key={item.page} to={createPageUrl(item.page)} onClick={() => setMobileOpen(false)}
-                className="flex items-center gap-3 px-4 py-2.5 rounded-lg text-sm text-gray-700 hover:bg-gray-50">
+          {/* Desktop Nav */}
+          <nav className="hidden lg:flex items-center gap-1 flex-1 justify-center">
+            {[
+              { name: "Schedule", icon: CalendarDays, page: "Schedule" },
+              { name: "Employees", icon: Users, page: "Employees" },
+              { name: "Locations", icon: MapPin, page: "Locations" },
+            ].map((item) => (
+              <Link key={item.page} to={createPageUrl(item.page)}
+                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-md text-sm font-medium transition-colors ${currentPageName === item.page ? "text-[#1a9c5b] bg-[#f0faf5]" : "text-gray-600 hover:text-gray-900 hover:bg-gray-50"}`}>
                 <item.icon className="w-4 h-4" />{item.name}
-                {item.badge === "swaps" && pendingSwaps > 0 && <span className="ml-auto bg-orange-500 text-white text-xs font-bold rounded-full px-2">{pendingSwaps}</span>}
               </Link>
             ))}
 
-            {/* Pro/Enterprise section */}
-            {ELEVATED_ROLES.includes(user?.role) && (
-              <>
-                <div className="border-t border-gray-200 pt-3 mt-2">
-                  <p className="text-xs font-bold text-[#1a9c5b] uppercase tracking-wide px-4 mb-2">
-                    {ENTERPRISE_ROLES.includes(user?.role) ? "Enterprise" : "Pro"}
-                  </p>
-                  {enterpriseNavItems.map((item) => {
-                    if (item.ownerOnly && !OWNER_ONLY_ROLES.includes(user?.role)) return null;
-                    if (item.enterpriseOnly && !ENTERPRISE_ROLES.includes(user?.role)) return null;
-                    if (item.submenu) {
-                      const visibleSubs = item.submenu.filter(s => {
-                        if (s.enterpriseOnly && !ENTERPRISE_ROLES.includes(user?.role)) return false;
+            {/* Team dropdown */}
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <button className="flex items-center gap-1.5 px-3 py-1.5 rounded-md text-sm font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-50 transition-colors">
+                  <Clock className="w-4 h-4" />Team
+                  <ChevronDown className="w-3 h-3 opacity-60" />
+                  {pendingSwaps > 0 && <span className="bg-orange-500 text-white text-xs font-bold rounded-full w-4 h-4 flex items-center justify-center">{pendingSwaps > 9 ? "9+" : pendingSwaps}</span>}
+                </button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="center" className="w-48">
+                <DropdownMenuItem asChild><Link to={createPageUrl("TimeOff")} className="flex items-center gap-2"><Clock className="w-4 h-4" />Time Off</Link></DropdownMenuItem>
+                <DropdownMenuItem asChild>
+                  <Link to={createPageUrl("ShiftSwaps")} className="flex items-center gap-2">
+                    <ArrowLeftRight className="w-4 h-4" />Shift Swaps
+                    {pendingSwaps > 0 && <span className="ml-auto bg-orange-500 text-white text-xs font-bold rounded-full px-1.5">{pendingSwaps}</span>}
+                  </Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem asChild><Link to={createPageUrl("Messages")} className="flex items-center gap-2"><MessageSquare className="w-4 h-4" />Messages</Link></DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+
+            {/* Enterprise mega-menu */}
+            {isElevated && (
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <button className="flex items-center gap-1.5 px-3 py-1.5 rounded-md text-sm font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-50 border border-gray-200 transition-colors">
+                    <Zap className="w-4 h-4 text-[#1a9c5b]" />
+                    {isEnterprise ? "Enterprise" : "Pro"}
+                    <ChevronDown className="w-3 h-3 opacity-60" />
+                    {unresolvedAlerts > 0 && <span className="bg-red-500 text-white text-xs font-bold rounded-full w-4 h-4 flex items-center justify-center">{unresolvedAlerts > 9 ? "9+" : unresolvedAlerts}</span>}
+                  </button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end" className="w-[680px] p-3">
+                  <div className="grid grid-cols-3 gap-1">
+                    {enterpriseGroups.map((group) => {
+                      const visible = group.items.filter(i => {
+                        if (i.ownerOnly && !isOwner) return false;
+                        if (i.enterpriseOnly && !isEnterprise) return false;
                         return true;
                       });
-                      if (visibleSubs.length === 0) return null;
+                      if (visible.length === 0) return null;
                       return (
-                        <div key={item.page}>
-                          <div className="flex items-center gap-3 px-4 py-2 text-xs font-semibold text-gray-500 uppercase tracking-wide mt-1">
-                            <item.icon className="w-3.5 h-3.5" />{item.name}
+                        <div key={group.label} className="bg-gray-50 rounded-lg p-2">
+                          <div className="flex items-center gap-1.5 px-1 py-1 mb-1">
+                            <group.icon className="w-3.5 h-3.5 text-[#1a9c5b]" />
+                            <span className="text-xs font-bold text-gray-500 uppercase tracking-wide">{group.label}</span>
                           </div>
-                          {visibleSubs.map((subitem) => (
-                            <Link key={subitem.page} to={createPageUrl(subitem.page)} onClick={() => setMobileOpen(false)}
-                              className="flex items-center gap-3 px-8 py-2 rounded-lg text-sm text-gray-700 hover:bg-gray-50">
-                              <subitem.icon className="w-4 h-4" />{subitem.name}
-                            </Link>
+                          {visible.map((item) => (
+                            <DropdownMenuItem key={item.page} asChild>
+                              <Link to={createPageUrl(item.page)} className="flex items-center gap-2 px-2 py-1.5 rounded-md text-sm text-gray-700 hover:bg-white">
+                                <item.icon className="w-3.5 h-3.5 text-gray-400 shrink-0" />
+                                <span className="truncate">{item.name}</span>
+                                {item.badge === "alerts" && unresolvedAlerts > 0 && <span className="ml-auto bg-red-500 text-white text-xs font-bold rounded-full px-1.5">{unresolvedAlerts}</span>}
+                              </Link>
+                            </DropdownMenuItem>
                           ))}
                         </div>
                       );
-                    }
+                    })}
+                  </div>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            )}
+          </nav>
+
+          {/* Desktop right actions */}
+          <div className="hidden lg:flex items-center gap-1">
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <button className="flex items-center gap-1.5 px-3 py-1.5 rounded-md text-sm font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-50 transition-colors">
+                  <div className="w-6 h-6 rounded-full bg-[#1a9c5b]/10 flex items-center justify-center">
+                    <span className="text-[10px] font-bold text-[#1a9c5b]">{user?.full_name?.[0] || "?"}</span>
+                  </div>
+                  <ChevronDown className="w-3 h-3 opacity-60" />
+                </button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" className="w-48">
+                {user?.full_name && <DropdownMenuLabel className="font-normal"><div className="font-semibold text-gray-900 text-sm">{user.full_name}</div><div className="text-xs text-gray-400">{user.email}</div></DropdownMenuLabel>}
+                <DropdownMenuSeparator />
+                <DropdownMenuItem asChild><Link to={createPageUrl("Docs")} className="flex items-center gap-2"><BookOpen className="w-4 h-4" />Documentation</Link></DropdownMenuItem>
+                <DropdownMenuItem asChild><Link to={createPageUrl("Contact")} className="flex items-center gap-2"><Mail className="w-4 h-4" />Contact Support</Link></DropdownMenuItem>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem onClick={() => base44.auth.logout(createPageUrl("Home"))} className="flex items-center gap-2 text-red-600 focus:text-red-600 cursor-pointer">
+                  <LogOut className="w-4 h-4" />Log Out
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </div>
+
+          {/* Mobile toggle */}
+          <button className="lg:hidden p-2 rounded-md hover:bg-gray-100 text-gray-700" onClick={() => setMobileOpen(!mobileOpen)}>
+            {mobileOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+          </button>
+        </div>
+
+        {/* Mobile Nav — collapsible sections */}
+        {mobileOpen && (
+          <div className="lg:hidden border-t border-gray-100 bg-white overflow-y-auto max-h-[80vh]">
+            <div className="px-3 py-3 space-y-0.5">
+
+              {/* Core */}
+              {[
+                { name: "Schedule", icon: CalendarDays, page: "Schedule" },
+                { name: "Employees", icon: Users, page: "Employees" },
+                { name: "Locations", icon: MapPin, page: "Locations" },
+              ].map((item) => (
+                <Link key={item.page} to={createPageUrl(item.page)} onClick={close}
+                  className={`flex items-center gap-3 px-4 py-2.5 rounded-lg text-sm font-medium ${currentPageName === item.page ? "text-[#1a9c5b] bg-[#f0faf5]" : "text-gray-700 hover:bg-gray-50"}`}>
+                  <item.icon className="w-4 h-4" />{item.name}
+                </Link>
+              ))}
+
+              {/* Team section */}
+              <MobileSection label="Team" icon={Clock}>
+                <Link to={createPageUrl("TimeOff")} onClick={close} className="flex items-center gap-2 px-3 py-2 rounded-md text-sm text-gray-700 hover:bg-gray-50"><Clock className="w-4 h-4" />Time Off</Link>
+                <Link to={createPageUrl("ShiftSwaps")} onClick={close} className="flex items-center gap-2 px-3 py-2 rounded-md text-sm text-gray-700 hover:bg-gray-50">
+                  <ArrowLeftRight className="w-4 h-4" />Shift Swaps
+                  {pendingSwaps > 0 && <span className="ml-auto bg-orange-500 text-white text-xs font-bold rounded-full px-1.5">{pendingSwaps}</span>}
+                </Link>
+                <Link to={createPageUrl("Messages")} onClick={close} className="flex items-center gap-2 px-3 py-2 rounded-md text-sm text-gray-700 hover:bg-gray-50"><MessageSquare className="w-4 h-4" />Messages</Link>
+              </MobileSection>
+
+              {/* Enterprise collapsible groups */}
+              {isElevated && (
+                <>
+                  <div className="pt-2 pb-1 px-4">
+                    <span className="text-xs font-bold text-[#1a9c5b] uppercase tracking-wide">{isEnterprise ? "Enterprise" : "Pro"} Tools</span>
+                  </div>
+                  {enterpriseGroups.map((group) => {
+                    const visible = group.items.filter(i => {
+                      if (i.ownerOnly && !isOwner) return false;
+                      if (i.enterpriseOnly && !isEnterprise) return false;
+                      return true;
+                    });
+                    if (visible.length === 0) return null;
                     return (
-                      <Link key={item.page} to={createPageUrl(item.page)} onClick={() => setMobileOpen(false)}
-                        className="flex items-center gap-3 px-4 py-2.5 rounded-lg text-sm text-gray-700 hover:bg-gray-50">
-                        <item.icon className="w-4 h-4" />{item.name}
-                        {item.badge === "alerts" && unresolvedAlerts > 0 && <span className="ml-auto bg-red-500 text-white text-xs font-bold rounded-full px-2">{unresolvedAlerts}</span>}
-                      </Link>
+                      <MobileSection key={group.label} label={group.label} icon={group.icon}>
+                        {visible.map((item) => (
+                          <Link key={item.page} to={createPageUrl(item.page)} onClick={close}
+                            className="flex items-center gap-2 px-3 py-2 rounded-md text-sm text-gray-700 hover:bg-gray-50">
+                            <item.icon className="w-4 h-4" />{item.name}
+                            {item.badge === "alerts" && unresolvedAlerts > 0 && <span className="ml-auto bg-red-500 text-white text-xs font-bold rounded-full px-1.5">{unresolvedAlerts}</span>}
+                          </Link>
+                        ))}
+                      </MobileSection>
                     );
                   })}
-                </div>
-              </>
-            )}
+                </>
+              )}
 
-            <div className="border-t border-gray-200 pt-2 mt-2">
-              <Link to={createPageUrl("Docs")} onClick={() => setMobileOpen(false)} className="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 rounded-lg">
-                <BookOpen className="w-4 h-4" />Documentation
-              </Link>
-              <Link to={createPageUrl("Contact")} onClick={() => setMobileOpen(false)} className="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 rounded-lg">
-                <Mail className="w-4 h-4" />Contact Support
-              </Link>
+              {/* Help & account */}
+              <div className="border-t border-gray-100 pt-2 mt-1 space-y-0.5">
+                <Link to={createPageUrl("Docs")} onClick={close} className="flex items-center gap-3 px-4 py-2.5 rounded-lg text-sm text-gray-700 hover:bg-gray-50"><BookOpen className="w-4 h-4" />Documentation</Link>
+                <Link to={createPageUrl("Contact")} onClick={close} className="flex items-center gap-3 px-4 py-2.5 rounded-lg text-sm text-gray-700 hover:bg-gray-50"><Mail className="w-4 h-4" />Contact Support</Link>
+                <button onClick={() => base44.auth.logout(createPageUrl("Home"))} className="w-full flex items-center gap-3 px-4 py-2.5 rounded-lg text-sm text-red-600 hover:bg-red-50">
+                  <LogOut className="w-4 h-4" />Log Out
+                </button>
+              </div>
             </div>
           </div>
         )}
       </header>
 
-      {/* Page Content */}
-      <main className="bg-white">
-        {children}
-      </main>
+      <main className="bg-white">{children}</main>
 
-      {/* Feedback Widget */}
       <FeedbackWidget />
-    </div>);
-
+    </div>
+  );
 }
