@@ -9,18 +9,20 @@ import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
 import { AlertTriangle, Siren, Camera, X, Loader2 } from "lucide-react";
 import { format } from "date-fns";
+import SignaturePad from "./SignaturePad";
 
 const defaultForm = () => ({
   location_id: "", date: format(new Date(), "yyyy-MM-dd"), time: format(new Date(), "HH:mm"),
   type: "incident", severity: "minor", patron_name: "", patron_age: "",
   description: "", action_taken: "", ems_called: false, patron_transported: false,
   witnesses: "", follow_up_required: false, follow_up_notes: "", status: "open",
-  photo_urls: []
+  photo_urls: [], signature_url: null
 });
 
 export default function LogIncidentForm({ open, onOpenChange }) {
   const qc = useQueryClient();
   const [form, setForm] = useState(defaultForm());
+  const [showSignature, setShowSignature] = useState(false);
   const { data: locations = [] } = useQuery({ queryKey: ["locations"], queryFn: () => base44.entities.Location.list() });
   const { data: user } = useQuery({ queryKey: ["user"], queryFn: () => base44.auth.me() });
 
@@ -35,8 +37,23 @@ export default function LogIncidentForm({ open, onOpenChange }) {
 
   const f = (field, val) => setForm(p => ({ ...p, [field]: val }));
 
+  const handleSignatureCapture = async (dataUrl) => {
+    try {
+      const blob = await fetch(dataUrl).then(r => r.blob());
+      const { file_url } = await base44.integrations.Core.UploadFile({ file: blob });
+      f("signature_url", file_url);
+      setShowSignature(false);
+    } catch (error) {
+      console.error("Failed to upload signature:", error);
+    }
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
+    if (!form.signature_url) {
+      alert("Signature is required. Please sign the form.");
+      return;
+    }
     const loc = locations.find(l => l.id === form.location_id);
     save.mutate({
       ...form,
@@ -176,6 +193,29 @@ export default function LogIncidentForm({ open, onOpenChange }) {
                   </div>
                 )}
               </div>
+            </div>
+
+            {/* Signature Pad */}
+            <div className="col-span-2">
+              {showSignature ? (
+                <SignaturePad onSign={handleSignatureCapture} onCancel={() => setShowSignature(false)} />
+              ) : (
+                <div className="space-y-2">
+                  <Label>Signature *</Label>
+                  {form.signature_url ? (
+                    <div className="space-y-2">
+                      <img src={form.signature_url} alt="Signature" className="w-32 h-20 border border-gray-200 rounded-lg" />
+                      <Button type="button" variant="outline" size="sm" onClick={() => setShowSignature(true)}>
+                        Re-sign
+                      </Button>
+                    </div>
+                  ) : (
+                    <Button type="button" variant="outline" onClick={() => setShowSignature(true)} className="w-full">
+                      Capture Signature
+                    </Button>
+                  )}
+                </div>
+              )}
             </div>
           </div>
 
