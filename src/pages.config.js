@@ -99,6 +99,7 @@ import Terms from './pages/Terms';
 import TimeOff from './pages/TimeOff';
 import Tutorials from './pages/Tutorials';
 import PublicSafetyDashboard from './pages/PublicSafetyDashboard';
+import OperationalForms from './pages/OperationalForms';
 import __Layout from './Layout.jsx';
 
 
@@ -155,6 +156,7 @@ export const PAGES = {
     "TimeOff": TimeOff,
     "Tutorials": Tutorials,
     "PublicSafetyDashboard": PublicSafetyDashboard,
+    "OperationalForms": OperationalForms,
 }
 
 export const pagesConfig = {
