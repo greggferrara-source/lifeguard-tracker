@@ -6,6 +6,7 @@ import { Badge } from "@/components/ui/badge";
 export default function ResourceBookingCalendar({ resources, bookings }) {
   const [currentDate, setCurrentDate] = useState(new Date());
   const [selectedResource, setSelectedResource] = useState(resources[0]?.id);
+  const [filterType, setFilterType] = useState('all');
 
   const getDaysInMonth = (date) => new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate();
   const getFirstDayOfMonth = (date) => new Date(date.getFullYear(), date.getMonth(), 1).getDay();
@@ -17,7 +18,8 @@ export default function ResourceBookingCalendar({ resources, bookings }) {
   const prevMonth = () => setCurrentDate(new Date(currentDate.getFullYear(), currentDate.getMonth() - 1));
   const nextMonth = () => setCurrentDate(new Date(currentDate.getFullYear(), currentDate.getMonth() + 1));
 
-  const resource = resources.find(r => r.id === selectedResource);
+  const filteredResources = filterType === 'all' ? resources : resources.filter(r => r.resource_type === filterType);
+  const resource = filteredResources.find(r => r.id === selectedResource);
   const resourceBookings = bookings.filter(b => b.resource_id === selectedResource && b.status !== 'cancelled');
 
   const getDateBookings = (day) => {
@@ -35,6 +37,29 @@ export default function ResourceBookingCalendar({ resources, bookings }) {
 
   return (
     <div className="bg-white rounded-xl border border-gray-200 p-6 space-y-4">
+      {/* Filter by Resource Type */}
+      <div>
+        <label className="text-sm font-semibold text-gray-700 block mb-2">Filter by Type</label>
+        <div className="flex flex-wrap gap-2">
+          {['all', 'meeting_room', 'equipment', 'vehicle', 'facility', 'other'].map(type => (
+            <button
+              key={type}
+              onClick={() => {
+                setFilterType(type);
+                setSelectedResource(filteredResources[0]?.id);
+              }}
+              className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-all ${
+                filterType === type
+                  ? 'bg-blue-600 text-white'
+                  : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+              }`}
+            >
+              {type === 'all' ? 'All' : type.replace('_', ' ')}
+            </button>
+          ))}
+        </div>
+      </div>
+
       {/* Resource Selector */}
       <div>
         <label className="text-sm font-semibold text-gray-700 block mb-2">Select Resource</label>
@@ -43,7 +68,7 @@ export default function ResourceBookingCalendar({ resources, bookings }) {
           value={selectedResource}
           onChange={(e) => setSelectedResource(e.target.value)}
         >
-          {resources.map(r => (
+          {filteredResources.map(r => (
             <option key={r.id} value={r.id}>{r.name}</option>
           ))}
         </select>
