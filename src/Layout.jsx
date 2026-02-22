@@ -71,6 +71,7 @@ const enterpriseNavItems = [
     page: "ComplianceDashboard",
     submenu: [
       { name: "Compliance Dashboard", icon: Shield, page: "ComplianceDashboard" },
+      { name: "Public Safety Dashboard", icon: Eye, page: "PublicSafetyDashboard" },
       { name: "Checklist Dashboard", icon: BarChart2, page: "ChecklistDashboard" },
       { name: "Incident Management", icon: AlertTriangle, page: "IncidentDashboard" },
       { name: "Incident & Rescue Logs", icon: AlertTriangle, page: "IncidentLogs" },
