@@ -1,4 +1,3 @@
-
 import { createClientFromRequest } from 'npm:@base44/sdk@0.8.6';
 
 Deno.serve(async (req) => {
@@ -17,6 +16,48 @@ Deno.serve(async (req) => {
 
     const fullName = employee.first_name + ' ' + employee.last_name;
 
+    // Auto-assign tasks based on employee role
+    const tasksByRole = {
+      lifeguard: [
+        { title: 'IT Setup - Create Account', description: 'Set up employee IT account and email', days: 1 },
+        { title: 'Complete HR Paperwork', description: 'Fill out employment forms and tax documents', days: 3 },
+        { title: 'Safety Training', description: 'Complete facility safety and orientation training', days: 7 },
+        { title: 'Certification Review', description: 'Verify current certifications and compliance', days: 5 }
+      ],
+      head_lifeguard: [
+        { title: 'IT Setup - Create Account', description: 'Set up employee IT account and email', days: 1 },
+        { title: 'Complete HR Paperwork', description: 'Fill out employment forms and tax documents', days: 3 },
+        { title: 'Management Training', description: 'Complete leadership and management training', days: 10 },
+        { title: 'Safety Training', description: 'Complete facility safety and orientation training', days: 7 },
+        { title: 'Certification Review', description: 'Verify current certifications and compliance', days: 5 }
+      ],
+      supervisor: [
+        { title: 'IT Setup - Create Account', description: 'Set up employee IT account and email and system access', days: 1 },
+        { title: 'Complete HR Paperwork', description: 'Fill out employment forms and tax documents', days: 3 },
+        { title: 'Management Training', description: 'Complete leadership and management training', days: 10 },
+        { title: 'System Access Setup', description: 'Configure admin portal and reporting tools access', days: 2 },
+        { title: 'Safety Training', description: 'Complete facility safety and orientation training', days: 7 }
+      ],
+      manager: [
+        { title: 'IT Setup - Create Account', description: 'Set up employee IT account and email', days: 1 },
+        { title: 'Complete HR Paperwork', description: 'Fill out employment forms and tax documents', days: 3 },
+        { title: 'Executive Onboarding', description: 'Complete management-level orientation', days: 14 },
+        { title: 'System Access Setup', description: 'Configure full admin portal and analytics access', days: 2 },
+        { title: 'Policy Review', description: 'Review company policies and procedures', days: 5 }
+      ]
+    };
+
+    const roleTasks = tasksByRole[employee.role] || tasksByRole.lifeguard;
+    const tasks = roleTasks.map((task, idx) => ({
+      id: String(idx + 1),
+      title: task.title,
+      description: task.description,
+      due_date: new Date(new Date(start_date).getTime() + task.days * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
+      status: 'pending',
+      assigned_to_email: mentor_email || 'onboarding@company.com',
+      assigned_to_name: 'Onboarding Team'
+    }));
+
     // Create onboarding workflow
     const workflow = await base44.asServiceRole.entities.OnboardingWorkflow.create({
       employee_id,
@@ -26,36 +67,7 @@ Deno.serve(async (req) => {
       status: 'not_started',
       assigned_mentor_email: mentor_email,
       training_modules_assigned: training_module_ids,
-      tasks: [
-        {
-          id: '1',
-          title: 'Complete HR Paperwork',
-          description: 'Fill out all required HR forms and documents',
-          due_date: new Date(new Date(start_date).getTime() + 3 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
-          status: 'pending'
-        },
-        {
-          id: '2',
-          title: 'IT Setup & Access',
-          description: 'Configure email, systems access, and equipment',
-          due_date: new Date(new Date(start_date).getTime() + 2 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
-          status: 'pending'
-        },
-        {
-          id: '3',
-          title: 'Safety & Compliance Training',
-          description: 'Complete required safety and compliance training',
-          due_date: new Date(new Date(start_date).getTime() + 7 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
-          status: 'pending'
-        },
-        {
-          id: '4',
-          title: 'Meet Department Team',
-          description: 'Meet with team members and department leads',
-          due_date: new Date(new Date(start_date).getTime() + 5 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
-          status: 'pending'
-        }
-      ],
+      tasks: tasks,
       checklist_items: [
         { id: '1', item: 'Welcome email sent', completed: false },
         { id: '2', item: 'Orientation meeting scheduled', completed: false },
