@@ -678,7 +678,7 @@ Yes! LifeGuard Tracker is fully responsive. Native mobile views are available fo
 The certification is automatically marked as Expired, and both the employee and managers receive email reminders 30 and 7 days before expiry.
 
 **How do I export data for a health department inspection?**
-Go to **Enterprise → Reports** and use the **Document Generator** to export compliance PDFs. Chemical logs, incident logs, and checklist submissions can all be exported.
+Go to **Enterprise → Reports** and click the **Export PDF** tab. Choose your report type (Shift & Staffing, Compliance, Certifications, or Incidents), set your date range and location, and generate a professional PDF. Reports include all relevant data formatted for regulatory review.
 
 **Can I attach photos to incident reports?**
 Yes — the incident log form includes a photo upload button. Multiple photos can be attached per incident.
