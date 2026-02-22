@@ -597,6 +597,52 @@ Alerts are only visible to admin-level users.`
     ]
   },
   {
+    section: "Payroll Integrations",
+    color: "bg-amber-50 border-amber-200",
+    badge: "bg-amber-100 text-amber-700",
+    articles: [
+      {
+        title: "Connecting a Payroll Provider",
+        content: `LifeGuard Tracker integrates with leading payroll systems to automatically sync employee hours and payment data.
+
+  **Supported Providers:**
+  - Gusto (modern payroll for small business)
+  - ADP (enterprise workforce management)
+  - Paychex (payroll & HR solutions)
+  - BambooHR (human resources software)
+  - Rippling (all-in-one HR, IT, and Finance)
+  - Workday (enterprise HCM & finance)
+
+  **How to connect:**
+  1. Go to **Enterprise → Payroll Integrations**
+  2. Find your payroll provider card and click **Connect**
+  3. Enter your API credentials (found in your provider's Developer or Settings section)
+  4. Click **Connect** — credentials are encrypted and securely stored
+  5. The integration will show **Connected** with a green indicator
+
+  Once connected, your scheduled shifts and hours automatically sync to your payroll provider.`
+      },
+      {
+        title: "Managing Payroll Integrations",
+        content: `After connecting, you can manage your payroll integrations directly in the app.
+
+  **Available actions:**
+  - **Sync Now** — Immediately push updated hours and employee data to your payroll provider
+  - **Auto-Sync** — Toggle automatic syncing (enabled by default)
+  - **Disconnect** — Safely remove the connection without affecting your payroll provider
+
+  **Last synced timestamp:**
+  Each integration shows when data was last successfully synced. Check this before running payroll in your external system to ensure all hours are up-to-date.
+
+  **Troubleshooting:**
+  If an integration shows **Error**, check:
+  - API credentials are correct and not expired
+  - Your payroll provider account is still active
+  - API permissions are still granted in your provider's settings`
+      },
+    ]
+  },
+  {
     section: "Support",
     color: "bg-slate-50 border-slate-200",
     badge: "bg-slate-100 text-slate-700",
