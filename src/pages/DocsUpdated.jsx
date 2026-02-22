@@ -151,10 +151,11 @@ export default function DocsUpdated() {
           <CardTitle>✨ Key Capabilities</CardTitle>
         </CardHeader>
         <CardContent className="space-y-2 text-sm">
+          <p><strong>✓ Asset Lifecycle Management:</strong> Maintenance requests, service history, warranty tracking, equipment performance dashboards</p>
           <p><strong>✓ Compliance & Certifications:</strong> Auto-expiry alerts, renewal reminders, audit-ready reports</p>
           <p><strong>✓ Incident Management:</strong> Digital signatures, trend analysis, pattern detection</p>
           <p><strong>✓ Staffing Intelligence:</strong> 7-day forecasts, shortage predictions, preference-based scheduling</p>
-          <p><strong>✓ Real-Time Monitoring:</strong> Weather alerts, chemical balance tracking, staffing status</p>
+          <p><strong>✓ Real-Time Monitoring:</strong> Weather alerts, chemical balance tracking, staffing status, maintenance alerts</p>
           <p><strong>✓ Employee Development:</strong> Training modules, performance tracking, achievement badges</p>
           <p><strong>✓ Customizable Forms:</strong> Template builder for checklists and incident reports</p>
         </CardContent>
