@@ -135,6 +135,25 @@ Photo documentation is especially important for insurance claims, legal proceedi
 Incidents with **Follow-Up Required** will remain visible in the open queue until explicitly closed.`
       },
       {
+        title: "Incident Follow-Up Workflow",
+        content: `When an incident requires follow-up, LifeGuard Tracker provides a structured 5-step workflow to ensure nothing is missed.
+
+**Follow-Up Steps:**
+1. Notify management / facility director
+2. Collect witness statements
+3. Complete and file official incident report
+4. Implement corrective action or preventive measures
+5. Debrief staff and document lessons learned
+
+**How to use it:**
+1. Open any incident from **Incident & Rescue Logs**
+2. Click the **Follow-Up** tab in the detail drawer
+3. Check off each step as it is completed
+4. Progress is saved automatically and visible to all managers
+
+Incidents with incomplete follow-up steps are flagged with an orange dot on the Follow-Up tab. The workflow is especially important for serious or critical severity incidents.`
+      },
+      {
         title: "Incident Dashboard",
         content: `The Incident Dashboard gives a bird's-eye view of all safety events across your facility.
 
