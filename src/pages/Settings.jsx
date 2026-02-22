@@ -13,7 +13,7 @@ import {
 } from "@/components/ui/dialog";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Switch } from "@/components/ui/switch";
-import { Plus, Trash2, CheckCircle2, Clock, Edit, AlertTriangle } from "lucide-react";
+import { Plus, Trash2, CheckCircle2, Clock, Edit, AlertTriangle, ExternalLink } from "lucide-react";
 import { motion } from "framer-motion";
 import InviteEmployees from "@/components/settings/InviteEmployees";
 import DataDeletion from "@/components/settings/DataDeletion";
