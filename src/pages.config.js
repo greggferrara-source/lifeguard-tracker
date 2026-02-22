@@ -115,6 +115,7 @@ import WeatherAlertsMonitor from './pages/WeatherAlertsMonitor';
 import DocsUpdated from './pages/DocsUpdated';
 import EmployeeManagement from './pages/EmployeeManagement';
 import AssetManagement from './pages/AssetManagement';
+import PoolTestReporting from './pages/PoolTestReporting';
 import __Layout from './Layout.jsx';
 
 
@@ -187,6 +188,7 @@ export const PAGES = {
     "DocsUpdated": DocsUpdated,
     "EmployeeManagement": EmployeeManagement,
     "AssetManagement": AssetManagement,
+    "PoolTestReporting": PoolTestReporting,
 }
 
 export const pagesConfig = {

@@ -4,6 +4,10 @@ import { ChevronDown, ChevronRight } from "lucide-react";
 
 const sections = [
   {
+    title: "Pool Test Reporting & Compliance",
+    content: "Digital pool water chemistry testing with compliance tracking. Log chlorine (free/total), pH, alkalinity, calcium hardness, cyanuric acid, and temperature. Automatic compliance alerts when parameters fall outside MAHC standards. Visual trend graphs showing chemical balance patterns over time. Instant out-of-range notifications with corrective action tracking. Mobile-friendly test entry from poolside. Historical data access for compliance audits and inspections. Customizable test standards (MAHC vs local guidelines). Signature capture and timestamp verification for audit readiness. Access via Admin → Operations → Pool Test Reporting."
+  },
+  {
     title: "Advanced Asset Management Hub",
     content: "Complete equipment lifecycle management with maintenance request workflows, approval processes, and service history tracking. Submit maintenance requests with priority levels and cost estimates. Track service records with before/after photos and parts documentation. Equipment performance dashboard shows maintenance patterns, service costs, and warranty status. Preventative maintenance scheduling with automatic alerts for overdue maintenance. Access via Admin → Operations → Asset Management. Includes warranty expiry tracking and condition-based reporting."
   },

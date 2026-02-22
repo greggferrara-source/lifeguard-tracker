@@ -46,6 +46,7 @@ const enterpriseGroups = [
       { name: "Asset Tracking", icon: Wrench, page: "Assets" },
       { name: "Patron Counts", icon: Users, page: "PatronCounts" },
       { name: "Chemical Logs", icon: Droplets, page: "ChemicalLogs" },
+      { name: "Pool Test Reporting", icon: Droplets, page: "PoolTestReporting" },
       { name: "Inspections", icon: BarChart2, page: "Inspections" },
       { name: "Maintenance Reports", icon: BarChart2, page: "MaintenanceReports" },
       { name: "Staff Training", icon: BookOpen, page: "TrainingDashboard" },
