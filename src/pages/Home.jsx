@@ -16,6 +16,18 @@ import {
   Menu,
   X,
   Play,
+  FileText,
+  BookOpen,
+  MapPin,
+  Zap,
+  Globe,
+  ClipboardList,
+  Droplets,
+  Wrench,
+  UserCheck,
+  DollarSign,
+  Bell,
+  Eye,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
