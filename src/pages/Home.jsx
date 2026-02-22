@@ -450,9 +450,9 @@ export default function Home() {
       <section className="px-4 sm:px-6 py-14 sm:py-20">
         <div className="max-w-5xl mx-auto text-center mb-10 sm:mb-12">
           <span className="inline-block text-xs font-bold tracking-widest text-[#1a9c5b] uppercase mb-4">PRICING</span>
-          <h2 className="text-3xl sm:text-4xl font-extrabold text-gray-900 mb-4">Simple, per-user pricing</h2>
+          <h2 className="text-3xl sm:text-4xl font-extrabold text-gray-900 mb-4">Flat-fee pricing. Add your whole team free.</h2>
           <p className="text-base sm:text-lg text-gray-500 max-w-xl mx-auto">
-            No hidden fees. No long-term contracts. Scale up or down as your team grows.
+            No per-user fees — ever. One flat monthly price for your entire facility, no matter how many guards you add. Cheaper than competitors once you factor in headcount.
           </p>
         </div>
 

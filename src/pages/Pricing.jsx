@@ -168,9 +168,9 @@ export default function Pricing() {
       {/* Header */}
       <section className="px-6 py-20 max-w-5xl mx-auto text-center">
         <Badge className="mb-4 bg-[#f0faf5] text-[#1a9c5b] border border-[#1a9c5b]/20">Transparent Pricing</Badge>
-        <h1 className="text-5xl font-bold text-gray-900 mb-5">Plans for every facility</h1>
+        <h1 className="text-5xl font-bold text-gray-900 mb-5">One flat price. Unlimited staff.</h1>
         <p className="text-xl text-gray-500 max-w-2xl mx-auto mb-10">
-          Start free for 14 days. No credit card required. Cancel anytime.
+          No per-user fees — ever. Add your entire team at no extra cost. Start free for 14 days, no credit card required.
         </p>
         <div className="inline-flex items-center gap-3 bg-gray-100 rounded-full p-1 mt-2">
           <button onClick={() => setAnnual(false)} className={`px-5 py-2 rounded-full text-sm font-semibold transition-colors ${!annual ? "bg-white shadow text-gray-900" : "text-gray-500"}`}>Monthly</button>
