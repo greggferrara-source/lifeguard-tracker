@@ -172,7 +172,12 @@ export default function Pricing() {
         <p className="text-xl text-gray-500 max-w-2xl mx-auto mb-10">
           Start free for 14 days. No credit card required. Cancel anytime.
         </p>
-        <p className="text-gray-500 text-base">Pricing is per user, per month.</p>
+        <div className="inline-flex items-center gap-3 bg-gray-100 rounded-full p-1 mt-2">
+          <button onClick={() => setAnnual(false)} className={`px-5 py-2 rounded-full text-sm font-semibold transition-colors ${!annual ? "bg-white shadow text-gray-900" : "text-gray-500"}`}>Monthly</button>
+          <button onClick={() => setAnnual(true)} className={`px-5 py-2 rounded-full text-sm font-semibold transition-colors ${annual ? "bg-white shadow text-gray-900" : "text-gray-500"}`}>
+            Annual <span className="text-[#1a9c5b] ml-1">Save ~17%</span>
+          </button>
+        </div>
       </section>
 
       {/* Pause Feature Banner */}
