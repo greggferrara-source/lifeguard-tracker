@@ -9,9 +9,10 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } f
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Loader, Plus, CheckCircle2, AlertCircle } from "lucide-react";
+import { Loader, Plus, CheckCircle2, AlertCircle, Settings } from "lucide-react";
 import OnboardingProgressCard from "@/components/onboarding/OnboardingProgressCard";
 import OnboardingTaskList from "@/components/onboarding/OnboardingTaskList";
+import { createPageUrl } from "@/utils";
 
 export default function OnboardingManagement() {
   const queryClient = useQueryClient();
@@ -72,10 +73,16 @@ export default function OnboardingManagement() {
             <h1 className="text-3xl font-bold">Employee Onboarding</h1>
             <p className="text-gray-600 mt-1">Manage and track employee onboarding workflows</p>
           </div>
-          <Button onClick={() => setNewOnboardingOpen(true)} className="bg-[#1a9c5b] hover:bg-[#158a4e]">
-            <Plus className="w-4 h-4 mr-2" />
-            Start Onboarding
-          </Button>
+          <div className="flex gap-2">
+            <Button variant="outline" onClick={() => window.location.href = createPageUrl('OnboardingRuleBuilder')} className="gap-2">
+              <Settings className="w-4 h-4" />
+              Task Rules
+            </Button>
+            <Button onClick={() => setNewOnboardingOpen(true)} className="bg-[#1a9c5b] hover:bg-[#158a4e]">
+              <Plus className="w-4 h-4 mr-2" />
+              Start Onboarding
+            </Button>
+          </div>
         </div>
 
         {/* Stats */}
