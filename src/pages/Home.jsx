@@ -470,10 +470,10 @@ export default function Home() {
                 </div>
               )}
               <h3 className="text-xl font-extrabold text-gray-900 mb-1">{plan.name}</h3>
-              <p className="text-sm text-gray-400 mb-5">{plan.users}</p>
+              <p className="text-sm text-gray-400 mb-5">Flat fee · {plan.annual}</p>
               <div className="mb-6">
                 <span className="text-5xl font-extrabold text-gray-900">{plan.price}</span>
-                <span className="text-gray-400 text-sm ml-1">/ user / month</span>
+                <span className="text-gray-400 text-sm ml-1">{plan.period}</span>
               </div>
               <ul className="space-y-3 mb-8">
                 {plan.features.map((feat) => (
