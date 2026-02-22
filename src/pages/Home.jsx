@@ -487,6 +487,47 @@ export default function Home() {
         </div>
       </section>
 
+      {/* ── No Reason Not To Box ── */}
+      <section className="px-4 sm:px-6 py-12 sm:py-16 max-w-5xl mx-auto">
+        <div className="rounded-2xl border border-gray-200 bg-white shadow-sm overflow-hidden">
+          <div className="grid grid-cols-1 md:grid-cols-2">
+            {/* Left: headline */}
+            <div className="bg-[#1a9c5b] px-8 sm:px-12 py-10 flex flex-col justify-center">
+              <p className="text-xs font-bold tracking-widest text-white/70 uppercase mb-3">Get Started Today</p>
+              <h2 className="text-2xl sm:text-3xl font-extrabold text-white leading-tight">
+                No reason<br />not to start.
+              </h2>
+              <p className="text-white/80 text-sm mt-3 leading-relaxed">
+                Everything you need to get your facility running — with zero upfront commitment.
+              </p>
+              <button
+                onClick={handleSignIn}
+                className="mt-6 inline-flex items-center gap-2 bg-white text-[#1a9c5b] font-bold text-sm px-5 py-2.5 rounded-lg hover:bg-gray-50 transition-colors w-fit"
+              >
+                Create Free Account <ArrowRight className="w-4 h-4" />
+              </button>
+            </div>
+            {/* Right: benefits list */}
+            <div className="px-8 sm:px-12 py-10 flex flex-col justify-center gap-5">
+              {[
+                { icon: CheckCircle2, title: "Free to Get Started", body: "Full access with no credit card required. Upgrade only when you're ready." },
+                { icon: CheckCircle2, title: "Unlimited Onboarding Support", body: "Our team will train your staff and walk you through setup at no cost." },
+                { icon: CheckCircle2, title: "Legacy Data Migration", body: "We'll help you import your existing schedules, employees, and records." },
+                { icon: CheckCircle2, title: "Works on Any Device", body: "No special hardware or software installs. Works in any modern browser." },
+              ].map((item) => (
+                <div key={item.title} className="flex items-start gap-3">
+                  <item.icon className="w-5 h-5 text-[#1a9c5b] flex-shrink-0 mt-0.5" />
+                  <div>
+                    <p className="font-semibold text-gray-900 text-sm">{item.title}</p>
+                    <p className="text-xs text-gray-500 mt-0.5 leading-relaxed">{item.body}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* ── Final CTA Banner ── */}
       <section className="mx-4 sm:mx-6 mb-12 sm:mb-16 rounded-2xl sm:rounded-3xl bg-gray-900 px-6 sm:px-10 py-12 sm:py-16 max-w-6xl lg:mx-auto text-center">
         <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white mb-4 leading-tight">
