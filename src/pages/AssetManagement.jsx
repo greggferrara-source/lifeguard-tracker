@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { Plus, AlertTriangle, CheckCircle2, Wrench, TrendingDown, Clock, DollarSign, Upload, Zap } from "lucide-react";
+import { Plus, AlertTriangle, CheckCircle2, Wrench, TrendingDown, Clock, DollarSign, Upload, Zap, BookOpen, FileText } from "lucide-react";
 import { differenceInDays, parseISO, format } from "date-fns";
 
 export default function AssetManagement() {
@@ -598,5 +598,3 @@ function ServiceLogDialog({ open, onOpenChange, assets }) {
     </Dialog>
   );
 }
-
-import { CheckCircle2 } from "lucide-react";
