@@ -39,47 +39,78 @@ import { useQuery } from "@tanstack/react-query";
 import { base44 } from "@/api/base44Client";
 import FeedbackWidget from "@/components/FeedbackWidget";
 
+const enterpriseRoles = ["admin", "site_owner", "manager"];
+
 const primaryNavItems = [
-{ name: "Schedule", icon: CalendarDays, page: "Schedule" },
-{ name: "Employees", icon: Users, page: "Employees" },
-{ name: "Locations", icon: MapPin, page: "Locations" }];
+  { name: "Schedule", icon: CalendarDays, page: "Schedule" },
+  { name: "Employees", icon: Users, page: "Employees" },
+  { name: "Locations", icon: MapPin, page: "Locations" },
+];
 
-
+// Shown to all roles in the "More" dropdown
 const moreNavItems = [
-{ name: "Communications", icon: MessageSquare, page: "Announcements", roles: ["admin", "site_owner", "manager"], submenu: [
-  { name: "Announcements", icon: AlertTriangle, page: "Announcements" },
-  { name: "Messages", icon: MessageSquare, page: "Messages" },
-  { name: "Channels", icon: Users, page: "Channels" }]
-},
-{ name: "Employee Hub", icon: Users, page: "EmployeeDashboard", roles: ["employee", "manager", "admin", "site_owner"], submenu: [
-  { name: "Directory", icon: Users, page: "EmployeeDirectory" },
-  { name: "My Availability", icon: Clock, page: "MyAvailability" },
   { name: "Time Off", icon: Clock, page: "TimeOff" },
   { name: "Shift Swaps", icon: ArrowLeftRight, page: "ShiftSwaps", badge: "swaps" },
-  { name: "Onboarding", icon: Users, page: "EmployeeOnboarding" }]
-},
-{ name: "Compliance", icon: Shield, page: "ComplianceDashboard", roles: ["admin", "site_owner", "manager"], submenu: [
-  { name: "Compliance Dashboard", icon: Shield, page: "ComplianceDashboard" },
-  { name: "Incident Management", icon: AlertTriangle, page: "IncidentDashboard" },
-  { name: "Certifications", icon: Shield, page: "Certifications" },
-  { name: "Chemical Logs", icon: BarChart2, page: "ChemicalLogs" },
-  { name: "Inspections", icon: BarChart2, page: "Inspections" },
-  { name: "Incident & Rescue Logs", icon: AlertTriangle, page: "IncidentLogs" },
-  { name: "Maintenance Reports", icon: BarChart2, page: "MaintenanceReports" }]
-},
-{ name: "Operations", icon: BarChart2, page: "Assignments", roles: ["admin", "site_owner", "manager"], submenu: [
-  { name: "Assignments", icon: BarChart2, page: "Assignments" },
-  { name: "Asset Tracking", icon: BarChart2, page: "Assets" },
-  { name: "Patron Counts", icon: Users, page: "PatronCounts" }]
-},
-{ name: "Payroll Integrations", icon: BarChart2, page: "PayrollIntegrations", roles: ["admin", "site_owner"] },
-{ name: "Compliance", icon: Shield, page: "Compliance", roles: ["admin", "site_owner"] },
-{ name: "Alerts", icon: AlertTriangle, page: "Alerts", badge: "alerts", roles: ["admin", "site_owner"] },
-{ name: "Billing", icon: CreditCard, page: "Billing", roles: ["admin", "site_owner"] },
-{ name: "Reports", icon: BarChart2, page: "Reports", roles: ["admin", "site_owner", "manager"] },
-{ name: "Settings", icon: Settings, page: "Settings", roles: ["admin", "site_owner"] },
-{ name: "Error Logs", icon: AlertTriangle, page: "ErrorLogs", roles: ["admin", "site_owner"] },
-{ name: "Admin Setup", icon: LayoutDashboard, page: "AdminSetup", roles: ["admin", "site_owner"] }];
+  { name: "Messages", icon: MessageSquare, page: "Messages" },
+  { name: "Announcements", icon: AlertTriangle, page: "Announcements" },
+];
+
+// Only shown to admin / site_owner / manager
+const enterpriseNavItems = [
+  {
+    name: "Compliance",
+    icon: Shield,
+    page: "ComplianceDashboard",
+    submenu: [
+      { name: "Compliance Dashboard", icon: Shield, page: "ComplianceDashboard" },
+      { name: "Incident Management", icon: AlertTriangle, page: "IncidentDashboard" },
+      { name: "Incident & Rescue Logs", icon: AlertTriangle, page: "IncidentLogs" },
+      { name: "Certifications", icon: Shield, page: "Certifications" },
+      { name: "Chemical Logs", icon: BarChart2, page: "ChemicalLogs" },
+      { name: "Inspections", icon: BarChart2, page: "Inspections" },
+      { name: "Maintenance Reports", icon: BarChart2, page: "MaintenanceReports" },
+    ],
+  },
+  {
+    name: "Operations",
+    icon: BarChart2,
+    page: "Assignments",
+    submenu: [
+      { name: "Assignments", icon: BarChart2, page: "Assignments" },
+      { name: "Asset Tracking", icon: BarChart2, page: "Assets" },
+      { name: "Patron Counts", icon: Users, page: "PatronCounts" },
+    ],
+  },
+  {
+    name: "Communications",
+    icon: MessageSquare,
+    page: "Announcements",
+    submenu: [
+      { name: "Announcements", icon: AlertTriangle, page: "Announcements" },
+      { name: "Messages", icon: MessageSquare, page: "Messages" },
+      { name: "Channels", icon: Users, page: "Channels" },
+    ],
+  },
+  {
+    name: "Employee Hub",
+    icon: Users,
+    page: "EmployeeDashboard",
+    submenu: [
+      { name: "Directory", icon: Users, page: "EmployeeDirectory" },
+      { name: "My Availability", icon: Clock, page: "MyAvailability" },
+      { name: "Time Off", icon: Clock, page: "TimeOff" },
+      { name: "Shift Swaps", icon: ArrowLeftRight, page: "ShiftSwaps", badge: "swaps" },
+      { name: "Onboarding", icon: Users, page: "EmployeeOnboarding" },
+    ],
+  },
+  { name: "Reports", icon: BarChart2, page: "Reports" },
+  { name: "Alerts", icon: AlertTriangle, page: "Alerts", badge: "alerts" },
+  { name: "Payroll Integrations", icon: BarChart2, page: "PayrollIntegrations" },
+  { name: "Billing", icon: CreditCard, page: "Billing", roles: ["admin", "site_owner"] },
+  { name: "Settings", icon: Settings, page: "Settings", roles: ["admin", "site_owner"] },
+  { name: "Admin Setup", icon: LayoutDashboard, page: "AdminSetup", roles: ["admin", "site_owner"] },
+  { name: "Error Logs", icon: AlertTriangle, page: "ErrorLogs", roles: ["admin", "site_owner"] },
+];
 
 
 export default function Layout({ children, currentPageName }) {
