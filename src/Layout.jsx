@@ -285,17 +285,20 @@ export default function Layout({ children, currentPageName }) {
                               <item.icon className="w-3.5 h-3.5" />
                               <span>{item.name}</span>
                             </DropdownMenuLabel>
-                            {item.submenu.map((subitem) => (
-                              <DropdownMenuItem key={subitem.page} asChild>
-                                <Link to={createPageUrl(subitem.page)} className="flex items-center gap-2 ml-2">
-                                  <subitem.icon className="w-4 h-4" />
-                                  <span>{subitem.name}</span>
-                                  {subitem.badge === "swaps" && pendingSwaps > 0 &&
-                                    <span className="ml-auto bg-orange-500 text-white text-xs font-bold rounded-full px-1.5">{pendingSwaps}</span>
-                                  }
-                                </Link>
-                              </DropdownMenuItem>
-                            ))}
+                            {item.submenu.map((subitem) => {
+                              if (subitem.proOnly && !PRO_AND_ABOVE_ROLES.includes(user?.role)) return null;
+                              return (
+                                <DropdownMenuItem key={subitem.page} asChild>
+                                  <Link to={createPageUrl(subitem.page)} className="flex items-center gap-2 ml-2">
+                                    <subitem.icon className="w-4 h-4" />
+                                    <span>{subitem.name}</span>
+                                    {subitem.badge === "swaps" && pendingSwaps > 0 &&
+                                      <span className="ml-auto bg-orange-500 text-white text-xs font-bold rounded-full px-1.5">{pendingSwaps}</span>
+                                    }
+                                  </Link>
+                                </DropdownMenuItem>
+                              );
+                            })}
                             <DropdownMenuSeparator />
                           </div>
                         );
