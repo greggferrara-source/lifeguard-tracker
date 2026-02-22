@@ -14,6 +14,57 @@ const docs = [
     articles: [
       {
         title: "Welcome to LifeGuard Tracker",
+        content: `LifeGuard Tracker is an all-in-one workforce management and safety compliance platform built for aquatic facilities — pools, beaches, waterparks, and recreation centers.
+
+**What you can do with LifeGuard Tracker:**
+- Build and manage weekly schedules for your lifeguards and staff
+- Track employee certifications and get expiry alerts
+- Log incidents, rescues, near-misses, and first aid events with photo attachments
+- Run digital checklists for chemical readings, equipment inspections, and opening/closing procedures
+- Manage chemical logs with automated out-of-range alerts
+- Assign and track facility assets (AEDs, rescue tubes, equipment)
+- Run staff training modules with quizzes and completion tracking
+- Build and distribute Emergency Action Plans for every scenario
+- Manage time-off requests with an approval workflow
+- Send announcements and messages to your whole team
+- Generate reports for compliance, staffing, labor costs, and more
+
+**Who uses LifeGuard Tracker:**
+- **Enterprise Site Owners / Admins** — Full access to all features including multi-location dashboards, EAPs, training, payroll integrations, billing, and settings
+- **Site Owners / Admins (Pro)** — Compliance, incident management, operational forms, certifications, reports, alerts, and team tools
+- **Employees** — View schedules, submit time off, log incidents, complete training, and communicate with the team`
+      },
+      {
+        title: "Adding Your First Employee",
+        content: `1. Navigate to **Employees** in the top navigation
+2. Click **Add Employee** in the top right
+3. Fill in the employee's name, email, role, and hourly rate
+4. Optionally upload a profile photo and add certifications
+5. Click **Save**
+
+Once added, you can optionally start the onboarding process from the employee's menu (three dots → **Start Onboarding**).`
+      },
+      {
+        title: "Setting Up Locations",
+        content: `Locations are the physical areas where shifts take place — e.g., Main Pool, Beach Zone A, Lap Lane.
+
+1. Go to **Locations** in the top nav
+2. Click **Add Location**
+3. Set the name, type, and minimum guards required
+4. Choose a color to distinguish it on the schedule
+5. Click **Save**
+
+Locations with **minimum guards required** will trigger understaffing alerts if too few shifts are scheduled.`
+      },
+    ]
+  },
+  {
+    section: "PLACEHOLDER_REMOVE",
+    color: "bg-green-50 border-green-200",
+    badge: "bg-green-100 text-green-700",
+    articles: [
+      {
+        title: "Welcome to LifeGuard Tracker",
         icon: null,
         content: `LifeGuard Tracker is an all-in-one workforce management platform built for aquatic facilities, pools, beaches, and waterparks.
 
