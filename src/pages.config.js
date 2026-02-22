@@ -125,6 +125,7 @@ import UrgentAlerts from './pages/UrgentAlerts';
 import WeatherAlertsMonitor from './pages/WeatherAlertsMonitor';
 import WorkflowAutomation from './pages/WorkflowAutomation';
 import NotificationPreferences from './pages/NotificationPreferences';
+import ResourceBooking from './pages/ResourceBooking';
 import __Layout from './Layout.jsx';
 
 
@@ -207,6 +208,7 @@ export const PAGES = {
     "WeatherAlertsMonitor": WeatherAlertsMonitor,
     "WorkflowAutomation": WorkflowAutomation,
     "NotificationPreferences": NotificationPreferences,
+    "ResourceBooking": ResourceBooking,
 }
 
 export const pagesConfig = {
