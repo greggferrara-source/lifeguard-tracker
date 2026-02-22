@@ -62,7 +62,6 @@ import Compliance from './pages/Compliance';
 import ComplianceDashboard from './pages/ComplianceDashboard';
 import Contact from './pages/Contact';
 import Dashboard from './pages/Dashboard';
-import Docs from './pages/Docs';
 import EmergencyActionPlans from './pages/EmergencyActionPlans';
 import EmployeeDashboard from './pages/EmployeeDashboard';
 import EmployeeDirectory from './pages/EmployeeDirectory';
@@ -113,6 +112,7 @@ import EmployeePerformanceDashboard from './pages/EmployeePerformanceDashboard';
 import PatronManagement from './pages/PatronManagement';
 import WeatherAlertsMonitor from './pages/WeatherAlertsMonitor';
 import StaffingForecastDashboard from './pages/StaffingForecastDashboard';
+import DocsUpdated from './pages/DocsUpdated';
 import __Layout from './Layout.jsx';
 
 
@@ -132,7 +132,6 @@ export const PAGES = {
     "ComplianceDashboard": ComplianceDashboard,
     "Contact": Contact,
     "Dashboard": Dashboard,
-    "Docs": Docs,
     "EmergencyActionPlans": EmergencyActionPlans,
     "EmployeeDashboard": EmployeeDashboard,
     "EmployeeDirectory": EmployeeDirectory,
@@ -183,6 +182,7 @@ export const PAGES = {
     "PatronManagement": PatronManagement,
     "WeatherAlertsMonitor": WeatherAlertsMonitor,
     "StaffingForecastDashboard": StaffingForecastDashboard,
+    "DocsUpdated": DocsUpdated,
 }
 
 export const pagesConfig = {
