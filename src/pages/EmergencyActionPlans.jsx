@@ -5,8 +5,8 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Plus, Shield, AlertTriangle, ChevronRight, Clock, CheckCircle2, FileText } from "lucide-react";
-import EAPDialog from "@/components/eap/EAPDialog";
-import EAPDetailDrawer from "@/components/eap/EAPDetailDrawer";
+import EAPDialog from "@/components/eap/EAPDialog.jsx";
+import EAPDetailDrawer from "@/components/eap/EAPDetailDrawer.jsx";
 
 const TYPE_CONFIG = {
   drowning: { label: "Drowning / Submersion", color: "bg-blue-100 text-blue-700", icon: "🌊" },

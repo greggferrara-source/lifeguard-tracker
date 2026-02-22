@@ -7,8 +7,8 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Plus, BookOpen, Users, CheckCircle2, Clock, Search, ChevronRight, Trophy } from "lucide-react";
-import TrainingModuleDialog from "@/components/training/TrainingModuleDialog";
-import TakeTrainingDialog from "@/components/training/TakeTrainingDialog";
+import TrainingModuleDialog from "@/components/training/TrainingModuleDialog.jsx";
+import TakeTrainingDialog from "@/components/training/TakeTrainingDialog.jsx";
 
 const CATEGORY_COLORS = {
   lifeguarding: "bg-blue-100 text-blue-700",
