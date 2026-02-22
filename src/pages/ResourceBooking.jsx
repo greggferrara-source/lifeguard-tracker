@@ -10,6 +10,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import ResourceBookingCalendar from "@/components/resources/ResourceBookingCalendar";
 import BookingForm from "@/components/resources/BookingForm";
+import BookingConflictIndicator from "@/components/resources/BookingConflictIndicator";
 
 const resourceTypeIcons = {
   meeting_room: '🏢',
@@ -25,6 +26,8 @@ export default function ResourceBooking() {
   const [selectedResource, setSelectedResource] = useState(null);
   const [selectedBooking, setSelectedBooking] = useState(null);
   const [filterType, setFilterType] = useState("all");
+  const [bookingConflicts, setBookingConflicts] = useState(null);
+  const [conflictLoading, setConflictLoading] = useState(false);
 
   const { data: user } = useQuery({
     queryKey: ['user'],
@@ -72,6 +75,25 @@ export default function ResourceBooking() {
   const handleNewBooking = (resource) => {
     setSelectedResource(resource);
     setBookingDialogOpen(true);
+    setBookingConflicts(null);
+  };
+
+  const checkBookingConflicts = async (resource, startDate, startTime, endDate, endTime) => {
+    setConflictLoading(true);
+    try {
+      const result = await base44.functions.invoke('checkResourceBookingConflicts', {
+        resource_id: resource.id,
+        start_date: startDate,
+        start_time: startTime,
+        end_date: endDate,
+        end_time: endTime
+      });
+      setBookingConflicts(result.conflict ? result.conflicts : []);
+    } catch (error) {
+      console.error('Conflict check failed:', error);
+    } finally {
+      setConflictLoading(false);
+    }
   };
 
   return (
