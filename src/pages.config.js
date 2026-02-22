@@ -120,6 +120,7 @@ import ComplianceAssessmentManager from './pages/ComplianceAssessmentManager';
 import NotificationCenter from './pages/NotificationCenter';
 import DocumentManagement from './pages/DocumentManagement';
 import AdvancedReporting from './pages/AdvancedReporting';
+import ComplianceAIAdvisor from './pages/ComplianceAIAdvisor';
 import __Layout from './Layout.jsx';
 
 
@@ -197,6 +198,7 @@ export const PAGES = {
     "NotificationCenter": NotificationCenter,
     "DocumentManagement": DocumentManagement,
     "AdvancedReporting": AdvancedReporting,
+    "ComplianceAIAdvisor": ComplianceAIAdvisor,
 }
 
 export const pagesConfig = {
