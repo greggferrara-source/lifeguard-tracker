@@ -76,10 +76,6 @@ const enterpriseNavItems = [
       { name: "Checklist Dashboard", icon: BarChart2, page: "ChecklistDashboard" },
       { name: "Incident Management", icon: AlertTriangle, page: "IncidentDashboard" },
       { name: "Incident & Rescue Logs", icon: AlertTriangle, page: "IncidentLogs" },
-      { name: "Certifications", icon: Shield, page: "Certifications" },
-      { name: "Chemical Logs", icon: BarChart2, page: "ChemicalLogs" },
-      { name: "Inspections", icon: BarChart2, page: "Inspections" },
-      { name: "Maintenance Reports", icon: BarChart2, page: "MaintenanceReports" },
     ],
   },
   {
@@ -90,6 +86,10 @@ const enterpriseNavItems = [
       { name: "Assignments", icon: BarChart2, page: "Assignments" },
       { name: "Asset Tracking", icon: BarChart2, page: "Assets" },
       { name: "Patron Counts", icon: Users, page: "PatronCounts" },
+      { name: "Certifications", icon: Shield, page: "Certifications", proOnly: true },
+      { name: "Chemical Logs", icon: BarChart2, page: "ChemicalLogs", proOnly: true },
+      { name: "Inspections", icon: BarChart2, page: "Inspections", proOnly: true },
+      { name: "Maintenance Reports", icon: BarChart2, page: "MaintenanceReports", proOnly: true },
     ],
   },
   {
