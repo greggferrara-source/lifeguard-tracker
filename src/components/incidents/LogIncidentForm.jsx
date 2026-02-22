@@ -144,6 +144,39 @@ export default function LogIncidentForm({ open, onOpenChange }) {
                 <Textarea rows={2} value={form.follow_up_notes} onChange={e => f("follow_up_notes", e.target.value)} className="mt-1" placeholder="What follow-up is needed?" />
               </div>
             )}
+
+            {/* Photo Attachments */}
+            <div className="col-span-2">
+              <Label className="flex items-center gap-1"><Camera className="w-4 h-4" /> Photo Attachments</Label>
+              <div className="mt-1 space-y-2">
+                <label className="flex items-center gap-2 cursor-pointer border-2 border-dashed border-gray-200 rounded-lg px-4 py-3 hover:border-[#1a9c5b] transition-colors">
+                  <Camera className="w-4 h-4 text-gray-400" />
+                  <span className="text-sm text-gray-500">Click to upload photo(s)</span>
+                  <input type="file" accept="image/*" multiple className="hidden" onChange={async (e) => {
+                    const files = Array.from(e.target.files);
+                    const urls = [];
+                    for (const file of files) {
+                      const { file_url } = await base44.integrations.Core.UploadFile({ file });
+                      urls.push(file_url);
+                    }
+                    f("photo_urls", [...(form.photo_urls || []), ...urls]);
+                  }} />
+                </label>
+                {(form.photo_urls || []).length > 0 && (
+                  <div className="flex flex-wrap gap-2">
+                    {form.photo_urls.map((url, i) => (
+                      <div key={i} className="relative group">
+                        <img src={url} alt={`Photo ${i + 1}`} className="w-20 h-20 object-cover rounded-lg border border-gray-200" />
+                        <button type="button" onClick={() => f("photo_urls", form.photo_urls.filter((_, j) => j !== i))}
+                          className="absolute -top-1.5 -right-1.5 bg-red-500 text-white rounded-full w-5 h-5 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                          <X className="w-3 h-3" />
+                        </button>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+            </div>
           </div>
 
           <div className="flex gap-2 justify-end pt-2 border-t">
