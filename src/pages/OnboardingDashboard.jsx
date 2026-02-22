@@ -1,378 +1,328 @@
-import React, { useState, useMemo } from "react";
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import React, { useState } from "react";
 import { base44 } from "@/api/base44Client";
-import { Button } from "@/components/ui/button";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogDescription,
-} from "@/components/ui/dialog";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import { CheckCircle2, AlertCircle, Clock, Search, Filter, Download, FileText } from "lucide-react";
-import { format, differenceInDays } from "date-fns";
-import OnboardingChecklist from "@/components/onboarding/OnboardingChecklist";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { Plus, Edit2, Trash2, Play, CheckCircle2, Clock, AlertCircle } from "lucide-react";
+import OnboardingFlowDialog from "@/components/onboarding/OnboardingFlowDialog";
+import ChecklistTemplateBuilder from "@/components/onboarding/ChecklistTemplateBuilder";
+import ReportTemplateBuilder from "@/components/onboarding/ReportTemplateBuilder";
 
 export default function OnboardingDashboard() {
-  const queryClient = useQueryClient();
-  const [search, setSearch] = useState("");
-  const [statusFilter, setStatusFilter] = useState("all");
+  const qc = useQueryClient();
+  const [tab, setTab] = useState("active");
+  const [showNewFlow, setShowNewFlow] = useState(false);
+  const [showChecklistBuilder, setShowChecklistBuilder] = useState(false);
+  const [showReportBuilder, setShowReportBuilder] = useState(false);
   const [selectedOnboarding, setSelectedOnboarding] = useState(null);
-  const [sortBy, setSortBy] = useState("recent");
+
+  const { data: employees = [] } = useQuery({
+    queryKey: ["employees"],
+    queryFn: () => base44.entities.Employee.list()
+  });
 
   const { data: onboardings = [] } = useQuery({
     queryKey: ["onboardings"],
-    queryFn: () => base44.entities.Onboarding.list("-created_date", 200),
+    queryFn: () => base44.entities.Onboarding.list("-created_date", 100)
   });
 
-  const { data: onboardingTasks = [] } = useQuery({
-    queryKey: ["onboarding-tasks"],
-    queryFn: () => base44.entities.OnboardingTask.list("-created_date", 500),
+  const { data: templates = [] } = useQuery({
+    queryKey: ["checklist-templates"],
+    queryFn: () => base44.entities.ChecklistTemplate.list()
   });
 
-  const { data: user } = useQuery({
-    queryKey: ["current-user"],
-    queryFn: () => base44.auth.me(),
+  const { data: reportTemplates = [] } = useQuery({
+    queryKey: ["report-templates"],
+    queryFn: () => base44.entities.OperationalForm.list()
   });
 
-  const updateTaskStatus = useMutation({
-    mutationFn: ({ taskId, status }) =>
-      base44.entities.OnboardingTask.update(taskId, { status }),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["onboarding-tasks"] });
-      queryClient.invalidateQueries({ queryKey: ["onboardings"] });
-    },
+  const deleteOnboarding = useMutation({
+    mutationFn: (id) => base44.entities.Onboarding.delete(id),
+    onSuccess: () => qc.invalidateQueries({ queryKey: ["onboardings"] })
   });
 
-  const updateOnboardingStatus = useMutation({
-    mutationFn: ({ onboardingId, status }) =>
-      base44.entities.Onboarding.update(onboardingId, { status }),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["onboardings"] });
-      setSelectedOnboarding(null);
-    },
+  const deleteTemplate = useMutation({
+    mutationFn: (id) => base44.entities.ChecklistTemplate.delete(id),
+    onSuccess: () => qc.invalidateQueries({ queryKey: ["checklist-templates"] })
   });
 
-  const getTasksForOnboarding = (onboardingId) =>
-    onboardingTasks.filter((t) => t.onboarding_id === onboardingId);
+  const activeOnboardings = onboardings.filter(o => o.status === "in_progress");
+  const completedOnboardings = onboardings.filter(o => o.status === "completed");
 
-  const getOnboardingProgress = (onboardingId) => {
-    const tasks = getTasksForOnboarding(onboardingId);
-    if (tasks.length === 0) return 0;
-    const completed = tasks.filter((t) => t.status === "completed").length;
-    return Math.round((completed / tasks.length) * 100);
+  const tabs = [
+    { id: "active", label: "Active Onboardings", count: activeOnboardings.length },
+    { id: "completed", label: "Completed", count: completedOnboardings.length },
+    { id: "templates", label: "Checklist Templates", count: templates.length },
+    { id: "reports", label: "Report Templates", count: reportTemplates.length }
+  ];
+
+  const getStatusColor = (status) => {
+    switch(status) {
+      case "completed": return "bg-green-50 border-green-200 text-green-700";
+      case "in_progress": return "bg-blue-50 border-blue-200 text-blue-700";
+      case "paused": return "bg-yellow-50 border-yellow-200 text-yellow-700";
+      default: return "bg-gray-50 border-gray-200 text-gray-700";
+    }
   };
 
-  const isManager = user?.role === "admin" || user?.role === "manager";
-
-  const filtered = useMemo(() => {
-    let result = onboardings;
-
-    // Status filter
-    if (statusFilter !== "all") {
-      result = result.filter((o) => o.status === statusFilter);
-    }
-
-    // Search filter
-    if (search) {
-      result = result.filter((o) =>
-        o.employee_name?.toLowerCase().includes(search.toLowerCase())
-      );
-    }
-
-    // Sort
-    if (sortBy === "progress") {
-      result.sort((a, b) => getOnboardingProgress(b.id) - getOnboardingProgress(a.id));
-    } else if (sortBy === "dueDate") {
-      result.sort((a, b) => new Date(a.target_completion_date) - new Date(b.target_completion_date));
-    }
-
-    return result;
-  }, [onboardings, statusFilter, search, sortBy]);
-
-  const stats = useMemo(() => ({
-    inProgress: onboardings.filter((o) => o.status === "in_progress").length,
-    completed: onboardings.filter((o) => o.status === "completed").length,
-    paused: onboardings.filter((o) => o.status === "paused").length,
-    atRisk: filtered.filter(
-      (o) =>
-        o.status === "in_progress" &&
-        differenceInDays(new Date(o.target_completion_date), new Date()) <= 3 &&
-        differenceInDays(new Date(o.target_completion_date), new Date()) > 0
-    ).length,
-  }), [onboardings, filtered]);
-
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14 space-y-8">
-      {/* Header */}
-      <div>
-        <h1 className="text-5xl font-extrabold text-gray-900 tracking-tight">Onboarding Dashboard</h1>
-        <p className="text-gray-400 mt-2 text-lg">Manage and track new hire onboarding progress</p>
-      </div>
-
-      {/* Stats */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-        {[
-          { label: "In Progress", value: stats.inProgress, color: "text-blue-600", icon: Clock },
-          { label: "Completed", value: stats.completed, color: "text-green-600", icon: CheckCircle2 },
-          { label: "Paused", value: stats.paused, color: "text-amber-600", icon: AlertCircle },
-          { label: "At Risk", value: stats.atRisk, color: "text-red-600", icon: AlertCircle },
-        ].map((s, i) => {
-          const Icon = s.icon;
-          return (
-            <Card key={i} className="border-gray-200">
-              <CardContent className="pt-6">
-                <div className="flex items-start justify-between">
-                  <div>
-                    <p className={`text-3xl font-bold ${s.color}`}>{s.value}</p>
-                    <p className="text-xs text-gray-500 mt-1">{s.label}</p>
-                  </div>
-                  <Icon className={`w-5 h-5 ${s.color} opacity-40`} />
-                </div>
-              </CardContent>
-            </Card>
-          );
-        })}
-      </div>
-
-      {/* Controls */}
-      <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between">
-        <div className="flex-1 flex gap-3">
-          <div className="relative flex-1 max-w-xs">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
-            <Input
-              placeholder="Search by name..."
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-              className="pl-9"
-            />
-          </div>
-          <Select value={statusFilter} onValueChange={setStatusFilter}>
-            <SelectTrigger className="w-40">
-              <Filter className="w-4 h-4 mr-2" />
-              <SelectValue />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="all">All Status</SelectItem>
-              <SelectItem value="not_started">Not Started</SelectItem>
-              <SelectItem value="in_progress">In Progress</SelectItem>
-              <SelectItem value="paused">Paused</SelectItem>
-              <SelectItem value="completed">Completed</SelectItem>
-            </SelectContent>
-          </Select>
-        </div>
-        <Select value={sortBy} onValueChange={setSortBy}>
-          <SelectTrigger className="w-40">
-            <SelectValue />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="recent">Most Recent</SelectItem>
-            <SelectItem value="progress">By Progress</SelectItem>
-            <SelectItem value="dueDate">Due Date</SelectItem>
-          </SelectContent>
-        </Select>
-      </div>
-
-      {/* Onboarding List */}
-      <div className="space-y-4">
-        {filtered.length === 0 ? (
-          <Card>
-            <CardContent className="pt-12 pb-12 text-center">
-              <p className="text-gray-500">No onboardings found</p>
-            </CardContent>
-          </Card>
-        ) : (
-          filtered.map((onboarding) => {
-            const tasks = getTasksForOnboarding(onboarding.id);
-            const progress = getOnboardingProgress(onboarding.id);
-            const daysLeft = differenceInDays(
-              new Date(onboarding.target_completion_date),
-              new Date()
-            );
-            const isAtRisk = daysLeft <= 3 && daysLeft > 0;
-
-            return (
-              <Card
-                key={onboarding.id}
-                className={`cursor-pointer hover:shadow-md transition-all border-l-4 ${
-                  onboarding.status === "completed"
-                    ? "border-l-green-500"
-                    : onboarding.status === "paused"
-                    ? "border-l-amber-500"
-                    : isAtRisk
-                    ? "border-l-red-500"
-                    : "border-l-blue-500"
-                }`}
-                onClick={() => setSelectedOnboarding(onboarding)}
-              >
-                <CardContent className="pt-6">
-                  <div className="flex items-start justify-between mb-4">
-                    <div className="flex items-center gap-4 flex-1">
-                      <div className="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center text-blue-700 font-bold flex-shrink-0">
-                        {onboarding.employee_name?.[0]}
-                      </div>
-                      <div className="flex-1">
-                        <p className="font-semibold text-gray-900 text-lg">
-                          {onboarding.employee_name}
-                        </p>
-                        <p className="text-sm text-gray-500">
-                          Started {format(new Date(onboarding.start_date), "MMM d, yyyy")}
-                        </p>
-                      </div>
-                    </div>
-                    <div className="flex items-center gap-3">
-                      <Badge
-                        className={
-                          onboarding.status === "completed"
-                            ? "bg-green-100 text-green-700"
-                            : onboarding.status === "paused"
-                            ? "bg-amber-100 text-amber-700"
-                            : isAtRisk
-                            ? "bg-red-100 text-red-700"
-                            : "bg-blue-100 text-blue-700"
-                        }
-                      >
-                        {onboarding.status}
-                        {isAtRisk && " - Due Soon"}
-                      </Badge>
-                    </div>
-                  </div>
-
-                  <div className="space-y-3">
-                    {/* Progress Bar */}
-                    <div>
-                      <div className="flex items-center justify-between mb-2">
-                        <p className="text-sm font-medium text-gray-600">
-                          Progress: {progress}%
-                        </p>
-                        <p className="text-xs text-gray-500">
-                          {tasks.filter((t) => t.status === "completed").length}/{tasks.length}
-                          tasks
-                        </p>
-                      </div>
-                      <div className="w-full bg-gray-200 rounded-full h-2">
-                        <div
-                          className="bg-[#1a9c5b] h-2 rounded-full transition-all"
-                          style={{ width: `${progress}%` }}
-                        />
-                      </div>
-                    </div>
-
-                    {/* Timeline */}
-                    <div className="flex items-center gap-2 text-sm">
-                      <Clock className="w-4 h-4 text-gray-400" />
-                      {daysLeft > 0 ? (
-                        <span className={isAtRisk ? "text-red-600 font-medium" : "text-gray-600"}>
-                          {daysLeft} days remaining
-                        </span>
-                      ) : daysLeft === 0 ? (
-                        <span className="text-amber-600 font-medium">Due today</span>
-                      ) : (
-                        <span className="text-red-600 font-medium">
-                          {Math.abs(daysLeft)} days overdue
-                        </span>
-                      )}
-                    </div>
-
-                    {/* Overdue Tasks */}
-                    {tasks.some(
-                      (t) => t.due_date && new Date(t.due_date) < new Date() && t.status !== "completed"
-                    ) && (
-                      <div className="flex items-center gap-2 text-sm text-red-600">
-                        <AlertCircle className="w-4 h-4" />
-                        {tasks.filter(
-                          (t) => t.due_date && new Date(t.due_date) < new Date() && t.status !== "completed"
-                        ).length}{" "}
-                        overdue task
-                        {tasks.filter(
-                          (t) => t.due_date && new Date(t.due_date) < new Date() && t.status !== "completed"
-                        ).length !== 1
-                          ? "s"
-                          : ""}
-                      </div>
-                    )}
-                  </div>
-                </CardContent>
-              </Card>
-            );
-          })
+    <div className="max-w-6xl mx-auto p-6 space-y-6">
+      <div className="flex items-center justify-between">
+        <h1 className="text-4xl font-bold">Onboarding Management</h1>
+        {tab === "active" && (
+          <Button onClick={() => setShowNewFlow(true)} className="bg-[#1a9c5b] hover:bg-[#158a4e]">
+            <Plus className="w-4 h-4 mr-2" />
+            Start Onboarding
+          </Button>
+        )}
+        {tab === "templates" && (
+          <Button onClick={() => setShowChecklistBuilder(true)} className="bg-[#1a9c5b] hover:bg-[#158a4e]">
+            <Plus className="w-4 h-4 mr-2" />
+            New Checklist Template
+          </Button>
+        )}
+        {tab === "reports" && (
+          <Button onClick={() => setShowReportBuilder(true)} className="bg-[#1a9c5b] hover:bg-[#158a4e]">
+            <Plus className="w-4 h-4 mr-2" />
+            New Report Template
+          </Button>
         )}
       </div>
 
-      {/* Detail Dialog */}
-      <Dialog open={!!selectedOnboarding} onOpenChange={() => setSelectedOnboarding(null)}>
-        <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto">
-          <DialogHeader>
-            <DialogTitle>Onboarding for {selectedOnboarding?.employee_name}</DialogTitle>
-            <DialogDescription>
-              {selectedOnboarding?.status === "in_progress"
-                ? `Target completion: ${format(
-                    new Date(selectedOnboarding.target_completion_date),
-                    "MMM d, yyyy"
-                  )}`
-                : ""}
-            </DialogDescription>
-          </DialogHeader>
+      {/* Tabs */}
+      <div className="flex gap-4 border-b border-gray-200 overflow-x-auto">
+        {tabs.map(t => (
+          <button
+            key={t.id}
+            onClick={() => setTab(t.id)}
+            className={`px-4 py-3 font-medium whitespace-nowrap border-b-2 transition-colors ${
+              tab === t.id
+                ? "border-[#1a9c5b] text-[#1a9c5b]"
+                : "border-transparent text-gray-600 hover:text-gray-900"
+            }`}
+          >
+            {t.label} ({t.count})
+          </button>
+        ))}
+      </div>
 
-          {selectedOnboarding && (
-            <div className="space-y-6">
-              {/* Status Controls */}
-              {isManager && selectedOnboarding.status === "in_progress" && (
-                <div className="flex gap-2 p-4 bg-blue-50 rounded-lg border border-blue-200">
-                  <Button
-                    size="sm"
-                    variant="outline"
-                    onClick={() =>
-                      updateOnboardingStatus.mutate({
-                        onboardingId: selectedOnboarding.id,
-                        status: "paused",
-                      })
-                    }
-                  >
-                    Pause
-                  </Button>
-                  <Button
-                    size="sm"
-                    className="bg-[#1a9c5b] hover:bg-[#158a4e]"
-                    onClick={() =>
-                      updateOnboardingStatus.mutate({
-                        onboardingId: selectedOnboarding.id,
-                        status: "completed",
-                      })
-                    }
-                  >
-                    Mark Complete
-                  </Button>
-                </div>
-              )}
-
-              {/* Checklist */}
-              <OnboardingChecklist
-                tasks={getTasksForOnboarding(selectedOnboarding.id)}
-                onboarding={selectedOnboarding}
-                isEditable={isManager}
-                onTaskStatusChange={(taskId, status) =>
-                  updateTaskStatus.mutate({ taskId, status })
-                }
-                onAddTask={() => {
-                  // Handle adding new task
-                }}
-              />
-            </div>
+      {/* Active Onboardings */}
+      {tab === "active" && (
+        <div className="grid gap-4">
+          {activeOnboardings.length === 0 ? (
+            <Card className="bg-gray-50">
+              <CardContent className="py-8 text-center text-gray-600">
+                No active onboardings. Start one to get employees up to speed.
+              </CardContent>
+            </Card>
+          ) : (
+            activeOnboardings.map(onboarding => (
+              <Card key={onboarding.id}>
+                <CardHeader className="pb-3">
+                  <div className="flex items-start justify-between">
+                    <div>
+                      <CardTitle>{onboarding.employee_name}</CardTitle>
+                      <p className="text-sm text-gray-500 mt-1">Started {onboarding.start_date}</p>
+                    </div>
+                    <span className={`text-xs font-bold px-3 py-1 rounded-full border ${getStatusColor(onboarding.status)}`}>
+                      {onboarding.status.replace("_", " ").toUpperCase()}
+                    </span>
+                  </div>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <div>
+                    <div className="flex justify-between mb-2">
+                      <span className="text-sm font-medium">Progress</span>
+                      <span className="text-sm font-bold">{onboarding.progress_percentage}%</span>
+                    </div>
+                    <div className="w-full bg-gray-200 rounded-full h-2">
+                      <div
+                        className="bg-[#1a9c5b] h-2 rounded-full transition-all"
+                        style={{ width: `${onboarding.progress_percentage}%` }}
+                      ></div>
+                    </div>
+                  </div>
+                  <div className="flex gap-2">
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() => setSelectedOnboarding(onboarding)}
+                    >
+                      <Play className="w-4 h-4 mr-1" />
+                      View Tasks
+                    </Button>
+                    <Button variant="outline" size="sm" onClick={() => deleteOnboarding.mutate(onboarding.id)}>
+                      <Trash2 className="w-4 h-4 mr-1" />
+                      Delete
+                    </Button>
+                  </div>
+                </CardContent>
+              </Card>
+            ))
           )}
-        </DialogContent>
-      </Dialog>
+        </div>
+      )}
+
+      {/* Completed Onboardings */}
+      {tab === "completed" && (
+        <div className="grid gap-4">
+          {completedOnboardings.length === 0 ? (
+            <Card className="bg-gray-50">
+              <CardContent className="py-8 text-center text-gray-600">
+                No completed onboardings yet.
+              </CardContent>
+            </Card>
+          ) : (
+            completedOnboardings.map(onboarding => (
+              <Card key={onboarding.id} className="bg-green-50">
+                <CardHeader className="pb-2">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-2">
+                      <CheckCircle2 className="w-5 h-5 text-green-600" />
+                      <CardTitle className="text-green-900">{onboarding.employee_name}</CardTitle>
+                    </div>
+                    <span className="text-sm text-green-700">Completed</span>
+                  </div>
+                </CardHeader>
+              </Card>
+            ))
+          )}
+        </div>
+      )}
+
+      {/* Checklist Templates */}
+      {tab === "templates" && (
+        <div className="grid gap-4">
+          {templates.length === 0 ? (
+            <Card className="bg-gray-50">
+              <CardContent className="py-8 text-center text-gray-600">
+                No checklist templates. Create one to streamline your operations.
+              </CardContent>
+            </Card>
+          ) : (
+            templates.map(template => (
+              <Card key={template.id}>
+                <CardHeader className="pb-3">
+                  <div className="flex items-start justify-between">
+                    <div>
+                      <CardTitle>{template.name}</CardTitle>
+                      <p className="text-sm text-gray-500 mt-1">{template.type} • {template.items?.length || 0} items</p>
+                    </div>
+                    <span className="text-xs px-2 py-1 rounded-full bg-blue-100 text-blue-700 font-medium">
+                      {template.frequency}
+                    </span>
+                  </div>
+                </CardHeader>
+                <CardContent>
+                  <div className="flex gap-2">
+                    <Button variant="outline" size="sm">
+                      <Edit2 className="w-4 h-4 mr-1" />
+                      Edit
+                    </Button>
+                    <Button variant="outline" size="sm" onClick={() => deleteTemplate.mutate(template.id)}>
+                      <Trash2 className="w-4 h-4 mr-1" />
+                      Delete
+                    </Button>
+                  </div>
+                </CardContent>
+              </Card>
+            ))
+          )}
+        </div>
+      )}
+
+      {/* Report Templates */}
+      {tab === "reports" && (
+        <div className="grid gap-4">
+          {reportTemplates.length === 0 ? (
+            <Card className="bg-gray-50">
+              <CardContent className="py-8 text-center text-gray-600">
+                No report templates. Create one to standardize incident documentation.
+              </CardContent>
+            </Card>
+          ) : (
+            reportTemplates.map(template => (
+              <Card key={template.id}>
+                <CardHeader className="pb-3">
+                  <div className="flex items-start justify-between">
+                    <div>
+                      <CardTitle>{template.name}</CardTitle>
+                      <p className="text-sm text-gray-500 mt-1">{template.category} • {template.fields?.length || 0} fields</p>
+                    </div>
+                    <span className={`text-xs px-2 py-1 rounded-full font-medium ${template.is_active ? "bg-green-100 text-green-700" : "bg-gray-100 text-gray-700"}`}>
+                      {template.is_active ? "Active" : "Inactive"}
+                    </span>
+                  </div>
+                </CardHeader>
+              </Card>
+            ))
+          )}
+        </div>
+      )}
+
+      {/* Dialogs */}
+      <OnboardingFlowDialog open={showNewFlow} onOpenChange={setShowNewFlow} employees={employees} />
+      <ChecklistTemplateBuilder open={showChecklistBuilder} onOpenChange={setShowChecklistBuilder} />
+      <ReportTemplateBuilder open={showReportBuilder} onOpenChange={setShowReportBuilder} />
+
+      {/* Task Details Modal */}
+      {selectedOnboarding && (
+        <OnboardingTasksModal
+          onboarding={selectedOnboarding}
+          onClose={() => setSelectedOnboarding(null)}
+        />
+      )}
     </div>
+  );
+}
+
+function OnboardingTasksModal({ onboarding, onClose }) {
+  const { data: tasks = [] } = useQuery({
+    queryKey: ["onboarding-tasks", onboarding.id],
+    queryFn: () => base44.entities.OnboardingTask.filter({ onboarding_id: onboarding.id }, "-display_order")
+  });
+
+  const completedCount = tasks.filter(t => t.status === "completed").length;
+
+  return (
+    <Dialog open={true} onOpenChange={onClose}>
+      <DialogContent className="max-w-2xl max-h-[80vh] overflow-y-auto">
+        <DialogHeader>
+          <DialogTitle>{onboarding.employee_name} - Onboarding Tasks</DialogTitle>
+        </DialogHeader>
+        <div className="space-y-4">
+          <div className="flex justify-between items-center">
+            <span className="text-sm text-gray-600">{completedCount} of {tasks.length} completed</span>
+            <div className="w-32 bg-gray-200 rounded-full h-2">
+              <div
+                className="bg-[#1a9c5b] h-2 rounded-full transition-all"
+                style={{ width: `${(completedCount / (tasks.length || 1)) * 100}%` }}
+              ></div>
+            </div>
+          </div>
+          <div className="space-y-2">
+            {tasks.map(task => (
+              <Card key={task.id}>
+                <CardContent className="py-4">
+                  <div className="flex items-start justify-between">
+                    <div>
+                      <h4 className="font-medium">{task.title}</h4>
+                      <p className="text-sm text-gray-600 mt-1">{task.description}</p>
+                      <div className="flex gap-2 mt-2">
+                        <span className="text-xs px-2 py-1 rounded bg-gray-100 text-gray-700">{task.category}</span>
+                        <span className="text-xs px-2 py-1 rounded bg-blue-100 text-blue-700">{task.status}</span>
+                      </div>
+                    </div>
+                    {task.status === "completed" && <CheckCircle2 className="w-5 h-5 text-green-600 flex-shrink-0" />}
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </div>
+      </DialogContent>
+    </Dialog>
   );
 }
