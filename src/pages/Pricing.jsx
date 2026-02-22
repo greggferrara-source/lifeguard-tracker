@@ -281,7 +281,7 @@ export default function Pricing() {
               <Mail className="w-4 h-4 mr-2" /> Contact Sales
             </Button>
           </Link>
-          <Link to={createPageUrl("Schedule")}>
+          <Link to={createPageUrl("Dashboard")}>
             <Button variant="outline" className="px-8 h-12 rounded-xl font-semibold border-2">
               <Zap className="w-4 h-4 mr-2" /> Start Free Trial
             </Button>
