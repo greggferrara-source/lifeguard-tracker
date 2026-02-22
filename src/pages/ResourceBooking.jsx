@@ -247,7 +247,11 @@ export default function ResourceBooking() {
           {selectedResource && (
             <BookingForm
               resource={selectedResource}
-              onSuccess={() => {
+              onSuccess={(booking) => {
+                base44.functions.invoke('sendBookingNotifications', {
+                  booking_id: booking.id,
+                  notification_type: 'confirmed'
+                });
                 setBookingDialogOpen(false);
                 queryClient.invalidateQueries({ queryKey: ['resource-bookings'] });
               }}
