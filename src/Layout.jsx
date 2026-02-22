@@ -75,6 +75,9 @@ const enterpriseGroups = [
     icon: BarChart2,
     items: [
       { name: "Reports", icon: BarChart2, page: "Reports" },
+      { name: "Incident Trends", icon: TrendingDown, page: "IncidentTrendReport" },
+      { name: "Staffing Forecast", icon: Zap, page: "StaffingForecastDashboard" },
+      { name: "Weather Alerts", icon: AlertTriangle, page: "WeatherAlertsMonitor" },
       { name: "Alerts", icon: AlertTriangle, page: "Alerts", badge: "alerts" },
       { name: "Multi-Location Dashboard", icon: Globe, page: "MultiLocationDashboard", enterpriseOnly: true },
       { name: "Payroll Integrations", icon: BarChart2, page: "PayrollIntegrations", enterpriseOnly: true },
@@ -82,6 +85,14 @@ const enterpriseGroups = [
       { name: "Settings", icon: Settings, page: "Settings", ownerOnly: true },
       { name: "Admin Setup", icon: LayoutDashboard, page: "AdminSetup", ownerOnly: true },
       { name: "Error Logs", icon: AlertTriangle, page: "ErrorLogs", ownerOnly: true },
+    ],
+  },
+  {
+    label: "Analytics & Team",
+    icon: Users,
+    items: [
+      { name: "Employee Performance", icon: Award, page: "EmployeePerformanceDashboard" },
+      { name: "Patron Management", icon: Users, page: "PatronManagement" },
     ],
   },
 ];
