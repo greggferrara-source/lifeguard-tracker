@@ -59,53 +59,6 @@ Locations with **minimum guards required** will trigger understaffing alerts if 
     ]
   },
   {
-    section: "PLACEHOLDER_REMOVE",
-    color: "bg-green-50 border-green-200",
-    badge: "bg-green-100 text-green-700",
-    articles: [
-      {
-        title: "Welcome to LifeGuard Tracker",
-        icon: null,
-        content: `LifeGuard Tracker is an all-in-one workforce management platform built for aquatic facilities, pools, beaches, and waterparks.
-
-**What you can do with LifeGuard Tracker:**
-- Build and manage weekly schedules for your lifeguards and staff
-- Track employee certifications and get expiry alerts
-- Manage time-off requests with an approval workflow
-- Run reports to understand coverage, hours, and costs
-- Onboard new hires with structured checklists
-- Send automated notifications for shift reminders and alerts
-
-**Who uses LifeGuard Tracker:**
-- **Admins** have full access to all features including payroll, reports, and settings
-- **Managers** can create and manage schedules, approve time off, and handle onboarding
-- **Employees** can view their schedule, submit time-off requests, and request shift swaps`
-      },
-      {
-        title: "Adding Your First Employee",
-        content: `1. Navigate to **Employees** in the top navigation
-2. Click **Add Employee** in the top right
-3. Fill in the employee's name, email, role, and hourly rate
-4. Optionally upload a profile photo and add certifications
-5. Click **Save**
-
-Once added, you can optionally start the onboarding process from the employee's menu (three dots → **Start Onboarding**).`
-      },
-      {
-        title: "Setting Up Locations",
-        content: `Locations are the physical areas where shifts take place — e.g., Main Pool, Beach Zone A, Lap Lane.
-
-1. Go to **Locations** in the top nav
-2. Click **Add Location**
-3. Set the name, type, and minimum guards required
-4. Choose a color to distinguish it on the schedule
-5. Click **Save**
-
-Locations with **minimum guards required** will trigger understaffing alerts if too few shifts are scheduled.`
-      },
-    ]
-  },
-  {
     section: "Scheduling",
     color: "bg-blue-50 border-blue-200",
     badge: "bg-blue-100 text-blue-700",
