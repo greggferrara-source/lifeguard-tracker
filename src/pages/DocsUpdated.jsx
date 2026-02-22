@@ -4,6 +4,22 @@ import { ChevronDown, ChevronRight } from "lucide-react";
 
 const sections = [
   {
+    title: "Advanced Notification System",
+    content: "Real-time alert system for critical events with configurable user preferences. Notifications for pool test out-of-range results, maintenance due dates, compliance gaps, and task assignments. Support for email, in-app, and SMS notifications with severity levels and quiet hours. Users can customize notification types, delivery methods, and alert thresholds. Unread notification badges and comprehensive notification history with archive. Access via Notifications menu."
+  },
+  {
+    title: "Enterprise Document Management",
+    content: "Centralized document storage with version control, categorization, and lifecycle management. Upload certifications, inspection reports, equipment manuals, compliance documents, and training materials. Associate documents with employees, assets, locations, or compliance items. Document expiry tracking with automatic alerts for expiring certifications. Version history tracking with previous version links. Full-text search with tags and metadata filtering. Access via Admin → Reports & Admin → Document Management."
+  },
+  {
+    title: "Advanced Reporting & Analytics Suite",
+    content: "Comprehensive reporting across all modules with customizable dashboards and data visualizations. Asset performance dashboards showing MTBF, availability, and maintenance costs. Pool test trends with compliance rates and parameter analysis over time. Compliance analysis by category with scoring and trend visualization. Staff performance metrics including shifts worked and hours logged. Generate multi-format reports (PDF, CSV, JSON) for any date range and location. Trend analysis visualizations with predictive maintenance insights. Access via Admin → Reports & Admin → Advanced Reporting."
+  },
+  {
+    title: "AI-Powered Compliance Advisor",
+    content: "Intelligent AI system that analyzes facility data to identify potential regulatory violations and compliance gaps. Detects violations against OSHA, MAHC, and ANSI standards. Analyzes trends across Employee Management, Asset Management, Pool Testing, and Compliance modules. Generates confidence-scored insights with severity levels. Provides specific, actionable recommendations for each identified issue with priority levels and effort estimates. Supports manual analysis across all facilities or specific locations. Tracks acknowledged vs. unacknowledged insights for ongoing compliance monitoring. Access via Admin → Reports & Admin → AI Compliance Advisor."
+  },
+  {
     title: "Comprehensive Compliance Assessment Manager",
     content: "Digital self-assessment and action-planning tool for aquatic operations. Complete assessments across facility maintenance, daily operations, risk management, staff training, and safety teams using standardized questions based on MAHC and aquatic safety best practices. Convert findings into actionable gap tasks assigned to specific staff with accountability tracking. Retest and verify improvements with photo documentation and before/after evidence. Multi-site compliance oversight with radar charts and comparative analysis across locations. Built-in resource library with templates, guidance documents, glossary, and safety references. Track compliance scores over time and maintain audit-ready records of due diligence efforts. Access via Admin → Compliance → Assessment Manager."
   },

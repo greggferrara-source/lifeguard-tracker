@@ -79,10 +79,13 @@ const enterpriseGroups = [
     icon: BarChart2,
     items: [
       { name: "Reports", icon: BarChart2, page: "Reports" },
+      { name: "Advanced Reporting", icon: BarChart2, page: "AdvancedReporting" },
       { name: "Incident Trends", icon: TrendingDown, page: "IncidentTrendReport" },
       { name: "Staffing Forecast", icon: Zap, page: "StaffingForecastDashboard" },
       { name: "Weather Alerts", icon: AlertTriangle, page: "WeatherAlertsMonitor" },
       { name: "Alerts", icon: AlertTriangle, page: "Alerts", badge: "alerts" },
+      { name: "AI Compliance Advisor", icon: Zap, page: "ComplianceAIAdvisor" },
+      { name: "Document Management", icon: FileText, page: "DocumentManagement" },
       { name: "Multi-Location Dashboard", icon: Globe, page: "MultiLocationDashboard", enterpriseOnly: true },
       { name: "Payroll Integrations", icon: BarChart2, page: "PayrollIntegrations", enterpriseOnly: true },
       { name: "Billing", icon: CreditCard, page: "Billing", ownerOnly: true },
