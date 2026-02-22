@@ -4,6 +4,10 @@ import { ChevronDown, ChevronRight } from "lucide-react";
 
 const sections = [
   {
+    title: "Comprehensive Compliance Assessment Manager",
+    content: "Digital self-assessment and action-planning tool for aquatic operations. Complete assessments across facility maintenance, daily operations, risk management, staff training, and safety teams using standardized questions based on MAHC and aquatic safety best practices. Convert findings into actionable gap tasks assigned to specific staff with accountability tracking. Retest and verify improvements with photo documentation and before/after evidence. Multi-site compliance oversight with radar charts and comparative analysis across locations. Built-in resource library with templates, guidance documents, glossary, and safety references. Track compliance scores over time and maintain audit-ready records of due diligence efforts. Access via Admin → Compliance → Assessment Manager."
+  },
+  {
     title: "Pool Test Reporting & Compliance",
     content: "Digital pool water chemistry testing with compliance tracking. Log chlorine (free/total), pH, alkalinity, calcium hardness, cyanuric acid, and temperature. Automatic compliance alerts when parameters fall outside MAHC standards. Visual trend graphs showing chemical balance patterns over time. Instant out-of-range notifications with corrective action tracking. Mobile-friendly test entry from poolside. Historical data access for compliance audits and inspections. Customizable test standards (MAHC vs local guidelines). Signature capture and timestamp verification for audit readiness. Access via Admin → Operations → Pool Test Reporting."
   },

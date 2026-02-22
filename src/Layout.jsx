@@ -29,6 +29,7 @@ const enterpriseGroups = [
     icon: Shield,
     items: [
       { name: "Compliance Dashboard", icon: Shield, page: "ComplianceDashboard" },
+      { name: "Assessment Manager", icon: Shield, page: "ComplianceAssessmentManager" },
       { name: "Checklist Dashboard", icon: ClipboardList, page: "ChecklistDashboard" },
       { name: "Incident Management", icon: AlertTriangle, page: "IncidentDashboard" },
       { name: "Incident & Rescue Logs", icon: AlertTriangle, page: "IncidentLogs" },
