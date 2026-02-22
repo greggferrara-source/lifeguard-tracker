@@ -7,6 +7,7 @@ import { Badge } from "@/components/ui/badge";
 import { Plus, AlertTriangle, CheckCircle2 } from "lucide-react";
 import LogIncidentForm from "@/components/incidents/LogIncidentForm";
 import IncidentDetailDrawer from "@/components/incidents/IncidentDetailDrawer";
+import IncidentAIInsights from "@/components/incidents/IncidentAIInsights";
 
 const typeStyle = { rescue: "bg-red-100 text-red-700", incident: "bg-orange-100 text-orange-700", near_miss: "bg-yellow-100 text-yellow-700", first_aid: "bg-blue-100 text-blue-700", injury: "bg-purple-100 text-purple-700", other: "bg-gray-100 text-gray-600" };
 const severityStyle = { minor: "bg-green-100 text-green-700", moderate: "bg-yellow-100 text-yellow-700", serious: "bg-orange-100 text-orange-700", critical: "bg-red-100 text-red-700" };
@@ -17,7 +18,10 @@ export default function IncidentLogs() {
   const [selected, setSelected] = useState(null);
   const [filterType, setFilterType] = useState("all");
 
+  const { data: user } = useQuery({ queryKey: ["user"], queryFn: () => base44.auth.me() });
   const { data: logs = [] } = useQuery({ queryKey: ["incident-logs"], queryFn: () => base44.entities.IncidentLog.list("-created_date", 200), refetchInterval: 30000 });
+  
+  const locationId = logs.length > 0 ? logs[0].location_id : null;
 
   const filtered = filterType === "all" ? logs : logs.filter(l => l.type === filterType);
   const openCount = logs.filter(l => l.status === "open").length;
@@ -34,6 +38,9 @@ export default function IncidentLogs() {
           <Plus className="w-4 h-4" /> Log Incident
         </Button>
       </div>
+
+      {/* AI Insights */}
+      {locationId && <IncidentAIInsights locationId={locationId} />}
 
       {/* Stats */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
