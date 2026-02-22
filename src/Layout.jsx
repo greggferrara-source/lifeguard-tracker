@@ -94,6 +94,8 @@ const enterpriseNavItems = [
       { name: "Chemical Logs", icon: BarChart2, page: "ChemicalLogs" },
       { name: "Inspections", icon: BarChart2, page: "Inspections" },
       { name: "Maintenance Reports", icon: BarChart2, page: "MaintenanceReports" },
+      { name: "Staff Training", icon: BookOpen, page: "TrainingDashboard" },
+      { name: "Emergency Action Plans", icon: Shield, page: "EmergencyActionPlans" },
     ],
   },
   {
