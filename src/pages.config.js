@@ -128,6 +128,7 @@ import NotificationPreferences from './pages/NotificationPreferences';
 import ResourceBooking from './pages/ResourceBooking';
 import EmployeeProfile from './pages/EmployeeProfile';
 import EmployeeLocationTracking from './pages/EmployeeLocationTracking';
+import DocsResourceBookingGPS from './pages/DocsResourceBookingGPS';
 import __Layout from './Layout.jsx';
 
 
@@ -213,6 +214,7 @@ export const PAGES = {
     "ResourceBooking": ResourceBooking,
     "EmployeeProfile": EmployeeProfile,
     "EmployeeLocationTracking": EmployeeLocationTracking,
+    "DocsResourceBookingGPS": DocsResourceBookingGPS,
 }
 
 export const pagesConfig = {
