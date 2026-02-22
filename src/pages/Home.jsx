@@ -74,13 +74,13 @@ const features = [
   { icon: Wrench, title: "Asset Tracking", desc: "Manage rescue tubes, AEDs, and all facility assets with maintenance schedules and status tracking." },
   { icon: BookOpen, title: "Staff Training", desc: "Assign training modules with quizzes, track completion rates, and ensure every guard is prepared." },
   { icon: FileText, title: "Emergency Action Plans", desc: "Build and distribute step-by-step EAPs for every emergency scenario — drowning, lightning, missing patron, and more." },
-  { icon: BarChart2, title: "Reports & Analytics", desc: "Staffing reports, patron counts, chemical trends, labor cost analysis, and exportable compliance records." },
+  { icon: BarChart2, title: "Advanced Analytics", desc: "Multi-module reporting with trends, visualizations, PDF/CSV exports, predictive insights, and compliance scoring." },
   { icon: MessageSquare, title: "Communications", desc: "Announcements, team channels, direct messages, and instant broadcast alerts." },
-  { icon: UserCheck, title: "Patron Counts", desc: "Track pool capacity in real time. Log entries and exits with occupancy alerts." },
+  { icon: Bell, title: "Smart Notifications", desc: "Configurable alerts for pool tests, maintenance, compliance gaps, task assignments with email/SMS/in-app delivery." },
   { icon: DollarSign, title: "Payroll Integration", desc: "Sync timesheets and schedules directly to Gusto, ADP, Paychex, and other payroll providers." },
   { icon: Globe, title: "Multi-Location Dashboard", desc: "Manage multiple pools and facilities from a single enterprise dashboard with rollup reporting." },
-  { icon: Bell, title: "Alerts & Notifications", desc: "Automated alerts for expiring certifications, unresolved incidents, chemical failures, and more." },
-  { icon: Eye, title: "Public Safety Dashboard", desc: "A shareable, real-time status board showing guard coverage and safety conditions to patrons." },
+  { icon: Eye, title: "Document Management", desc: "Centralized storage with version control, expiry tracking, categorization, and full-text search." },
+  { icon: Zap, title: "AI Compliance Advisor", desc: "Intelligent system analyzing data to identify OSHA/MAHC violations with actionable recommendations." },
   { icon: MapPin, title: "Locations Management", desc: "Manage unlimited facility locations with per-location settings, staff, and compliance records." },
 ];
 
@@ -130,7 +130,7 @@ const plans = [
     period: "/month",
     annual: "$990/year",
     highlight: true,
-    features: ["Everything in Starter", "Compliance & cert tracking", "Payroll integrations", "Automated alerts"],
+    features: ["Everything in Starter", "Compliance & cert tracking", "Smart notifications", "Payroll integrations", "Advanced reporting & analytics"],
   },
   {
     name: "Enterprise",
@@ -138,7 +138,7 @@ const plans = [
     period: "/month",
     annual: "$4,990/year",
     highlight: false,
-    features: ["Everything in Pro", "Multi-location management", "Advanced analytics", "Priority support"],
+    features: ["Everything in Pro", "Multi-location management", "Document management", "AI Compliance Advisor", "Priority support"],
   },
 ];
 
