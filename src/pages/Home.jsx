@@ -489,6 +489,33 @@ export default function Home() {
         </div>
       </section>
 
+      {/* ── Testimonials (moved to bottom) ── */}
+      <section id="testimonials" className="px-4 sm:px-6 py-14 sm:py-20 max-w-6xl mx-auto">
+        <div className="text-center mb-10 sm:mb-14">
+          <h2 className="text-3xl sm:text-4xl font-extrabold text-gray-900 mb-4">Trusted by aquatic teams</h2>
+          <p className="text-base sm:text-lg text-gray-500">See what managers and directors are saying.</p>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-5 sm:gap-8">
+          {testimonials.map((t) => (
+            <div key={t.name} className="bg-white rounded-2xl border border-gray-200 p-8 shadow-sm hover:shadow-md transition-shadow">
+              <div className="flex gap-1 mb-5">
+                {Array.from({ length: t.stars }).map((_, i) => (
+                  <Star key={i} className="w-4 h-4 fill-yellow-400 text-yellow-400" />
+                ))}
+              </div>
+              <p className="text-gray-700 leading-relaxed mb-7 text-sm">"{t.text}"</p>
+              <div className="flex items-center gap-3">
+                <img src={t.img} alt={t.name} className="w-11 h-11 rounded-full object-cover ring-2 ring-[#1a9c5b]/20" />
+                <div>
+                  <p className="font-bold text-gray-900 text-sm">{t.name}</p>
+                  <p className="text-xs text-gray-400">{t.role}</p>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
       {/* ── Final CTA Banner ── */}
       <section className="mx-4 sm:mx-6 mb-12 sm:mb-16 rounded-2xl sm:rounded-3xl bg-gray-900 px-6 sm:px-10 py-12 sm:py-16 max-w-6xl lg:mx-auto text-center">
         <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white mb-4 leading-tight">
