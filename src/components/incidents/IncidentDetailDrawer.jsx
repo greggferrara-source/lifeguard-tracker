@@ -49,103 +49,105 @@ export default function IncidentDetailDrawer({ incident, onClose }) {
           </Tabs>
         </div>
 
-        {tab === "details" && <div className="space-y-5 mt-4">
-          {/* Badges */}
-          <div className="flex gap-2 flex-wrap">
-            <Badge className={typeStyle[incident.type]}>{incident.type?.replace("_", " ")}</Badge>
-            <Badge className={severityStyle[incident.severity]}>{incident.severity}</Badge>
-            <Badge className={statusStyle[incident.status]}>{incident.status}</Badge>
-            {incident.ems_called && <Badge className="bg-red-100 text-red-700"><Siren className="w-3 h-3 mr-1" />EMS Called</Badge>}
-            {incident.patron_transported && <Badge className="bg-purple-100 text-purple-700">Patron Transported</Badge>}
-            {incident.follow_up_required && <Badge className="bg-yellow-100 text-yellow-700">Follow-Up Required</Badge>}
-          </div>
-
-          {/* Meta grid */}
-          <div className="grid grid-cols-2 gap-3 bg-gray-50 rounded-xl p-4 text-sm">
-            <div className="flex items-start gap-2">
-              <MapPin className="w-4 h-4 text-gray-400 mt-0.5" />
-              <div><p className="text-xs text-gray-400">Location</p><p className="font-medium">{incident.location_name || "—"}</p></div>
-            </div>
-            <div className="flex items-start gap-2">
-              <Calendar className="w-4 h-4 text-gray-400 mt-0.5" />
-              <div><p className="text-xs text-gray-400">Date / Time</p><p className="font-medium">{incident.date}{incident.time ? ` · ${incident.time}` : ""}</p></div>
-            </div>
-            <div className="flex items-start gap-2">
-              <User className="w-4 h-4 text-gray-400 mt-0.5" />
-              <div><p className="text-xs text-gray-400">Reported By</p><p className="font-medium">{incident.reporting_staff_name || incident.reporting_staff_email || "—"}</p></div>
-            </div>
-            {incident.patron_name && (
-              <div className="flex items-start gap-2">
-                <User className="w-4 h-4 text-gray-400 mt-0.5" />
-                <div><p className="text-xs text-gray-400">Patron / Victim</p><p className="font-medium">{incident.patron_name}{incident.patron_age ? `, age ${incident.patron_age}` : ""}</p></div>
+        <div>
+          {tab === "details" && (
+            <div className="space-y-5 mt-4">
+              {/* Badges */}
+              <div className="flex gap-2 flex-wrap">
+                <Badge className={typeStyle[incident.type]}>{incident.type?.replace("_", " ")}</Badge>
+                <Badge className={severityStyle[incident.severity]}>{incident.severity}</Badge>
+                <Badge className={statusStyle[incident.status]}>{incident.status}</Badge>
+                {incident.ems_called && <Badge className="bg-red-100 text-red-700"><Siren className="w-3 h-3 mr-1" />EMS Called</Badge>}
+                {incident.patron_transported && <Badge className="bg-purple-100 text-purple-700">Patron Transported</Badge>}
+                {incident.follow_up_required && <Badge className="bg-yellow-100 text-yellow-700">Follow-Up Required</Badge>}
               </div>
-            )}
-          </div>
 
-          <div>
-            <p className="text-xs text-gray-400 mb-1 font-medium uppercase tracking-wide">Description</p>
-            <p className="text-sm text-gray-800 leading-relaxed bg-gray-50 rounded-lg p-3">{incident.description}</p>
-          </div>
-
-          {incident.action_taken && (
-            <div>
-              <p className="text-xs text-gray-400 mb-1 font-medium uppercase tracking-wide">Action Taken</p>
-              <p className="text-sm text-gray-800 bg-blue-50 rounded-lg p-3">{incident.action_taken}</p>
-            </div>
-          )}
-
-          {incident.witnesses && (
-            <div>
-              <p className="text-xs text-gray-400 mb-1 font-medium uppercase tracking-wide">Witnesses</p>
-              <p className="text-sm text-gray-800">{incident.witnesses}</p>
-            </div>
-          )}
-
-          {incident.follow_up_notes && (
-            <div>
-              <p className="text-xs text-gray-400 mb-1 font-medium uppercase tracking-wide">Follow-Up Notes</p>
-              <p className="text-sm text-gray-800 bg-yellow-50 rounded-lg p-3">{incident.follow_up_notes}</p>
-            </div>
-          )}
-
-          {/* Photo Attachments */}
-          {incident.photo_urls?.length > 0 && (
-            <div>
-              <p className="text-xs text-gray-400 mb-2 font-medium uppercase tracking-wide">Photos ({incident.photo_urls.length})</p>
-              <div className="flex flex-wrap gap-2">
-                {incident.photo_urls.map((url, i) => (
-                  <a key={i} href={url} target="_blank" rel="noopener noreferrer">
-                    <img src={url} alt={`Photo ${i + 1}`} className="w-24 h-24 object-cover rounded-lg border border-gray-200 hover:opacity-90 transition-opacity" />
-                  </a>
-                ))}
+              {/* Meta grid */}
+              <div className="grid grid-cols-2 gap-3 bg-gray-50 rounded-xl p-4 text-sm">
+                <div className="flex items-start gap-2">
+                  <MapPin className="w-4 h-4 text-gray-400 mt-0.5" />
+                  <div><p className="text-xs text-gray-400">Location</p><p className="font-medium">{incident.location_name || "—"}</p></div>
+                </div>
+                <div className="flex items-start gap-2">
+                  <Calendar className="w-4 h-4 text-gray-400 mt-0.5" />
+                  <div><p className="text-xs text-gray-400">Date / Time</p><p className="font-medium">{incident.date}{incident.time ? ` · ${incident.time}` : ""}</p></div>
+                </div>
+                <div className="flex items-start gap-2">
+                  <User className="w-4 h-4 text-gray-400 mt-0.5" />
+                  <div><p className="text-xs text-gray-400">Reported By</p><p className="font-medium">{incident.reporting_staff_name || incident.reporting_staff_email || "—"}</p></div>
+                </div>
+                {incident.patron_name && (
+                  <div className="flex items-start gap-2">
+                    <User className="w-4 h-4 text-gray-400 mt-0.5" />
+                    <div><p className="text-xs text-gray-400">Patron / Victim</p><p className="font-medium">{incident.patron_name}{incident.patron_age ? `, age ${incident.patron_age}` : ""}</p></div>
+                  </div>
+                )}
               </div>
-            </div>
-          )}
 
-          {/* Status actions */}
-          {incident.status !== "closed" && (
-            <div className="flex gap-2 pt-2 border-t">
-              {incident.status === "open" && (
-                <Button variant="outline" size="sm" className="flex-1"
-                  onClick={() => updateStatus.mutate({ id: incident.id, status: "reviewed" })}
-                  disabled={updateStatus.isPending}>
-                  <Clock className="w-4 h-4 mr-1" />Mark Reviewed
-                </Button>
+              <div>
+                <p className="text-xs text-gray-400 mb-1 font-medium uppercase tracking-wide">Description</p>
+                <p className="text-sm text-gray-800 leading-relaxed bg-gray-50 rounded-lg p-3">{incident.description}</p>
+              </div>
+
+              {incident.action_taken && (
+                <div>
+                  <p className="text-xs text-gray-400 mb-1 font-medium uppercase tracking-wide">Action Taken</p>
+                  <p className="text-sm text-gray-800 bg-blue-50 rounded-lg p-3">{incident.action_taken}</p>
+                </div>
               )}
-              <Button size="sm" className="flex-1 bg-[#1a9c5b] hover:bg-[#158a4e]"
-                onClick={() => updateStatus.mutate({ id: incident.id, status: "closed" })}
-                disabled={updateStatus.isPending}>
-                <CheckCircle2 className="w-4 h-4 mr-1" />Close Incident
-              </Button>
+
+              {incident.witnesses && (
+                <div>
+                  <p className="text-xs text-gray-400 mb-1 font-medium uppercase tracking-wide">Witnesses</p>
+                  <p className="text-sm text-gray-800">{incident.witnesses}</p>
+                </div>
+              )}
+
+              {incident.follow_up_notes && (
+                <div>
+                  <p className="text-xs text-gray-400 mb-1 font-medium uppercase tracking-wide">Follow-Up Notes</p>
+                  <p className="text-sm text-gray-800 bg-yellow-50 rounded-lg p-3">{incident.follow_up_notes}</p>
+                </div>
+              )}
+
+              {incident.photo_urls?.length > 0 && (
+                <div>
+                  <p className="text-xs text-gray-400 mb-2 font-medium uppercase tracking-wide">Photos ({incident.photo_urls.length})</p>
+                  <div className="flex flex-wrap gap-2">
+                    {incident.photo_urls.map((url, i) => (
+                      <a key={i} href={url} target="_blank" rel="noopener noreferrer">
+                        <img src={url} alt={`Photo ${i + 1}`} className="w-24 h-24 object-cover rounded-lg border border-gray-200 hover:opacity-90 transition-opacity" />
+                      </a>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {incident.status !== "closed" && (
+                <div className="flex gap-2 pt-2 border-t">
+                  {incident.status === "open" && (
+                    <Button variant="outline" size="sm" className="flex-1"
+                      onClick={() => updateStatus.mutate({ id: incident.id, status: "reviewed" })}
+                      disabled={updateStatus.isPending}>
+                      <Clock className="w-4 h-4 mr-1" />Mark Reviewed
+                    </Button>
+                  )}
+                  <Button size="sm" className="flex-1 bg-[#1a9c5b] hover:bg-[#158a4e]"
+                    onClick={() => updateStatus.mutate({ id: incident.id, status: "closed" })}
+                    disabled={updateStatus.isPending}>
+                    <CheckCircle2 className="w-4 h-4 mr-1" />Close Incident
+                  </Button>
+                </div>
+              )}
             </div>
           )}
-        </div>}
 
-        {tab === "followup" && (
-          <div className="mt-4">
-            <IncidentFollowUpPanel incident={incident} />
-          </div>
-        )}
+          {tab === "followup" && (
+            <div className="mt-4">
+              <IncidentFollowUpPanel incident={incident} />
+            </div>
+          )}
+        </div>
       </SheetContent>
     </Sheet>
   );
