@@ -370,15 +370,15 @@ Regulatory standards (OSHA, state health departments) typically require annual E
     articles: [
       {
         title: "Available Reports",
-        content: `LifeGuard Tracker provides a suite of built-in reports accessible via **Enterprise → Reports**:
+        content: `LifeGuard Tracker provides a suite of built-in reports accessible via **Enterprise → Reports → Shift & Pay**:
 
-- **Shift Report** — Hours worked per employee, by date range
-- **Clock Report** — Time clock entries, late arrivals, and overtime
-- **Chemical Trends** — pH and chlorine readings over time by location
-- **Location History** — Incident and checklist activity per location
-- **Document Generator** — Export formatted PDF reports for compliance
+      - **Shift & Pay** — Employee hours, estimated payroll, daily coverage, and employee pay summaries
+      - **Clock Report** — Time clock entries, punctuality, and overtime trends
+      - **Chemical Trends** — pH and chlorine readings over time with out-of-range alerts
+      - **Location History** — Incident and checklist activity per location
+      - **Export PDF** — Generate professional PDF documents with multiple report types for audits and inspections
 
-All reports can be filtered by date range and location.`
+      All reports can be filtered by date range and location.`
       },
       {
         title: "Exporting to PDF",
