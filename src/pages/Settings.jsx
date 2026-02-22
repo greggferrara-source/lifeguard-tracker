@@ -133,6 +133,7 @@ export default function Settings() {
           <TabsTrigger value="templates" className="rounded-full text-sm">Shift Templates</TabsTrigger>
           <TabsTrigger value="automation" className="rounded-full text-sm">Automation</TabsTrigger>
           <TabsTrigger value="team" className="rounded-full text-sm">Team</TabsTrigger>
+          <TabsTrigger value="integrations" className="rounded-full text-sm">Integrations</TabsTrigger>
           <TabsTrigger value="privacy" className="rounded-full text-sm">Privacy</TabsTrigger>
         </TabsList>
       </Tabs>
