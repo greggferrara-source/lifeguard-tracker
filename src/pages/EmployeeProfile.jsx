@@ -10,6 +10,8 @@ import { createPageUrl } from "@/utils";
 import { Link } from "react-router-dom";
 import EmployeeProfileCard from "@/components/employees/EmployeeProfileCard";
 import OnboardingProgressCard from "@/components/onboarding/OnboardingProgressCard";
+import EmergencyContactCard from "@/components/employees/EmergencyContactCard";
+import PerformanceReviewHistory from "@/components/employees/PerformanceReviewHistory";
 
 export default function EmployeeProfilePage() {
   const [searchParams] = useSearchParams();
@@ -59,6 +61,16 @@ export default function EmployeeProfilePage() {
     select: (data) => data?.[0]
   });
 
+  const { data: reviews = [] } = useQuery({
+    queryKey: ['employee-reviews', employeeId],
+    queryFn: () => base44.entities.PerformanceReview.filter(
+      { employee_id: employeeId },
+      '-created_at',
+      10
+    ),
+    enabled: !!employeeId
+  });
+
   if (!employeeId || !employee) {
     return <div className="p-6">Employee not found</div>;
   }
@@ -81,7 +93,9 @@ export default function EmployeeProfilePage() {
           {/* Sidebar */}
           <div className="lg:col-span-1 space-y-6">
             <EmployeeProfileCard employeeId={employeeId} />
+            <EmergencyContactCard employee={employee} />
             {onboarding && <OnboardingProgressCard workflow={onboarding} />}
+            <PerformanceReviewHistory reviews={reviews} />
           </div>
 
           {/* Tabs */}
