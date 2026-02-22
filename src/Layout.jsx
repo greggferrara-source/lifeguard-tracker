@@ -49,6 +49,7 @@ const enterpriseGroups = [
       { name: "Employee Profiles", icon: Users, page: "EmployeeProfile" },
       { name: "Location Tracking", icon: MapPin, page: "EmployeeLocationTracking" },
       { name: "Docs", icon: FileText, page: "DocsResourceBookingGPS" },
+      { name: "Employee Onboarding", icon: Users, page: "OnboardingManagement" },
       { name: "Patron Counts", icon: Users, page: "PatronCounts" },
       { name: "Chemical Logs", icon: Droplets, page: "ChemicalLogs" },
       { name: "Pool Test Reporting", icon: Droplets, page: "PoolTestReporting" },

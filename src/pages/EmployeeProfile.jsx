@@ -9,6 +9,7 @@ import { ArrowLeft, Plus } from "lucide-react";
 import { createPageUrl } from "@/utils";
 import { Link } from "react-router-dom";
 import EmployeeProfileCard from "@/components/employees/EmployeeProfileCard";
+import OnboardingProgressCard from "@/components/onboarding/OnboardingProgressCard";
 
 export default function EmployeeProfilePage() {
   const [searchParams] = useSearchParams();
@@ -47,6 +48,17 @@ export default function EmployeeProfilePage() {
     enabled: !!employeeId
   });
 
+  const { data: onboarding } = useQuery({
+    queryKey: ['employee-onboarding', employeeId],
+    queryFn: () => base44.entities.OnboardingWorkflow.filter(
+      { employee_id: employeeId },
+      '-created_at',
+      1
+    ),
+    enabled: !!employeeId,
+    select: (data) => data?.[0]
+  });
+
   if (!employeeId || !employee) {
     return <div className="p-6">Employee not found</div>;
   }
@@ -67,8 +79,9 @@ export default function EmployeeProfilePage() {
         {/* Main Content */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           {/* Sidebar */}
-          <div className="lg:col-span-1">
+          <div className="lg:col-span-1 space-y-6">
             <EmployeeProfileCard employeeId={employeeId} />
+            {onboarding && <OnboardingProgressCard workflow={onboarding} />}
           </div>
 
           {/* Tabs */}
