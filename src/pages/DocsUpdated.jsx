@@ -4,6 +4,10 @@ import { ChevronDown, ChevronRight } from "lucide-react";
 
 const sections = [
   {
+    title: "Advanced Employee Management",
+    content: "Comprehensive staff certification tracking with automated expiration reminders. Monitor in-service training progress, view team performance metrics, and generate audit-ready compliance reports. Access via Admin → People → Employee Management. Includes automated certification expiry notifications and supervisor oversight tools."
+  },
+  {
     title: "Comprehensive Onboarding System",
     content: "Automate employee onboarding with customizable task flows. Start onboarding for new hires, assign profile completion, role setup, training modules, and equipment access. Track progress with visual indicators. Access via Admin → Onboarding Dashboard. Create custom checklist and report templates to match facility workflows."
   },
