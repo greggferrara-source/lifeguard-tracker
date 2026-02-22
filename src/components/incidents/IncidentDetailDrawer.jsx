@@ -49,7 +49,7 @@ export default function IncidentDetailDrawer({ incident, onClose }) {
           </Tabs>
         </div>
 
-        {tab === "details" && <div className="space-y-5">
+        {tab === "details" && <div className="space-y-5 mt-4">
           {/* Badges */}
           <div className="flex gap-2 flex-wrap">
             <Badge className={typeStyle[incident.type]}>{incident.type?.replace("_", " ")}</Badge>
