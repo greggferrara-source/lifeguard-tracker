@@ -24,7 +24,8 @@ import {
   CreditCard,
   Eye,
   FileText,
-  LogOut } from
+  LogOut,
+  Globe } from
 "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
