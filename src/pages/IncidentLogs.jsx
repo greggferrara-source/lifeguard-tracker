@@ -1,13 +1,12 @@
 import React, { useState } from "react";
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import { base44 } from "@/api/base44Client";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Input } from "@/components/ui/input";
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { Plus, AlertTriangle, CheckCircle2, Clock, XCircle, Ambulance } from "lucide-react";
-import { format } from "date-fns";
+import { Plus, AlertTriangle, CheckCircle2 } from "lucide-react";
+import LogIncidentForm from "@/components/incidents/LogIncidentForm";
+import IncidentDetailDrawer from "@/components/incidents/IncidentDetailDrawer";
 
 const typeStyle = {
   rescue: "bg-red-100 text-red-700",
