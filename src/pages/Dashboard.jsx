@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import DashboardFooter from "@/components/dashboard/DashboardFooter";
 import TrialBanner from "@/components/dashboard/TrialBanner";
 import PushNotificationPrompt from "@/components/dashboard/PushNotificationPrompt";
+import FacilityManagerWidgets from "@/components/dashboard/FacilityManagerWidgets";
 import {
   CalendarDays,
   Clock,
@@ -100,6 +101,14 @@ export default function Dashboard() {
         <TrialBanner user={user} subscription={subscription} />
         <PushNotificationPrompt />
       </div>
+
+      {/* Facility Manager Real-time Widgets */}
+      {isAdmin && (
+        <div className="px-6 py-8 max-w-6xl mx-auto border-b border-gray-200">
+          <h2 className="text-2xl font-bold text-gray-900 mb-6">Facility Dashboard</h2>
+          <FacilityManagerWidgets />
+        </div>
+      )}
 
       {/* Hero Section */}
       <section className="px-6 py-20 sm:py-28 max-w-6xl mx-auto text-center">
