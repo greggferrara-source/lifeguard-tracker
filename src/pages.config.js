@@ -119,6 +119,7 @@ import PoolTestReporting from './pages/PoolTestReporting';
 import ComplianceAssessmentManager from './pages/ComplianceAssessmentManager';
 import NotificationCenter from './pages/NotificationCenter';
 import DocumentManagement from './pages/DocumentManagement';
+import AdvancedReporting from './pages/AdvancedReporting';
 import __Layout from './Layout.jsx';
 
 
@@ -195,6 +196,7 @@ export const PAGES = {
     "ComplianceAssessmentManager": ComplianceAssessmentManager,
     "NotificationCenter": NotificationCenter,
     "DocumentManagement": DocumentManagement,
+    "AdvancedReporting": AdvancedReporting,
 }
 
 export const pagesConfig = {
