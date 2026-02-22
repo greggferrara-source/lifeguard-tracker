@@ -32,6 +32,8 @@ const enterpriseGroups = [
       { name: "Checklist Dashboard", icon: ClipboardList, page: "ChecklistDashboard" },
       { name: "Incident Management", icon: AlertTriangle, page: "IncidentDashboard" },
       { name: "Incident & Rescue Logs", icon: AlertTriangle, page: "IncidentLogs" },
+      { name: "Staffing Forecast", icon: TrendingDown, page: "StaffingForecast" },
+      { name: "Cert Compliance", icon: Award, page: "CertComplianceDashboard" },
       { name: "Public Safety Dashboard", icon: Eye, page: "PublicSafetyDashboard", enterpriseOnly: true },
     ],
   },
