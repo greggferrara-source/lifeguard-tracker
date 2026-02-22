@@ -6,7 +6,7 @@ import {
   LayoutDashboard, CalendarDays, Users, MapPin, Clock, Menu, X, Shield,
   AlertTriangle, ArrowLeftRight, BarChart2, MessageSquare, Settings,
   BookOpen, Mail, Zap, CreditCard, Eye, FileText, LogOut, Globe,
-  ChevronDown, ChevronRight, Bell, Wrench, Droplets, ClipboardList,
+  ChevronDown, ChevronRight, Bell, Wrench, Droplets, ClipboardList, TrendingDown, Award,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
