@@ -8,67 +8,16 @@ import { Plus, AlertTriangle, CheckCircle2 } from "lucide-react";
 import LogIncidentForm from "@/components/incidents/LogIncidentForm";
 import IncidentDetailDrawer from "@/components/incidents/IncidentDetailDrawer";
 
-const typeStyle = {
-  rescue: "bg-red-100 text-red-700",
-  incident: "bg-orange-100 text-orange-700",
-  near_miss: "bg-yellow-100 text-yellow-700",
-  first_aid: "bg-blue-100 text-blue-700",
-  injury: "bg-purple-100 text-purple-700",
-  other: "bg-gray-100 text-gray-600",
-};
-
-const severityStyle = {
-  minor: "bg-green-100 text-green-700",
-  moderate: "bg-yellow-100 text-yellow-700",
-  serious: "bg-orange-100 text-orange-700",
-  critical: "bg-red-100 text-red-700",
-};
-
-const statusStyle = {
-  open: "bg-red-100 text-red-700",
-  reviewed: "bg-yellow-100 text-yellow-700",
-  closed: "bg-green-100 text-green-700",
-};
-
-const defaultForm = {
-  location_id: "", date: format(new Date(), "yyyy-MM-dd"), time: format(new Date(), "HH:mm"),
-  type: "incident", severity: "minor", patron_name: "", patron_age: "",
-  description: "", action_taken: "", ems_called: false, patron_transported: false,
-  witnesses: "", follow_up_required: false, follow_up_notes: "", status: "open"
-};
+const typeStyle = { rescue: "bg-red-100 text-red-700", incident: "bg-orange-100 text-orange-700", near_miss: "bg-yellow-100 text-yellow-700", first_aid: "bg-blue-100 text-blue-700", injury: "bg-purple-100 text-purple-700", other: "bg-gray-100 text-gray-600" };
+const severityStyle = { minor: "bg-green-100 text-green-700", moderate: "bg-yellow-100 text-yellow-700", serious: "bg-orange-100 text-orange-700", critical: "bg-red-100 text-red-700" };
+const statusStyle = { open: "bg-red-100 text-red-700", reviewed: "bg-yellow-100 text-yellow-700", closed: "bg-green-100 text-green-700" };
 
 export default function IncidentLogs() {
-  const queryClient = useQueryClient();
-  const [open, setOpen] = useState(false);
+  const [logOpen, setLogOpen] = useState(false);
   const [selected, setSelected] = useState(null);
-  const [form, setForm] = useState(defaultForm);
   const [filterType, setFilterType] = useState("all");
 
-  const { data: logs = [] } = useQuery({ queryKey: ["incident-logs"], queryFn: () => base44.entities.IncidentLog.list("-created_date", 200) });
-  const { data: locations = [] } = useQuery({ queryKey: ["locations"], queryFn: () => base44.entities.Location.list() });
-  const { data: user } = useQuery({ queryKey: ["me"], queryFn: () => base44.auth.me() });
-
-  const save = useMutation({
-    mutationFn: (data) => base44.entities.IncidentLog.create(data),
-    onSuccess: () => { queryClient.invalidateQueries({ queryKey: ["incident-logs"] }); setOpen(false); setForm(defaultForm); },
-  });
-
-  const updateStatus = useMutation({
-    mutationFn: ({ id, status }) => base44.entities.IncidentLog.update(id, { status }),
-    onSuccess: () => { queryClient.invalidateQueries({ queryKey: ["incident-logs"] }); setSelected(s => ({ ...s, status: updateStatus.variables?.status })); },
-  });
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const loc = locations.find(l => l.id === form.location_id);
-    save.mutate({
-      ...form,
-      patron_age: form.patron_age ? Number(form.patron_age) : undefined,
-      location_name: loc?.name,
-      reporting_staff_name: user?.full_name,
-      reporting_staff_email: user?.email,
-    });
-  };
+  const { data: logs = [] } = useQuery({ queryKey: ["incident-logs"], queryFn: () => base44.entities.IncidentLog.list("-created_date", 200), refetchInterval: 30000 });
 
   const filtered = filterType === "all" ? logs : logs.filter(l => l.type === filterType);
   const openCount = logs.filter(l => l.status === "open").length;
