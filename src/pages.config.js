@@ -108,6 +108,7 @@ import StaffingForecast from './pages/StaffingForecast';
 import UrgentAlerts from './pages/UrgentAlerts';
 import MobileGuardDashboard from './pages/MobileGuardDashboard';
 import ShiftPreferencesManager from './pages/ShiftPreferencesManager';
+import IncidentTrendReport from './pages/IncidentTrendReport';
 import __Layout from './Layout.jsx';
 
 
@@ -173,6 +174,7 @@ export const PAGES = {
     "UrgentAlerts": UrgentAlerts,
     "MobileGuardDashboard": MobileGuardDashboard,
     "ShiftPreferencesManager": ShiftPreferencesManager,
+    "IncidentTrendReport": IncidentTrendReport,
 }
 
 export const pagesConfig = {
