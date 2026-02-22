@@ -130,6 +130,7 @@ import EmployeeProfile from './pages/EmployeeProfile';
 import EmployeeLocationTracking from './pages/EmployeeLocationTracking';
 import DocsResourceBookingGPS from './pages/DocsResourceBookingGPS';
 import OnboardingManagement from './pages/OnboardingManagement';
+import PerformanceReviewManager from './pages/PerformanceReviewManager';
 import __Layout from './Layout.jsx';
 
 
@@ -217,6 +218,7 @@ export const PAGES = {
     "EmployeeLocationTracking": EmployeeLocationTracking,
     "DocsResourceBookingGPS": DocsResourceBookingGPS,
     "OnboardingManagement": OnboardingManagement,
+    "PerformanceReviewManager": PerformanceReviewManager,
 }
 
 export const pagesConfig = {
