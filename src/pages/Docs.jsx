@@ -62,7 +62,6 @@ Locations with **minimum guards required** will trigger understaffing alerts if 
     section: "Scheduling",
     color: "bg-blue-50 border-blue-200",
     badge: "bg-blue-100 text-blue-700",
-    icon: CalendarDays,
     articles: [
       {
         title: "Creating a Shift",
@@ -96,10 +95,321 @@ The AI respects maximum weekly hours and flagged unavailability.`
     ]
   },
   {
+    section: "Incident Management",
+    color: "bg-red-50 border-red-200",
+    badge: "bg-red-100 text-red-700",
+    articles: [
+      {
+        title: "Logging an Incident",
+        content: `Incidents include rescues, injuries, near-misses, first aid events, and other notable occurrences.
+
+1. Go to **Enterprise → Compliance → Incident & Rescue Logs**
+2. Click **Log Incident**
+3. Fill in the incident type, severity, date/time, location, patron details (if applicable), and a description
+4. Add the actions taken, witness names, and whether EMS was called
+5. Attach photos by clicking **Add Photos** (supports multiple images)
+6. Click **Submit**
+
+The incident will appear with status **Open** and can be reviewed and closed by a manager.`
+      },
+      {
+        title: "Photo Attachments on Incidents",
+        content: `You can attach photos to any incident report for documentation purposes.
+
+- Tap or click **Add Photos** in the incident log form
+- Select one or more image files from your device
+- Photos are uploaded securely and attached to the incident record
+- Photos are visible in the **Incident Detail** drawer when clicking any logged incident
+
+Photo documentation is especially important for insurance claims, legal proceedings, and internal reviews.`
+      },
+      {
+        title: "Reviewing & Closing Incidents",
+        content: `Managers and admins can update the status of incidents as they are reviewed.
+
+1. Go to **Incident & Rescue Logs**
+2. Click any incident card to open the detail drawer
+3. Click **Mark Reviewed** to change status from Open → Reviewed
+4. Once all follow-up actions are complete, click **Close Incident**
+
+Incidents with **Follow-Up Required** will remain visible in the open queue until explicitly closed.`
+      },
+      {
+        title: "Incident Dashboard",
+        content: `The Incident Dashboard gives a bird's-eye view of all safety events across your facility.
+
+- View totals for rescues, incidents, injuries, and near-misses
+- Filter by time period, type, severity, and location
+- See trend charts to identify patterns
+- Export incident data for regulatory reporting
+
+Access it via **Enterprise → Compliance → Incident Management**.`
+      },
+    ]
+  },
+  {
+    section: "Checklists & Operational Forms",
+    color: "bg-orange-50 border-orange-200",
+    badge: "bg-orange-100 text-orange-700",
+    articles: [
+      {
+        title: "Creating a Checklist Template",
+        content: `Checklists are used for recurring daily, weekly, or per-shift inspections.
+
+1. Go to **Enterprise → Compliance → Checklist Dashboard**
+2. Click **New Template**
+3. Set the name, type (chemical, equipment, safety, opening, closing), and frequency
+4. Add checklist items — each can be a checkbox, number input, or text field
+5. For number fields, set acceptable min/max ranges
+6. Click **Save**
+
+Once created, staff can submit the checklist from the same page.`
+      },
+      {
+        title: "Submitting a Checklist",
+        content: `1. Go to **Enterprise → Compliance → Checklist Dashboard**
+2. Find the checklist template and click **Submit Checklist**
+3. Fill in all required fields — out-of-range numeric values will be flagged automatically
+4. Add any notes
+5. Click **Submit**
+
+Submissions are logged with timestamp and staff name. Failed items trigger a warning/fail status on the submission record.`
+      },
+      {
+        title: "Operational Forms Builder",
+        content: `Operational Forms are fully customizable forms for vehicle checks, patient assessments, equipment audits, and more.
+
+1. Go to **Enterprise → Operational Forms**
+2. Click **New Form**
+3. Name the form, select a category, and add fields
+4. Field types include: Pass/Fail, Yes/No, Number, Text, and Select (dropdown)
+5. Mark fields as required and set **Alert on Fail** for critical items
+6. Click **Save**
+
+Staff can then fill out and submit these forms from the same page. Submissions with failures are flagged and logged.`
+      },
+    ]
+  },
+  {
+    section: "Chemical Logs",
+    color: "bg-cyan-50 border-cyan-200",
+    badge: "bg-cyan-100 text-cyan-700",
+    articles: [
+      {
+        title: "Logging Chemical Readings",
+        content: `Regular chemical testing is required by health departments for all public aquatic facilities.
+
+1. Go to **Enterprise → Operations → Chemical Logs**
+2. Click **Add Reading**
+3. Select the location, enter pH, chlorine (free and combined), alkalinity, and other readings
+4. The system automatically flags readings outside safe ranges
+5. Click **Save**
+
+Out-of-range values will generate an alert and can trigger an automated notification email.`
+      },
+      {
+        title: "Chemical Trends & Reporting",
+        content: `LifeGuard Tracker tracks chemical readings over time so you can spot patterns and regulatory trends.
+
+- Go to **Reports** and select the **Chemical Trends** report
+- Filter by location and date range
+- View charts showing pH and chlorine levels over time
+- Export data for health department inspections
+
+Maintaining consistent chemical logs protects your facility from regulatory violations and demonstrates due diligence.`
+      },
+    ]
+  },
+  {
+    section: "Asset Tracking",
+    color: "bg-yellow-50 border-yellow-200",
+    badge: "bg-yellow-100 text-yellow-700",
+    articles: [
+      {
+        title: "Adding an Asset",
+        content: `Track all your facility equipment — rescue tubes, AEDs, oxygen kits, vehicles, and more.
+
+1. Go to **Enterprise → Operations → Asset Tracking**
+2. Click **Add Asset**
+3. Fill in the asset name, category, serial number, and current condition
+4. Set the location and assign to a staff member or department if applicable
+5. Set maintenance intervals and next maintenance due date
+6. Click **Save**
+
+Assets that are overdue for maintenance will be highlighted on the asset list.`
+      },
+      {
+        title: "Tracking Maintenance",
+        content: `When maintenance is performed on an asset:
+
+1. Open the asset record from the Asset Tracking page
+2. Click **Edit**
+3. Update the **Last Maintenance Date** — the system will automatically calculate the next due date based on the maintenance interval
+4. Update the status and condition if needed
+5. Save
+
+Assets with status **Needs Maintenance** or **Out of Service** are highlighted for immediate attention.`
+      },
+    ]
+  },
+  {
+    section: "Staff Training",
+    color: "bg-indigo-50 border-indigo-200",
+    badge: "bg-indigo-100 text-indigo-700",
+    articles: [
+      {
+        title: "Creating a Training Module",
+        content: `Training modules allow you to build structured lessons with content, videos, and quizzes.
+
+1. Go to **Enterprise → Operations → Staff Training**
+2. Click **New Module**
+3. Add a title, description, and category (lifeguarding, first aid, chemical safety, etc.)
+4. Write the training content using the text editor (supports markdown formatting)
+5. Optionally add a video URL or document link
+6. Add quiz questions with multiple-choice answers and mark the correct answer
+7. Set the passing score percentage (default 80%)
+8. Click **Save**`
+      },
+      {
+        title: "Taking a Training Module",
+        content: `Employees can take assigned training modules directly in the app.
+
+1. Go to **Enterprise → Operations → Staff Training**
+2. Click **Start Training** on any available module
+3. Read through the training content
+4. Complete the quiz at the end
+5. Submit your answers — the system calculates your score automatically
+6. If you pass, your completion is recorded. If you fail, you can retry.
+
+Completion records include the score, date, and pass/fail status.`
+      },
+      {
+        title: "Tracking Staff Completion",
+        content: `Managers can see training progress for all staff.
+
+- The **Training Dashboard** shows completion rates per module
+- View which employees have completed, are in progress, or haven't started
+- Filter by module or employee
+- Completion data is visible in employee profiles
+
+Use this to ensure every guard is properly trained before staffing shifts.`
+      },
+    ]
+  },
+  {
+    section: "Emergency Action Plans",
+    color: "bg-rose-50 border-rose-200",
+    badge: "bg-rose-100 text-rose-700",
+    articles: [
+      {
+        title: "Creating an Emergency Action Plan",
+        content: `Emergency Action Plans (EAPs) document your step-by-step response for every foreseeable emergency at your facility.
+
+1. Go to **Enterprise → Operations → Emergency Action Plans**
+2. Click **New EAP**
+3. Select the emergency type (drowning, lightning, missing patron, fire, chemical leak, etc.)
+4. Add a title, version number, and review dates
+5. Build the response steps in order — each step includes a title, description, responsible role, and time target
+6. Add emergency contacts and equipment locations
+7. Click **Save**
+
+EAPs should be reviewed at least annually and updated whenever procedures change.`
+      },
+      {
+        title: "Using EAPs During an Emergency",
+        content: `During an emergency, pull up the relevant EAP for a step-by-step guide.
+
+1. Go to **Emergency Action Plans**
+2. Find and click the relevant plan (e.g., "Drowning Response")
+3. Use the step-by-step cards to guide your team's response
+4. Follow up by logging an incident report after the event is resolved
+
+**Pre-loaded EAPs in your system:**
+- Drowning / Submersion Response
+- Lightning / Severe Weather Evacuation
+- Missing Child / Patron Response`
+      },
+      {
+        title: "Reviewing & Updating EAPs",
+        content: `EAPs should be reviewed regularly to ensure accuracy.
+
+- Each EAP shows the **Last Reviewed** date and **Next Review Due** date
+- Plans overdue for review are highlighted with a warning badge
+- Click **Edit** to update steps, contacts, or procedures
+- Increment the version number when making significant changes
+
+Regulatory standards (OSHA, state health departments) typically require annual EAP reviews.`
+      },
+    ]
+  },
+  {
+    section: "Reports & Analytics",
+    color: "bg-violet-50 border-violet-200",
+    badge: "bg-violet-100 text-violet-700",
+    articles: [
+      {
+        title: "Available Reports",
+        content: `LifeGuard Tracker provides a suite of built-in reports accessible via **Enterprise → Reports**:
+
+- **Shift Report** — Hours worked per employee, by date range
+- **Clock Report** — Time clock entries, late arrivals, and overtime
+- **Chemical Trends** — pH and chlorine readings over time by location
+- **Location History** — Incident and checklist activity per location
+- **Document Generator** — Export formatted PDF reports for compliance
+
+All reports can be filtered by date range and location.`
+      },
+      {
+        title: "Exporting to PDF",
+        content: `You can export reports as professional PDF documents for inspections, insurance, and audits.
+
+1. Go to **Enterprise → Reports**
+2. Select the **Document Generator** tab
+3. Choose the report type, date range, and location filter
+4. Click **Generate PDF**
+5. The document will download automatically
+
+PDF reports include your facility name, date range, and all relevant data formatted for regulatory review.`
+      },
+    ]
+  },
+  {
+    section: "Multi-Location Dashboard",
+    color: "bg-emerald-50 border-emerald-200",
+    badge: "bg-emerald-100 text-emerald-700",
+    articles: [
+      {
+        title: "Overview: Multi-Location Dashboard",
+        content: `The Multi-Location Dashboard is an Enterprise feature that provides a real-time rollup view across all your facilities.
+
+Access it via **Enterprise → Multi-Location Dashboard**.
+
+**What you can see:**
+- Status card for each location (Safe / Warning / Critical)
+- Total active staff across all locations today
+- Open incidents across all locations
+- Unresolved alerts
+- Incident count chart by location
+- Quick links to dive into any individual location
+
+This is especially useful for regional managers overseeing multiple pools, beach zones, or recreation centers.`
+      },
+      {
+        title: "Location Status Levels",
+        content: `Each location is assigned a real-time status based on active alerts and open incidents:
+
+- 🟢 **Safe** — No unresolved alerts or open incidents
+- 🟡 **Warning** — One or more warning-level alerts or open incidents
+- 🔴 **Critical** — One or more critical alerts or serious/critical open incidents
+
+Click any location card to jump directly to that facility's data.`
+      },
+    ]
+  },
+  {
     section: "Time Off",
     color: "bg-amber-50 border-amber-200",
     badge: "bg-amber-100 text-amber-700",
-    icon: Clock,
     articles: [
       {
         title: "Submitting a Time Off Request",
@@ -120,23 +430,12 @@ Admins and managers will see a notification in the Time Off section and can appr
 
 Once approved, the time off will automatically appear on the **Calendar View** and the employee's availability will be blocked in the scheduling module.`
       },
-      {
-        title: "Calendar View",
-        content: `The Calendar View shows all approved time off for the month at a glance.
-
-1. Go to **Time Off**
-2. Click **Calendar View**
-3. Use the Previous/Next buttons to navigate months
-
-Full-day absences appear in blue, partial days in yellow.`
-      },
     ]
   },
   {
     section: "Onboarding",
     color: "bg-purple-50 border-purple-200",
     badge: "bg-purple-100 text-purple-700",
-    icon: CheckSquare,
     articles: [
       {
         title: "Starting Onboarding for a New Hire",
@@ -147,7 +446,7 @@ Full-day absences appear in blue, partial days in yellow.`
 5. Set a start date and target completion duration
 6. Click **Start Onboarding**
 
-The onboarding checklist will be created and visible in **More → Onboarding**.`
+The onboarding checklist will be created and visible in **Enterprise → Employee Hub → Onboarding**.`
       },
       {
         title: "Tracking Onboarding Progress",
@@ -160,38 +459,6 @@ If tasks have due dates, overdue tasks will be flagged in red.`
     ]
   },
   {
-    section: "Alerts & Notifications",
-    color: "bg-red-50 border-red-200",
-    badge: "bg-red-100 text-red-700",
-    icon: AlertTriangle,
-    articles: [
-      {
-        title: "Running an Alert Scan",
-        content: `LifeGuard Tracker can automatically detect scheduling issues.
-
-1. Go to **More → Alerts**
-2. Click **Run Scan**
-3. The system checks for: understaffing, shift conflicts, certification expiries
-
-Alert types:
-- 🔴 **Critical** – Immediate action required (e.g., location uncovered)
-- 🟡 **Warning** – Potential issue (e.g., cert expiring soon)
-- 🔵 **Info** – Informational notices`
-      },
-      {
-        title: "Setting Up Automated Alerts",
-        content: `Automated daily scans can be configured in **More → Settings**.
-
-You can control:
-- Which alert types to check
-- The number of days ahead to check for cert expiries
-- Whether to send email/SMS notifications for critical alerts
-
-Alerts are only visible to Admin users.`
-      },
-    ]
-  },
-  {
     section: "Certifications",
     color: "bg-teal-50 border-teal-200",
     badge: "bg-teal-100 text-teal-700",
@@ -200,7 +467,7 @@ Alerts are only visible to Admin users.`
         title: "Uploading Your Certification",
         content: `Employees can upload their own certifications directly in LifeGuard Tracker.
 
-1. Go to **More → Certifications**
+1. Go to **Enterprise → Operations → Certifications**
 2. Click **Upload Certification**
 3. Select the certification type (CPR, Lifeguard, First Aid, etc.) or enter a custom name
 4. Enter the issuing organization, issue date, and expiry date
@@ -210,27 +477,47 @@ Alerts are only visible to Admin users.`
 Your certification will appear as **Pending Review** until a manager approves it.`
       },
       {
-        title: "Manager: Reviewing Certifications",
-        content: `Managers and admins can review and approve employee certifications.
-
-1. Go to **More → Certifications**
-2. Click the **Pending** tab to see all submissions awaiting review
-3. Click **Review** on any certification
-4. Optionally click **View Certificate File** to inspect the uploaded document
-5. Add notes if needed, then click **Approve** or **Reject**
-
-Employees will see their certification status updated immediately.`
-      },
-      {
         title: "Expiry Notifications",
         content: `LifeGuard Tracker automatically sends email reminders for expiring certifications.
 
 - **30-day warning**: Sent to the employee and all managers
 - **7-day urgent warning**: Sent to the employee
 
-You can also see all expiring certs at a glance on the **Expiring** tab in the Certifications page.
+The system runs this check daily and automatically marks certifications as **Expired** once their date passes.
 
-The system runs this check daily at 8am and automatically marks certifications as **Expired** once their date passes.`
+You can view all expiring certs on the **Expiring** tab in the Certifications page.`
+      },
+    ]
+  },
+  {
+    section: "Alerts & Notifications",
+    color: "bg-red-50 border-red-200",
+    badge: "bg-red-100 text-red-700",
+    articles: [
+      {
+        title: "Running an Alert Scan",
+        content: `LifeGuard Tracker can automatically detect issues across your facility.
+
+1. Go to **Enterprise → Alerts**
+2. Click **Run Scan**
+3. The system checks for: understaffing, shift conflicts, certification expiries, out-of-range chemical readings, overdue asset maintenance, and more
+
+Alert types:
+- 🔴 **Critical** – Immediate action required (e.g., location uncovered, active incident)
+- 🟡 **Warning** – Potential issue (e.g., cert expiring in 30 days)
+- 🔵 **Info** – Informational notices`
+      },
+      {
+        title: "Setting Up Automated Alerts",
+        content: `Automated daily scans can be configured in **Enterprise → Settings**.
+
+You can control:
+- Which alert types to check
+- Days ahead to check for cert expiries
+- Whether to send email/SMS notifications for critical alerts
+- Alert email recipients
+
+Alerts are only visible to admin-level users.`
       },
     ]
   },
@@ -246,36 +533,42 @@ The system runs this check daily at 8am and automatically marks certifications a
 **In-App Support:**
 - Go to **More → Contact Support** to send a message to our team
 - Browse **More → Documentation** (this page) for step-by-step guides
-- Watch **More → Video Tutorials** for visual walkthroughs
 
 **Email Support:**
-- Reach us at support@shiftguard.app
-- Response time: within 1 business day
+- Reach us at support@lifeguardtracker.app
+- Response time: within 1 business day (Standard plan)
+- Same-day response (Pro plan)
 
 **Priority Support (Enterprise):**
 - Dedicated account manager
 - Phone support during business hours
-- Custom onboarding assistance`
+- Custom onboarding and training assistance`
       },
       {
         title: "Frequently Asked Questions",
         content: `**How do I reset an employee's password?**
-LifeGuard Tracker uses your organization's login system. Contact your IT admin or the employee can use the "Forgot Password" link on the login page.
+The employee can use the "Forgot Password" link on the login page to reset their own password.
 
 **Can employees access LifeGuard Tracker on mobile?**
-Yes! LifeGuard Tracker is fully responsive and works on any smartphone or tablet browser.
+Yes! LifeGuard Tracker is fully responsive. Native mobile views are available for Schedules, Employees, Time Off, Locations, and Certifications.
 
 **What happens when a certification expires?**
-The certification is automatically marked as Expired, the employee loses their "certified" status for scheduling purposes, and both the employee and managers receive email reminders before it expires.
+The certification is automatically marked as Expired, and both the employee and managers receive email reminders 30 and 7 days before expiry.
 
-**How do I export schedule data?**
-Go to **Reports** and use the **Document Generator** to export shift reports as PDF.
+**How do I export data for a health department inspection?**
+Go to **Enterprise → Reports** and use the **Document Generator** to export compliance PDFs. Chemical logs, incident logs, and checklist submissions can all be exported.
 
-**Can I set up recurring shifts?**
-Yes — when creating a shift on the Schedule page, you can set it as recurring (daily, weekly, etc.) with an end date.
+**Can I attach photos to incident reports?**
+Yes — the incident log form includes a photo upload button. Multiple photos can be attached per incident.
+
+**What Emergency Action Plans come pre-loaded?**
+Three real-world EAPs are pre-loaded: Drowning/Submersion Response, Lightning/Severe Weather Evacuation, and Missing Child/Patron Response. You can edit these or add your own.
 
 **How are shift conflicts detected?**
-The system automatically flags when an employee is scheduled for overlapping shifts, or is scheduled during approved time off.`
+The system automatically flags when an employee is scheduled for overlapping shifts or is scheduled during approved time off.
+
+**What payroll systems does LifeGuard Tracker integrate with?**
+Enterprise plan users can sync with Gusto, ADP, Paychex, BambooHR, Rippling, and Workday via the Payroll Integrations page.`
       },
     ]
   },
