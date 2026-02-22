@@ -361,28 +361,33 @@ export default function Layout({ children, currentPageName }) {
               </Link>
             ))}
 
-            {/* Enterprise section */}
-            {ENTERPRISE_MENU_ROLES.includes(user?.role) && (
+            {/* Pro/Enterprise section */}
+            {ELEVATED_ROLES.includes(user?.role) && (
               <>
                 <div className="border-t border-gray-200 pt-3 mt-2">
-                  <p className="text-xs font-bold text-[#1a9c5b] uppercase tracking-wide px-4 mb-2">Enterprise</p>
+                  <p className="text-xs font-bold text-[#1a9c5b] uppercase tracking-wide px-4 mb-2">
+                    {ENTERPRISE_ROLES.includes(user?.role) ? "Enterprise" : "Pro"}
+                  </p>
                   {enterpriseNavItems.map((item) => {
                     if (item.ownerOnly && !OWNER_ONLY_ROLES.includes(user?.role)) return null;
+                    if (item.enterpriseOnly && !ENTERPRISE_ROLES.includes(user?.role)) return null;
                     if (item.submenu) {
+                      const visibleSubs = item.submenu.filter(s => {
+                        if (s.enterpriseOnly && !ENTERPRISE_ROLES.includes(user?.role)) return false;
+                        return true;
+                      });
+                      if (visibleSubs.length === 0) return null;
                       return (
                         <div key={item.page}>
                           <div className="flex items-center gap-3 px-4 py-2 text-xs font-semibold text-gray-500 uppercase tracking-wide mt-1">
                             <item.icon className="w-3.5 h-3.5" />{item.name}
                           </div>
-                          {item.submenu.map((subitem) => {
-                            if (subitem.proOnly && !PRO_AND_ABOVE_ROLES.includes(user?.role)) return null;
-                            return (
-                              <Link key={subitem.page} to={createPageUrl(subitem.page)} onClick={() => setMobileOpen(false)}
-                                className="flex items-center gap-3 px-8 py-2 rounded-lg text-sm text-gray-700 hover:bg-gray-50">
-                                <subitem.icon className="w-4 h-4" />{subitem.name}
-                              </Link>
-                            );
-                          })}
+                          {visibleSubs.map((subitem) => (
+                            <Link key={subitem.page} to={createPageUrl(subitem.page)} onClick={() => setMobileOpen(false)}
+                              className="flex items-center gap-3 px-8 py-2 rounded-lg text-sm text-gray-700 hover:bg-gray-50">
+                              <subitem.icon className="w-4 h-4" />{subitem.name}
+                            </Link>
+                          ))}
                         </div>
                       );
                     }
