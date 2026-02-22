@@ -68,6 +68,7 @@ const moreNavItems = [
 },
 { name: "Operations", icon: BarChart2, page: "Assignments", roles: ["admin", "site_owner", "manager"], submenu: [
   { name: "Assignments", icon: BarChart2, page: "Assignments" },
+  { name: "Asset Tracking", icon: BarChart2, page: "Assets" },
   { name: "Patron Counts", icon: Users, page: "PatronCounts" }]
 },
 { name: "Payroll Integrations", icon: BarChart2, page: "PayrollIntegrations", roles: ["admin", "site_owner"] },
