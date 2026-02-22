@@ -121,6 +121,9 @@ import NotificationCenter from './pages/NotificationCenter';
 import DocumentManagement from './pages/DocumentManagement';
 import AdvancedReporting from './pages/AdvancedReporting';
 import ComplianceAIAdvisor from './pages/ComplianceAIAdvisor';
+import WorkflowAutomation from './pages/WorkflowAutomation';
+import CustomDashboard from './pages/CustomDashboard';
+import GlobalSearch from './pages/GlobalSearch';
 import __Layout from './Layout.jsx';
 
 
@@ -199,6 +202,9 @@ export const PAGES = {
     "DocumentManagement": DocumentManagement,
     "AdvancedReporting": AdvancedReporting,
     "ComplianceAIAdvisor": ComplianceAIAdvisor,
+    "WorkflowAutomation": WorkflowAutomation,
+    "CustomDashboard": CustomDashboard,
+    "GlobalSearch": GlobalSearch,
 }
 
 export const pagesConfig = {
