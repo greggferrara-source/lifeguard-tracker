@@ -40,14 +40,17 @@ import { base44 } from "@/api/base44Client";
 import FeedbackWidget from "@/components/FeedbackWidget";
 
 // Role hierarchy:
-// enterprise_site_owner → full access + Enterprise menu
-// site_owner            → full access + Enterprise menu
-// admin                 → management tools + Enterprise menu (no billing/settings/setup/error logs)
-// user                  → basic nav only (schedule, employees, locations, time off, messages)
+// enterprise_site_owner → ALL tools
+// enterprise_admin      → ALL tools except owner-only (billing, settings, admin setup, error logs)
+// site_owner            → Pro tools + owner-only
+// admin                 → Pro tools (no billing/settings/setup/error logs)
+// user                  → Starter only (schedule, employees, locations, time off, shift swaps, messages)
 
-const ENTERPRISE_MENU_ROLES = ["enterprise_site_owner", "site_owner", "admin"];
+const ENTERPRISE_ROLES = ["enterprise_site_owner", "enterprise_admin"];
+const PRO_AND_ABOVE_ROLES = ["enterprise_site_owner", "enterprise_admin", "site_owner", "admin"];
 const OWNER_ONLY_ROLES = ["enterprise_site_owner", "site_owner"];
-const PRO_AND_ABOVE_ROLES = ["enterprise_site_owner", "site_owner", "admin"];
+// Combined: anyone who sees the enterprise/pro menu
+const ELEVATED_ROLES = PRO_AND_ABOVE_ROLES;
 
 // Shown to ALL roles in the top nav
 const primaryNavItems = [
@@ -63,8 +66,9 @@ const moreNavItems = [
   { name: "Messages", icon: MessageSquare, page: "Messages" },
 ];
 
-// Enterprise menu items — admin/site_owner/enterprise_site_owner only
-// items with `ownerOnly: true` are hidden from plain admin
+// Pro menu — site_owner, admin, enterprise_site_owner, enterprise_admin
+// enterpriseOnly: true → only enterprise_site_owner / enterprise_admin
+// ownerOnly: true      → only site_owner / enterprise_site_owner (no plain admin)
 const enterpriseNavItems = [
   {
     name: "Compliance",
@@ -72,10 +76,10 @@ const enterpriseNavItems = [
     page: "ComplianceDashboard",
     submenu: [
       { name: "Compliance Dashboard", icon: Shield, page: "ComplianceDashboard" },
-      { name: "Public Safety Dashboard", icon: Eye, page: "PublicSafetyDashboard" },
       { name: "Checklist Dashboard", icon: BarChart2, page: "ChecklistDashboard" },
       { name: "Incident Management", icon: AlertTriangle, page: "IncidentDashboard" },
       { name: "Incident & Rescue Logs", icon: AlertTriangle, page: "IncidentLogs" },
+      { name: "Public Safety Dashboard", icon: Eye, page: "PublicSafetyDashboard", enterpriseOnly: true },
     ],
   },
   {
@@ -86,10 +90,10 @@ const enterpriseNavItems = [
       { name: "Assignments", icon: BarChart2, page: "Assignments" },
       { name: "Asset Tracking", icon: BarChart2, page: "Assets" },
       { name: "Patron Counts", icon: Users, page: "PatronCounts" },
-      { name: "Certifications", icon: Shield, page: "Certifications", proOnly: true },
-      { name: "Chemical Logs", icon: BarChart2, page: "ChemicalLogs", proOnly: true },
-      { name: "Inspections", icon: BarChart2, page: "Inspections", proOnly: true },
-      { name: "Maintenance Reports", icon: BarChart2, page: "MaintenanceReports", proOnly: true },
+      { name: "Certifications", icon: Shield, page: "Certifications" },
+      { name: "Chemical Logs", icon: BarChart2, page: "ChemicalLogs" },
+      { name: "Inspections", icon: BarChart2, page: "Inspections" },
+      { name: "Maintenance Reports", icon: BarChart2, page: "MaintenanceReports" },
     ],
   },
   {
@@ -98,14 +102,14 @@ const enterpriseNavItems = [
     page: "Announcements",
     submenu: [
       { name: "Announcements", icon: AlertTriangle, page: "Announcements" },
-      { name: "Messages", icon: MessageSquare, page: "Messages" },
       { name: "Channels", icon: Users, page: "Channels" },
+      { name: "Messages", icon: MessageSquare, page: "Messages" },
     ],
   },
   {
     name: "Employee Hub",
     icon: Users,
-    page: "EmployeeDashboard",
+    page: "EmployeeDirectory",
     submenu: [
       { name: "Directory", icon: Users, page: "EmployeeDirectory" },
       { name: "My Availability", icon: Clock, page: "MyAvailability" },
@@ -114,11 +118,12 @@ const enterpriseNavItems = [
       { name: "Onboarding", icon: Users, page: "EmployeeOnboarding" },
     ],
   },
-  { name: "Reports", icon: BarChart2, page: "Reports" },
   { name: "Operational Forms", icon: FileText, page: "OperationalForms" },
+  { name: "Reports", icon: BarChart2, page: "Reports" },
   { name: "Alerts", icon: AlertTriangle, page: "Alerts", badge: "alerts" },
-  { name: "Payroll Integrations", icon: BarChart2, page: "PayrollIntegrations" },
-  // Owner-only items (hidden from plain admin)
+  // Enterprise-only
+  { name: "Payroll Integrations", icon: BarChart2, page: "PayrollIntegrations", enterpriseOnly: true },
+  // Owner-only
   { name: "Billing", icon: CreditCard, page: "Billing", ownerOnly: true },
   { name: "Settings", icon: Settings, page: "Settings", ownerOnly: true },
   { name: "Admin Setup", icon: LayoutDashboard, page: "AdminSetup", ownerOnly: true },
