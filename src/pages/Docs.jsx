@@ -381,16 +381,21 @@ Regulatory standards (OSHA, state health departments) typically require annual E
       All reports can be filtered by date range and location.`
       },
       {
-        title: "Exporting to PDF",
-        content: `You can export reports as professional PDF documents for inspections, insurance, and audits.
+        title: "Exporting Compliance PDFs",
+        content: `Professional PDF exports let you create formatted reports for health inspections, insurance audits, and regulatory submissions.
 
-1. Go to **Enterprise → Reports**
-2. Select the **Document Generator** tab
-3. Choose the report type, date range, and location filter
-4. Click **Generate PDF**
-5. The document will download automatically
+      1. Go to **Enterprise → Reports**
+      2. Click the **Export PDF** tab
+      3. Select your report type:
+      - **Shift & Staffing** — Hours, payroll, and coverage analysis
+      - **Compliance** — Incident logs, checklists, and certifications
+      - **Certifications** — Staff certification status across all locations
+      - **Incidents** — Detailed incident reports with follow-up status
+      4. Set your date range and location
+      5. Click **Generate PDF**
+      6. Download automatically
 
-PDF reports include your facility name, date range, and all relevant data formatted for regulatory review.`
+      PDFs include your facility branding, date ranges, and all data formatted for regulatory bodies.`
       },
     ]
   },
