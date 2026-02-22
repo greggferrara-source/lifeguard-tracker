@@ -81,7 +81,7 @@ export default function IncidentLogs() {
                     {log.ems_called && <Badge className="bg-red-100 text-red-700">EMS Called</Badge>}
                   </div>
                   <p className="text-sm font-medium text-gray-900 mt-1 line-clamp-1">{log.description}</p>
-                  <p className="text-xs text-gray-500 mt-0.5">{log.location_name} · {log.date} {log.time && `· ${log.time}`} · {log.reporting_staff_name}</p>
+                  <p className="text-xs text-gray-500 mt-0.5">{log.location_name} · {log.date}{log.time ? ` · ${log.time}` : ""} · {log.reporting_staff_name}</p>
                 </div>
                 {log.status === "open" && <AlertTriangle className="w-5 h-5 text-red-400 flex-shrink-0 mt-0.5" />}
                 {log.status === "closed" && <CheckCircle2 className="w-5 h-5 text-green-500 flex-shrink-0 mt-0.5" />}
