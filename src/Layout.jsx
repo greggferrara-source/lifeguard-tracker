@@ -185,6 +185,11 @@ export default function Layout({ children, currentPageName }) {
   const pendingSwaps = swapRequests.filter((s) => s.status === "pending_employee" || s.status === "pending_manager").length;
   const unreadNotifications = notifications.filter((n) => n.user_email === user?.email && !n.read).length;
 
+  // Home page has its own full nav — skip the layout nav entirely
+  if (currentPageName === "Home") {
+    return <>{children}</>;
+  }
+
   return (
     <div className="min-h-screen bg-white" style={{ fontFamily: "'Inter', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', sans-serif" }}>
       <style>{`
