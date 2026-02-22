@@ -111,6 +111,7 @@ import ShiftPreferencesManager from './pages/ShiftPreferencesManager';
 import IncidentTrendReport from './pages/IncidentTrendReport';
 import EmployeePerformanceDashboard from './pages/EmployeePerformanceDashboard';
 import PatronManagement from './pages/PatronManagement';
+import WeatherAlertsMonitor from './pages/WeatherAlertsMonitor';
 import __Layout from './Layout.jsx';
 
 
@@ -179,6 +180,7 @@ export const PAGES = {
     "IncidentTrendReport": IncidentTrendReport,
     "EmployeePerformanceDashboard": EmployeePerformanceDashboard,
     "PatronManagement": PatronManagement,
+    "WeatherAlertsMonitor": WeatherAlertsMonitor,
 }
 
 export const pagesConfig = {
