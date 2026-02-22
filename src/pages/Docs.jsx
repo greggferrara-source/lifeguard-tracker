@@ -690,7 +690,7 @@ Three real-world EAPs are pre-loaded: Drowning/Submersion Response, Lightning/Se
 The system automatically flags when an employee is scheduled for overlapping shifts or is scheduled during approved time off.
 
 **What payroll systems does LifeGuard Tracker integrate with?**
-Enterprise plan users can sync with Gusto, ADP, Paychex, BambooHR, Rippling, and Workday via the Payroll Integrations page.
+LifeGuard Tracker integrates with Gusto, ADP, Paychex, BambooHR, Rippling, and Workday. Manage all connections from **Enterprise → Payroll Integrations** where you can securely store API credentials, monitor sync status, and trigger manual syncs.
 
 **What is the Staffing Forecast / Understaffing Predictor?**
 It's an AI-powered tool under Enterprise → Staffing Forecast that scans the next 14 days of your schedule and flags dates/locations where you may be understaffed before it becomes a problem.
