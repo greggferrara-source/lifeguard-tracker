@@ -4,6 +4,10 @@ import { ChevronDown, ChevronRight } from "lucide-react";
 
 const sections = [
   {
+    title: "Advanced Asset Management Hub",
+    content: "Complete equipment lifecycle management with maintenance request workflows, approval processes, and service history tracking. Submit maintenance requests with priority levels and cost estimates. Track service records with before/after photos and parts documentation. Equipment performance dashboard shows maintenance patterns, service costs, and warranty status. Preventative maintenance scheduling with automatic alerts for overdue maintenance. Access via Admin → Operations → Asset Management. Includes warranty expiry tracking and condition-based reporting."
+  },
+  {
     title: "Advanced Employee Management",
     content: "Comprehensive staff certification tracking with automated expiration reminders and alerts. Monitor in-service training progress, view team performance metrics, and generate audit-ready compliance reports. Real-time compliance dashboard showing certification status. Access via Admin → People → Employee Management. Includes automated certification expiry notifications (critical alerts for expired, urgent alerts for 14-day expiry), supervisor oversight tools, and renewal reminders."
   },

@@ -114,6 +114,7 @@ import UrgentAlerts from './pages/UrgentAlerts';
 import WeatherAlertsMonitor from './pages/WeatherAlertsMonitor';
 import DocsUpdated from './pages/DocsUpdated';
 import EmployeeManagement from './pages/EmployeeManagement';
+import AssetManagement from './pages/AssetManagement';
 import __Layout from './Layout.jsx';
 
 
@@ -185,6 +186,7 @@ export const PAGES = {
     "WeatherAlertsMonitor": WeatherAlertsMonitor,
     "DocsUpdated": DocsUpdated,
     "EmployeeManagement": EmployeeManagement,
+    "AssetManagement": AssetManagement,
 }
 
 export const pagesConfig = {

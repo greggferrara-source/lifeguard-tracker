@@ -42,6 +42,7 @@ const enterpriseGroups = [
     icon: Wrench,
     items: [
       { name: "Assignments", icon: BarChart2, page: "Assignments" },
+      { name: "Asset Management", icon: Wrench, page: "AssetManagement" },
       { name: "Asset Tracking", icon: Wrench, page: "Assets" },
       { name: "Patron Counts", icon: Users, page: "PatronCounts" },
       { name: "Chemical Logs", icon: Droplets, page: "ChemicalLogs" },
