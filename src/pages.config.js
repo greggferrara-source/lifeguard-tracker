@@ -105,6 +105,8 @@ import TrainingDashboard from './pages/TrainingDashboard';
 import Tutorials from './pages/Tutorials';
 import CertComplianceDashboard from './pages/CertComplianceDashboard';
 import StaffingForecast from './pages/StaffingForecast';
+import UrgentAlerts from './pages/UrgentAlerts';
+import MobileGuardDashboard from './pages/MobileGuardDashboard';
 import __Layout from './Layout.jsx';
 
 
@@ -167,6 +169,8 @@ export const PAGES = {
     "Tutorials": Tutorials,
     "CertComplianceDashboard": CertComplianceDashboard,
     "StaffingForecast": StaffingForecast,
+    "UrgentAlerts": UrgentAlerts,
+    "MobileGuardDashboard": MobileGuardDashboard,
 }
 
 export const pagesConfig = {
