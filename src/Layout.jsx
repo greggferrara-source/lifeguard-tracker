@@ -316,78 +316,71 @@ export default function Layout({ children, currentPageName }) {
         </div>
 
         {/* Mobile Nav */}
-        {mobileOpen &&
-        <div className="lg:hidden border-t border-gray-200 bg-white px-6 py-4 space-y-2">
-            {[...primaryNavItems, ...moreNavItems].map((item) => {
-            const isActive = currentPageName === item.page;
-            if (item.roles && !item.roles.includes(user?.role)) return null;
-            
-            if (item.submenu) {
+        {mobileOpen && (
+          <div className="lg:hidden border-t border-gray-200 bg-white px-6 py-4 space-y-1">
+            {/* Primary */}
+            {primaryNavItems.map((item) => {
+              const isActive = currentPageName === item.page;
               return (
-                <div key={item.page}>
-                      <div className={`flex items-center gap-3 px-4 py-2.5 rounded-lg text-sm font-medium text-gray-700`}>
-                        <item.icon className="w-4 h-4" />
-                        {item.name}
-                      </div>
-                  {item.submenu.map((subitem) =>
-                    <Link
-                      key={subitem.page}
-                      to={createPageUrl(subitem.page)}
-                      onClick={() => setMobileOpen(false)}
-                      className="flex items-center gap-3 px-8 py-2.5 rounded-lg text-sm text-gray-700 hover:bg-gray-50">
-                      <subitem.icon className="w-4 h-4" />
-                      {subitem.name}
-                      {subitem.badge === "swaps" && pendingSwaps > 0 &&
-                        <span className="ml-auto bg-orange-500 text-white text-xs font-bold rounded-full px-2">{pendingSwaps}</span>
-                      }
-                    </Link>
-                  )}
-                </div>
+                <Link key={item.page} to={createPageUrl(item.page)} onClick={() => setMobileOpen(false)}
+                  className={`flex items-center gap-3 px-4 py-2.5 rounded-lg text-sm font-medium transition-colors ${isActive ? "text-[#1a9c5b] bg-[#f0faf5]" : "text-gray-700 hover:text-gray-900"}`}>
+                  <item.icon className="w-4 h-4" />{item.name}
+                </Link>
               );
-            }
-            return (
-              <Link
-                key={item.page}
-                to={createPageUrl(item.page)}
-                onClick={() => setMobileOpen(false)}
-                className={`flex items-center gap-3 px-4 py-2.5 rounded-lg text-sm font-medium transition-colors ${
-                isActive ?
-                "text-[#1a9c5b] bg-[#f0faf5]" :
-                "text-gray-700 hover:text-gray-900"}`
-                }>
-                <item.icon className="w-4 h-4" />
-                {item.name}
-                {item.badge === "alerts" && unresolvedAlerts > 0 &&
-                  <span className="ml-auto bg-red-500 text-white text-xs font-bold rounded-full px-2">{unresolvedAlerts}</span>
-                }
+            })}
+            {/* Basic more */}
+            {moreNavItems.map((item) => (
+              <Link key={item.page} to={createPageUrl(item.page)} onClick={() => setMobileOpen(false)}
+                className="flex items-center gap-3 px-4 py-2.5 rounded-lg text-sm text-gray-700 hover:bg-gray-50">
+                <item.icon className="w-4 h-4" />{item.name}
+                {item.badge === "swaps" && pendingSwaps > 0 && <span className="ml-auto bg-orange-500 text-white text-xs font-bold rounded-full px-2">{pendingSwaps}</span>}
               </Link>
-            );
-          })}
+            ))}
+
+            {/* Enterprise section */}
+            {enterpriseRoles.includes(user?.role) && (
+              <>
+                <div className="border-t border-gray-200 pt-3 mt-2">
+                  <p className="text-xs font-bold text-[#1a9c5b] uppercase tracking-wide px-4 mb-2">Enterprise</p>
+                  {enterpriseNavItems.map((item) => {
+                    if (item.roles && !item.roles.includes(user?.role)) return null;
+                    if (item.submenu) {
+                      return (
+                        <div key={item.page}>
+                          <div className="flex items-center gap-3 px-4 py-2 text-xs font-semibold text-gray-500 uppercase tracking-wide mt-1">
+                            <item.icon className="w-3.5 h-3.5" />{item.name}
+                          </div>
+                          {item.submenu.map((subitem) => (
+                            <Link key={subitem.page} to={createPageUrl(subitem.page)} onClick={() => setMobileOpen(false)}
+                              className="flex items-center gap-3 px-8 py-2 rounded-lg text-sm text-gray-700 hover:bg-gray-50">
+                              <subitem.icon className="w-4 h-4" />{subitem.name}
+                            </Link>
+                          ))}
+                        </div>
+                      );
+                    }
+                    return (
+                      <Link key={item.page} to={createPageUrl(item.page)} onClick={() => setMobileOpen(false)}
+                        className="flex items-center gap-3 px-4 py-2.5 rounded-lg text-sm text-gray-700 hover:bg-gray-50">
+                        <item.icon className="w-4 h-4" />{item.name}
+                        {item.badge === "alerts" && unresolvedAlerts > 0 && <span className="ml-auto bg-red-500 text-white text-xs font-bold rounded-full px-2">{unresolvedAlerts}</span>}
+                      </Link>
+                    );
+                  })}
+                </div>
+              </>
+            )}
+
             <div className="border-t border-gray-200 pt-2 mt-2">
-              <DropdownMenuLabel className="text-xs font-semibold text-gray-500 px-4">Help & Info</DropdownMenuLabel>
               <Link to={createPageUrl("Docs")} onClick={() => setMobileOpen(false)} className="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 rounded-lg">
-                <BookOpen className="w-4 h-4" />
-                Documentation
-              </Link>
-              <Link to={createPageUrl("Tutorials")} onClick={() => setMobileOpen(false)} className="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 rounded-lg">
-                <Play className="w-4 h-4" />
-                Video Tutorials
+                <BookOpen className="w-4 h-4" />Documentation
               </Link>
               <Link to={createPageUrl("Contact")} onClick={() => setMobileOpen(false)} className="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 rounded-lg">
-                <Mail className="w-4 h-4" />
-                Contact Support
-              </Link>
-              <Link to={createPageUrl("Terms")} onClick={() => setMobileOpen(false)} className="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 rounded-lg">
-                <FileText className="w-4 h-4" />
-                Terms of Service
-              </Link>
-              <Link to={createPageUrl("Privacy")} onClick={() => setMobileOpen(false)} className="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 rounded-lg">
-                <FileText className="w-4 h-4" />
-                Privacy Policy
+                <Mail className="w-4 h-4" />Contact Support
               </Link>
             </div>
           </div>
-        }
+        )}
       </header>
 
       {/* Page Content */}
