@@ -113,6 +113,7 @@ import Tutorials from './pages/Tutorials';
 import UrgentAlerts from './pages/UrgentAlerts';
 import WeatherAlertsMonitor from './pages/WeatherAlertsMonitor';
 import DocsUpdated from './pages/DocsUpdated';
+import EmployeeManagement from './pages/EmployeeManagement';
 import __Layout from './Layout.jsx';
 
 
@@ -183,6 +184,7 @@ export const PAGES = {
     "UrgentAlerts": UrgentAlerts,
     "WeatherAlertsMonitor": WeatherAlertsMonitor,
     "DocsUpdated": DocsUpdated,
+    "EmployeeManagement": EmployeeManagement,
 }
 
 export const pagesConfig = {

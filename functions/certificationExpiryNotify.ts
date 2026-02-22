@@ -3,73 +3,87 @@ import { createClientFromRequest } from 'npm:@base44/sdk@0.8.6';
 Deno.serve(async (req) => {
   try {
     const base44 = createClientFromRequest(req);
-    const user = await base44.auth.me();
-    if (user?.role !== 'admin') {
-      return Response.json({ error: 'Forbidden' }, { status: 403 });
-    }
 
-    const today = new Date();
-    const in30 = new Date(today); in30.setDate(in30.getDate() + 30);
-    const in7 = new Date(today); in7.setDate(in7.getDate() + 7);
-
-    const todayStr = today.toISOString().split('T')[0];
-    const in30Str = in30.toISOString().split('T')[0];
-    const in7Str = in7.toISOString().split('T')[0];
-
-    const certs = await base44.asServiceRole.entities.Certification.list();
+    // Fetch all employees
     const employees = await base44.asServiceRole.entities.Employee.list();
-    const empMap = Object.fromEntries(employees.map(e => [e.id, e]));
+    const certifications = await base44.asServiceRole.entities.Certification.list();
 
-    let notified = 0;
+    // Calculate expiration dates
+    const today = new Date();
+    const thirtyDaysOut = new Date(today.getTime() + 30 * 24 * 60 * 60 * 1000);
+    const fourteenDaysOut = new Date(today.getTime() + 14 * 24 * 60 * 60 * 1000);
 
-    for (const cert of certs) {
-      if (!cert.expiry_date || cert.status === 'expired') continue;
+    const alerts = [];
 
-      const emp = empMap[cert.employee_id];
-      if (!emp?.email) continue;
+    for (const cert of certifications) {
+      const expDate = new Date(cert.expiry_date);
+      const employee = employees.find(e => e.id === cert.employee_id);
 
-      const daysLeft = Math.ceil((new Date(cert.expiry_date) - today) / (1000 * 60 * 60 * 24));
-
-      // Mark expired
-      if (cert.expiry_date < todayStr && cert.status !== 'expired') {
-        await base44.asServiceRole.entities.Certification.update(cert.id, { status: 'expired' });
-      }
-
-      // 30-day warning
-      if (!cert.notification_sent_30 && cert.expiry_date <= in30Str && cert.expiry_date >= todayStr) {
-        await base44.asServiceRole.integrations.Core.SendEmail({
-          to: emp.email,
-          subject: `ShiftGuard: Certification expiring in ${daysLeft} days — ${cert.name}`,
-          body: `Hi ${emp.first_name},\n\nYour certification "${cert.name}" will expire on ${cert.expiry_date} (${daysLeft} days from now).\n\nPlease renew it and upload the new certificate in ShiftGuard.\n\nShiftGuard Team`
+      // Check for expired certs
+      if (expDate <= today) {
+        alerts.push({
+          type: 'expired',
+          employee: employee?.first_name + ' ' + employee?.last_name,
+          email: employee?.email,
+          certification: cert.name,
+          expiry_date: cert.expiry_date
         });
-        // Notify managers too
-        const managers = employees.filter(e => e.role === 'manager' || e.role === 'supervisor');
-        for (const mgr of managers) {
-          if (!mgr.email) continue;
-          await base44.asServiceRole.integrations.Core.SendEmail({
-            to: mgr.email,
-            subject: `ShiftGuard: Staff certification expiring soon`,
-            body: `Hi ${mgr.first_name},\n\n${emp.first_name} ${emp.last_name}'s "${cert.name}" certification expires on ${cert.expiry_date} (${daysLeft} days).\n\nShiftGuard Team`
-          });
-        }
-        await base44.asServiceRole.entities.Certification.update(cert.id, { notification_sent_30: true });
-        notified++;
       }
-
-      // 7-day warning
-      if (!cert.notification_sent_7 && cert.expiry_date <= in7Str && cert.expiry_date >= todayStr) {
-        await base44.asServiceRole.integrations.Core.SendEmail({
-          to: emp.email,
-          subject: `URGENT: ShiftGuard certification expires in ${daysLeft} days — ${cert.name}`,
-          body: `Hi ${emp.first_name},\n\nURGENT: Your "${cert.name}" certification expires in ${daysLeft} days (${cert.expiry_date}). Please renew immediately.\n\nShiftGuard Team`
+      // Check for certs expiring in 14-30 days
+      else if (expDate > fourteenDaysOut && expDate <= thirtyDaysOut) {
+        alerts.push({
+          type: 'expiring_soon',
+          employee: employee?.first_name + ' ' + employee?.last_name,
+          email: employee?.email,
+          certification: cert.name,
+          expiry_date: cert.expiry_date,
+          days_until: Math.ceil((expDate - today) / (1000 * 60 * 60 * 24))
         });
-        await base44.asServiceRole.entities.Certification.update(cert.id, { notification_sent_7: true });
-        notified++;
+      }
+      // Check for certs expiring within 14 days (urgent)
+      else if (expDate > today && expDate <= fourteenDaysOut) {
+        alerts.push({
+          type: 'expiring_urgent',
+          employee: employee?.first_name + ' ' + employee?.last_name,
+          email: employee?.email,
+          certification: cert.name,
+          expiry_date: cert.expiry_date,
+          days_until: Math.ceil((expDate - today) / (1000 * 60 * 60 * 24))
+        });
       }
     }
 
-    return Response.json({ success: true, notified });
+    // Log alerts for review
+    console.log(`Generated ${alerts.length} certification alerts`);
+    console.log(JSON.stringify(alerts, null, 2));
+
+    // Create urgent alerts in the system
+    const urgentAlerts = alerts.filter(a => a.type === 'expired' || a.type === 'expiring_urgent');
+    for (const alert of urgentAlerts) {
+      try {
+        await base44.asServiceRole.entities.UrgentAlert.create({
+          title: alert.type === 'expired' ? `URGENT: ${alert.employee} - ${alert.certification} Expired` : `${alert.employee} - ${alert.certification} Expiring in ${alert.days_until} Days`,
+          severity: alert.type === 'expired' ? 'critical' : 'high',
+          type: 'staffing',
+          message: `${alert.employee}'s ${alert.certification} certification ${alert.type === 'expired' ? 'has expired on' : 'will expire on'} ${alert.expiry_date}. Immediate action required.`,
+          status: 'active',
+          send_email: true,
+          send_sms: true,
+          target_roles: ['admin', 'manager', 'site_owner']
+        });
+      } catch (e) {
+        console.error(`Error creating alert for ${alert.employee}:`, e.message);
+      }
+    }
+
+    return Response.json({
+      status: 'success',
+      total_alerts: alerts.length,
+      urgent_count: urgentAlerts.length,
+      alerts: alerts
+    });
   } catch (error) {
+    console.error('Certification expiry notification error:', error);
     return Response.json({ error: error.message }, { status: 500 });
   }
 });
