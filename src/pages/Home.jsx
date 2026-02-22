@@ -361,6 +361,27 @@ export default function Home() {
 
 
 
+      {/* ── Features Section ── */}
+      <section id="features" className="px-4 sm:px-6 py-14 sm:py-20">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-10 sm:mb-14">
+            <h2 className="text-3xl sm:text-4xl font-extrabold text-gray-900 mb-4">Everything you need to manage aquatic operations</h2>
+            <p className="text-base sm:text-lg text-gray-500 max-w-xl mx-auto">Purpose-built features for lifeguard scheduling, compliance, team coordination, and safety.</p>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {features.map((f) => (
+              <div key={f.title} className="bg-white rounded-2xl border border-gray-200 p-6 hover:shadow-lg transition-shadow">
+                <div className="w-12 h-12 rounded-lg bg-[#1a9c5b]/10 flex items-center justify-center mb-4">
+                  <f.icon className="w-6 h-6 text-[#1a9c5b]" />
+                </div>
+                <h3 className="font-bold text-gray-900 text-sm mb-2">{f.title}</h3>
+                <p className="text-sm text-gray-600 leading-relaxed">{f.desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* ── Industry Section ── */}
       <section className="px-4 sm:px-6 py-12 sm:py-16 bg-gray-50 border-t border-gray-100">
         <div className="max-w-6xl mx-auto">
