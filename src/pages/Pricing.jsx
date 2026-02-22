@@ -29,7 +29,7 @@ const plans = [
   {
     name: "Starter",
     priceKey: "starter",
-    price: { monthly: 29, annual: 24 },
+    price: { monthly: 29, annual: 290 },
     annualTotal: 290,
     description: "Perfect for small facilities getting started.",
     badge: null,
@@ -47,8 +47,8 @@ const plans = [
   {
     name: "Pro",
     priceKey: "pro",
-    price: { monthly: 149, annual: 124 },
-    annualTotal: 1490,
+    price: { monthly: 149, annual: 990 },
+    annualTotal: 990,
     description: "Full compliance & operations suite for growing programs.",
     badge: "Most Popular",
     color: "border-[#1a9c5b]",
@@ -70,8 +70,8 @@ const plans = [
   {
     name: "Enterprise",
     priceKey: "enterprise",
-    price: { monthly: 999, annual: 833 },
-    annualTotal: 9990,
+    price: { monthly: 999, annual: 4990 },
+    annualTotal: 4990,
     description: "For multi-location facilities, parks departments & waterparks.",
     badge: "Full Suite",
     color: "border-gray-900",
@@ -180,22 +180,7 @@ export default function Pricing() {
         </div>
       </section>
 
-      {/* Pause Feature Banner */}
-      <section className="px-6 py-12 bg-gradient-to-r from-amber-50 to-orange-50 border-y border-amber-200">
-        <div className="max-w-4xl mx-auto">
-          <div className="flex items-start gap-4">
-            <div className="flex-shrink-0 mt-1">
-              <PauseCircle className="w-6 h-6 text-amber-600" />
-            </div>
-            <div className="flex-1">
-              <h3 className="text-lg font-bold text-gray-900 mb-1">Seasonal Billing Flexibility</h3>
-              <p className="text-gray-700">
-                Pause your subscription during off-season months at no penalty. When you resume, billing is automatically prorated — you pay only for the days you actively use the platform. Perfect for aquatic facilities with seasonal operations.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
+
 
       {/* Plans */}
       <section className="px-6 pb-20 max-w-6xl mx-auto">
@@ -218,11 +203,10 @@ export default function Pricing() {
                 <span className="text-5xl font-extrabold text-gray-900">
                   ${annual ? plan.price.annual : plan.price.monthly}
                 </span>
-                <span className="text-gray-400 ml-1">/mo</span>
+                <span className="text-gray-400 ml-1">{annual ? "/year" : "/month"}</span>
                 {annual && plan.annualTotal && (
-                  <p className="text-xs text-[#1a9c5b] mt-1 font-medium">Billed ${plan.annualTotal}/year</p>
+                  <p className="text-xs text-[#1a9c5b] mt-1 font-medium">Save vs. monthly billing</p>
                 )}
-                {!annual && <p className="text-xs text-gray-400 mt-1">Billed monthly</p>}
               </div>
 
               <ul className="space-y-2.5 mb-8 flex-1">
