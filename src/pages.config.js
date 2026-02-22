@@ -112,6 +112,7 @@ import IncidentTrendReport from './pages/IncidentTrendReport';
 import EmployeePerformanceDashboard from './pages/EmployeePerformanceDashboard';
 import PatronManagement from './pages/PatronManagement';
 import WeatherAlertsMonitor from './pages/WeatherAlertsMonitor';
+import StaffingForecastDashboard from './pages/StaffingForecastDashboard';
 import __Layout from './Layout.jsx';
 
 
@@ -181,6 +182,7 @@ export const PAGES = {
     "EmployeePerformanceDashboard": EmployeePerformanceDashboard,
     "PatronManagement": PatronManagement,
     "WeatherAlertsMonitor": WeatherAlertsMonitor,
+    "StaffingForecastDashboard": StaffingForecastDashboard,
 }
 
 export const pagesConfig = {
