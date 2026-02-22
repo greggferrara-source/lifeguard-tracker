@@ -60,6 +60,7 @@ const moreNavItems = [
 },
 { name: "Compliance", icon: Shield, page: "ComplianceDashboard", roles: ["admin", "site_owner", "manager"], submenu: [
   { name: "Compliance Dashboard", icon: Shield, page: "ComplianceDashboard" },
+  { name: "Incident Management", icon: AlertTriangle, page: "IncidentDashboard" },
   { name: "Certifications", icon: Shield, page: "Certifications" },
   { name: "Chemical Logs", icon: BarChart2, page: "ChemicalLogs" },
   { name: "Inspections", icon: BarChart2, page: "Inspections" },
