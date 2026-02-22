@@ -117,6 +117,8 @@ import EmployeeManagement from './pages/EmployeeManagement';
 import AssetManagement from './pages/AssetManagement';
 import PoolTestReporting from './pages/PoolTestReporting';
 import ComplianceAssessmentManager from './pages/ComplianceAssessmentManager';
+import NotificationCenter from './pages/NotificationCenter';
+import DocumentManagement from './pages/DocumentManagement';
 import __Layout from './Layout.jsx';
 
 
@@ -191,6 +193,8 @@ export const PAGES = {
     "AssetManagement": AssetManagement,
     "PoolTestReporting": PoolTestReporting,
     "ComplianceAssessmentManager": ComplianceAssessmentManager,
+    "NotificationCenter": NotificationCenter,
+    "DocumentManagement": DocumentManagement,
 }
 
 export const pagesConfig = {
