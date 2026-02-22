@@ -348,12 +348,12 @@ export default function Layout({ children, currentPageName }) {
             ))}
 
             {/* Enterprise section */}
-            {enterpriseRoles.includes(user?.role) && (
+            {ENTERPRISE_MENU_ROLES.includes(user?.role) && (
               <>
                 <div className="border-t border-gray-200 pt-3 mt-2">
                   <p className="text-xs font-bold text-[#1a9c5b] uppercase tracking-wide px-4 mb-2">Enterprise</p>
                   {enterpriseNavItems.map((item) => {
-                    if (item.roles && !item.roles.includes(user?.role)) return null;
+                    if (item.ownerOnly && !OWNER_ONLY_ROLES.includes(user?.role)) return null;
                     if (item.submenu) {
                       return (
                         <div key={item.page}>
