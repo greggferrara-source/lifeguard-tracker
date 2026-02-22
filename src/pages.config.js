@@ -109,6 +109,7 @@ import UrgentAlerts from './pages/UrgentAlerts';
 import MobileGuardDashboard from './pages/MobileGuardDashboard';
 import ShiftPreferencesManager from './pages/ShiftPreferencesManager';
 import IncidentTrendReport from './pages/IncidentTrendReport';
+import EmployeePerformanceDashboard from './pages/EmployeePerformanceDashboard';
 import __Layout from './Layout.jsx';
 
 
@@ -175,6 +176,7 @@ export const PAGES = {
     "MobileGuardDashboard": MobileGuardDashboard,
     "ShiftPreferencesManager": ShiftPreferencesManager,
     "IncidentTrendReport": IncidentTrendReport,
+    "EmployeePerformanceDashboard": EmployeePerformanceDashboard,
 }
 
 export const pagesConfig = {
