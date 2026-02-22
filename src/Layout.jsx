@@ -367,12 +367,15 @@ export default function Layout({ children, currentPageName }) {
                           <div className="flex items-center gap-3 px-4 py-2 text-xs font-semibold text-gray-500 uppercase tracking-wide mt-1">
                             <item.icon className="w-3.5 h-3.5" />{item.name}
                           </div>
-                          {item.submenu.map((subitem) => (
-                            <Link key={subitem.page} to={createPageUrl(subitem.page)} onClick={() => setMobileOpen(false)}
-                              className="flex items-center gap-3 px-8 py-2 rounded-lg text-sm text-gray-700 hover:bg-gray-50">
-                              <subitem.icon className="w-4 h-4" />{subitem.name}
-                            </Link>
-                          ))}
+                          {item.submenu.map((subitem) => {
+                            if (subitem.proOnly && !PRO_AND_ABOVE_ROLES.includes(user?.role)) return null;
+                            return (
+                              <Link key={subitem.page} to={createPageUrl(subitem.page)} onClick={() => setMobileOpen(false)}
+                                className="flex items-center gap-3 px-8 py-2 rounded-lg text-sm text-gray-700 hover:bg-gray-50">
+                                <subitem.icon className="w-4 h-4" />{subitem.name}
+                              </Link>
+                            );
+                          })}
                         </div>
                       );
                     }
