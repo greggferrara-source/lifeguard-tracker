@@ -64,12 +64,24 @@ const benefits = [
 ];
 
 const features = [
-  { icon: CalendarDays, title: "Smart Scheduling", desc: "Drag-and-drop schedule builder with conflict detection and open shift management." },
-  { icon: Users, title: "Team Management", desc: "Employee profiles, roles, availability, and certification tracking in one place." },
-  { icon: Clock, title: "Time & Attendance", desc: "Clock in/out, time-off requests, and shift swap approvals — all streamlined." },
-  { icon: Shield, title: "Compliance & Safety", desc: "Certification expiry alerts, compliance checks, and audit-ready digital records." },
-  { icon: BarChart2, title: "Reports & Analytics", desc: "Staffing reports, chemical logs, patron counts, and payroll-ready exports." },
-  { icon: MessageSquare, title: "Communications", desc: "Announcements, direct messages, and broadcast alerts to your whole team." },
+  { icon: CalendarDays, title: "Smart Scheduling", desc: "Drag-and-drop schedule builder with conflict detection, open shifts, and rotation management." },
+  { icon: Users, title: "Team Management", desc: "Employee profiles, roles, availability, certifications, and onboarding in one place." },
+  { icon: Clock, title: "Time & Attendance", desc: "Clock in/out, time-off requests, shift swap approvals, and payroll-ready exports." },
+  { icon: Shield, title: "Compliance Dashboard", desc: "Audit-ready compliance checks, certification expiry alerts, and inspection logs." },
+  { icon: AlertTriangle, title: "Incident Logs", desc: "Log rescues, injuries, and near-misses with photo attachments, severity tracking, and follow-up workflows." },
+  { icon: ClipboardList, title: "Checklists & Forms", desc: "Digital daily checklists and custom operational forms for every area of your facility." },
+  { icon: Droplets, title: "Chemical Logs", desc: "Track pH, chlorine, and other chemical readings with automated alerts for out-of-range values." },
+  { icon: Wrench, title: "Asset Tracking", desc: "Manage rescue tubes, AEDs, and all facility assets with maintenance schedules and status tracking." },
+  { icon: BookOpen, title: "Staff Training", desc: "Assign training modules with quizzes, track completion rates, and ensure every guard is prepared." },
+  { icon: FileText, title: "Emergency Action Plans", desc: "Build and distribute step-by-step EAPs for every emergency scenario — drowning, lightning, missing patron, and more." },
+  { icon: BarChart2, title: "Reports & Analytics", desc: "Staffing reports, patron counts, chemical trends, labor cost analysis, and exportable compliance records." },
+  { icon: MessageSquare, title: "Communications", desc: "Announcements, team channels, direct messages, and instant broadcast alerts." },
+  { icon: UserCheck, title: "Patron Counts", desc: "Track pool capacity in real time. Log entries and exits with occupancy alerts." },
+  { icon: DollarSign, title: "Payroll Integration", desc: "Sync timesheets and schedules directly to Gusto, ADP, Paychex, and other payroll providers." },
+  { icon: Globe, title: "Multi-Location Dashboard", desc: "Manage multiple pools and facilities from a single enterprise dashboard with rollup reporting." },
+  { icon: Bell, title: "Alerts & Notifications", desc: "Automated alerts for expiring certifications, unresolved incidents, chemical failures, and more." },
+  { icon: Eye, title: "Public Safety Dashboard", desc: "A shareable, real-time status board showing guard coverage and safety conditions to patrons." },
+  { icon: MapPin, title: "Locations Management", desc: "Manage unlimited facility locations with per-location settings, staff, and compliance records." },
 ];
 
 const testimonials = [
