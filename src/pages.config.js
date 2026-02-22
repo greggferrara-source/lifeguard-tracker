@@ -104,6 +104,7 @@ import TimeOff from './pages/TimeOff';
 import TrainingDashboard from './pages/TrainingDashboard';
 import Tutorials from './pages/Tutorials';
 import CertComplianceDashboard from './pages/CertComplianceDashboard';
+import StaffingForecast from './pages/StaffingForecast';
 import __Layout from './Layout.jsx';
 
 
@@ -165,6 +166,7 @@ export const PAGES = {
     "TrainingDashboard": TrainingDashboard,
     "Tutorials": Tutorials,
     "CertComplianceDashboard": CertComplianceDashboard,
+    "StaffingForecast": StaffingForecast,
 }
 
 export const pagesConfig = {

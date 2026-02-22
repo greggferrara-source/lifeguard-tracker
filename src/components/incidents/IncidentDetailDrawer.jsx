@@ -1,10 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sheet";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { base44 } from "@/api/base44Client";
-import { CheckCircle2, Clock, MapPin, User, Calendar, AlertTriangle, Siren } from "lucide-react";
+import { CheckCircle2, Clock, MapPin, User, Calendar, AlertTriangle, Siren, ClipboardList } from "lucide-react";
+import IncidentFollowUpPanel from "./IncidentFollowUpPanel";
 
 const typeStyle = { rescue: "bg-red-100 text-red-700", incident: "bg-orange-100 text-orange-700", near_miss: "bg-yellow-100 text-yellow-700", first_aid: "bg-blue-100 text-blue-700", injury: "bg-purple-100 text-purple-700", other: "bg-gray-100 text-gray-600" };
 const severityStyle = { minor: "bg-green-100 text-green-700", moderate: "bg-yellow-100 text-yellow-700", serious: "bg-orange-100 text-orange-700", critical: "bg-red-100 text-red-700" };
