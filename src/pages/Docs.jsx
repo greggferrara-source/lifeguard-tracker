@@ -521,6 +521,39 @@ You can view all expiring certs on the **Expiring** tab in the Certifications pa
     badge: "bg-red-100 text-red-700",
     articles: [
       {
+        title: "Sending Urgent Alerts (Pool Closures & Emergencies)",
+        content: `LifeGuard Tracker provides an urgent alert system to instantly notify staff of pool closures, emergencies, weather events, chemical issues, and other critical situations.
+
+**Access it via:** Enterprise → Reports & Admin → Urgent Alerts
+
+**How to send an urgent alert:**
+1. Go to **Urgent Alerts**
+2. Click **Send Alert** (admin-only)
+3. Fill in the alert title, type (pool closure, weather, emergency, chemical issue, staffing, or other)
+4. Set severity (Critical, High, Medium)
+5. Write the message
+6. Select the location (or leave blank for all locations)
+7. Choose notification methods:
+   - Send SMS to staff
+   - Send Email notifications
+   - Post as a public Announcement
+8. Optionally filter which roles to notify (e.g., only managers, only lifeguards)
+9. Click **Send**
+
+**What happens:**
+- Staff instantly receive SMS, email, and/or in-app notifications
+- Alert appears at the top of the **MobileGuardDashboard** with red warning badge
+- Message is posted as a public Announcement visible to all
+- Alert status can be updated from Active → Resolved
+
+**Use cases:**
+- Pool closure due to maintenance or chemical issues
+- Severe weather warning (lightning, flooding)
+- Emergency evacuation notification
+- Staff shortage alert
+- Emergency training or drill notification`
+      },
+      {
         title: "Running an Alert Scan",
         content: `LifeGuard Tracker can automatically detect issues across your facility.
 
@@ -639,6 +672,94 @@ Alerts are only visible to admin-level users.`
   - API credentials are correct and not expired
   - Your payroll provider account is still active
   - API permissions are still granted in your provider's settings`
+      },
+    ]
+  },
+  {
+    section: "Mobile & Guard Features",
+    color: "bg-blue-50 border-blue-200",
+    badge: "bg-blue-100 text-blue-700",
+    articles: [
+      {
+        title: "Guard Mobile Dashboard",
+        content: `Guards and employees have access to a dedicated **Mobile Guard Dashboard** optimized for smartphones and tablets. This is the primary interface for staff to view shifts, clock in/out, and receive alerts.
+
+**Access it via:** The main Dashboard when logged in on a mobile device (or manually navigate to MobileGuardDashboard)
+
+**Features available:**
+- 📢 **Active Alerts** — Real-time urgent notifications about pool closures, emergencies, and critical situations
+- ⏰ **Clock In/Out** — One-tap clock in and out with timestamps
+- 📅 **Today's Shift** — Full details (time, location, duration)
+- 📋 **Next 7 Days** — Upcoming shifts at a glance
+- 🔔 **Push Notifications** — Automatic alerts for shift changes, reminders, and urgent messages
+
+The interface is simplified, mobile-optimized, and designed for quick access during shift changes and breaks.`
+      },
+      {
+        title: "Clocking In & Out",
+        content: `The **Clock In/Out** feature tracks employee time for payroll and compliance purposes.
+
+**How to clock in/out:**
+1. Open the **Mobile Guard Dashboard**
+2. See your current status (Clocked In or Clocked Out)
+3. Tap **Clock In** or **Clock Out** — the system records the exact timestamp
+4. A confirmation appears with the time
+
+**Clock entries are logged with:**
+- Employee name and email
+- Date and time (to the second)
+- Location (auto-populated from today's shift if available)
+- Status (In/Out)
+
+**Viewing your clock history:**
+- Scroll down on the Mobile Guard Dashboard to see **Today's Log**
+- Full clock history is available in the reports section for managers
+
+**Manager view:**
+- Go to **Reports** → **Clock Report** to see all clock entries by employee or date
+- Use the Clock Report to track punctuality and monitor overtime`
+      },
+      {
+        title: "Push Notifications & Alerts",
+        content: `Guards and employees receive real-time push notifications for:
+- Shift changes or cancellations
+- Urgent pool closure or emergency alerts
+- Time off approvals or denials
+- Team announcements from management
+- Direct messages from managers
+
+**Enabling push notifications:**
+1. Open the **Dashboard** (desktop or mobile)
+2. A prompt will appear asking to enable notifications
+3. Click **Enable** to grant permission
+4. Notifications will now appear on your device
+
+**Note:** Push notifications work on published app instances, not in the preview editor.
+
+**What you'll see:**
+- Desktop: Browser notification badge and popup
+- Mobile: System notification (iOS and Android supported)`
+      },
+      {
+        title: "Offline Schedule Access",
+        content: `View your shifts and schedule even when offline. The app caches your schedule locally for quick access.
+
+**How it works:**
+- Your schedule is automatically cached each time you view it
+- You can access **My Schedule** and **Today's Shift** offline
+- Offline data is refreshed whenever you regain connectivity
+
+**Offline features:**
+- View your assigned shifts for the week
+- See shift times, locations, and durations
+- Check today's shift details
+
+**Features that require internet:**
+- Clocking in/out (queued for sync when online)
+- Viewing team messages or announcements
+- Submitting requests
+
+Once online, any actions taken offline are automatically synced.`
       },
     ]
   },
