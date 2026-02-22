@@ -30,7 +30,7 @@ export default function IncidentLogs() {
           <h1 className="text-3xl font-bold text-gray-900">Incident & Rescue Logs</h1>
           <p className="text-gray-500 mt-1">{openCount} open · {rescueCount} rescues total</p>
         </div>
-        <Button onClick={() => setOpen(true)} className="bg-[#1a9c5b] hover:bg-[#158a4e] gap-2">
+        <Button onClick={() => setLogOpen(true)} className="bg-red-600 hover:bg-red-700 gap-2 font-semibold">
           <Plus className="w-4 h-4" /> Log Incident
         </Button>
       </div>
