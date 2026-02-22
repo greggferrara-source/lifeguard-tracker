@@ -58,13 +58,17 @@ const moreNavItems = [
   { name: "Shift Swaps", icon: ArrowLeftRight, page: "ShiftSwaps", badge: "swaps" },
   { name: "Onboarding", icon: Users, page: "EmployeeOnboarding" }]
 },
-{ name: "Operations", icon: BarChart2, page: "MaintenanceReports", roles: ["admin", "site_owner", "manager"], submenu: [
+{ name: "Compliance", icon: Shield, page: "ComplianceDashboard", roles: ["admin", "site_owner", "manager"], submenu: [
+  { name: "Compliance Dashboard", icon: Shield, page: "ComplianceDashboard" },
   { name: "Certifications", icon: Shield, page: "Certifications" },
-  { name: "Assignments", icon: BarChart2, page: "Assignments" },
   { name: "Chemical Logs", icon: BarChart2, page: "ChemicalLogs" },
-  { name: "Maintenance", icon: BarChart2, page: "MaintenanceReports" },
-  { name: "Patron Counts", icon: Users, page: "PatronCounts" },
-  { name: "Inspections", icon: BarChart2, page: "Inspections" }]
+  { name: "Inspections", icon: BarChart2, page: "Inspections" },
+  { name: "Incident & Rescue Logs", icon: AlertTriangle, page: "IncidentLogs" },
+  { name: "Maintenance Reports", icon: BarChart2, page: "MaintenanceReports" }]
+},
+{ name: "Operations", icon: BarChart2, page: "Assignments", roles: ["admin", "site_owner", "manager"], submenu: [
+  { name: "Assignments", icon: BarChart2, page: "Assignments" },
+  { name: "Patron Counts", icon: Users, page: "PatronCounts" }]
 },
 { name: "Payroll Integrations", icon: BarChart2, page: "PayrollIntegrations", roles: ["admin", "site_owner"] },
 { name: "Compliance", icon: Shield, page: "Compliance", roles: ["admin", "site_owner"] },
