@@ -58,7 +58,7 @@ const enterpriseGroups = [
       { name: "Certifications", icon: Shield, page: "Certifications" },
       { name: "Directory", icon: Users, page: "EmployeeDirectory" },
       { name: "My Availability", icon: Clock, page: "MyAvailability" },
-      { name: "Onboarding", icon: LayoutDashboard, page: "EmployeeOnboarding" },
+      { name: "Onboarding", icon: LayoutDashboard, page: "OnboardingDashboard" },
     ],
   },
   {

@@ -4,6 +4,10 @@ import { ChevronDown, ChevronRight } from "lucide-react";
 
 const sections = [
   {
+    title: "Comprehensive Onboarding System",
+    content: "Automate employee onboarding with customizable task flows. Start onboarding for new hires, assign profile completion, role setup, training modules, and equipment access. Track progress with visual indicators. Access via Admin → Onboarding Dashboard. Create custom checklist and report templates to match facility workflows."
+  },
+  {
     title: "Shift Preferences Engine",
     content: "Employees can set preferred days, times, locations, max consecutive shifts, and blackout dates. Access via Team dropdown → Shift Preferences. Improves scheduling satisfaction and efficiency."
   },
