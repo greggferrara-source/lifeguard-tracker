@@ -527,6 +527,25 @@ Alert types:
 - 🔵 **Info** – Informational notices`
       },
       {
+        title: "AI Understaffing Predictor",
+        content: `The AI Understaffing Predictor proactively scans your upcoming schedule and flags potential staffing gaps before they become a problem.
+
+**Access it via:** Enterprise → Staffing Forecast
+
+**How it works:**
+1. Click **Run Prediction** on the Staffing Forecast page
+2. The AI analyzes the next 14 days of scheduled shifts against your location minimums, approved time-off, and available certified staff
+3. It identifies gaps and scores them as Critical, High, or Medium risk
+4. Each gap shows the specific date, location, and recommended action
+
+**What it checks:**
+- Locations with fewer shifts than the required minimum guards
+- Days where approved time-off leaves a location short-staffed
+- Upcoming shifts assigned to employees with expiring certifications
+
+Use the Staffing Forecast proactively every week to prevent uncovered shifts and compliance violations.`
+      },
+      {
         title: "Setting Up Automated Alerts",
         content: `Automated daily scans can be configured in **Enterprise → Settings**.
 
@@ -537,6 +556,36 @@ You can control:
 - Alert email recipients
 
 Alerts are only visible to admin-level users.`
+      },
+    ]
+  },
+  {
+    section: "Certification Compliance",
+    color: "bg-teal-50 border-teal-200",
+    badge: "bg-teal-100 text-teal-700",
+    articles: [
+      {
+        title: "Certification Compliance Dashboard",
+        content: `The Cert Compliance Dashboard aggregates certification status across all your locations and staff in one view.
+
+**Access it via:** Enterprise → Compliance → Cert Compliance
+
+**What you'll see:**
+- Overall compliance score (% of staff with all valid certs)
+- Per-location compliance breakdown with color-coded status
+- Cert-type breakdown chart (CPR, Lifeguard, First Aid, etc.)
+- Full searchable list of all certifications with expiry status
+
+**Status colors:**
+- 🟢 **Valid** — Certification is current
+- 🟡 **Expiring Soon** — Expires within 30 days
+- 🔴 **Expired** — Certification has lapsed
+
+**Using the dashboard:**
+- Filter by location, certification type, or status
+- Search by employee name or cert name
+- Use the per-location cards to quickly identify which facilities are below compliance thresholds
+- Export the view to PDF for regulatory inspections`
       },
     ]
   },
