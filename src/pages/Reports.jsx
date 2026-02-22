@@ -122,7 +122,7 @@ export default function Reports() {
       </div>
 
       {/* Filters (for clock, location, chemical) */}
-      {section !== "schedule" && (
+      {section !== "schedule" && section !== "export" && (
         <div className="flex flex-wrap items-end gap-4 p-4 bg-gray-50 rounded-2xl">
           <div>
             <Label className="text-xs font-semibold text-gray-500">From</Label>
