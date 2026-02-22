@@ -47,6 +47,7 @@ import FeedbackWidget from "@/components/FeedbackWidget";
 
 const ENTERPRISE_MENU_ROLES = ["enterprise_site_owner", "site_owner", "admin"];
 const OWNER_ONLY_ROLES = ["enterprise_site_owner", "site_owner"];
+const PRO_AND_ABOVE_ROLES = ["enterprise_site_owner", "site_owner", "admin"];
 
 // Shown to ALL roles in the top nav
 const primaryNavItems = [
