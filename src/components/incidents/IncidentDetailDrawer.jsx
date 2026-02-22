@@ -139,7 +139,13 @@ export default function IncidentDetailDrawer({ incident, onClose }) {
               </Button>
             </div>
           )}
-        </div>
+        </div>}
+
+        {tab === "followup" && (
+          <div className="mt-4">
+            <IncidentFollowUpPanel incident={incident} />
+          </div>
+        )}
       </SheetContent>
     </Sheet>
   );
