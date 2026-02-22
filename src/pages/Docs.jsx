@@ -651,19 +651,20 @@ Alerts are only visible to admin-level users.`
         title: "Getting Help & Support",
         content: `LifeGuard Tracker offers multiple ways to get help:
 
-**In-App Support:**
-- Go to **More → Contact Support** to send a message to our team
-- Browse **More → Documentation** (this page) for step-by-step guides
+      **In-App Support:**
+      - Click **Contact Support** in the help menu to send a message to our team
+      - Browse **Documentation** (this page) for step-by-step guides and best practices
 
-**Email Support:**
-- Reach us at support@lifeguardtracker.app
-- Response time: within 1 business day (Standard plan)
-- Same-day response (Pro plan)
+      **Email Support:**
+      - Reach us at support@lifeguardtracker.app
+      - Response time: within 1 business day (Standard)
+      - Same-day response (Pro & Enterprise)
 
-**Priority Support (Enterprise):**
-- Dedicated account manager
-- Phone support during business hours
-- Custom onboarding and training assistance`
+      **Priority Support (Enterprise):**
+      - Dedicated account manager
+      - Priority phone support during business hours
+      - Custom onboarding, training, and implementation assistance
+      - Proactive compliance audits and optimization recommendations`
       },
       {
         title: "Frequently Asked Questions",
