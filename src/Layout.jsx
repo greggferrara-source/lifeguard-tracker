@@ -172,7 +172,7 @@ export default function Layout({ children, currentPageName }) {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 h-14 flex items-center justify-between gap-4">
 
           {/* Logo */}
-          <Link to={createPageUrl("Dashboard")} className="flex items-center gap-2.5 shrink-0">
+          <Link to={createPageUrl("Home")} className="flex items-center gap-2.5 shrink-0">
             <div className="w-8 h-8 rounded-lg bg-[#1a9c5b] flex items-center justify-center">
               <Shield className="w-4 h-4 text-white" />
             </div>
