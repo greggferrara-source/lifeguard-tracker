@@ -294,6 +294,12 @@ export default function Reports() {
       {section === "chemical" && (
         <ChemicalTrendsReport chemicalLogs={chemicalLogs} locations={locations} dateFrom={dateFrom} dateTo={dateTo} locationFilter={locFilterId} />
       )}
+
+      {section === "export" && (
+        <div className="max-w-2xl">
+          <DocumentGenerator locations={locations} />
+        </div>
+      )}
     </div>
   );
 }
