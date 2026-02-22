@@ -115,6 +115,7 @@ const enterpriseNavItems = [
     ],
   },
   { name: "Reports", icon: BarChart2, page: "Reports" },
+  { name: "Operational Forms", icon: FileText, page: "OperationalForms" },
   { name: "Alerts", icon: AlertTriangle, page: "Alerts", badge: "alerts" },
   { name: "Payroll Integrations", icon: BarChart2, page: "PayrollIntegrations" },
   // Owner-only items (hidden from plain admin)
