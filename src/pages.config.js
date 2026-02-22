@@ -50,13 +50,16 @@
 import AdminSetup from './pages/AdminSetup';
 import Alerts from './pages/Alerts';
 import Announcements from './pages/Announcements';
+import Assets from './pages/Assets';
 import Assignments from './pages/Assignments';
 import Billing from './pages/Billing';
 import BillingDashboard from './pages/BillingDashboard';
 import Certifications from './pages/Certifications';
 import Channels from './pages/Channels';
+import ChecklistDashboard from './pages/ChecklistDashboard';
 import ChemicalLogs from './pages/ChemicalLogs';
 import Compliance from './pages/Compliance';
+import ComplianceDashboard from './pages/ComplianceDashboard';
 import Contact from './pages/Contact';
 import Dashboard from './pages/Dashboard';
 import Docs from './pages/Docs';
@@ -67,6 +70,8 @@ import Employees from './pages/Employees';
 import ErrorLogs from './pages/ErrorLogs';
 import Features from './pages/Features';
 import Home from './pages/Home';
+import IncidentDashboard from './pages/IncidentDashboard';
+import IncidentLogs from './pages/IncidentLogs';
 import Inspections from './pages/Inspections';
 import Locations from './pages/Locations';
 import MaintenanceReports from './pages/MaintenanceReports';
@@ -93,11 +98,6 @@ import ShiftSwaps from './pages/ShiftSwaps';
 import Terms from './pages/Terms';
 import TimeOff from './pages/TimeOff';
 import Tutorials from './pages/Tutorials';
-import IncidentLogs from './pages/IncidentLogs';
-import ComplianceDashboard from './pages/ComplianceDashboard';
-import Assets from './pages/Assets';
-import IncidentDashboard from './pages/IncidentDashboard';
-import ChecklistDashboard from './pages/ChecklistDashboard';
 import __Layout from './Layout.jsx';
 
 
@@ -105,13 +105,16 @@ export const PAGES = {
     "AdminSetup": AdminSetup,
     "Alerts": Alerts,
     "Announcements": Announcements,
+    "Assets": Assets,
     "Assignments": Assignments,
     "Billing": Billing,
     "BillingDashboard": BillingDashboard,
     "Certifications": Certifications,
     "Channels": Channels,
+    "ChecklistDashboard": ChecklistDashboard,
     "ChemicalLogs": ChemicalLogs,
     "Compliance": Compliance,
+    "ComplianceDashboard": ComplianceDashboard,
     "Contact": Contact,
     "Dashboard": Dashboard,
     "Docs": Docs,
@@ -122,6 +125,8 @@ export const PAGES = {
     "ErrorLogs": ErrorLogs,
     "Features": Features,
     "Home": Home,
+    "IncidentDashboard": IncidentDashboard,
+    "IncidentLogs": IncidentLogs,
     "Inspections": Inspections,
     "Locations": Locations,
     "MaintenanceReports": MaintenanceReports,
@@ -148,11 +153,6 @@ export const PAGES = {
     "Terms": Terms,
     "TimeOff": TimeOff,
     "Tutorials": Tutorials,
-    "IncidentLogs": IncidentLogs,
-    "ComplianceDashboard": ComplianceDashboard,
-    "Assets": Assets,
-    "IncidentDashboard": IncidentDashboard,
-    "ChecklistDashboard": ChecklistDashboard,
 }
 
 export const pagesConfig = {
