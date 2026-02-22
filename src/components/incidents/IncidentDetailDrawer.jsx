@@ -89,6 +89,20 @@ export default function IncidentDetailDrawer({ incident, onClose }) {
             </div>
           )}
 
+          {/* Photo Attachments */}
+          {incident.photo_urls?.length > 0 && (
+            <div>
+              <p className="text-xs text-gray-400 mb-2 font-medium uppercase tracking-wide">Photos ({incident.photo_urls.length})</p>
+              <div className="flex flex-wrap gap-2">
+                {incident.photo_urls.map((url, i) => (
+                  <a key={i} href={url} target="_blank" rel="noopener noreferrer">
+                    <img src={url} alt={`Photo ${i + 1}`} className="w-24 h-24 object-cover rounded-lg border border-gray-200 hover:opacity-90 transition-opacity" />
+                  </a>
+                ))}
+              </div>
+            </div>
+          )}
+
           {/* Status actions */}
           {incident.status !== "closed" && (
             <div className="flex gap-2 pt-2 border-t">
