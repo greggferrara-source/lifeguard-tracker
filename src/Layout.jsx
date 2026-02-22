@@ -19,8 +19,6 @@ import {
   HelpCircle,
   BookOpen,
   Mail,
-  FileText,
-  Play,
   MoreVertical,
   Zap,
   CreditCard,
