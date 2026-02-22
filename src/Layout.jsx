@@ -281,29 +281,31 @@ export default function Layout({ children, currentPageName }) {
                   <DropdownMenuContent align="end" className="w-60 max-h-[85vh] overflow-y-auto">
                     <DropdownMenuLabel className="text-xs font-bold text-[#1a9c5b] uppercase tracking-wide px-2 py-1.5">Enterprise Tools</DropdownMenuLabel>
                     {enterpriseNavItems.map((item) => {
-                      // Owner-only items hidden from plain admin
                       if (item.ownerOnly && !OWNER_ONLY_ROLES.includes(user?.role)) return null;
+                      if (item.enterpriseOnly && !ENTERPRISE_ROLES.includes(user?.role)) return null;
                       if (item.submenu) {
+                        const visibleSubs = item.submenu.filter(s => {
+                          if (s.enterpriseOnly && !ENTERPRISE_ROLES.includes(user?.role)) return false;
+                          return true;
+                        });
+                        if (visibleSubs.length === 0) return null;
                         return (
                           <div key={item.page}>
                             <DropdownMenuLabel className="flex items-center gap-2 px-2 py-1.5 text-gray-600 font-semibold text-xs mt-1">
                               <item.icon className="w-3.5 h-3.5" />
                               <span>{item.name}</span>
                             </DropdownMenuLabel>
-                            {item.submenu.map((subitem) => {
-                              if (subitem.proOnly && !PRO_AND_ABOVE_ROLES.includes(user?.role)) return null;
-                              return (
-                                <DropdownMenuItem key={subitem.page} asChild>
-                                  <Link to={createPageUrl(subitem.page)} className="flex items-center gap-2 ml-2">
-                                    <subitem.icon className="w-4 h-4" />
-                                    <span>{subitem.name}</span>
-                                    {subitem.badge === "swaps" && pendingSwaps > 0 &&
-                                      <span className="ml-auto bg-orange-500 text-white text-xs font-bold rounded-full px-1.5">{pendingSwaps}</span>
-                                    }
-                                  </Link>
-                                </DropdownMenuItem>
-                              );
-                            })}
+                            {visibleSubs.map((subitem) => (
+                              <DropdownMenuItem key={subitem.page} asChild>
+                                <Link to={createPageUrl(subitem.page)} className="flex items-center gap-2 ml-2">
+                                  <subitem.icon className="w-4 h-4" />
+                                  <span>{subitem.name}</span>
+                                  {subitem.badge === "swaps" && pendingSwaps > 0 &&
+                                    <span className="ml-auto bg-orange-500 text-white text-xs font-bold rounded-full px-1.5">{pendingSwaps}</span>
+                                  }
+                                </Link>
+                              </DropdownMenuItem>
+                            ))}
                             <DropdownMenuSeparator />
                           </div>
                         );
