@@ -362,22 +362,94 @@ export default function Home() {
 
 
       {/* ── Features Section ── */}
-      <section id="features" className="px-4 sm:px-6 py-14 sm:py-20">
-        <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-10 sm:mb-14">
-            <h2 className="text-3xl sm:text-4xl font-extrabold text-gray-900 mb-4">Everything you need to manage aquatic operations</h2>
-            <p className="text-base sm:text-lg text-gray-500 max-w-xl mx-auto">Purpose-built features for lifeguard scheduling, compliance, team coordination, and safety.</p>
+      <section id="features" className="px-4 sm:px-6 py-16 sm:py-24 bg-gradient-to-b from-white via-[#f0faf5]/30 to-white">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-14 sm:mb-18">
+            <span className="inline-block text-xs font-bold tracking-widest text-[#1a9c5b] uppercase mb-3">Industry-Leading Platform</span>
+            <h2 className="text-4xl sm:text-5xl font-extrabold text-gray-900 mb-5 leading-tight">Comprehensive tools built for aquatic excellence</h2>
+            <p className="text-lg sm:text-xl text-gray-600 max-w-2xl mx-auto leading-relaxed">From scheduling and compliance to safety management — everything you need in one powerful platform.</p>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {features.map((f) => (
-              <div key={f.title} className="bg-white rounded-2xl border border-gray-200 p-6 hover:shadow-lg transition-shadow">
-                <div className="w-12 h-12 rounded-lg bg-[#1a9c5b]/10 flex items-center justify-center mb-4">
-                  <f.icon className="w-6 h-6 text-[#1a9c5b]" />
+
+          {/* Feature Grid - 3 columns with visual enhancements */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+            {features.slice(0, 12).map((f, i) => (
+              <div 
+                key={f.title} 
+                className="group relative bg-white rounded-2xl border border-gray-200 p-7 hover:border-[#1a9c5b] hover:shadow-xl transition-all duration-300 overflow-hidden"
+              >
+                {/* Gradient background on hover */}
+                <div className="absolute inset-0 bg-gradient-to-br from-[#1a9c5b]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                
+                {/* Content */}
+                <div className="relative z-10">
+                  <div className="flex items-start gap-4 mb-4">
+                    <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-[#1a9c5b]/15 to-[#1a9c5b]/5 flex items-center justify-center group-hover:from-[#1a9c5b]/25 group-hover:to-[#1a9c5b]/10 transition-all duration-300 flex-shrink-0">
+                      <f.icon className="w-7 h-7 text-[#1a9c5b] group-hover:scale-110 transition-transform duration-300" />
+                    </div>
+                    <div className="flex-1">
+                      <h3 className="font-bold text-gray-900 text-base mb-1">{f.title}</h3>
+                      <div className="h-0.5 w-6 bg-gradient-to-r from-[#1a9c5b] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                    </div>
+                  </div>
+                  <p className="text-sm text-gray-600 leading-relaxed">{f.desc}</p>
                 </div>
-                <h3 className="font-bold text-gray-900 text-sm mb-2">{f.title}</h3>
-                <p className="text-sm text-gray-600 leading-relaxed">{f.desc}</p>
+
+                {/* Decorative accent */}
+                <div className="absolute top-0 right-0 w-20 h-20 bg-gradient-to-br from-[#1a9c5b]/10 to-transparent rounded-full -translate-y-8 translate-x-8 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
               </div>
             ))}
+          </div>
+
+          {/* Feature Highlights - 2 row with larger cards showing key benefits */}
+          <div className="mt-16 pt-12 border-t border-gray-200">
+            <h3 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-8 text-center">Why facilities choose LifeGuard Tracker</h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {[
+                {
+                  title: "Complete Compliance Suite",
+                  features: ["Certification tracking & alerts", "Audit-ready documentation", "Inspection & incident logs"],
+                  icon: Shield,
+                  color: "from-[#1a9c5b] to-emerald-600"
+                },
+                {
+                  title: "Real-time Operations",
+                  features: ["Live shift management", "Instant team communication", "Chemical & safety monitoring"],
+                  icon: Zap,
+                  color: "from-blue-500 to-blue-600"
+                },
+              ].map((group, i) => {
+                const Icon = group.icon;
+                return (
+                  <div key={i} className="group relative bg-gradient-to-br p-8 rounded-2xl border border-gray-200 hover:border-gray-300 hover:shadow-xl transition-all duration-300 overflow-hidden">
+                    <div className={`absolute inset-0 bg-gradient-to-br ${group.color} opacity-5 group-hover:opacity-10 transition-opacity duration-300`} />
+                    <div className="relative z-10">
+                      <div className="flex items-start gap-4 mb-6">
+                        <div className={`w-16 h-16 rounded-xl bg-gradient-to-br ${group.color} flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform duration-300`}>
+                          <Icon className="w-8 h-8 text-white" />
+                        </div>
+                        <h4 className="text-xl sm:text-2xl font-bold text-gray-900">{group.title}</h4>
+                      </div>
+                      <ul className="space-y-3">
+                        {group.features.map((feat, j) => (
+                          <li key={j} className="flex items-center gap-3 text-gray-700">
+                            <span className={`w-2 h-2 rounded-full bg-gradient-to-r ${group.color}`} />
+                            {feat}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* CTA */}
+          <div className="mt-16 text-center">
+            <p className="text-gray-600 mb-6">Explore all features and see what makes us the industry standard.</p>
+            <Link to={createPageUrl("Pricing")} className="inline-flex items-center gap-2 bg-[#1a9c5b] hover:bg-[#158a4e] text-white font-bold px-8 py-3 rounded-xl transition-colors">
+              View Full Feature List <ArrowRight className="w-4 h-4" />
+            </Link>
           </div>
         </div>
       </section>
