@@ -95,6 +95,7 @@ import TimeOff from './pages/TimeOff';
 import Tutorials from './pages/Tutorials';
 import IncidentLogs from './pages/IncidentLogs';
 import ComplianceDashboard from './pages/ComplianceDashboard';
+import Assets from './pages/Assets';
 import __Layout from './Layout.jsx';
 
 
@@ -147,6 +148,7 @@ export const PAGES = {
     "Tutorials": Tutorials,
     "IncidentLogs": IncidentLogs,
     "ComplianceDashboard": ComplianceDashboard,
+    "Assets": Assets,
 }
 
 export const pagesConfig = {
