@@ -112,6 +112,7 @@ export default function Reports() {
           { key: "clock", label: "Clock-In/Out" },
           { key: "location", label: "Maintenance & Inspections" },
           { key: "chemical", label: "Chemical Trends" },
+          { key: "export", label: "Export PDF" },
         ].map(s => (
           <button key={s.key} onClick={() => setSection(s.key)}
             className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${section === s.key ? "bg-[#1a9c5b] text-white" : "bg-gray-100 text-gray-600 hover:bg-gray-200"}`}>
