@@ -96,6 +96,7 @@ import Tutorials from './pages/Tutorials';
 import IncidentLogs from './pages/IncidentLogs';
 import ComplianceDashboard from './pages/ComplianceDashboard';
 import Assets from './pages/Assets';
+import IncidentDashboard from './pages/IncidentDashboard';
 import __Layout from './Layout.jsx';
 
 
@@ -149,6 +150,7 @@ export const PAGES = {
     "IncidentLogs": IncidentLogs,
     "ComplianceDashboard": ComplianceDashboard,
     "Assets": Assets,
+    "IncidentDashboard": IncidentDashboard,
 }
 
 export const pagesConfig = {
