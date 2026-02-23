@@ -1,17 +1,20 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { base44 } from "@/api/base44Client";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Loader2 } from "lucide-react";
+import { Loader2, Sparkles } from "lucide-react";
 import { toast } from "sonner";
 import { useQueryClient } from "@tanstack/react-query";
 
 export default function BillDialog({ open, onClose, bill, vendors, categories }) {
   const qc = useQueryClient();
   const [saving, setSaving] = useState(false);
+  const [suggesting, setSuggesting] = useState(false);
+  const [aiSuggestion, setAiSuggestion] = useState(null);
+  const suggestTimeout = useRef(null);
   const [form, setForm] = useState({
     vendor_id: "", vendor_name: "", bill_number: "", description: "",
     category: "", amount: "", due_date: "", issue_date: "", status: "pending",
@@ -33,10 +36,25 @@ export default function BillDialog({ open, onClose, bill, vendors, categories })
 
   const set = (k, v) => setForm(f => ({ ...f, [k]: v }));
 
+  const triggerSuggest = (vendor_name, description) => {
+    clearTimeout(suggestTimeout.current);
+    if (!vendor_name && !description) return;
+    suggestTimeout.current = setTimeout(async () => {
+      setSuggesting(true);
+      try {
+        const res = await base44.functions.invoke("suggestBillCategory", { vendor_name, description });
+        if (res.data?.suggestion) setAiSuggestion(res.data.suggestion);
+        else setAiSuggestion(null);
+      } catch (_) { setAiSuggestion(null); }
+      setSuggesting(false);
+    }, 800);
+  };
+
   const handleVendorChange = (vendorId) => {
     const vendor = vendors.find(v => v.id === vendorId);
     set("vendor_id", vendorId);
     set("vendor_name", vendor?.name || "");
+    triggerSuggest(vendor?.name || "", form.description);
   };
 
   const handleSave = async () => {
@@ -96,13 +114,25 @@ export default function BillDialog({ open, onClose, bill, vendors, categories })
               <Input className="mt-1" type="date" value={form.due_date} onChange={e => set("due_date", e.target.value)} />
             </div>
             <div>
-              <Label>Category</Label>
-              <Select value={form.category} onValueChange={v => set("category", v)}>
+              <Label className="flex items-center gap-1.5">
+                Category
+                {suggesting && <Loader2 className="w-3 h-3 animate-spin text-gray-400" />}
+              </Label>
+              <Select value={form.category} onValueChange={v => { set("category", v); setAiSuggestion(null); }}>
                 <SelectTrigger className="mt-1"><SelectValue placeholder="Select category" /></SelectTrigger>
                 <SelectContent>
                   {categories.map(c => <SelectItem key={c.id} value={c.name}>{c.name}</SelectItem>)}
                 </SelectContent>
               </Select>
+              {aiSuggestion && !form.category && (
+                <button
+                  type="button"
+                  onClick={() => { set("category", aiSuggestion); setAiSuggestion(null); }}
+                  className="mt-1.5 flex items-center gap-1.5 text-xs text-[#1a9c5b] hover:underline"
+                >
+                  <Sparkles className="w-3 h-3" /> AI suggests: <span className="font-semibold">{aiSuggestion}</span> — click to apply
+                </button>
+              )}
             </div>
             <div>
               <Label>Status</Label>
@@ -117,7 +147,7 @@ export default function BillDialog({ open, onClose, bill, vendors, categories })
             </div>
             <div className="col-span-2">
               <Label>Description</Label>
-              <Input className="mt-1" value={form.description} onChange={e => set("description", e.target.value)} placeholder="What is this bill for?" />
+              <Input className="mt-1" value={form.description} onChange={e => { set("description", e.target.value); triggerSuggest(form.vendor_name, e.target.value); }} placeholder="What is this bill for?" />
             </div>
             <div className="col-span-2">
               <Label>Notes</Label>
