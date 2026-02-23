@@ -129,11 +129,11 @@ export default function AssetImporter({ onComplete }) {
                     <tr key={i} className={row._errors.length > 0 ? "bg-red-50" : "bg-white"}>
                       <td className="px-3 py-2 text-gray-400">{row._rowNum}</td>
                       <td className="px-3 py-2 font-medium">{row.name}</td>
-                      <td className="px-3 py-2"><Badge variant="outline" className="text-xs">{row.asset_type}</Badge></td>
-                      <td className="px-3 py-2 text-gray-500">{row.serial_number || "—"}</td>
-                      <td className="px-3 py-2">{row.location_name || row.location_id || "—"}</td>
+                      <td className="px-3 py-2 text-gray-500">{row.asset_tag || "—"}</td>
+                      <td className="px-3 py-2"><Badge variant="outline" className="text-xs">{row.category?.replace(/_/g, " ")}</Badge></td>
+                      <td className="px-3 py-2">{row.location_name || "—"}</td>
                       <td className="px-3 py-2">{row.status}</td>
-                      <td className="px-3 py-2">{row.next_maintenance_date || "—"}</td>
+                      <td className="px-3 py-2">{row.condition}</td>
                       <td className="px-3 py-2">
                         {row._errors.length > 0 ? <span className="text-red-600 flex items-center gap-1"><AlertTriangle className="w-3 h-3" />{row._errors.join(", ")}</span> : <CheckCircle2 className="w-3.5 h-3.5 text-green-500" />}
                       </td>
