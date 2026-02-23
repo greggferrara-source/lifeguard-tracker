@@ -103,6 +103,7 @@ const enterpriseGroups = [
       { name: "Billing", icon: CreditCard, page: "Billing", ownerOnly: true },
       { name: "Settings", icon: Settings, page: "Settings", ownerOnly: true },
       { name: "Admin Setup", icon: LayoutDashboard, page: "AdminSetup", ownerOnly: true },
+      { name: "Integrations", icon: Zap, page: "Integrations", ownerOnly: true },
       { name: "Data Import", icon: Upload, page: "DataImport", ownerOnly: true },
       { name: "Error Logs", icon: AlertTriangle, page: "ErrorLogs", ownerOnly: true },
     ],
