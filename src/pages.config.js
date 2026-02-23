@@ -143,6 +143,7 @@ import UrgentAlerts from './pages/UrgentAlerts';
 import WeatherAlertsMonitor from './pages/WeatherAlertsMonitor';
 import WorkflowAutomation from './pages/WorkflowAutomation';
 import WorkforceScheduler from './pages/WorkforceScheduler';
+import BlogPost1 from './pages/BlogPost1';
 import __Layout from './Layout.jsx';
 
 
@@ -243,6 +244,7 @@ export const PAGES = {
     "WeatherAlertsMonitor": WeatherAlertsMonitor,
     "WorkflowAutomation": WorkflowAutomation,
     "WorkforceScheduler": WorkforceScheduler,
+    "BlogPost1": BlogPost1,
 }
 
 export const pagesConfig = {
