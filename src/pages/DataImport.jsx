@@ -5,8 +5,8 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Upload, Users, MapPin, CheckCircle2, AlertTriangle, Download, Loader, X, FileText } from "lucide-react";
-import EmployeeImporter from "@/components/import/EmployeeImporter";
-import LocationImporter from "@/components/import/LocationImporter";
+import EmployeeImporter from "../components/import/EmployeeImporter";
+import LocationImporter from "../components/import/LocationImporter";
 
 export default function DataImport() {
   return (
