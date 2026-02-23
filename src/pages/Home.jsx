@@ -144,6 +144,8 @@ const plans = [
 
 // ─── Component ───────────────────────────────────────────────────────────────
 
+import ChatbotWidget from "@/components/ChatbotWidget";
+
 export default function Home() {
   const navigate = useNavigate();
   const [checking, setChecking] = useState(true);
@@ -738,6 +740,9 @@ export default function Home() {
           </div>
         </div>
       </footer>
+
+      {/* ── Chatbot Widget ── */}
+      <ChatbotWidget />
 
       {/* ── Demo Video Modal ── */}
       {showDemoModal && (
