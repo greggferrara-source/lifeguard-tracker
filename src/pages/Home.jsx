@@ -601,11 +601,33 @@ export default function Home() {
         </div>
       </section>
 
+      {/* ── FAQ Section for SEO ── */}
+      <section className="px-4 sm:px-6 py-12 max-w-3xl mx-auto">
+        <h2 className="text-2xl sm:text-3xl font-extrabold text-gray-900 mb-8 text-center">Frequently Asked Questions</h2>
+        <div className="space-y-5">
+          {[
+            { q: "What is LifeGuard Tracker?", a: "LifeGuard Tracker is a cloud-based lifeguard management and scheduling software platform built specifically for aquatic facilities — including community pools, water parks, beaches, YMCAs, and recreation centers. It combines scheduling, GPS tracking, certification compliance, incident logging, and team communication in one tool." },
+            { q: "Does LifeGuard Tracker include GPS tracking for lifeguards?", a: "Yes. Our platform includes real-time GPS location tracking so managers can verify lifeguard positions, confirm clock-ins within geofenced areas, and ensure proper zone coverage at all times." },
+            { q: "How does certification tracking work?", a: "You upload each lifeguard's certifications (CPR, First Aid, NLS, etc.) and set expiry dates. LifeGuard Tracker automatically sends alerts 30 and 7 days before any cert expires, keeping your facility compliant with health authority inspections." },
+            { q: "Is LifeGuard Tracker suitable for multi-location facilities?", a: "Absolutely. Our Enterprise plan supports unlimited locations with a centralized dashboard, per-location staff management, compliance records, and rollup reporting across all your facilities." },
+            { q: "How much does LifeGuard Tracker cost?", a: "Plans start at $29/month for the Starter plan (scheduling + basic features), $149/month for Pro (full compliance + payroll integrations), and $999/month for Enterprise (multi-location + AI compliance advisor). All plans are flat-fee — no per-user charges." },
+          ].map(({ q, a }) => (
+            <details key={q} className="group border border-gray-200 rounded-xl p-5 cursor-pointer">
+              <summary className="font-semibold text-gray-900 text-sm list-none flex items-center justify-between gap-2">
+                {q}
+                <span className="text-[#1a9c5b] text-lg leading-none group-open:rotate-45 transition-transform">+</span>
+              </summary>
+              <p className="text-sm text-gray-600 mt-3 leading-relaxed">{a}</p>
+            </details>
+          ))}
+        </div>
+      </section>
+
       {/* ── Testimonials (moved to bottom) ── */}
       <section id="testimonials" className="px-4 sm:px-6 py-14 sm:py-20 max-w-6xl mx-auto">
         <div className="text-center mb-10 sm:mb-14">
-          <h2 className="text-3xl sm:text-4xl font-extrabold text-gray-900 mb-4">Trusted by aquatic teams</h2>
-          <p className="text-base sm:text-lg text-gray-500">See what managers and directors are saying.</p>
+          <h2 className="text-3xl sm:text-4xl font-extrabold text-gray-900 mb-4">Trusted by Aquatic Facility Managers & Directors</h2>
+          <p className="text-base sm:text-lg text-gray-500">See what pool managers and aquatics directors are saying about LifeGuard Tracker.</p>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-5 sm:gap-8">
           {testimonials.map((t) => (
