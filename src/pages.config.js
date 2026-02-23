@@ -69,6 +69,7 @@ import ChecklistDashboard from './pages/ChecklistDashboard';
 import ChemicalLogs from './pages/ChemicalLogs';
 import Compliance from './pages/Compliance';
 import ComplianceAIAdvisor from './pages/ComplianceAIAdvisor';
+import ComplianceAlertSettings from './pages/ComplianceAlertSettings';
 import ComplianceAssessmentManager from './pages/ComplianceAssessmentManager';
 import ComplianceDashboard from './pages/ComplianceDashboard';
 import Contact from './pages/Contact';
@@ -148,7 +149,14 @@ import UrgentAlerts from './pages/UrgentAlerts';
 import WeatherAlertsMonitor from './pages/WeatherAlertsMonitor';
 import WorkflowAutomation from './pages/WorkflowAutomation';
 import WorkforceScheduler from './pages/WorkforceScheduler';
-import ComplianceAlertSettings from './pages/ComplianceAlertSettings';
+import Blog from './pages/Blog';
+import BlogPost6 from './pages/BlogPost6';
+import BlogPost7 from './pages/BlogPost7';
+import BlogPost8 from './pages/BlogPost8';
+import BlogPost9 from './pages/BlogPost9';
+import BlogPost10 from './pages/BlogPost10';
+import BlogPost11 from './pages/BlogPost11';
+import BlogPost12 from './pages/BlogPost12';
 import __Layout from './Layout.jsx';
 
 
@@ -175,6 +183,7 @@ export const PAGES = {
     "ChemicalLogs": ChemicalLogs,
     "Compliance": Compliance,
     "ComplianceAIAdvisor": ComplianceAIAdvisor,
+    "ComplianceAlertSettings": ComplianceAlertSettings,
     "ComplianceAssessmentManager": ComplianceAssessmentManager,
     "ComplianceDashboard": ComplianceDashboard,
     "Contact": Contact,
@@ -254,7 +263,14 @@ export const PAGES = {
     "WeatherAlertsMonitor": WeatherAlertsMonitor,
     "WorkflowAutomation": WorkflowAutomation,
     "WorkforceScheduler": WorkforceScheduler,
-    "ComplianceAlertSettings": ComplianceAlertSettings,
+    "Blog": Blog,
+    "BlogPost6": BlogPost6,
+    "BlogPost7": BlogPost7,
+    "BlogPost8": BlogPost8,
+    "BlogPost9": BlogPost9,
+    "BlogPost10": BlogPost10,
+    "BlogPost11": BlogPost11,
+    "BlogPost12": BlogPost12,
 }
 
 export const pagesConfig = {

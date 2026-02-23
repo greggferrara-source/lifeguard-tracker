@@ -708,11 +708,11 @@ export default function Home() {
               <div>
                 <p className="font-bold text-gray-900 mb-3 text-xs uppercase tracking-wide">Blog</p>
                 <div className="space-y-2">
+                  <Link to={createPageUrl("Blog")} className="block text-gray-500 hover:text-gray-900 text-xs font-semibold">View All Articles</Link>
                   <Link to={createPageUrl("BlogPost1")} className="block text-gray-500 hover:text-gray-900 text-xs">Summer Scheduling</Link>
                   <Link to={createPageUrl("BlogPost2")} className="block text-gray-500 hover:text-gray-900 text-xs">Certification Guide</Link>
                   <Link to={createPageUrl("BlogPost3")} className="block text-gray-500 hover:text-gray-900 text-xs">OSHA Compliance</Link>
-                  <Link to={createPageUrl("BlogPost4")} className="block text-gray-500 hover:text-gray-900 text-xs">GPS Tracking</Link>
-                  <Link to={createPageUrl("BlogPost5")} className="block text-gray-500 hover:text-gray-900 text-xs">Chemical Logs</Link>
+                  <Link to={createPageUrl("BlogPost6")} className="block text-gray-500 hover:text-gray-900 text-xs">Water Park Ops</Link>
                 </div>
               </div>
               <div>
