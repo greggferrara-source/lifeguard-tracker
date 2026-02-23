@@ -6,9 +6,10 @@ import { Badge } from "@/components/ui/badge";
 import { Download, Loader, CheckCircle2, AlertTriangle, Wrench } from "lucide-react";
 import CSVDropzone from "./CSVDropzone";
 
-const HEADERS = ["name", "asset_type", "serial_number", "location_id", "location_name", "status", "purchase_date", "last_maintenance_date", "next_maintenance_date", "notes"];
-const STATUS_OPTIONS = ["active", "inactive", "maintenance", "retired"];
-const TYPE_OPTIONS = ["equipment", "vehicle", "facility", "tool", "safety", "other"];
+const HEADERS = ["name", "asset_tag", "category", "serial_number", "location_name", "status", "condition", "manufacturer", "model", "purchase_date", "purchase_price", "warranty_expiry", "last_maintenance_date", "next_maintenance_due", "notes"];
+const STATUS_OPTIONS = ["operational", "needs_maintenance", "out_of_service", "retired", "lost"];
+const CATEGORY_OPTIONS = ["safety_equipment", "pool_equipment", "chemical_equipment", "technology", "vehicle", "furniture", "other"];
+const CONDITION_OPTIONS = ["excellent", "good", "fair", "poor"];
 
 const downloadTemplate = () => {
   const rows = [
