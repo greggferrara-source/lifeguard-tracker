@@ -8,6 +8,8 @@ import DashboardFooter from "@/components/dashboard/DashboardFooter";
 import TrialBanner from "@/components/dashboard/TrialBanner";
 import PushNotificationPrompt from "@/components/dashboard/PushNotificationPrompt";
 import FacilityManagerWidgets from "@/components/dashboard/FacilityManagerWidgets";
+import QuickStartChecklist from "@/components/dashboard/QuickStartChecklist";
+import InviteTeamBanner from "@/components/dashboard/InviteTeamBanner";
 import {
   CalendarDays,
   Clock,
@@ -100,6 +102,12 @@ export default function Dashboard() {
       <div className="max-w-6xl mx-auto px-6 pt-4 space-y-2">
         <TrialBanner user={user} subscription={subscription} />
         <PushNotificationPrompt />
+        {isAdmin && employees.length > 0 && (
+          <InviteTeamBanner employees={employees} />
+        )}
+        {isAdmin && (
+          <QuickStartChecklist hasLocations={locations.length > 0} hasEmployees={employees.length > 0} />
+        )}
       </div>
 
       {/* Facility Manager Real-time Widgets */}
