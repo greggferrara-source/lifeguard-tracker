@@ -157,6 +157,9 @@ import BlogPost9 from './pages/BlogPost9';
 import BlogPost10 from './pages/BlogPost10';
 import BlogPost11 from './pages/BlogPost11';
 import BlogPost12 from './pages/BlogPost12';
+import PredictiveAnalytics from './pages/PredictiveAnalytics';
+import MobileStaffApp from './pages/MobileStaffApp';
+import TeamChat from './pages/TeamChat';
 import __Layout from './Layout.jsx';
 
 
@@ -271,6 +274,9 @@ export const PAGES = {
     "BlogPost10": BlogPost10,
     "BlogPost11": BlogPost11,
     "BlogPost12": BlogPost12,
+    "PredictiveAnalytics": PredictiveAnalytics,
+    "MobileStaffApp": MobileStaffApp,
+    "TeamChat": TeamChat,
 }
 
 export const pagesConfig = {
