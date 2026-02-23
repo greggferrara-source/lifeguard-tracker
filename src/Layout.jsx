@@ -108,6 +108,7 @@ const enterpriseGroups = [
       { name: "Global Search", icon: Search, page: "GlobalSearch" },
       { name: "My Dashboard", icon: LayoutIcon, page: "CustomDashboard" },
       { name: "Multi-Location Dashboard", icon: Globe, page: "MultiLocationDashboard", enterpriseOnly: true },
+      { name: "Public Status Widget", icon: Eye, page: "PublicStatusWidget", ownerOnly: true },
       { name: "Payroll Integrations", icon: BarChart2, page: "PayrollIntegrations", enterpriseOnly: true },
       { name: "Billing", icon: CreditCard, page: "Billing", ownerOnly: true },
       { name: "Settings", icon: Settings, page: "Settings", ownerOnly: true },
