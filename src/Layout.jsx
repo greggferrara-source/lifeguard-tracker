@@ -234,6 +234,8 @@ export default function Layout({ children, currentPageName }) {
                 <DropdownMenuItem asChild><Link to={createPageUrl("UrgentAlerts")} className="flex items-center gap-2"><AlertTriangle className="w-4 h-4" />Urgent Alerts</Link></DropdownMenuItem>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem asChild><Link to={createPageUrl("ShiftPreferencesManager")} className="flex items-center gap-2"><Users className="w-4 h-4" />Shift Preferences</Link></DropdownMenuItem>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem asChild><Link to={createPageUrl("MobileGuardDashboard")} className="flex items-center gap-2"><Shield className="w-4 h-4" />Guard Mobile View</Link></DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
 
