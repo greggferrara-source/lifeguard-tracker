@@ -4,9 +4,10 @@ import { useQuery } from "@tanstack/react-query";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
-import { MapPin, Users } from "lucide-react";
+import { MapPin, Users, Map, AlertTriangle, CheckCircle } from "lucide-react";
 import EmployeeLocationMap from "@/components/gps/EmployeeLocationMap";
 import GeofenceAlerts from "@/components/gps/GeofenceAlerts";
+import CoverageHeatmap from "@/components/gps/CoverageHeatmap";
 
 export default function EmployeeLocationTrackingPage() {
   const [selectedEmployeeId, setSelectedEmployeeId] = useState(null);
