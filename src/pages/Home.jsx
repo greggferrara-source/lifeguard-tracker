@@ -608,11 +608,11 @@ export default function Home() {
         <h2 className="text-2xl sm:text-3xl font-extrabold text-gray-900 mb-8 text-center">Frequently Asked Questions</h2>
         <div className="space-y-5">
           {[
-            { q: "What is LifeGuard Tracker?", a: "LifeGuard Tracker is a cloud-based lifeguard management and scheduling software platform built specifically for aquatic facilities — including community pools, water parks, beaches, YMCAs, and recreation centers. It combines scheduling, GPS tracking, certification compliance, incident logging, and team communication in one tool." },
-            { q: "Does LifeGuard Tracker include GPS tracking for lifeguards?", a: "Yes. Our platform includes real-time GPS location tracking so managers can verify lifeguard positions, confirm clock-ins within geofenced areas, and ensure proper zone coverage at all times." },
-            { q: "How does certification tracking work?", a: "You upload each lifeguard's certifications (CPR, First Aid, NLS, etc.) and set expiry dates. LifeGuard Tracker automatically sends alerts 30 and 7 days before any cert expires, keeping your facility compliant with health authority inspections." },
-            { q: "Is LifeGuard Tracker suitable for multi-location facilities?", a: "Absolutely. Our Enterprise plan supports unlimited locations with a centralized dashboard, per-location staff management, compliance records, and rollup reporting across all your facilities." },
-            { q: "How much does LifeGuard Tracker cost?", a: "Plans start at $29/month for the Starter plan (scheduling + basic features), $149/month for Pro (full compliance + payroll integrations), and $999/month for Enterprise (multi-location + AI compliance advisor). All plans are flat-fee — no per-user charges." },
+            { q: "What is LifeGuard Tracker?", a: "LifeGuard Tracker is a cloud-based lifeguard management and scheduling software platform built specifically for aquatic facilities — including community pools, water parks, beaches, YMCAs, and recreation centers. It combines scheduling, GPS tracking, certification compliance, incident logging, IoT sensor monitoring, AI-powered analytics, gamified training, and team communication in one integrated tool." },
+            { q: "How does the IoT analytics and sensor monitoring work?", a: "Our platform connects to water quality and environmental sensors for real-time monitoring of pH, chlorine, temperature, humidity, and more. We analyze historical trends, detect anomalies automatically, correlate data with facility access patterns, and generate predictive reports to prevent safety issues before they occur." },
+            { q: "What makes the training module system unique?", a: "We've built in comprehensive gamification with points, badges, streaks, and leaderboards to boost engagement. The system also uses AI to analyze incident trends and employee performance, recommending personalized training modules based on identified skill gaps and facility-specific risks." },
+            { q: "How does the AI predict safety risks and staffing needs?", a: "Our AI analyzes incident history, IoT sensor data, staff certifications, and performance metrics to predict incident risk levels and recommend appropriate staffing levels. It identifies training gaps, highlights potential hazards, and suggests preventive actions." },
+            { q: "Is LifeGuard Tracker suitable for multi-location facilities?", a: "Absolutely. Our Enterprise plan supports unlimited locations with a centralized dashboard, per-location staff management, compliance records, consolidated IoT analytics, incident analysis, and rollup reporting across all your facilities." },
           ].map(({ q, a }) => (
             <details key={q} className="group border border-gray-200 rounded-xl p-5 cursor-pointer">
               <summary className="font-semibold text-gray-900 text-sm list-none flex items-center justify-between gap-2">
@@ -689,7 +689,7 @@ export default function Home() {
                 </div>
                 <span className="font-bold text-gray-900">LifeGuard Tracker</span>
               </div>
-              <p className="text-sm text-gray-500 max-w-xs">Lifeguard scheduling software and pool management system for aquatic facilities, water parks, beaches, and recreation centers.</p>
+              <p className="text-sm text-gray-500 max-w-xs">AI-powered lifeguard scheduling, incident management, IoT sensor analytics, gamified training, and pool management for aquatic facilities, water parks, beaches, and recreation centers.</p>
             </div>
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-8 text-sm">
               <div>
@@ -735,7 +735,7 @@ export default function Home() {
           {/* SEO footer links */}
           <div className="pt-4 text-center">
             <p className="text-xs text-gray-300 leading-loose">
-              Lifeguard Scheduling Software &nbsp;·&nbsp; Pool Management System &nbsp;·&nbsp; Facility Scheduling Software &nbsp;·&nbsp; Aquatic Workforce Management &nbsp;·&nbsp; Lifeguard Tracker &nbsp;·&nbsp; Pool Software &nbsp;·&nbsp; Lifeguard GPS Tracking &nbsp;·&nbsp; Recreation Center Management Software &nbsp;·&nbsp; Water Park Scheduling &nbsp;·&nbsp; Beach Lifeguard Management &nbsp;·&nbsp; Certification Tracking &nbsp;·&nbsp; Incident Reporting System &nbsp;·&nbsp; Chemical Log Software &nbsp;·&nbsp; Aquatic Facility Management &nbsp;·&nbsp; Workforce Scheduling Platform &nbsp;·&nbsp; Pool Operations Software
+              Lifeguard Scheduling Software &nbsp;·&nbsp; Pool Management System &nbsp;·&nbsp; Facility Scheduling Software &nbsp;·&nbsp; IoT Sensor Analytics &nbsp;·&nbsp; Water Quality Monitoring &nbsp;·&nbsp; Aquatic Workforce Management &nbsp;·&nbsp; Lifeguard Tracker &nbsp;·&nbsp; Gamified Training Platform &nbsp;·&nbsp; Incident Management System &nbsp;·&nbsp; AI Safety Prediction &nbsp;·&nbsp; Pool Software &nbsp;·&nbsp; Lifeguard GPS Tracking &nbsp;·&nbsp; Recreation Center Management &nbsp;·&nbsp; Staffing Forecasting &nbsp;·&nbsp; Water Park Scheduling &nbsp;·&nbsp; Beach Lifeguard Management &nbsp;·&nbsp; Certification Tracking &nbsp;·&nbsp; Incident Reporting System &nbsp;·&nbsp; Chemical Log Software &nbsp;·&nbsp; Aquatic Facility Management
             </p>
           </div>
         </div>
