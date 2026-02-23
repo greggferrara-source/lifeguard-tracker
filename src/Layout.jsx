@@ -360,6 +360,7 @@ export default function Layout({ children, currentPageName }) {
                   </div>
                   {enterpriseGroups.map((group) => {
                     const visible = group.items.filter(i => {
+                      if (i.rootOnly && !isRoot) return false;
                       if (i.ownerOnly && !isOwner) return false;
                       if (i.enterpriseOnly && !isEnterprise) return false;
                       return true;
