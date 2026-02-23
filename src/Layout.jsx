@@ -123,6 +123,9 @@ const enterpriseGroups = [
     items: [
       { name: "Employee Performance", icon: Award, page: "EmployeePerformanceDashboard" },
       { name: "Patron Management", icon: Users, page: "PatronManagement" },
+      { name: "Staff Recognition", icon: Award, page: "StaffRecognition" },
+      { name: "AI Guard Insights", icon: Lightbulb, page: "GuardAIInsights" },
+      { name: "Emergency Dispatch", icon: AlertTriangle, page: "EmergencyCall" },
     ],
   },
 ];
