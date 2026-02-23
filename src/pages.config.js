@@ -136,6 +136,7 @@ import OnboardingRuleBuilder from './pages/OnboardingRuleBuilder';
 import WorkforceScheduler from './pages/WorkforceScheduler';
 import AutoShiftPlanner from './pages/AutoShiftPlanner';
 import DataImport from './pages/DataImport';
+import Integrations from './pages/Integrations';
 import __Layout from './Layout.jsx';
 
 
@@ -229,6 +230,7 @@ export const PAGES = {
     "WorkforceScheduler": WorkforceScheduler,
     "AutoShiftPlanner": AutoShiftPlanner,
     "DataImport": DataImport,
+    "Integrations": Integrations,
 }
 
 export const pagesConfig = {
