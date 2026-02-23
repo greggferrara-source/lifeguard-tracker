@@ -6,6 +6,7 @@ import {
   Shield,
   CalendarDays,
   Users,
+  Clock,
   CheckCircle2,
   Star,
   ArrowRight,
