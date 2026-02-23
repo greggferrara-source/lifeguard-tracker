@@ -47,6 +47,7 @@ const enterpriseGroups = [
       { name: "Asset Tracking", icon: Wrench, page: "Assets" },
       { name: "Resource Booking", icon: Calendar, page: "ResourceBooking" },
       { name: "Workforce Scheduler", icon: CalendarDays, page: "WorkforceScheduler", enterpriseOnly: true },
+      { name: "Auto Shift Planner", icon: Zap, page: "AutoShiftPlanner", enterpriseOnly: true },
       { name: "Employee Profiles", icon: Users, page: "EmployeeProfile" },
       { name: "Location Tracking", icon: MapPin, page: "EmployeeLocationTracking" },
       { name: "Docs", icon: FileText, page: "DocsResourceBookingGPS" },
