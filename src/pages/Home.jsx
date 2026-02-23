@@ -694,7 +694,15 @@ export default function Home() {
           </div>
           <div className="border-t border-gray-100 pt-6 flex flex-col sm:flex-row items-center justify-between gap-3">
             <p className="text-xs text-gray-400">© 2026 LifeGuard Tracker. All rights reserved.</p>
-            <p className="text-xs text-gray-400">Built for aquatic professionals.</p>
+            <p className="text-xs text-gray-400">
+              <a href="https://www.lifeguardtracker.com" className="hover:text-gray-600">lifeguardtracker.com</a> · Lifeguard Scheduling Software · Aquatic Workforce Management
+            </p>
+          </div>
+          {/* SEO footer links */}
+          <div className="pt-4 text-center">
+            <p className="text-xs text-gray-300 leading-loose">
+              Lifeguard Tracking System &nbsp;·&nbsp; Pool Safety Management Software &nbsp;·&nbsp; Aquatic Staff Scheduling &nbsp;·&nbsp; Lifeguard GPS Tracker &nbsp;·&nbsp; Certification Compliance Tool &nbsp;·&nbsp; Incident Reporting for Pools &nbsp;·&nbsp; Recreation Center Scheduling &nbsp;·&nbsp; Water Park Staff Management
+            </p>
           </div>
         </div>
       </footer>
