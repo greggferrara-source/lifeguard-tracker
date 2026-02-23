@@ -133,6 +133,7 @@ import OnboardingManagement from './pages/OnboardingManagement';
 import PerformanceReviewManager from './pages/PerformanceReviewManager';
 import DocsEnhancedFeatures from './pages/DocsEnhancedFeatures';
 import OnboardingRuleBuilder from './pages/OnboardingRuleBuilder';
+import WorkforceScheduler from './pages/WorkforceScheduler';
 import __Layout from './Layout.jsx';
 
 
@@ -223,6 +224,7 @@ export const PAGES = {
     "PerformanceReviewManager": PerformanceReviewManager,
     "DocsEnhancedFeatures": DocsEnhancedFeatures,
     "OnboardingRuleBuilder": OnboardingRuleBuilder,
+    "WorkforceScheduler": WorkforceScheduler,
 }
 
 export const pagesConfig = {
