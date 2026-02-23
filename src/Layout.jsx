@@ -162,6 +162,7 @@ export default function Layout({ children, currentPageName }) {
     "Schedule": "MobileSchedule", "Employees": "MobileEmployees",
     "TimeOff": "MobileTimeOff", "Billing": "MobileBilling",
     "Locations": "MobileLocations", "Certifications": "MobileCertifications",
+    "MobileGuardDashboard": "MobileGuardDashboard",
   };
 
   if (isMobile && mobilePageMap[currentPageName]) {
