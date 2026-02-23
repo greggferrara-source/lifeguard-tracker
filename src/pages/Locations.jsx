@@ -109,7 +109,7 @@ export default function Locations() {
                     <DropdownMenuItem onClick={() => { setEditingLocation(loc); setDialogOpen(true); }}>
                       <Pencil className="w-3.5 h-3.5 mr-2" /> Edit
                     </DropdownMenuItem>
-                    <DropdownMenuItem className="text-red-600" onClick={() => deleteLocation.mutate(loc.id)}>
+                    <DropdownMenuItem className="text-red-600" onClick={() => { if (confirm(`Delete "${loc.name}"? This cannot be undone.`)) deleteLocation.mutate(loc.id); }}>
                       <Trash2 className="w-3.5 h-3.5 mr-2" /> Delete
                     </DropdownMenuItem>
                   </DropdownMenuContent>

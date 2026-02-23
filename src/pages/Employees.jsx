@@ -17,7 +17,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { Plus, Search, MoreHorizontal, Pencil, Trash2, Phone, Mail, CalendarCheck, Eye, CheckSquare } from "lucide-react";
+import { Plus, Search, MoreHorizontal, Pencil, Trash2, Phone, Mail, CalendarCheck, Eye, CheckSquare, Users } from "lucide-react";
 import { motion } from "framer-motion";
 import { useQuery as useQueryBase44 } from "@tanstack/react-query";
 import EmployeeDialog from "@/components/employees/EmployeeDialog";
