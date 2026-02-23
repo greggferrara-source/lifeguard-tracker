@@ -17,6 +17,7 @@ import { useQuery } from "@tanstack/react-query";
 import { base44 } from "@/api/base44Client";
 import FeedbackWidget from "@/components/FeedbackWidget";
 
+const ROOT_EMAIL = "greggferrara@gmail.com";
 const ENTERPRISE_ROLES = ["enterprise_site_owner", "enterprise_admin"];
 const PRO_AND_ABOVE_ROLES = ["enterprise_site_owner", "enterprise_admin", "site_owner", "admin"];
 const OWNER_ONLY_ROLES = ["enterprise_site_owner", "site_owner"];
