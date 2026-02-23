@@ -247,12 +247,15 @@ export default function Home() {
 
       {/* ── HERO ── */}
       <section className="px-4 sm:px-6 pt-12 sm:pt-20 pb-8 max-w-4xl mx-auto text-center">
+        <div className="inline-flex items-center gap-2 bg-[#f0faf5] text-[#1a9c5b] text-xs font-bold px-3 py-1.5 rounded-full mb-5 uppercase tracking-wide">
+          <Shield className="w-3.5 h-3.5" /> #1 Lifeguard Scheduling & Safety Software
+        </div>
         <h1 className="text-4xl sm:text-5xl lg:text-7xl font-extrabold leading-tight mb-4 sm:mb-6 tracking-tight">
-          <span className="text-[#1a9c5b]">Smarter Scheduling,</span><br />
-          <span className="text-gray-900">Safer Facilities.</span>
+          <span className="text-[#1a9c5b]">Lifeguard Scheduling</span><br />
+          <span className="text-gray-900">&amp; Safety Management.</span>
         </h1>
         <p className="text-base sm:text-xl text-gray-500 max-w-2xl mx-auto mb-8 sm:mb-10 leading-relaxed px-2">
-          Get the right <span className="text-[#1a9c5b] font-semibold">lifeguards</span> in the right <span className="text-gray-800 font-semibold">location</span> at the right <span className="text-[#1a9c5b] font-semibold">time</span>. Purpose-built for aquatic facilities.
+          The complete <strong className="text-gray-700">lifeguard management software</strong> for pools, beaches, and aquatic facilities. Real-time scheduling, GPS tracking, certification compliance, and incident reporting — all in one platform.
         </p>
         <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center px-4 sm:px-0">
           <Button
