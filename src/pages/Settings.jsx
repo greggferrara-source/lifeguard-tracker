@@ -128,6 +128,18 @@ export default function Settings() {
     setTesting(false);
   };
 
+  if (currentUser && currentUser.email !== ROOT_EMAIL && currentUser.role !== "admin") {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <Card className="p-12 text-center max-w-lg">
+          <AlertTriangle className="w-12 h-12 text-red-500 mx-auto mb-4" />
+          <h2 className="text-xl font-bold text-gray-900 mb-2">Access Denied</h2>
+          <p className="text-gray-600">Only administrators can access Settings.</p>
+        </Card>
+      </div>
+    );
+  }
+
   return (
     <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-8">
       <div>
