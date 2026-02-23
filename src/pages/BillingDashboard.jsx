@@ -7,8 +7,10 @@ import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
   Search, CreditCard, TrendingUp, AlertCircle, Loader2, Plus,
-  Upload, Building2, Tag, DollarSign, Calendar, Pencil, Trash2
+  Upload, Building2, Tag, DollarSign, Calendar, Pencil, Trash2, Zap
 } from "lucide-react";
+import VendorPerformance from "@/components/billing/VendorPerformance";
+import CategoryRulesManager from "@/components/billing/CategoryRulesManager";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { format } from "date-fns";
 import { toast } from "sonner";
@@ -186,6 +188,8 @@ export default function BillingDashboard() {
             <TabsTrigger value="bills"><DollarSign className="w-4 h-4 mr-1.5" />Bills</TabsTrigger>
             <TabsTrigger value="vendors"><Building2 className="w-4 h-4 mr-1.5" />Vendors</TabsTrigger>
             <TabsTrigger value="categories"><Tag className="w-4 h-4 mr-1.5" />Categories</TabsTrigger>
+            <TabsTrigger value="vendor-performance"><TrendingUp className="w-4 h-4 mr-1.5" />Vendor Analytics</TabsTrigger>
+            <TabsTrigger value="rules"><Zap className="w-4 h-4 mr-1.5" />Auto-Rules</TabsTrigger>
             {user?.email === "greggferrara@gmail.com" && <TabsTrigger value="stripe"><CreditCard className="w-4 h-4 mr-1.5" />Stripe</TabsTrigger>}
           </TabsList>
 
@@ -354,6 +358,18 @@ export default function BillingDashboard() {
                 })}
               </div>
             )}
+          </TabsContent>
+
+          {/* VENDOR PERFORMANCE TAB */}
+          <TabsContent value="vendor-performance">
+            <VendorPerformance bills={bills} vendors={vendors} />
+          </TabsContent>
+
+          {/* AUTO-RULES TAB */}
+          <TabsContent value="rules">
+            <Card className="p-5">
+              <CategoryRulesManager categories={categories} />
+            </Card>
           </TabsContent>
 
           {/* STRIPE TAB */}
