@@ -257,6 +257,7 @@ export default function Layout({ children, currentPageName }) {
                   <div className="grid grid-cols-3 gap-1">
                     {enterpriseGroups.map((group) => {
                       const visible = group.items.filter(i => {
+                        if (i.rootOnly && !isRoot) return false;
                         if (i.ownerOnly && !isOwner) return false;
                         if (i.enterpriseOnly && !isEnterprise) return false;
                         return true;
