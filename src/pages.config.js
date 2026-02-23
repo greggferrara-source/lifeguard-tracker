@@ -167,6 +167,10 @@ import DataProcessingAgreement from './pages/DataProcessingAgreement';
 import Sitemap from './pages/Sitemap';
 import AccessibilityStatement from './pages/AccessibilityStatement';
 import Documentation from './pages/Documentation';
+import IncidentManagement from './pages/IncidentManagement';
+import CreateIncidentReport from './pages/CreateIncidentReport';
+import TrainingModuleManager from './pages/TrainingModuleManager';
+import IoTSensorDashboard from './pages/IoTSensorDashboard';
 import __Layout from './Layout.jsx';
 
 
@@ -291,6 +295,10 @@ export const PAGES = {
     "Sitemap": Sitemap,
     "AccessibilityStatement": AccessibilityStatement,
     "Documentation": Documentation,
+    "IncidentManagement": IncidentManagement,
+    "CreateIncidentReport": CreateIncidentReport,
+    "TrainingModuleManager": TrainingModuleManager,
+    "IoTSensorDashboard": IoTSensorDashboard,
 }
 
 export const pagesConfig = {
