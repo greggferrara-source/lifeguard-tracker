@@ -119,7 +119,7 @@ export default function AssetImporter({ onComplete }) {
               <table className="text-xs w-full">
                 <thead className="bg-gray-50">
                   <tr>
-                    {["Row", "Name", "Type", "Serial #", "Location", "Status", "Next Maintenance", "Valid"].map(h => (
+                    {["Row", "Name", "Tag", "Category", "Location", "Status", "Condition", "Valid"].map(h => (
                       <th key={h} className="px-3 py-2 text-left font-medium text-gray-600">{h}</th>
                     ))}
                   </tr>
