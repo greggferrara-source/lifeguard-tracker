@@ -14,8 +14,8 @@ const CONDITION_OPTIONS = ["excellent", "good", "fair", "poor"];
 const downloadTemplate = () => {
   const rows = [
     HEADERS.join(","),
-    "AED Unit #1,safety,AED-2023-001,,Main Pool,active,2023-06-01,2024-06-01,2025-06-01,Check battery monthly",
-    "Rescue Tube Set A,equipment,RT-2022-005,,Beach Zone A,active,2022-03-15,2024-03-15,2025-03-15,"
+    "AED Unit #1,AQ-001,safety_equipment,AED-2023-001,Main Pool,operational,good,Zoll,AED Plus,2023-06-01,1200,2026-06-01,2024-06-01,2025-06-01,Check battery monthly",
+    "Rescue Tube Set A,AQ-002,safety_equipment,RT-2022-005,Beach Zone A,operational,good,Kiefer,,2022-03-15,85,,2024-03-15,2025-03-15,"
   ];
   const blob = new Blob([rows.join("\n")], { type: "text/csv" });
   const url = URL.createObjectURL(blob);
