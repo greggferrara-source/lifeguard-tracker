@@ -52,7 +52,7 @@ function validate(r) {
   return errors;
 }
 
-export default function AssetImporter() {
+export default function AssetImporter({ onComplete }) {
   const [preview, setPreview] = useState(null);
   const [importing, setImporting] = useState(false);
   const [importResult, setImportResult] = useState(null);
