@@ -160,6 +160,7 @@ import BlogPost12 from './pages/BlogPost12';
 import PredictiveAnalytics from './pages/PredictiveAnalytics';
 import MobileStaffApp from './pages/MobileStaffApp';
 import TeamChat from './pages/TeamChat';
+import ComplianceWorkflowManager from './pages/ComplianceWorkflowManager';
 import __Layout from './Layout.jsx';
 
 
@@ -277,6 +278,7 @@ export const PAGES = {
     "PredictiveAnalytics": PredictiveAnalytics,
     "MobileStaffApp": MobileStaffApp,
     "TeamChat": TeamChat,
+    "ComplianceWorkflowManager": ComplianceWorkflowManager,
 }
 
 export const pagesConfig = {

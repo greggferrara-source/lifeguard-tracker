@@ -1,151 +1,187 @@
-import React, { useEffect } from "react";
+import React, { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { base44 } from "@/api/base44Client";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { AlertTriangle, Zap, Thermometer, Wind, Cloud } from "lucide-react";
+import { AlertTriangle, Cloud, Droplets, Wind, Zap, CheckCircle2, MapPin } from "lucide-react";
 
 export default function WeatherAlertsMonitor() {
-  const { data: alerts = [] } = useQuery({
-    queryKey: ["weather-alerts"],
-    queryFn: () => base44.entities.WeatherAlert.filter({ status: "active" }),
-    refetchInterval: 300000 // 5 minutes
+  const { data: locations = [] } = useQuery({
+    queryKey: ["locations"],
+    queryFn: () => base44.entities.Location.list()
   });
 
-  const activeAlerts = alerts.filter(a => a.status === "active");
-  const critical = activeAlerts.filter(a => a.severity === "critical");
-  const warnings = activeAlerts.filter(a => a.severity === "warning");
+  const { data: weatherAlerts = [] } = useQuery({
+    queryKey: ["weather-alerts"],
+    queryFn: () => base44.entities.WeatherAlert.list("-issued_at", 100)
+  });
 
-  const getAlertIcon = (type) => {
-    switch (type) {
-      case "lightning":
-        return <Zap className="w-6 h-6 text-yellow-500" />;
-      case "extreme_heat":
-        return <Thermometer className="w-6 h-6 text-red-500" />;
-      case "high_wind":
-        return <Wind className="w-6 h-6 text-blue-500" />;
-      default:
-        return <Cloud className="w-6 h-6 text-gray-500" />;
-    }
+  const { data: eventAlerts = [] } = useQuery({
+    queryKey: ["event-alerts"],
+    queryFn: () => base44.entities.EventAlert.list("-event_date", 50)
+  });
+
+  const activeWeatherAlerts = weatherAlerts.filter(a => !a.acknowledged && new Date() < new Date(a.expires_at));
+  const upcomingEvents = eventAlerts.filter(e => new Date(e.event_date) >= new Date());
+
+  const severityColors = {
+    minor: 'text-blue-600',
+    moderate: 'text-orange-600',
+    severe: 'text-red-600'
   };
 
-  const getActionColor = (action) => {
-    switch (action) {
-      case "evacuate":
-        return "bg-red-100 text-red-800";
-      case "close_pool":
-        return "bg-red-50 text-red-700";
-      case "reduce_operations":
-        return "bg-yellow-100 text-yellow-800";
-      default:
-        return "bg-blue-100 text-blue-800";
-    }
+  const severityBgColors = {
+    minor: 'bg-blue-50 border-blue-200',
+    moderate: 'bg-orange-50 border-orange-200',
+    severe: 'bg-red-50 border-red-200'
+  };
+
+  const impactColors = {
+    none: 'bg-gray-100 text-gray-800',
+    advisory: 'bg-blue-100 text-blue-800',
+    limited_operations: 'bg-orange-100 text-orange-800',
+    closure_recommended: 'bg-red-100 text-red-800'
   };
 
   return (
-    <div className="max-w-6xl mx-auto p-6 space-y-6">
-      <h1 className="text-3xl font-bold">Weather Alerts</h1>
+    <div className="max-w-6xl mx-auto px-4 py-8 space-y-8">
+      <div>
+        <h1 className="text-4xl font-bold text-gray-900">Weather & Events Monitor</h1>
+        <p className="text-gray-500 mt-1">Real-time weather alerts and local event impacts</p>
+      </div>
 
-      <div className="grid md:grid-cols-4 gap-4">
+      {/* Summary Cards */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         <Card>
-          <CardContent className="pt-6">
-            <div className="text-3xl font-bold text-red-600">{critical.length}</div>
-            <p className="text-sm text-gray-600">Critical Alerts</p>
+          <CardContent className="pt-4">
+            <div className="flex items-start justify-between">
+              <div>
+                <p className="text-sm text-gray-600">Active Weather Alerts</p>
+                <p className="text-3xl font-bold text-red-600 mt-1">{activeWeatherAlerts.length}</p>
+              </div>
+              <AlertTriangle className="w-5 h-5 text-red-600 opacity-50" />
+            </div>
           </CardContent>
         </Card>
         <Card>
-          <CardContent className="pt-6">
-            <div className="text-3xl font-bold text-yellow-600">{warnings.length}</div>
-            <p className="text-sm text-gray-600">Warnings</p>
+          <CardContent className="pt-4">
+            <div className="flex items-start justify-between">
+              <div>
+                <p className="text-sm text-gray-600">Upcoming Events</p>
+                <p className="text-3xl font-bold text-blue-600 mt-1">{upcomingEvents.length}</p>
+              </div>
+              <Cloud className="w-5 h-5 text-blue-600 opacity-50" />
+            </div>
           </CardContent>
         </Card>
         <Card>
-          <CardContent className="pt-6">
-            <div className="text-3xl font-bold">{activeAlerts.length}</div>
-            <p className="text-sm text-gray-600">Active Alerts</p>
-          </CardContent>
-        </Card>
-        <Card>
-          <CardContent className="pt-6">
-            <div className="text-sm text-gray-600">Last Updated</div>
-            <div className="text-lg font-semibold">
-              {new Date().toLocaleTimeString()}
+          <CardContent className="pt-4">
+            <div className="flex items-start justify-between">
+              <div>
+                <p className="text-sm text-gray-600">Monitored Locations</p>
+                <p className="text-3xl font-bold text-[#1a9c5b] mt-1">{locations.length}</p>
+              </div>
+              <MapPin className="w-5 h-5 text-[#1a9c5b] opacity-50" />
             </div>
           </CardContent>
         </Card>
       </div>
 
-      {critical.length > 0 && (
-        <Card className="border-red-300 bg-red-50">
-          <CardHeader>
-            <CardTitle className="text-red-800 flex items-center gap-2">
-              <AlertTriangle className="w-5 h-5" />
-              Critical Alerts
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-3">
-            {critical.map((alert) => (
-              <div key={alert.id} className="border-l-4 border-red-500 pl-4 py-2">
-                <div className="flex items-start justify-between mb-2">
-                  <div className="flex items-center gap-3">
-                    {getAlertIcon(alert.alert_type)}
+      {/* Active Weather Alerts */}
+      <div className="space-y-4">
+        <h2 className="text-2xl font-bold text-gray-900">Active Weather Alerts</h2>
+        {activeWeatherAlerts.length === 0 ? (
+          <Card>
+            <CardContent className="pt-8 pb-8 text-center text-gray-500">
+              <CheckCircle2 className="w-12 h-12 mx-auto mb-3 text-green-500" />
+              <p className="font-medium">No active weather alerts</p>
+            </CardContent>
+          </Card>
+        ) : (
+          activeWeatherAlerts.map(alert => (
+            <Card key={alert.id} className={`border-2 ${severityBgColors[alert.severity]}`}>
+              <CardContent className="pt-4">
+                <div className="flex items-start justify-between mb-3">
+                  <div className="flex items-start gap-3">
+                    <div className={`mt-1 ${severityColors[alert.severity]}`}>
+                      {alert.alert_type === 'severe_thunderstorm' && <Zap className="w-5 h-5" />}
+                      {alert.alert_type === 'heavy_rain' && <Droplets className="w-5 h-5" />}
+                      {alert.alert_type === 'wind' && <Wind className="w-5 h-5" />}
+                      {!['severe_thunderstorm', 'heavy_rain', 'wind'].includes(alert.alert_type) && <AlertTriangle className="w-5 h-5" />}
+                    </div>
                     <div>
-                      <h4 className="font-bold text-gray-900">{alert.location_name}</h4>
-                      <p className="text-sm text-gray-700">{alert.condition_description}</p>
+                      <h3 className="font-bold text-gray-900 capitalize">{alert.alert_type.replace(/_/g, ' ')}</h3>
+                      <p className="text-sm text-gray-700 mt-1">{alert.location_name}</p>
+                      <p className="text-xs text-gray-600 mt-2">{alert.description}</p>
                     </div>
                   </div>
-                  <Badge className={getActionColor(alert.recommended_action)}>
-                    {alert.recommended_action.replace(/_/g, " ").toUpperCase()}
+                  <Badge className={impactColors[alert.impact_on_operations]}>
+                    {alert.impact_on_operations.replace(/_/g, ' ')}
                   </Badge>
                 </div>
-                <div className="grid grid-cols-3 gap-4 text-sm">
-                  {alert.temperature !== undefined && (
-                    <div><span className="text-gray-600">Temp:</span> <span className="font-semibold">{alert.temperature}°F</span></div>
-                  )}
-                  {alert.wind_speed !== undefined && (
-                    <div><span className="text-gray-600">Wind:</span> <span className="font-semibold">{alert.wind_speed} mph</span></div>
-                  )}
-                  {alert.humidity !== undefined && (
-                    <div><span className="text-gray-600">Humidity:</span> <span className="font-semibold">{alert.humidity}%</span></div>
-                  )}
-                </div>
-              </div>
-            ))}
-          </CardContent>
-        </Card>
-      )}
-
-      {warnings.length > 0 && (
-        <Card className="border-yellow-300 bg-yellow-50">
-          <CardHeader>
-            <CardTitle className="text-yellow-800">Warnings</CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-3">
-            {warnings.map((alert) => (
-              <div key={alert.id} className="border-l-4 border-yellow-500 pl-4 py-2">
-                <div className="flex items-start justify-between">
-                  <div className="flex items-center gap-3">
-                    {getAlertIcon(alert.alert_type)}
-                    <div>
-                      <h4 className="font-bold text-gray-900">{alert.location_name}</h4>
-                      <p className="text-sm text-gray-700">{alert.condition_description}</p>
-                    </div>
+                {alert.recommended_action && (
+                  <div className="mt-3 p-2 bg-white rounded border border-gray-200">
+                    <p className="text-xs font-medium text-gray-900">Recommended Action:</p>
+                    <p className="text-xs text-gray-700 mt-1">{alert.recommended_action}</p>
                   </div>
-                  <Badge variant="outline">{alert.alert_type.replace(/_/g, " ").toUpperCase()}</Badge>
-                </div>
-              </div>
-            ))}
-          </CardContent>
-        </Card>
-      )}
+                )}
+              </CardContent>
+            </Card>
+          ))
+        )}
+      </div>
 
-      {activeAlerts.length === 0 && (
-        <Card>
-          <CardContent className="pt-6 text-center py-12">
-            <p className="text-gray-600">No active weather alerts. All systems operational.</p>
-          </CardContent>
-        </Card>
-      )}
+      {/* Upcoming Events */}
+      <div className="space-y-4">
+        <h2 className="text-2xl font-bold text-gray-900">Upcoming Events (Staffing Impact)</h2>
+        {upcomingEvents.length === 0 ? (
+          <Card>
+            <CardContent className="pt-8 pb-8 text-center text-gray-500">
+              <Cloud className="w-12 h-12 mx-auto mb-3 text-gray-300" />
+              <p className="font-medium">No upcoming events</p>
+            </CardContent>
+          </Card>
+        ) : (
+          upcomingEvents.map(event => (
+            <Card key={event.id}>
+              <CardContent className="pt-4">
+                <div className="flex items-start justify-between mb-3">
+                  <div>
+                    <h3 className="font-bold text-gray-900">{event.event_name}</h3>
+                    <p className="text-sm text-gray-700 mt-1">{event.location_name}</p>
+                  </div>
+                  <Badge className={
+                    event.impact_level === 'high' ? 'bg-red-100 text-red-800' :
+                    event.impact_level === 'moderate' ? 'bg-orange-100 text-orange-800' :
+                    'bg-green-100 text-green-800'
+                  }>
+                    {event.impact_level} impact
+                  </Badge>
+                </div>
+                <div className="grid grid-cols-3 gap-4 mt-4 pt-4 border-t border-gray-200">
+                  <div>
+                    <p className="text-xs text-gray-600">Date & Time</p>
+                    <p className="text-sm font-medium text-gray-900 mt-1">{event.event_date} at {event.event_time}</p>
+                  </div>
+                  <div>
+                    <p className="text-xs text-gray-600">Extra Patrons Expected</p>
+                    <p className="text-sm font-medium text-gray-900 mt-1">+{event.estimated_extra_patrons}</p>
+                  </div>
+                  <div>
+                    <p className="text-xs text-gray-600">Recommended Staff</p>
+                    <p className="text-sm font-medium text-gray-900 mt-1">+{event.recommended_staffing_increase}</p>
+                  </div>
+                </div>
+                {!event.staffing_planned && (
+                  <div className="mt-3 p-2 bg-yellow-50 border border-yellow-200 rounded text-xs text-yellow-800">
+                    ⚠️ Staffing not yet planned for this event
+                  </div>
+                )}
+              </CardContent>
+            </Card>
+          ))
+        )}
+      </div>
     </div>
   );
 }
