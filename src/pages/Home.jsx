@@ -689,7 +689,7 @@ export default function Home() {
               </div>
               <p className="text-sm text-gray-500 max-w-xs">Aquatic workforce management for pools, beaches, and recreation centers.</p>
             </div>
-            <div className="grid grid-cols-2 sm:grid-cols-3 gap-8 text-sm">
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-8 text-sm">
               <div>
                 <p className="font-bold text-gray-900 mb-3 text-xs uppercase tracking-wide">Product</p>
                 <div className="space-y-2">
@@ -699,10 +699,20 @@ export default function Home() {
                 </div>
               </div>
               <div>
-                <p className="font-bold text-gray-900 mb-3 text-xs uppercase tracking-wide">Company</p>
+                <p className="font-bold text-gray-900 mb-3 text-xs uppercase tracking-wide">Resources</p>
                 <div className="space-y-2">
                   <Link to={createPageUrl("Contact")} className="block text-gray-500 hover:text-gray-900">Contact</Link>
                   <Link to={createPageUrl("Tutorials")} className="block text-gray-500 hover:text-gray-900">Tutorials</Link>
+                </div>
+              </div>
+              <div>
+                <p className="font-bold text-gray-900 mb-3 text-xs uppercase tracking-wide">Blog</p>
+                <div className="space-y-2">
+                  <Link to={createPageUrl("BlogPost1")} className="block text-gray-500 hover:text-gray-900 text-xs">Summer Scheduling</Link>
+                  <Link to={createPageUrl("BlogPost2")} className="block text-gray-500 hover:text-gray-900 text-xs">Certification Guide</Link>
+                  <Link to={createPageUrl("BlogPost3")} className="block text-gray-500 hover:text-gray-900 text-xs">OSHA Compliance</Link>
+                  <Link to={createPageUrl("BlogPost4")} className="block text-gray-500 hover:text-gray-900 text-xs">GPS Tracking</Link>
+                  <Link to={createPageUrl("BlogPost5")} className="block text-gray-500 hover:text-gray-900 text-xs">Chemical Logs</Link>
                 </div>
               </div>
               <div>
