@@ -271,6 +271,11 @@ export default function Layout({ children, currentPageName }) {
                       );
                     })}
                   </div>
+                  <div className="border-t border-gray-200 mt-2 pt-2">
+                    <DropdownMenuItem onClick={() => base44.auth.logout(createPageUrl("Home"))} className="flex items-center gap-2 text-red-600 focus:text-red-600 cursor-pointer rounded-md px-2 py-1.5">
+                      <LogOut className="w-3.5 h-3.5" />Log Out
+                    </DropdownMenuItem>
+                  </div>
                 </DropdownMenuContent>
               </DropdownMenu>
             )}
