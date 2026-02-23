@@ -142,6 +142,7 @@ import EmergencyCall from './pages/EmergencyCall';
 import StaffRecognition from './pages/StaffRecognition';
 import PublicStatusWidget from './pages/PublicStatusWidget';
 import SafetyDashboard from './pages/SafetyDashboard';
+import Docs from './pages/Docs';
 import __Layout from './Layout.jsx';
 
 
@@ -241,6 +242,7 @@ export const PAGES = {
     "StaffRecognition": StaffRecognition,
     "PublicStatusWidget": PublicStatusWidget,
     "SafetyDashboard": SafetyDashboard,
+    "Docs": Docs,
 }
 
 export const pagesConfig = {
