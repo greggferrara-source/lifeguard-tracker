@@ -445,8 +445,48 @@ function GenerateReportDialog({ open, onOpenChange }) {
   const [locationId, setLocationId] = React.useState("");
 
   const generate = useMutation({
-    mutationFn: (data) => {
-      // In production, this would call a backend function to generate the report
+    mutationFn: async (data) => {
+      // Collect report data based on type
+      let reportData = { metrics: {}, data: [] };
+      
+      if (reportType === 'staff_performance') {
+        const shifts = await base44.entities.Shift.filter({ 
+          date: { $gte: dateStart, $lte: dateEnd }
+        });
+        reportData.metrics = {
+          total_shifts: shifts.length,
+          total_hours: shifts.reduce((sum, s) => sum + (parseFloat(s.duration) || 0), 0)
+        };
+        reportData.data = shifts.map(s => ({
+          employee: s.employee_name,
+          date: s.date,
+          location: s.location_name,
+          hours: s.duration || 0
+        }));
+      } else if (reportType === 'compliance_scorecard') {
+        const assessments = await base44.entities.ComplianceAssessment.list();
+        reportData.metrics = {
+          total_assessments: assessments.length,
+          avg_score: (assessments.reduce((sum, a) => sum + (a.overall_score || 0), 0) / assessments.length).toFixed(1)
+        };
+        reportData.data = assessments.map(a => ({
+          type: a.assessment_type,
+          score: a.overall_score,
+          date: a.assessment_date
+        }));
+      }
+      
+      // Generate export file
+      const exportResponse = await base44.functions.invoke('generateReportExport', {
+        reportType,
+        format,
+        dateStart,
+        dateEnd,
+        locationId,
+        reportData
+      });
+      
+      // Create report record with actual file
       return base44.entities.SystemReport.create({
         report_type: reportType,
         report_name: `${reportType} Report ${new Date().toLocaleDateString()}`,
@@ -457,8 +497,8 @@ function GenerateReportDialog({ open, onOpenChange }) {
         generated_by_name: "Current User",
         generated_at: new Date().toISOString(),
         format,
-        file_url: "#",
-        metrics: {}
+        file_url: exportResponse.data?.file_url || "#",
+        metrics: reportData.metrics
       });
     },
     onSuccess: () => {
