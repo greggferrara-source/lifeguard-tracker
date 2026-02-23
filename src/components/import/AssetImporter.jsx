@@ -80,6 +80,7 @@ export default function AssetImporter({ onComplete }) {
     setImportResult({ success });
     setImporting(false);
     setPreview(null);
+    if (onComplete) onComplete();
   };
 
   return (
