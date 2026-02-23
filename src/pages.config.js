@@ -54,6 +54,7 @@ import Announcements from './pages/Announcements';
 import AssetManagement from './pages/AssetManagement';
 import Assets from './pages/Assets';
 import Assignments from './pages/Assignments';
+import AutoShiftPlanner from './pages/AutoShiftPlanner';
 import Billing from './pages/Billing';
 import BillingDashboard from './pages/BillingDashboard';
 import CertComplianceDashboard from './pages/CertComplianceDashboard';
@@ -68,14 +69,19 @@ import ComplianceDashboard from './pages/ComplianceDashboard';
 import Contact from './pages/Contact';
 import CustomDashboard from './pages/CustomDashboard';
 import Dashboard from './pages/Dashboard';
+import DataImport from './pages/DataImport';
+import DocsEnhancedFeatures from './pages/DocsEnhancedFeatures';
+import DocsResourceBookingGPS from './pages/DocsResourceBookingGPS';
 import DocsUpdated from './pages/DocsUpdated';
 import DocumentManagement from './pages/DocumentManagement';
 import EmergencyActionPlans from './pages/EmergencyActionPlans';
 import EmployeeDashboard from './pages/EmployeeDashboard';
 import EmployeeDirectory from './pages/EmployeeDirectory';
+import EmployeeLocationTracking from './pages/EmployeeLocationTracking';
 import EmployeeManagement from './pages/EmployeeManagement';
 import EmployeeOnboarding from './pages/EmployeeOnboarding';
 import EmployeePerformanceDashboard from './pages/EmployeePerformanceDashboard';
+import EmployeeProfile from './pages/EmployeeProfile';
 import Employees from './pages/Employees';
 import ErrorLogs from './pages/ErrorLogs';
 import Features from './pages/Features';
@@ -85,6 +91,7 @@ import IncidentDashboard from './pages/IncidentDashboard';
 import IncidentLogs from './pages/IncidentLogs';
 import IncidentTrendReport from './pages/IncidentTrendReport';
 import Inspections from './pages/Inspections';
+import Integrations from './pages/Integrations';
 import Locations from './pages/Locations';
 import MaintenanceReports from './pages/MaintenanceReports';
 import Messages from './pages/Messages';
@@ -98,18 +105,23 @@ import MobileTimeOff from './pages/MobileTimeOff';
 import MultiLocationDashboard from './pages/MultiLocationDashboard';
 import MyAvailability from './pages/MyAvailability';
 import NotificationCenter from './pages/NotificationCenter';
+import NotificationPreferences from './pages/NotificationPreferences';
 import Notifications from './pages/Notifications';
 import OnboardingDashboard from './pages/OnboardingDashboard';
+import OnboardingManagement from './pages/OnboardingManagement';
+import OnboardingRuleBuilder from './pages/OnboardingRuleBuilder';
 import OperationalForms from './pages/OperationalForms';
 import PatronCounts from './pages/PatronCounts';
 import PatronManagement from './pages/PatronManagement';
 import Payroll from './pages/Payroll';
 import PayrollIntegrations from './pages/PayrollIntegrations';
+import PerformanceReviewManager from './pages/PerformanceReviewManager';
 import PoolTestReporting from './pages/PoolTestReporting';
 import Pricing from './pages/Pricing';
 import Privacy from './pages/Privacy';
 import PublicSafetyDashboard from './pages/PublicSafetyDashboard';
 import Reports from './pages/Reports';
+import ResourceBooking from './pages/ResourceBooking';
 import Schedule from './pages/Schedule';
 import Settings from './pages/Settings';
 import SetupWizard from './pages/SetupWizard';
@@ -124,19 +136,7 @@ import Tutorials from './pages/Tutorials';
 import UrgentAlerts from './pages/UrgentAlerts';
 import WeatherAlertsMonitor from './pages/WeatherAlertsMonitor';
 import WorkflowAutomation from './pages/WorkflowAutomation';
-import NotificationPreferences from './pages/NotificationPreferences';
-import ResourceBooking from './pages/ResourceBooking';
-import EmployeeProfile from './pages/EmployeeProfile';
-import EmployeeLocationTracking from './pages/EmployeeLocationTracking';
-import DocsResourceBookingGPS from './pages/DocsResourceBookingGPS';
-import OnboardingManagement from './pages/OnboardingManagement';
-import PerformanceReviewManager from './pages/PerformanceReviewManager';
-import DocsEnhancedFeatures from './pages/DocsEnhancedFeatures';
-import OnboardingRuleBuilder from './pages/OnboardingRuleBuilder';
 import WorkforceScheduler from './pages/WorkforceScheduler';
-import AutoShiftPlanner from './pages/AutoShiftPlanner';
-import DataImport from './pages/DataImport';
-import Integrations from './pages/Integrations';
 import __Layout from './Layout.jsx';
 
 
@@ -148,6 +148,7 @@ export const PAGES = {
     "AssetManagement": AssetManagement,
     "Assets": Assets,
     "Assignments": Assignments,
+    "AutoShiftPlanner": AutoShiftPlanner,
     "Billing": Billing,
     "BillingDashboard": BillingDashboard,
     "CertComplianceDashboard": CertComplianceDashboard,
@@ -162,14 +163,19 @@ export const PAGES = {
     "Contact": Contact,
     "CustomDashboard": CustomDashboard,
     "Dashboard": Dashboard,
+    "DataImport": DataImport,
+    "DocsEnhancedFeatures": DocsEnhancedFeatures,
+    "DocsResourceBookingGPS": DocsResourceBookingGPS,
     "DocsUpdated": DocsUpdated,
     "DocumentManagement": DocumentManagement,
     "EmergencyActionPlans": EmergencyActionPlans,
     "EmployeeDashboard": EmployeeDashboard,
     "EmployeeDirectory": EmployeeDirectory,
+    "EmployeeLocationTracking": EmployeeLocationTracking,
     "EmployeeManagement": EmployeeManagement,
     "EmployeeOnboarding": EmployeeOnboarding,
     "EmployeePerformanceDashboard": EmployeePerformanceDashboard,
+    "EmployeeProfile": EmployeeProfile,
     "Employees": Employees,
     "ErrorLogs": ErrorLogs,
     "Features": Features,
@@ -179,6 +185,7 @@ export const PAGES = {
     "IncidentLogs": IncidentLogs,
     "IncidentTrendReport": IncidentTrendReport,
     "Inspections": Inspections,
+    "Integrations": Integrations,
     "Locations": Locations,
     "MaintenanceReports": MaintenanceReports,
     "Messages": Messages,
@@ -192,18 +199,23 @@ export const PAGES = {
     "MultiLocationDashboard": MultiLocationDashboard,
     "MyAvailability": MyAvailability,
     "NotificationCenter": NotificationCenter,
+    "NotificationPreferences": NotificationPreferences,
     "Notifications": Notifications,
     "OnboardingDashboard": OnboardingDashboard,
+    "OnboardingManagement": OnboardingManagement,
+    "OnboardingRuleBuilder": OnboardingRuleBuilder,
     "OperationalForms": OperationalForms,
     "PatronCounts": PatronCounts,
     "PatronManagement": PatronManagement,
     "Payroll": Payroll,
     "PayrollIntegrations": PayrollIntegrations,
+    "PerformanceReviewManager": PerformanceReviewManager,
     "PoolTestReporting": PoolTestReporting,
     "Pricing": Pricing,
     "Privacy": Privacy,
     "PublicSafetyDashboard": PublicSafetyDashboard,
     "Reports": Reports,
+    "ResourceBooking": ResourceBooking,
     "Schedule": Schedule,
     "Settings": Settings,
     "SetupWizard": SetupWizard,
@@ -218,19 +230,7 @@ export const PAGES = {
     "UrgentAlerts": UrgentAlerts,
     "WeatherAlertsMonitor": WeatherAlertsMonitor,
     "WorkflowAutomation": WorkflowAutomation,
-    "NotificationPreferences": NotificationPreferences,
-    "ResourceBooking": ResourceBooking,
-    "EmployeeProfile": EmployeeProfile,
-    "EmployeeLocationTracking": EmployeeLocationTracking,
-    "DocsResourceBookingGPS": DocsResourceBookingGPS,
-    "OnboardingManagement": OnboardingManagement,
-    "PerformanceReviewManager": PerformanceReviewManager,
-    "DocsEnhancedFeatures": DocsEnhancedFeatures,
-    "OnboardingRuleBuilder": OnboardingRuleBuilder,
     "WorkforceScheduler": WorkforceScheduler,
-    "AutoShiftPlanner": AutoShiftPlanner,
-    "DataImport": DataImport,
-    "Integrations": Integrations,
 }
 
 export const pagesConfig = {
