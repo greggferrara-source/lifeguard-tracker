@@ -17,10 +17,9 @@ import {
   AlertTriangle,
   BarChart2,
   ArrowRight,
-  Shield,
   CheckCircle2,
-  Zap } from
-"lucide-react";
+  Zap
+} from "lucide-react";
 
 export default function Dashboard() {
   const { data: user } = useQuery({
@@ -120,15 +119,8 @@ export default function Dashboard() {
 
       {/* Hero Section */}
       <section className="px-6 py-20 sm:py-28 max-w-6xl mx-auto text-center">
-        <h1 className="text-5xl sm:text-6xl font-bold text-gray-900 leading-tight mb-6">Lifeguard scheduling
-made simple.
-
-
-        </h1>
-        <p className="text-xl text-gray-600 max-w-2xl mx-auto mb-10 leading-relaxed">Organize your team, manage schedules, and keep everyone aligned. All in one simple, elegant, organized place.
-
-
-        </p>
+        <h1 className="text-5xl sm:text-6xl font-bold text-gray-900 leading-tight mb-6">Lifeguard scheduling made simple.</h1>
+        <p className="text-xl text-gray-600 max-w-2xl mx-auto mb-10 leading-relaxed">Organize your team, manage schedules, and keep everyone aligned. All in one simple, elegant, organized place.</p>
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
           <Link to={createPageUrl("Schedule")}>
             <Button className="bg-[#1a9c5b] hover:bg-[#158a4e] text-white px-8 py-6 text-lg rounded-xl h-auto">
@@ -165,9 +157,7 @@ made simple.
               </div>
               <div>
                 <h3 className="text-2xl font-bold text-gray-900">Schedule</h3>
-                <p className="text-gray-600 mt-1">
-                  View shifts by week, location, or employee
-                </p>
+                <p className="text-gray-600 mt-1">View shifts by week, location, or employee</p>
               </div>
             </div>
             <p className="text-gray-600 mb-4">
@@ -258,11 +248,9 @@ made simple.
         </div>
 
         {/* Admin Section */}
-        {isAdmin &&
+        {isAdmin && (
         <div className="mt-12 pt-12 border-t border-gray-200">
-            <h3 className="text-2xl font-bold text-gray-900 mb-8">
-              Admin & Oversight
-            </h3>
+            <h3 className="text-2xl font-bold text-gray-900 mb-8">Admin & Oversight</h3>
             <div className="grid md:grid-cols-2 gap-12">
               <Link
               to={createPageUrl("Alerts")}
@@ -317,7 +305,7 @@ made simple.
               </Link>
             </div>
           </div>
-        }
+        )}
       </section>
 
       {/* Why LifeGuard Tracker */}
@@ -438,6 +426,6 @@ made simple.
       </section>
 
       <DashboardFooter />
-    </div>);
-
+    </div>
+  );
 }

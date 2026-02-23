@@ -6,30 +6,15 @@ import {
   Shield,
   CalendarDays,
   Users,
-  Clock,
-  BarChart2,
-  AlertTriangle,
   CheckCircle2,
   Star,
   ArrowRight,
-  MessageSquare,
   Menu,
   X,
   Play,
-  FileText,
-  BookOpen,
-  MapPin,
-  Zap,
-  Globe,
-  ClipboardList,
-  Droplets,
-  Wrench,
-  UserCheck,
-  DollarSign,
-  Bell,
-  Eye,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import ChatbotWidget from "@/components/ChatbotWidget";
 
 // ─── Data ───────────────────────────────────────────────────────────────────
 
@@ -143,8 +128,6 @@ const plans = [
 ];
 
 // ─── Component ───────────────────────────────────────────────────────────────
-
-import ChatbotWidget from "@/components/ChatbotWidget";
 
 export default function Home() {
   const navigate = useNavigate();

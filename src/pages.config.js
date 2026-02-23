@@ -47,6 +47,7 @@
  *
  * The mainPage value must match a key in the PAGES object exactly.
  */
+import AccessibilityStatement from './pages/AccessibilityStatement';
 import AdminSetup from './pages/AdminSetup';
 import AdvancedReporting from './pages/AdvancedReporting';
 import Alerts from './pages/Alerts';
@@ -57,11 +58,19 @@ import Assignments from './pages/Assignments';
 import AutoShiftPlanner from './pages/AutoShiftPlanner';
 import Billing from './pages/Billing';
 import BillingDashboard from './pages/BillingDashboard';
+import Blog from './pages/Blog';
 import BlogPost1 from './pages/BlogPost1';
+import BlogPost10 from './pages/BlogPost10';
+import BlogPost11 from './pages/BlogPost11';
+import BlogPost12 from './pages/BlogPost12';
 import BlogPost2 from './pages/BlogPost2';
 import BlogPost3 from './pages/BlogPost3';
 import BlogPost4 from './pages/BlogPost4';
 import BlogPost5 from './pages/BlogPost5';
+import BlogPost6 from './pages/BlogPost6';
+import BlogPost7 from './pages/BlogPost7';
+import BlogPost8 from './pages/BlogPost8';
+import BlogPost9 from './pages/BlogPost9';
 import CertComplianceDashboard from './pages/CertComplianceDashboard';
 import Certifications from './pages/Certifications';
 import Channels from './pages/Channels';
@@ -72,15 +81,20 @@ import ComplianceAIAdvisor from './pages/ComplianceAIAdvisor';
 import ComplianceAlertSettings from './pages/ComplianceAlertSettings';
 import ComplianceAssessmentManager from './pages/ComplianceAssessmentManager';
 import ComplianceDashboard from './pages/ComplianceDashboard';
+import ComplianceWorkflowDetail from './pages/ComplianceWorkflowDetail';
+import ComplianceWorkflowManager from './pages/ComplianceWorkflowManager';
 import Contact from './pages/Contact';
+import CreateIncidentReport from './pages/CreateIncidentReport';
 import CustomDashboard from './pages/CustomDashboard';
 import Dashboard from './pages/Dashboard';
 import DataImport from './pages/DataImport';
+import DataProcessingAgreement from './pages/DataProcessingAgreement';
 import Docs from './pages/Docs';
 import DocsEnhancedFeatures from './pages/DocsEnhancedFeatures';
 import DocsResourceBookingGPS from './pages/DocsResourceBookingGPS';
 import DocsUpdated from './pages/DocsUpdated';
 import DocumentManagement from './pages/DocumentManagement';
+import Documentation from './pages/Documentation';
 import EmergencyActionPlans from './pages/EmergencyActionPlans';
 import EmergencyCall from './pages/EmergencyCall';
 import EmployeeDashboard from './pages/EmployeeDashboard';
@@ -97,10 +111,14 @@ import GlobalSearch from './pages/GlobalSearch';
 import GuardAIInsights from './pages/GuardAIInsights';
 import Home from './pages/Home';
 import IncidentDashboard from './pages/IncidentDashboard';
+import IncidentDetail from './pages/IncidentDetail';
 import IncidentLogs from './pages/IncidentLogs';
+import IncidentManagement from './pages/IncidentManagement';
 import IncidentTrendReport from './pages/IncidentTrendReport';
 import Inspections from './pages/Inspections';
 import Integrations from './pages/Integrations';
+import IoTAnalyticsDashboard from './pages/IoTAnalyticsDashboard';
+import IoTSensorDashboard from './pages/IoTSensorDashboard';
 import Locations from './pages/Locations';
 import MaintenanceReports from './pages/MaintenanceReports';
 import Messages from './pages/Messages';
@@ -110,6 +128,7 @@ import MobileEmployees from './pages/MobileEmployees';
 import MobileGuardDashboard from './pages/MobileGuardDashboard';
 import MobileLocations from './pages/MobileLocations';
 import MobileSchedule from './pages/MobileSchedule';
+import MobileStaffApp from './pages/MobileStaffApp';
 import MobileTimeOff from './pages/MobileTimeOff';
 import MultiLocationDashboard from './pages/MultiLocationDashboard';
 import MyAvailability from './pages/MyAvailability';
@@ -126,8 +145,10 @@ import Payroll from './pages/Payroll';
 import PayrollIntegrations from './pages/PayrollIntegrations';
 import PerformanceReviewManager from './pages/PerformanceReviewManager';
 import PoolTestReporting from './pages/PoolTestReporting';
+import PredictiveAnalytics from './pages/PredictiveAnalytics';
 import Pricing from './pages/Pricing';
 import Privacy from './pages/Privacy';
+import PrivacyPolicy from './pages/PrivacyPolicy';
 import PublicSafetyDashboard from './pages/PublicSafetyDashboard';
 import PublicStatusWidget from './pages/PublicStatusWidget';
 import Reports from './pages/Reports';
@@ -138,46 +159,26 @@ import Settings from './pages/Settings';
 import SetupWizard from './pages/SetupWizard';
 import ShiftPreferencesManager from './pages/ShiftPreferencesManager';
 import ShiftSwaps from './pages/ShiftSwaps';
+import Sitemap from './pages/Sitemap';
 import StaffRecognition from './pages/StaffRecognition';
 import StaffingForecast from './pages/StaffingForecast';
 import StaffingForecastDashboard from './pages/StaffingForecastDashboard';
+import TeamChat from './pages/TeamChat';
 import Terms from './pages/Terms';
 import TimeOff from './pages/TimeOff';
 import TrainingDashboard from './pages/TrainingDashboard';
+import TrainingGamification from './pages/TrainingGamification';
+import TrainingModuleManager from './pages/TrainingModuleManager';
 import Tutorials from './pages/Tutorials';
 import UrgentAlerts from './pages/UrgentAlerts';
 import WeatherAlertsMonitor from './pages/WeatherAlertsMonitor';
 import WorkflowAutomation from './pages/WorkflowAutomation';
 import WorkforceScheduler from './pages/WorkforceScheduler';
-import Blog from './pages/Blog';
-import BlogPost6 from './pages/BlogPost6';
-import BlogPost7 from './pages/BlogPost7';
-import BlogPost8 from './pages/BlogPost8';
-import BlogPost9 from './pages/BlogPost9';
-import BlogPost10 from './pages/BlogPost10';
-import BlogPost11 from './pages/BlogPost11';
-import BlogPost12 from './pages/BlogPost12';
-import PredictiveAnalytics from './pages/PredictiveAnalytics';
-import MobileStaffApp from './pages/MobileStaffApp';
-import TeamChat from './pages/TeamChat';
-import ComplianceWorkflowManager from './pages/ComplianceWorkflowManager';
-import ComplianceWorkflowDetail from './pages/ComplianceWorkflowDetail';
-import PrivacyPolicy from './pages/PrivacyPolicy';
-import DataProcessingAgreement from './pages/DataProcessingAgreement';
-import Sitemap from './pages/Sitemap';
-import AccessibilityStatement from './pages/AccessibilityStatement';
-import Documentation from './pages/Documentation';
-import IncidentManagement from './pages/IncidentManagement';
-import CreateIncidentReport from './pages/CreateIncidentReport';
-import TrainingModuleManager from './pages/TrainingModuleManager';
-import IoTSensorDashboard from './pages/IoTSensorDashboard';
-import IncidentDetail from './pages/IncidentDetail';
-import IoTAnalyticsDashboard from './pages/IoTAnalyticsDashboard';
-import TrainingGamification from './pages/TrainingGamification';
 import __Layout from './Layout.jsx';
 
 
 export const PAGES = {
+    "AccessibilityStatement": AccessibilityStatement,
     "AdminSetup": AdminSetup,
     "AdvancedReporting": AdvancedReporting,
     "Alerts": Alerts,
@@ -188,11 +189,19 @@ export const PAGES = {
     "AutoShiftPlanner": AutoShiftPlanner,
     "Billing": Billing,
     "BillingDashboard": BillingDashboard,
+    "Blog": Blog,
     "BlogPost1": BlogPost1,
+    "BlogPost10": BlogPost10,
+    "BlogPost11": BlogPost11,
+    "BlogPost12": BlogPost12,
     "BlogPost2": BlogPost2,
     "BlogPost3": BlogPost3,
     "BlogPost4": BlogPost4,
     "BlogPost5": BlogPost5,
+    "BlogPost6": BlogPost6,
+    "BlogPost7": BlogPost7,
+    "BlogPost8": BlogPost8,
+    "BlogPost9": BlogPost9,
     "CertComplianceDashboard": CertComplianceDashboard,
     "Certifications": Certifications,
     "Channels": Channels,
@@ -203,15 +212,20 @@ export const PAGES = {
     "ComplianceAlertSettings": ComplianceAlertSettings,
     "ComplianceAssessmentManager": ComplianceAssessmentManager,
     "ComplianceDashboard": ComplianceDashboard,
+    "ComplianceWorkflowDetail": ComplianceWorkflowDetail,
+    "ComplianceWorkflowManager": ComplianceWorkflowManager,
     "Contact": Contact,
+    "CreateIncidentReport": CreateIncidentReport,
     "CustomDashboard": CustomDashboard,
     "Dashboard": Dashboard,
     "DataImport": DataImport,
+    "DataProcessingAgreement": DataProcessingAgreement,
     "Docs": Docs,
     "DocsEnhancedFeatures": DocsEnhancedFeatures,
     "DocsResourceBookingGPS": DocsResourceBookingGPS,
     "DocsUpdated": DocsUpdated,
     "DocumentManagement": DocumentManagement,
+    "Documentation": Documentation,
     "EmergencyActionPlans": EmergencyActionPlans,
     "EmergencyCall": EmergencyCall,
     "EmployeeDashboard": EmployeeDashboard,
@@ -228,10 +242,14 @@ export const PAGES = {
     "GuardAIInsights": GuardAIInsights,
     "Home": Home,
     "IncidentDashboard": IncidentDashboard,
+    "IncidentDetail": IncidentDetail,
     "IncidentLogs": IncidentLogs,
+    "IncidentManagement": IncidentManagement,
     "IncidentTrendReport": IncidentTrendReport,
     "Inspections": Inspections,
     "Integrations": Integrations,
+    "IoTAnalyticsDashboard": IoTAnalyticsDashboard,
+    "IoTSensorDashboard": IoTSensorDashboard,
     "Locations": Locations,
     "MaintenanceReports": MaintenanceReports,
     "Messages": Messages,
@@ -241,6 +259,7 @@ export const PAGES = {
     "MobileGuardDashboard": MobileGuardDashboard,
     "MobileLocations": MobileLocations,
     "MobileSchedule": MobileSchedule,
+    "MobileStaffApp": MobileStaffApp,
     "MobileTimeOff": MobileTimeOff,
     "MultiLocationDashboard": MultiLocationDashboard,
     "MyAvailability": MyAvailability,
@@ -257,8 +276,10 @@ export const PAGES = {
     "PayrollIntegrations": PayrollIntegrations,
     "PerformanceReviewManager": PerformanceReviewManager,
     "PoolTestReporting": PoolTestReporting,
+    "PredictiveAnalytics": PredictiveAnalytics,
     "Pricing": Pricing,
     "Privacy": Privacy,
+    "PrivacyPolicy": PrivacyPolicy,
     "PublicSafetyDashboard": PublicSafetyDashboard,
     "PublicStatusWidget": PublicStatusWidget,
     "Reports": Reports,
@@ -269,42 +290,21 @@ export const PAGES = {
     "SetupWizard": SetupWizard,
     "ShiftPreferencesManager": ShiftPreferencesManager,
     "ShiftSwaps": ShiftSwaps,
+    "Sitemap": Sitemap,
     "StaffRecognition": StaffRecognition,
     "StaffingForecast": StaffingForecast,
     "StaffingForecastDashboard": StaffingForecastDashboard,
+    "TeamChat": TeamChat,
     "Terms": Terms,
     "TimeOff": TimeOff,
     "TrainingDashboard": TrainingDashboard,
+    "TrainingGamification": TrainingGamification,
+    "TrainingModuleManager": TrainingModuleManager,
     "Tutorials": Tutorials,
     "UrgentAlerts": UrgentAlerts,
     "WeatherAlertsMonitor": WeatherAlertsMonitor,
     "WorkflowAutomation": WorkflowAutomation,
     "WorkforceScheduler": WorkforceScheduler,
-    "Blog": Blog,
-    "BlogPost6": BlogPost6,
-    "BlogPost7": BlogPost7,
-    "BlogPost8": BlogPost8,
-    "BlogPost9": BlogPost9,
-    "BlogPost10": BlogPost10,
-    "BlogPost11": BlogPost11,
-    "BlogPost12": BlogPost12,
-    "PredictiveAnalytics": PredictiveAnalytics,
-    "MobileStaffApp": MobileStaffApp,
-    "TeamChat": TeamChat,
-    "ComplianceWorkflowManager": ComplianceWorkflowManager,
-    "ComplianceWorkflowDetail": ComplianceWorkflowDetail,
-    "PrivacyPolicy": PrivacyPolicy,
-    "DataProcessingAgreement": DataProcessingAgreement,
-    "Sitemap": Sitemap,
-    "AccessibilityStatement": AccessibilityStatement,
-    "Documentation": Documentation,
-    "IncidentManagement": IncidentManagement,
-    "CreateIncidentReport": CreateIncidentReport,
-    "TrainingModuleManager": TrainingModuleManager,
-    "IoTSensorDashboard": IoTSensorDashboard,
-    "IncidentDetail": IncidentDetail,
-    "IoTAnalyticsDashboard": IoTAnalyticsDashboard,
-    "TrainingGamification": TrainingGamification,
 }
 
 export const pagesConfig = {

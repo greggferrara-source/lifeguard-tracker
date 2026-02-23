@@ -1,10 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { createPageUrl } from "@/utils";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { base44 } from "@/api/base44Client";
-import { CheckCircle2, Shield, Zap, Users, ArrowRight, MessageSquare, Phone, Mail, Loader2 } from "lucide-react";
+import { CheckCircle2, ArrowRight, Mail, Loader2 } from "lucide-react";
 import { toast } from "sonner";
 
 const PRICE_IDS = {
@@ -13,17 +13,7 @@ const PRICE_IDS = {
   enterprise: { monthly: "price_1T3jT0Jz3753BrBceoHWaLAr", annual: "price_1T3jT0Jz3753BrBcP96qiKow" },
 };
 
-const sharedFeatures = [
-  "Scheduling & shift management",
-  "Time-off requests & approvals",
-  "Shift swaps & availability",
-  "Chemical & inspection logs",
-  "Certification tracking + expiry alerts",
-  "SMS & email notifications",
-  "Reports & analytics",
-  "AI scheduling assistant",
-  "Up to 10 locations",
-];
+
 
 const plans = [
   {
@@ -118,7 +108,7 @@ export default function Pricing() {
   const [annual, setAnnual] = useState(false);
   const [loadingPlan, setLoadingPlan] = useState(null);
 
-  React.useEffect(() => { window.scrollTo(0, 0); }, []);
+  useEffect(() => { window.scrollTo(0, 0); }, []);
 
   const handleCheckout = async (plan) => {
     if (plan.name === "Enterprise") {
