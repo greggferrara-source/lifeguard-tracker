@@ -164,6 +164,7 @@ import ComplianceWorkflowManager from './pages/ComplianceWorkflowManager';
 import ComplianceWorkflowDetail from './pages/ComplianceWorkflowDetail';
 import PrivacyPolicy from './pages/PrivacyPolicy';
 import DataProcessingAgreement from './pages/DataProcessingAgreement';
+import Sitemap from './pages/Sitemap';
 import __Layout from './Layout.jsx';
 
 
@@ -285,6 +286,7 @@ export const PAGES = {
     "ComplianceWorkflowDetail": ComplianceWorkflowDetail,
     "PrivacyPolicy": PrivacyPolicy,
     "DataProcessingAgreement": DataProcessingAgreement,
+    "Sitemap": Sitemap,
 }
 
 export const pagesConfig = {
