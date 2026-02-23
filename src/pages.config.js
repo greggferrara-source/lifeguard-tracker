@@ -138,6 +138,7 @@ import WeatherAlertsMonitor from './pages/WeatherAlertsMonitor';
 import WorkflowAutomation from './pages/WorkflowAutomation';
 import WorkforceScheduler from './pages/WorkforceScheduler';
 import GuardAIInsights from './pages/GuardAIInsights';
+import EmergencyCall from './pages/EmergencyCall';
 import __Layout from './Layout.jsx';
 
 
@@ -233,6 +234,7 @@ export const PAGES = {
     "WorkflowAutomation": WorkflowAutomation,
     "WorkforceScheduler": WorkforceScheduler,
     "GuardAIInsights": GuardAIInsights,
+    "EmergencyCall": EmergencyCall,
 }
 
 export const pagesConfig = {
