@@ -205,13 +205,14 @@ export default function AssetManagement() {
   );
 }
 
-function OverviewTab({ assets, maintenanceDue, overdueMaintenance }) {
+function OverviewTab({ assets, maintenanceDue, overdueMaintenance, categoryFilter, onEdit }) {
   const [search, setSearch] = React.useState("");
 
-  const filtered = assets.filter(a =>
-    a.name?.toLowerCase().includes(search.toLowerCase()) ||
-    a.asset_tag?.toLowerCase().includes(search.toLowerCase())
-  );
+  const filtered = assets.filter(a => {
+    const matchesSearch = a.name?.toLowerCase().includes(search.toLowerCase()) || a.asset_tag?.toLowerCase().includes(search.toLowerCase());
+    const matchesCat = categoryFilter === "all" || a.category === categoryFilter;
+    return matchesSearch && matchesCat;
+  });
 
   return (
     <div className="space-y-4">
