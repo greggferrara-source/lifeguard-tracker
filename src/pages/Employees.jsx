@@ -234,11 +234,11 @@ export default function Employees() {
                        <CalendarCheck className="w-3.5 h-3.5 mr-2" /> Set Availability
                      </DropdownMenuItem>
                      <DropdownMenuItem
-                       className="text-red-600"
-                       onClick={() => deleteEmployee.mutate(emp.id)}
-                     >
-                       <Trash2 className="w-3.5 h-3.5 mr-2" /> Delete
-                     </DropdownMenuItem>
+                                       className="text-red-600"
+                                       onClick={() => { if (confirm(`Delete ${emp.first_name} ${emp.last_name}? This cannot be undone.`)) deleteEmployee.mutate(emp.id); }}
+                                     >
+                                       <Trash2 className="w-3.5 h-3.5 mr-2" /> Delete
+                                     </DropdownMenuItem>
                    </DropdownMenuContent>
                 </DropdownMenu>
               </div>
@@ -279,8 +279,21 @@ export default function Employees() {
 
       {filtered.length === 0 && !isLoading && (
         <div className="text-center py-16 text-slate-400">
-          <p className="font-medium">No employees found</p>
-          <p className="text-sm mt-1">Add your first team member to get started</p>
+          <Users className="w-12 h-12 mx-auto mb-3 opacity-30" />
+          {search ? (
+            <>
+              <p className="font-medium">No employees match "{search}"</p>
+              <p className="text-sm mt-1">Try a different name or clear your search</p>
+            </>
+          ) : (
+            <>
+              <p className="font-medium text-gray-700">No team members yet</p>
+              <p className="text-sm mt-1 mb-4">Add your first employee to start building schedules</p>
+              <Button size="sm" className="bg-[#1a9c5b] hover:bg-[#158a4e]" onClick={() => { setEditingEmployee(null); setDialogOpen(true); }}>
+                <Plus className="w-4 h-4 mr-1" /> Add First Employee
+              </Button>
+            </>
+          )}
         </div>
       )}
 
