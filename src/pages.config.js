@@ -140,6 +140,7 @@ import WorkforceScheduler from './pages/WorkforceScheduler';
 import GuardAIInsights from './pages/GuardAIInsights';
 import EmergencyCall from './pages/EmergencyCall';
 import StaffRecognition from './pages/StaffRecognition';
+import PublicStatusWidget from './pages/PublicStatusWidget';
 import __Layout from './Layout.jsx';
 
 
@@ -237,6 +238,7 @@ export const PAGES = {
     "GuardAIInsights": GuardAIInsights,
     "EmergencyCall": EmergencyCall,
     "StaffRecognition": StaffRecognition,
+    "PublicStatusWidget": PublicStatusWidget,
 }
 
 export const pagesConfig = {
