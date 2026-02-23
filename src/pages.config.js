@@ -139,6 +139,7 @@ import WorkflowAutomation from './pages/WorkflowAutomation';
 import WorkforceScheduler from './pages/WorkforceScheduler';
 import GuardAIInsights from './pages/GuardAIInsights';
 import EmergencyCall from './pages/EmergencyCall';
+import StaffRecognition from './pages/StaffRecognition';
 import __Layout from './Layout.jsx';
 
 
@@ -235,6 +236,7 @@ export const PAGES = {
     "WorkforceScheduler": WorkforceScheduler,
     "GuardAIInsights": GuardAIInsights,
     "EmergencyCall": EmergencyCall,
+    "StaffRecognition": StaffRecognition,
 }
 
 export const pagesConfig = {
