@@ -68,19 +68,19 @@ const features = [
   { icon: Users, title: "Team Management", desc: "Employee profiles, roles, availability, certifications, and onboarding in one place." },
   { icon: Clock, title: "Time & Attendance", desc: "Clock in/out, time-off requests, shift swap approvals, and payroll-ready exports." },
   { icon: Shield, title: "Compliance Dashboard", desc: "Audit-ready compliance checks, certification expiry alerts, and inspection logs." },
-  { icon: AlertTriangle, title: "Incident Logs", desc: "Log rescues, injuries, and near-misses with photo attachments, severity tracking, and follow-up workflows." },
+  { icon: AlertTriangle, title: "Incident Management", desc: "Comprehensive incident reporting with AI-powered analysis, trend detection, and predictive safety recommendations." },
   { icon: ClipboardList, title: "Checklists & Forms", desc: "Digital daily checklists and custom operational forms for every area of your facility." },
-  { icon: Droplets, title: "Chemical Logs", desc: "Track pH, chlorine, and other chemical readings with automated alerts for out-of-range values." },
+  { icon: Droplets, title: "IoT Analytics & Monitoring", desc: "Real-time water/air quality with historical trends, anomaly detection, sensor correlation analysis, and predictive alerts." },
   { icon: Wrench, title: "Asset Tracking", desc: "Manage rescue tubes, AEDs, and all facility assets with maintenance schedules and status tracking." },
-  { icon: BookOpen, title: "Staff Training", desc: "Assign training modules with quizzes, track completion rates, and ensure every guard is prepared." },
+  { icon: BookOpen, title: "Gamified Staff Training", desc: "Earn points, badges, and compete on leaderboards. Track progress with visual rewards and intelligent recommendations." },
   { icon: FileText, title: "Emergency Action Plans", desc: "Build and distribute step-by-step EAPs for every emergency scenario — drowning, lightning, missing patron, and more." },
-  { icon: BarChart2, title: "Advanced Analytics", desc: "Multi-module reporting with trends, visualizations, PDF/CSV exports, predictive insights, and compliance scoring." },
+  { icon: BarChart2, title: "Advanced Analytics", desc: "Multi-module reporting with AI-generated insights, predictive staffing needs, trends, visualizations, and compliance scoring." },
   { icon: MessageSquare, title: "Communications", desc: "Announcements, team channels, direct messages, and instant broadcast alerts." },
   { icon: Bell, title: "Smart Notifications", desc: "Configurable alerts for pool tests, maintenance, compliance gaps, task assignments with email/SMS/in-app delivery." },
   { icon: DollarSign, title: "Payroll Integration", desc: "Sync timesheets and schedules directly to Gusto, ADP, Paychex, and other payroll providers." },
   { icon: Globe, title: "Multi-Location Dashboard", desc: "Manage multiple pools and facilities from a single enterprise dashboard with rollup reporting." },
   { icon: Eye, title: "Document Management", desc: "Centralized storage with version control, expiry tracking, categorization, and full-text search." },
-  { icon: Zap, title: "AI Compliance Advisor", desc: "Intelligent system analyzing data to identify OSHA/MAHC violations with actionable recommendations." },
+  { icon: Zap, title: "AI Safety & Training Advisor", desc: "Intelligent system analyzing incident trends and employee performance to recommend targeted training and predict staffing needs." },
   { icon: MapPin, title: "Locations Management", desc: "Manage unlimited facility locations with per-location settings, staff, and compliance records." },
 ];
 
@@ -122,7 +122,7 @@ const plans = [
     period: "/month",
     annual: "$290/year",
     highlight: false,
-    features: ["Scheduling & shifts", "Employee profiles", "Time off management", "Basic reports"],
+    features: ["Scheduling & shifts", "Employee profiles", "Time off management", "Basic training & gamification", "IoT sensor monitoring"],
   },
   {
     name: "Pro",
@@ -130,7 +130,7 @@ const plans = [
     period: "/month",
     annual: "$990/year",
     highlight: true,
-    features: ["Everything in Starter", "Compliance & cert tracking", "Smart notifications", "Payroll integrations", "Advanced reporting & analytics"],
+    features: ["Everything in Starter", "Compliance & cert tracking", "Incident management", "IoT analytics & predictions", "Training with AI recommendations", "Gamification leaderboards"],
   },
   {
     name: "Enterprise",
@@ -138,7 +138,7 @@ const plans = [
     period: "/month",
     annual: "$4,990/year",
     highlight: false,
-    features: ["Everything in Pro", "Multi-location management", "Document management", "AI Compliance Advisor", "Priority support"],
+    features: ["Everything in Pro", "Multi-location management", "Document management", "Advanced AI safety advisor", "Predictive staffing analysis", "Priority support"],
   },
 ];
 
