@@ -124,6 +124,9 @@ const enterpriseGroups = [
     label: "Analytics & Team",
     icon: Users,
     items: [
+      { name: "Predictive Analytics", icon: TrendingUp, page: "PredictiveAnalytics" },
+      { name: "Staff Mobile App", icon: Users, page: "MobileStaffApp" },
+      { name: "Team Chat", icon: MessageSquare, page: "TeamChat" },
       { name: "Employee Performance", icon: Award, page: "EmployeePerformanceDashboard" },
       { name: "Patron Management", icon: Users, page: "PatronManagement" },
       { name: "Staff Recognition", icon: Award, page: "StaffRecognition" },
