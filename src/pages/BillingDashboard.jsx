@@ -432,7 +432,7 @@ export default function BillingDashboard() {
                 </div>
               </div>
             )}
-          </>)}
+          </div>)}
           </TabsContent>
         </Tabs>
       </div>
