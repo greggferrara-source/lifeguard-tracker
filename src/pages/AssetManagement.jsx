@@ -11,12 +11,27 @@ import { differenceInDays, parseISO, format } from "date-fns";
 import AssetDialog from "@/components/assets/AssetDialog";
 import AssetImporter from "@/components/import/AssetImporter";
 
+const CATEGORIES = [
+  { value: "all", label: "All Categories" },
+  { value: "safety_equipment", label: "Safety Equipment" },
+  { value: "pool_equipment", label: "Pool Equipment" },
+  { value: "chemical_equipment", label: "Chemical Equipment" },
+  { value: "technology", label: "Technology" },
+  { value: "vehicle", label: "Vehicle" },
+  { value: "furniture", label: "Furniture" },
+  { value: "other", label: "Other" },
+];
+
 export default function AssetManagement() {
   const qc = useQueryClient();
   const [tab, setTab] = useState("overview");
   const [searchTerm, setSearchTerm] = useState("");
+  const [categoryFilter, setCategoryFilter] = useState("all");
   const [showMaintenanceDialog, setShowMaintenanceDialog] = useState(false);
   const [showServiceDialog, setShowServiceDialog] = useState(false);
+  const [showAssetDialog, setShowAssetDialog] = useState(false);
+  const [showImporter, setShowImporter] = useState(false);
+  const [editingAsset, setEditingAsset] = useState(null);
   const [selectedAsset, setSelectedAsset] = useState(null);
 
   const { data: assets = [] } = useQuery({
