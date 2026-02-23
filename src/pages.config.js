@@ -146,6 +146,7 @@ import WorkforceScheduler from './pages/WorkforceScheduler';
 import BlogPost1 from './pages/BlogPost1';
 import BlogPost2 from './pages/BlogPost2';
 import BlogPost3 from './pages/BlogPost3';
+import BlogPost4 from './pages/BlogPost4';
 import __Layout from './Layout.jsx';
 
 
@@ -249,6 +250,7 @@ export const PAGES = {
     "BlogPost1": BlogPost1,
     "BlogPost2": BlogPost2,
     "BlogPost3": BlogPost3,
+    "BlogPost4": BlogPost4,
 }
 
 export const pagesConfig = {
