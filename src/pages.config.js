@@ -166,6 +166,7 @@ import PrivacyPolicy from './pages/PrivacyPolicy';
 import DataProcessingAgreement from './pages/DataProcessingAgreement';
 import Sitemap from './pages/Sitemap';
 import AccessibilityStatement from './pages/AccessibilityStatement';
+import Documentation from './pages/Documentation';
 import __Layout from './Layout.jsx';
 
 
@@ -289,6 +290,7 @@ export const PAGES = {
     "DataProcessingAgreement": DataProcessingAgreement,
     "Sitemap": Sitemap,
     "AccessibilityStatement": AccessibilityStatement,
+    "Documentation": Documentation,
 }
 
 export const pagesConfig = {

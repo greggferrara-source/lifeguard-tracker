@@ -114,6 +114,7 @@ const enterpriseGroups = [
       { name: "Payroll Integrations", icon: BarChart2, page: "PayrollIntegrations", enterpriseOnly: true },
       { name: "External Integrations", icon: Zap, page: "Integrations" },
       { name: "Compliance Workflows", icon: Shield, page: "ComplianceWorkflowManager" },
+      { name: "Documentation", icon: BookOpen, page: "Documentation" },
       { name: "Billing", icon: CreditCard, page: "Billing", ownerOnly: true, rootOnly: true },
       { name: "Settings", icon: Settings, page: "Settings", ownerOnly: true },
       { name: "Admin Setup", icon: LayoutDashboard, page: "AdminSetup", ownerOnly: true },
@@ -312,7 +313,7 @@ export default function Layout({ children, currentPageName }) {
                 <DropdownMenuSeparator />
                 <DropdownMenuItem asChild><Link to={createPageUrl("NotificationPreferences")} className="flex items-center gap-2"><Bell className="w-4 h-4" />Notification Preferences</Link></DropdownMenuItem>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem asChild><Link to={createPageUrl("Docs")} className="flex items-center gap-2"><BookOpen className="w-4 h-4" />Documentation</Link></DropdownMenuItem>
+                <DropdownMenuItem asChild><Link to={createPageUrl("Documentation")} className="flex items-center gap-2"><BookOpen className="w-4 h-4" />Documentation</Link></DropdownMenuItem>
                 <DropdownMenuItem asChild><Link to={createPageUrl("Contact")} className="flex items-center gap-2"><Mail className="w-4 h-4" />Contact Support</Link></DropdownMenuItem>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem onClick={() => base44.auth.logout(createPageUrl("Home"))} className="flex items-center gap-2 text-red-600 focus:text-red-600 cursor-pointer">
@@ -388,7 +389,7 @@ export default function Layout({ children, currentPageName }) {
               {/* Help & account */}
               <div className="border-t border-gray-100 pt-2 mt-1 space-y-0.5">
                 <Link to={createPageUrl("NotificationPreferences")} onClick={close} className="flex items-center gap-3 px-4 py-2.5 rounded-lg text-sm text-gray-700 hover:bg-gray-50"><Bell className="w-4 h-4" />Notification Preferences</Link>
-                <Link to={createPageUrl("Docs")} onClick={close} className="flex items-center gap-3 px-4 py-2.5 rounded-lg text-sm text-gray-700 hover:bg-gray-50"><BookOpen className="w-4 h-4" />Documentation</Link>
+                <Link to={createPageUrl("Documentation")} onClick={close} className="flex items-center gap-3 px-4 py-2.5 rounded-lg text-sm text-gray-700 hover:bg-gray-50"><BookOpen className="w-4 h-4" />Documentation</Link>
                 <Link to={createPageUrl("Contact")} onClick={close} className="flex items-center gap-3 px-4 py-2.5 rounded-lg text-sm text-gray-700 hover:bg-gray-50"><Mail className="w-4 h-4" />Contact Support</Link>
                 <button onClick={() => base44.auth.logout(createPageUrl("Home"))} className="w-full flex items-center gap-3 px-4 py-2.5 rounded-lg text-sm text-red-600 hover:bg-red-50">
                   <LogOut className="w-4 h-4" />Log Out
