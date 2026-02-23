@@ -136,8 +136,11 @@ export default function Locations() {
       {locations.length === 0 && !isLoading && (
         <div className="text-center py-16 text-slate-400">
           <Waves className="w-10 h-10 mx-auto mb-3 opacity-50" />
-          <p className="font-medium">No locations yet</p>
-          <p className="text-sm mt-1">Add your pools, beaches, or waterparks</p>
+          <p className="font-medium text-gray-700">No locations yet</p>
+          <p className="text-sm mt-1 mb-4">Add the pools, beaches, or waterparks you manage</p>
+          <Button size="sm" className="bg-[#1a9c5b] hover:bg-[#158a4e]" onClick={() => { setEditingLocation(null); setDialogOpen(true); }}>
+            <Plus className="w-4 h-4 mr-1" /> Add First Location
+          </Button>
         </div>
       )}
 
