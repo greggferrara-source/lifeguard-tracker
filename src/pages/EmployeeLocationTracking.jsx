@@ -57,11 +57,55 @@ export default function EmployeeLocationTrackingPage() {
           <p className="text-gray-600 mt-1">Real-time GPS tracking for opted-in employees</p>
         </div>
 
-        <Tabs defaultValue="map" className="space-y-6">
-          <TabsList className="grid w-full grid-cols-2">
-            <TabsTrigger value="map">Live Map</TabsTrigger>
-            <TabsTrigger value="list">Active Employees</TabsTrigger>
+        {/* Coverage summary pills */}
+        <div className="flex gap-3 mb-4 flex-wrap">
+          {[
+            { label: "On Duty", value: clockEntries.length, color: "bg-green-100 text-green-800" },
+            { label: "Locations Active", value: locations.filter(l => clockEntries.some(e => e.location_id === l.id)).length, color: "bg-blue-100 text-blue-800" },
+            { label: "Uncovered Zones", value: locations.filter(l => !clockEntries.some(e => e.location_id === l.id)).length, color: "bg-red-100 text-red-800" },
+          ].map(s => (
+            <div key={s.label} className={`px-3 py-1.5 rounded-full text-sm font-semibold ${s.color}`}>
+              {s.value} {s.label}
+            </div>
+          ))}
+        </div>
+
+        <Tabs defaultValue="heatmap" className="space-y-6">
+          <TabsList className="grid w-full grid-cols-3">
+            <TabsTrigger value="heatmap"><Map className="w-3.5 h-3.5 mr-1" />Coverage Map</TabsTrigger>
+            <TabsTrigger value="map">Live Tracking</TabsTrigger>
+            <TabsTrigger value="list">Active Guards</TabsTrigger>
           </TabsList>
+
+          {/* Coverage Heatmap Tab */}
+          <TabsContent value="heatmap" className="space-y-4">
+            <Card>
+              <CardHeader className="pb-2">
+                <CardTitle className="text-base">Zone Coverage Heatmap</CardTitle>
+                <p className="text-xs text-gray-500">Shows staffing coverage across all active locations in real-time</p>
+              </CardHeader>
+              <CardContent>
+                <CoverageHeatmap locations={locations} activeLocations={activeLocations} clockEntries={clockEntries} />
+              </CardContent>
+            </Card>
+            {/* Uncovered zones alert */}
+            {locations.filter(l => !clockEntries.some(e => e.location_id === l.id)).length > 0 && (
+              <Card className="border-red-300 bg-red-50">
+                <CardContent className="py-3">
+                  <div className="flex items-center gap-2 text-red-700 font-semibold mb-2">
+                    <AlertTriangle className="w-4 h-4" /> Uncovered Zones
+                  </div>
+                  <div className="space-y-1">
+                    {locations.filter(l => !clockEntries.some(e => e.location_id === l.id)).map(loc => (
+                      <div key={loc.id} className="text-sm text-red-600 flex items-center gap-2">
+                        <MapPin className="w-3 h-3" /> {loc.name} — no guard on duty
+                      </div>
+                    ))}
+                  </div>
+                </CardContent>
+              </Card>
+            )}
+          </TabsContent>
 
           {/* Map Tab */}
           <TabsContent value="map" className="space-y-4">
