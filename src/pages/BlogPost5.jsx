@@ -95,7 +95,7 @@ export default function BlogPost5() {
           <ul className="list-disc pl-6 space-y-2">
             <li><strong>Calcium Hardness:</strong> 200–400 ppm (prevents scaling & corrosion)</li>
             <li><strong>Turbidity:</strong> Should be clear enough to see the drain (prevents hiding of pathogens)</li>
-            <li><strong>Copper & Iron:</strong> Should be < 0.2 ppm (aesthetic & health concern)</li>
+            <li><strong>Copper & Iron:</strong> Should be &lt; 0.2 ppm (aesthetic &amp; health concern)</li>
             <li><strong>Bacterial testing (weekly or monthly):</strong> ATP, total plate count, or plate count testing to verify disinfection is working</li>
           </ul>
 
