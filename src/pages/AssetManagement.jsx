@@ -66,14 +66,24 @@ export default function AssetManagement() {
   const totalValue = assets.reduce((sum, a) => sum + (a.purchase_price || 0), 0);
   const totalServiceCost = serviceHistory.reduce((sum, s) => sum + (s.cost || 0), 0);
 
+  const openAdd = () => { setEditingAsset(null); setShowAssetDialog(true); };
+  const openEdit = (asset) => { setEditingAsset(asset); setShowAssetDialog(true); };
+
   return (
     <div className="max-w-7xl mx-auto p-6 space-y-6">
-      <div className="flex items-center justify-between">
+      <div className="flex items-center justify-between flex-wrap gap-3">
         <h1 className="text-4xl font-bold">Asset Management Hub</h1>
-        <Button onClick={() => setShowMaintenanceDialog(true)} className="bg-[#1a9c5b] hover:bg-[#158a4e]">
-          <Plus className="w-4 h-4 mr-2" />
-          Submit Maintenance Request
-        </Button>
+        <div className="flex gap-2 flex-wrap">
+          <Button variant="outline" onClick={() => setShowImporter(true)}>
+            <Upload className="w-4 h-4 mr-2" />Import CSV
+          </Button>
+          <Button variant="outline" onClick={() => setShowMaintenanceDialog(true)}>
+            <Wrench className="w-4 h-4 mr-2" />Maintenance Request
+          </Button>
+          <Button onClick={openAdd} className="bg-[#1a9c5b] hover:bg-[#158a4e]">
+            <Plus className="w-4 h-4 mr-2" />Add Asset
+          </Button>
+        </div>
       </div>
 
       {/* Key Metrics */}
