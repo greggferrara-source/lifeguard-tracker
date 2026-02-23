@@ -162,6 +162,8 @@ import MobileStaffApp from './pages/MobileStaffApp';
 import TeamChat from './pages/TeamChat';
 import ComplianceWorkflowManager from './pages/ComplianceWorkflowManager';
 import ComplianceWorkflowDetail from './pages/ComplianceWorkflowDetail';
+import PrivacyPolicy from './pages/PrivacyPolicy';
+import DataProcessingAgreement from './pages/DataProcessingAgreement';
 import __Layout from './Layout.jsx';
 
 
@@ -281,6 +283,8 @@ export const PAGES = {
     "TeamChat": TeamChat,
     "ComplianceWorkflowManager": ComplianceWorkflowManager,
     "ComplianceWorkflowDetail": ComplianceWorkflowDetail,
+    "PrivacyPolicy": PrivacyPolicy,
+    "DataProcessingAgreement": DataProcessingAgreement,
 }
 
 export const pagesConfig = {
