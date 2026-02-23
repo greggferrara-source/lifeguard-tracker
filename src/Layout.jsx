@@ -183,6 +183,7 @@ export default function Layout({ children, currentPageName }) {
   const isElevated = ELEVATED_ROLES.includes(user?.role);
   const isEnterprise = ENTERPRISE_ROLES.includes(user?.role);
   const isOwner = OWNER_ONLY_ROLES.includes(user?.role);
+  const isRoot = user?.email === ROOT_EMAIL;
 
   const close = () => setMobileOpen(false);
 
