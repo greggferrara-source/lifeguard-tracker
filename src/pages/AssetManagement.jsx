@@ -141,6 +141,23 @@ export default function AssetManagement() {
         </Card>
       </div>
 
+      {/* Category filter pills */}
+      <div className="flex gap-2 flex-wrap">
+        {CATEGORIES.map(cat => (
+          <button
+            key={cat.value}
+            onClick={() => setCategoryFilter(cat.value)}
+            className={`px-3 py-1.5 rounded-full text-xs font-semibold border transition-colors ${
+              categoryFilter === cat.value
+                ? "bg-[#1a9c5b] text-white border-[#1a9c5b]"
+                : "bg-white text-gray-600 border-gray-200 hover:border-[#1a9c5b]"
+            }`}
+          >
+            {cat.label}
+          </button>
+        ))}
+      </div>
+
       {/* Tabs */}
       <div className="flex gap-4 border-b border-gray-200">
         {[
