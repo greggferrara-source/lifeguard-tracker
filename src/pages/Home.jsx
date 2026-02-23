@@ -183,7 +183,7 @@ export default function Home() {
             </div>
             <div className="min-w-0">
               <span className="font-bold text-base sm:text-lg text-gray-900 leading-none block truncate">LifeGuard Tracker</span>
-              <span className="text-[9px] sm:text-[10px] text-gray-400 leading-none tracking-wide uppercase hidden sm:block">Aquatic Workforce Management</span>
+              <span className="text-[9px] sm:text-[10px] text-gray-400 leading-none tracking-wide uppercase hidden sm:block">Lifeguard Scheduling & Pool Management Software</span>
             </div>
           </div>
 
@@ -248,14 +248,14 @@ export default function Home() {
       {/* ── HERO ── */}
       <section className="px-4 sm:px-6 pt-12 sm:pt-20 pb-8 max-w-4xl mx-auto text-center">
         <div className="inline-flex items-center gap-2 bg-[#f0faf5] text-[#1a9c5b] text-xs font-bold px-3 py-1.5 rounded-full mb-5 uppercase tracking-wide">
-          <Shield className="w-3.5 h-3.5" /> #1 Lifeguard Scheduling & Safety Software
+          <Shield className="w-3.5 h-3.5" /> #1 Lifeguard Scheduling Software & Pool Management System
         </div>
         <h1 className="text-4xl sm:text-5xl lg:text-7xl font-extrabold leading-tight mb-4 sm:mb-6 tracking-tight">
-          <span className="text-[#1a9c5b]">Lifeguard Scheduling</span><br />
-          <span className="text-gray-900">&amp; Safety Management.</span>
+          <span className="text-[#1a9c5b]">Lifeguard Scheduling Software</span><br />
+          <span className="text-gray-900">for Pool &amp; Facility Management</span>
         </h1>
         <p className="text-base sm:text-xl text-gray-500 max-w-2xl mx-auto mb-8 sm:mb-10 leading-relaxed px-2">
-          The complete <strong className="text-gray-700">lifeguard management software</strong> for pools, beaches, and aquatic facilities. Real-time scheduling, GPS tracking, certification compliance, and incident reporting — all in one platform.
+          The complete <strong className="text-gray-700">lifeguard scheduling software</strong> and <strong className="text-gray-700">pool management system</strong> for aquatic facilities, water parks, beaches, and recreation centers. Real-time <strong className="text-gray-700">facility scheduling</strong>, GPS tracking, <strong className="text-gray-700">workforce management</strong>, certification compliance, and incident reporting — all in one platform.
         </p>
         <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center px-4 sm:px-0">
           <Button
@@ -335,7 +335,7 @@ export default function Home() {
       {/* ── SEO keyword-rich intro paragraph (visible to Google) ── */}
       <section className="px-4 sm:px-6 pt-12 pb-4 max-w-4xl mx-auto text-center">
         <p className="text-sm text-gray-400 leading-relaxed">
-          LifeGuard Tracker is the leading <strong className="text-gray-500">lifeguard tracking system</strong> and <strong className="text-gray-500">aquatic staff management software</strong> trusted by community pools, water parks, YMCAs, municipal beaches, and recreation centers across the United States. Our platform combines <strong className="text-gray-500">lifeguard GPS tracking</strong>, real-time scheduling, certification compliance, incident logging, and chemical monitoring into one easy-to-use tool designed specifically for aquatic facility managers.
+          LifeGuard Tracker is the leading <strong className="text-gray-500">lifeguard scheduling software</strong>, <strong className="text-gray-500">pool management system</strong>, and <strong className="text-gray-500">aquatic facility management software</strong> trusted by community pools, water parks, YMCAs, municipal beaches, and recreation centers across the United States. Our comprehensive <strong className="text-gray-500">facility scheduling platform</strong> combines <strong className="text-gray-500">lifeguard GPS tracking</strong>, <strong className="text-gray-500">workforce scheduling</strong>, <strong className="text-gray-500">pool software</strong> features, certification compliance, incident logging, and chemical monitoring into one easy-to-use tool designed specifically for <strong className="text-gray-500">aquatic facility managers</strong> and <strong className="text-gray-500">recreation center directors</strong>.
         </p>
       </section>
 
@@ -384,9 +384,9 @@ export default function Home() {
       <section id="features" className="px-4 sm:px-6 py-16 sm:py-24 bg-gradient-to-b from-white via-[#f0faf5]/30 to-white">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-14 sm:mb-18">
-            <span className="inline-block text-xs font-bold tracking-widest text-[#1a9c5b] uppercase mb-3">Industry-Leading Platform</span>
-            <h2 className="text-4xl sm:text-5xl font-extrabold text-gray-900 mb-5 leading-tight">Comprehensive tools built for aquatic excellence</h2>
-            <p className="text-lg sm:text-xl text-gray-600 max-w-2xl mx-auto leading-relaxed">From scheduling and compliance to safety management — everything you need in one powerful platform.</p>
+          <span className="inline-block text-xs font-bold tracking-widest text-[#1a9c5b] uppercase mb-3">Industry-Leading Pool & Facility Management Software</span>
+          <h2 className="text-4xl sm:text-5xl font-extrabold text-gray-900 mb-5 leading-tight">Comprehensive lifeguard scheduling & pool software tools</h2>
+          <p className="text-lg sm:text-xl text-gray-600 max-w-2xl mx-auto leading-relaxed">From <strong className="text-gray-700">facility scheduling</strong> and compliance to <strong className="text-gray-700">workforce management</strong> and safety — everything you need in one powerful <strong className="text-gray-700">pool management platform</strong>.</p>
           </div>
 
           {/* Feature Grid - 3 columns with visual enhancements */}
@@ -477,8 +477,8 @@ export default function Home() {
       <section className="px-4 sm:px-6 py-12 sm:py-16 bg-gray-50 border-t border-gray-100">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-8 sm:mb-12">
-            <h2 className="text-3xl sm:text-4xl font-extrabold text-gray-900 mb-4">Lifeguard Management Software for Every Aquatic Facility</h2>
-            <p className="text-base sm:text-lg text-gray-500 max-w-xl mx-auto">From community pools to water parks and municipal beaches — LifeGuard Tracker works everywhere lifeguards work.</p>
+            <h2 className="text-3xl sm:text-4xl font-extrabold text-gray-900 mb-4">Lifeguard Scheduling & Pool Management Software for Every Aquatic Facility</h2>
+            <p className="text-base sm:text-lg text-gray-500 max-w-xl mx-auto">From community pools to water parks and municipal beaches — our <strong className="text-gray-600">facility scheduling software</strong> and <strong className="text-gray-600">workforce management system</strong> works everywhere lifeguards work.</p>
           </div>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-5">
             {[
@@ -687,7 +687,7 @@ export default function Home() {
                 </div>
                 <span className="font-bold text-gray-900">LifeGuard Tracker</span>
               </div>
-              <p className="text-sm text-gray-500 max-w-xs">Aquatic workforce management for pools, beaches, and recreation centers.</p>
+              <p className="text-sm text-gray-500 max-w-xs">Lifeguard scheduling software and pool management system for aquatic facilities, water parks, beaches, and recreation centers.</p>
             </div>
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-8 text-sm">
               <div>
@@ -727,13 +727,13 @@ export default function Home() {
           <div className="border-t border-gray-100 pt-6 flex flex-col sm:flex-row items-center justify-between gap-3">
             <p className="text-xs text-gray-400">© 2026 LifeGuard Tracker. All rights reserved.</p>
             <p className="text-xs text-gray-400">
-              <a href="https://www.lifeguardtracker.com" className="hover:text-gray-600">lifeguardtracker.com</a> · Lifeguard Scheduling Software · Aquatic Workforce Management
+              <a href="https://www.lifeguardtracker.com" className="hover:text-gray-600">lifeguardtracker.com</a> · Lifeguard Scheduling Software · Pool Management System · Facility Scheduling · Workforce Management
             </p>
           </div>
           {/* SEO footer links */}
           <div className="pt-4 text-center">
             <p className="text-xs text-gray-300 leading-loose">
-              Lifeguard Tracking System &nbsp;·&nbsp; Pool Safety Management Software &nbsp;·&nbsp; Aquatic Staff Scheduling &nbsp;·&nbsp; Lifeguard GPS Tracker &nbsp;·&nbsp; Certification Compliance Tool &nbsp;·&nbsp; Incident Reporting for Pools &nbsp;·&nbsp; Recreation Center Scheduling &nbsp;·&nbsp; Water Park Staff Management
+              Lifeguard Scheduling Software &nbsp;·&nbsp; Pool Management System &nbsp;·&nbsp; Facility Scheduling Software &nbsp;·&nbsp; Aquatic Workforce Management &nbsp;·&nbsp; Lifeguard Tracker &nbsp;·&nbsp; Pool Software &nbsp;·&nbsp; Lifeguard GPS Tracking &nbsp;·&nbsp; Recreation Center Management Software &nbsp;·&nbsp; Water Park Scheduling &nbsp;·&nbsp; Beach Lifeguard Management &nbsp;·&nbsp; Certification Tracking &nbsp;·&nbsp; Incident Reporting System &nbsp;·&nbsp; Chemical Log Software &nbsp;·&nbsp; Aquatic Facility Management &nbsp;·&nbsp; Workforce Scheduling Platform &nbsp;·&nbsp; Pool Operations Software
             </p>
           </div>
         </div>

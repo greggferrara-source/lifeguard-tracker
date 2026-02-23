@@ -57,6 +57,11 @@ import Assignments from './pages/Assignments';
 import AutoShiftPlanner from './pages/AutoShiftPlanner';
 import Billing from './pages/Billing';
 import BillingDashboard from './pages/BillingDashboard';
+import BlogPost1 from './pages/BlogPost1';
+import BlogPost2 from './pages/BlogPost2';
+import BlogPost3 from './pages/BlogPost3';
+import BlogPost4 from './pages/BlogPost4';
+import BlogPost5 from './pages/BlogPost5';
 import CertComplianceDashboard from './pages/CertComplianceDashboard';
 import Certifications from './pages/Certifications';
 import Channels from './pages/Channels';
@@ -143,11 +148,6 @@ import UrgentAlerts from './pages/UrgentAlerts';
 import WeatherAlertsMonitor from './pages/WeatherAlertsMonitor';
 import WorkflowAutomation from './pages/WorkflowAutomation';
 import WorkforceScheduler from './pages/WorkforceScheduler';
-import BlogPost1 from './pages/BlogPost1';
-import BlogPost2 from './pages/BlogPost2';
-import BlogPost3 from './pages/BlogPost3';
-import BlogPost4 from './pages/BlogPost4';
-import BlogPost5 from './pages/BlogPost5';
 import __Layout from './Layout.jsx';
 
 
@@ -162,6 +162,11 @@ export const PAGES = {
     "AutoShiftPlanner": AutoShiftPlanner,
     "Billing": Billing,
     "BillingDashboard": BillingDashboard,
+    "BlogPost1": BlogPost1,
+    "BlogPost2": BlogPost2,
+    "BlogPost3": BlogPost3,
+    "BlogPost4": BlogPost4,
+    "BlogPost5": BlogPost5,
     "CertComplianceDashboard": CertComplianceDashboard,
     "Certifications": Certifications,
     "Channels": Channels,
@@ -248,11 +253,6 @@ export const PAGES = {
     "WeatherAlertsMonitor": WeatherAlertsMonitor,
     "WorkflowAutomation": WorkflowAutomation,
     "WorkforceScheduler": WorkforceScheduler,
-    "BlogPost1": BlogPost1,
-    "BlogPost2": BlogPost2,
-    "BlogPost3": BlogPost3,
-    "BlogPost4": BlogPost4,
-    "BlogPost5": BlogPost5,
 }
 
 export const pagesConfig = {
