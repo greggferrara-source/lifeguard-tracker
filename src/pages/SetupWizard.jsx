@@ -209,8 +209,13 @@ function DoneStep({ onGo }) {
       <div className="w-20 h-20 bg-[#f0faf5] rounded-full flex items-center justify-center mx-auto mb-6">
         <CheckCircle2 className="w-10 h-10 text-[#1a9c5b]" />
       </div>
-      <h2 className="text-2xl font-bold text-gray-900 mb-2">You're all set!</h2>
-      <p className="text-gray-500 mb-8">Your account is ready. Start building your schedule and managing your team.</p>
+      <h2 className="text-2xl font-bold text-gray-900 mb-2">You're all set! 🎉</h2>
+      <p className="text-gray-500 mb-4 leading-relaxed">Your account is ready. Here's what to do next:</p>
+      <ul className="text-left space-y-2 mb-8 bg-gray-50 rounded-xl p-4 text-sm text-gray-700">
+        <li className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4 text-[#1a9c5b] flex-shrink-0" /> Set up your schedule on the Schedule page</li>
+        <li className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4 text-[#1a9c5b] flex-shrink-0" /> Invite your team via Settings → Invite Employees</li>
+        <li className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4 text-[#1a9c5b] flex-shrink-0" /> Check Docs for tips and tutorials</li>
+      </ul>
       <Button onClick={onGo} className="w-full bg-[#1a9c5b] hover:bg-[#158a4e] text-white h-12 rounded-xl text-base font-semibold">
         Go to Dashboard <ArrowRight className="w-4 h-4 ml-2" />
       </Button>
