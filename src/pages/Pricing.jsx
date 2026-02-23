@@ -134,6 +134,17 @@ export default function Pricing() {
 
     setLoadingPlan(plan.priceKey);
     try {
+      // Track abandoned checkout
+      const user = await base44.auth.me().catch(() => null);
+      if (user?.email) {
+        await base44.functions.invoke("trackCheckoutAbandon", {
+          user_email: user.email,
+          user_name: user.full_name,
+          plan_name: plan.name,
+          checkout_url: window.location.href
+        }).catch(() => {});
+      }
+
       const res = await base44.functions.invoke("createCheckout", {
         price_id: PRICE_IDS[plan.priceKey][annual ? "annual" : "monthly"],
         success_url: window.location.origin + createPageUrl("Dashboard"),
