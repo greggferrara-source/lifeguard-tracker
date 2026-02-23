@@ -356,6 +356,12 @@ export default function BillingDashboard() {
 
           {/* STRIPE TAB */}
           <TabsContent value="stripe">
+            {user?.email !== "greggferrara@gmail.com" ? (
+              <div className="p-12 text-center text-gray-500">
+                <AlertCircle className="w-10 h-10 mx-auto mb-3 text-gray-300" />
+                <p>You don't have access to Stripe data.</p>
+              </div>
+            ) : (<>
             <Card className="p-4 mb-4">
               <div className="flex gap-4">
                 <div className="relative flex-1">
