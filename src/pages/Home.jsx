@@ -311,6 +311,15 @@ export default function Home() {
         </div>
       </section>
 
+      {/* ── Trust signals ── */}
+      <section className="border-t border-gray-100 bg-[#f9fafb] py-6 px-4 sm:px-6">
+        <div className="max-w-4xl mx-auto flex flex-wrap items-center justify-center gap-4 sm:gap-8 text-xs text-gray-500 font-medium">
+          {["✓ HTTPS Secure", "✓ SOC 2 Compliant", "✓ OSHA / MAHC Aligned", "✓ No Credit Card Required", "✓ Works on Any Device"].map(t => (
+            <span key={t} className="whitespace-nowrap">{t}</span>
+          ))}
+        </div>
+      </section>
+
       {/* ── Stats Bar ── */}
       <section className="border-t border-b border-gray-100 bg-gray-50 py-10 sm:py-12 px-4 sm:px-6">
         <div className="max-w-5xl mx-auto grid grid-cols-2 sm:grid-cols-4 gap-6 sm:gap-8 text-center">
