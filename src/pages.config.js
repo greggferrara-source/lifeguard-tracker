@@ -172,6 +172,8 @@ import CreateIncidentReport from './pages/CreateIncidentReport';
 import TrainingModuleManager from './pages/TrainingModuleManager';
 import IoTSensorDashboard from './pages/IoTSensorDashboard';
 import IncidentDetail from './pages/IncidentDetail';
+import IoTAnalyticsDashboard from './pages/IoTAnalyticsDashboard';
+import TrainingGamification from './pages/TrainingGamification';
 import __Layout from './Layout.jsx';
 
 
@@ -301,6 +303,8 @@ export const PAGES = {
     "TrainingModuleManager": TrainingModuleManager,
     "IoTSensorDashboard": IoTSensorDashboard,
     "IncidentDetail": IncidentDetail,
+    "IoTAnalyticsDashboard": IoTAnalyticsDashboard,
+    "TrainingGamification": TrainingGamification,
 }
 
 export const pagesConfig = {
