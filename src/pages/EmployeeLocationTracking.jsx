@@ -21,12 +21,19 @@ export default function EmployeeLocationTrackingPage() {
   // Fetch active employees currently on shift
   const { data: activeLocations = [] } = useQuery({
     queryKey: ['active-locations'],
-    queryFn: () => base44.entities.EmployeeLocationTracking.filter(
-      {},
-      '-timestamp',
-      100
-    ),
+    queryFn: () => base44.entities.EmployeeLocationTracking.filter({}, '-timestamp', 100),
     refetchInterval: 5000
+  });
+
+  const { data: locations = [] } = useQuery({
+    queryKey: ['locations-tracking'],
+    queryFn: () => base44.entities.Location.filter({ status: 'active' }),
+  });
+
+  const { data: clockEntries = [] } = useQuery({
+    queryKey: ['clock-entries-live'],
+    queryFn: () => base44.entities.ClockEntry.filter({ status: 'clocked_in' }),
+    refetchInterval: 15000,
   });
 
   const uniqueEmployees = [...new Map(
