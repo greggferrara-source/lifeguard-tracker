@@ -130,7 +130,7 @@ export default function EmployeeLocationTrackingPage() {
             )}
           </TabsContent>
 
-          {/* List Tab */}
+          {/* Active Guards Tab */}
           <TabsContent value="list" className="space-y-4">
             {uniqueEmployees.length === 0 ? (
               <Card>
