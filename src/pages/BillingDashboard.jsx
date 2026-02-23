@@ -363,7 +363,8 @@ export default function BillingDashboard() {
                 <AlertCircle className="w-10 h-10 mx-auto mb-3 text-gray-300" />
                 <p>You don't have access to Stripe data.</p>
               </div>
-            ) : (<>
+            ) : (
+            <div>
             <Card className="p-4 mb-4">
               <div className="flex gap-4">
                 <div className="relative flex-1">
