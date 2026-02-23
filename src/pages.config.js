@@ -70,11 +70,13 @@ import Contact from './pages/Contact';
 import CustomDashboard from './pages/CustomDashboard';
 import Dashboard from './pages/Dashboard';
 import DataImport from './pages/DataImport';
+import Docs from './pages/Docs';
 import DocsEnhancedFeatures from './pages/DocsEnhancedFeatures';
 import DocsResourceBookingGPS from './pages/DocsResourceBookingGPS';
 import DocsUpdated from './pages/DocsUpdated';
 import DocumentManagement from './pages/DocumentManagement';
 import EmergencyActionPlans from './pages/EmergencyActionPlans';
+import EmergencyCall from './pages/EmergencyCall';
 import EmployeeDashboard from './pages/EmployeeDashboard';
 import EmployeeDirectory from './pages/EmployeeDirectory';
 import EmployeeLocationTracking from './pages/EmployeeLocationTracking';
@@ -86,6 +88,7 @@ import Employees from './pages/Employees';
 import ErrorLogs from './pages/ErrorLogs';
 import Features from './pages/Features';
 import GlobalSearch from './pages/GlobalSearch';
+import GuardAIInsights from './pages/GuardAIInsights';
 import Home from './pages/Home';
 import IncidentDashboard from './pages/IncidentDashboard';
 import IncidentLogs from './pages/IncidentLogs';
@@ -120,13 +123,16 @@ import PoolTestReporting from './pages/PoolTestReporting';
 import Pricing from './pages/Pricing';
 import Privacy from './pages/Privacy';
 import PublicSafetyDashboard from './pages/PublicSafetyDashboard';
+import PublicStatusWidget from './pages/PublicStatusWidget';
 import Reports from './pages/Reports';
 import ResourceBooking from './pages/ResourceBooking';
+import SafetyDashboard from './pages/SafetyDashboard';
 import Schedule from './pages/Schedule';
 import Settings from './pages/Settings';
 import SetupWizard from './pages/SetupWizard';
 import ShiftPreferencesManager from './pages/ShiftPreferencesManager';
 import ShiftSwaps from './pages/ShiftSwaps';
+import StaffRecognition from './pages/StaffRecognition';
 import StaffingForecast from './pages/StaffingForecast';
 import StaffingForecastDashboard from './pages/StaffingForecastDashboard';
 import Terms from './pages/Terms';
@@ -137,12 +143,6 @@ import UrgentAlerts from './pages/UrgentAlerts';
 import WeatherAlertsMonitor from './pages/WeatherAlertsMonitor';
 import WorkflowAutomation from './pages/WorkflowAutomation';
 import WorkforceScheduler from './pages/WorkforceScheduler';
-import GuardAIInsights from './pages/GuardAIInsights';
-import EmergencyCall from './pages/EmergencyCall';
-import StaffRecognition from './pages/StaffRecognition';
-import PublicStatusWidget from './pages/PublicStatusWidget';
-import SafetyDashboard from './pages/SafetyDashboard';
-import Docs from './pages/Docs';
 import __Layout from './Layout.jsx';
 
 
@@ -170,11 +170,13 @@ export const PAGES = {
     "CustomDashboard": CustomDashboard,
     "Dashboard": Dashboard,
     "DataImport": DataImport,
+    "Docs": Docs,
     "DocsEnhancedFeatures": DocsEnhancedFeatures,
     "DocsResourceBookingGPS": DocsResourceBookingGPS,
     "DocsUpdated": DocsUpdated,
     "DocumentManagement": DocumentManagement,
     "EmergencyActionPlans": EmergencyActionPlans,
+    "EmergencyCall": EmergencyCall,
     "EmployeeDashboard": EmployeeDashboard,
     "EmployeeDirectory": EmployeeDirectory,
     "EmployeeLocationTracking": EmployeeLocationTracking,
@@ -186,6 +188,7 @@ export const PAGES = {
     "ErrorLogs": ErrorLogs,
     "Features": Features,
     "GlobalSearch": GlobalSearch,
+    "GuardAIInsights": GuardAIInsights,
     "Home": Home,
     "IncidentDashboard": IncidentDashboard,
     "IncidentLogs": IncidentLogs,
@@ -220,13 +223,16 @@ export const PAGES = {
     "Pricing": Pricing,
     "Privacy": Privacy,
     "PublicSafetyDashboard": PublicSafetyDashboard,
+    "PublicStatusWidget": PublicStatusWidget,
     "Reports": Reports,
     "ResourceBooking": ResourceBooking,
+    "SafetyDashboard": SafetyDashboard,
     "Schedule": Schedule,
     "Settings": Settings,
     "SetupWizard": SetupWizard,
     "ShiftPreferencesManager": ShiftPreferencesManager,
     "ShiftSwaps": ShiftSwaps,
+    "StaffRecognition": StaffRecognition,
     "StaffingForecast": StaffingForecast,
     "StaffingForecastDashboard": StaffingForecastDashboard,
     "Terms": Terms,
@@ -237,12 +243,6 @@ export const PAGES = {
     "WeatherAlertsMonitor": WeatherAlertsMonitor,
     "WorkflowAutomation": WorkflowAutomation,
     "WorkforceScheduler": WorkforceScheduler,
-    "GuardAIInsights": GuardAIInsights,
-    "EmergencyCall": EmergencyCall,
-    "StaffRecognition": StaffRecognition,
-    "PublicStatusWidget": PublicStatusWidget,
-    "SafetyDashboard": SafetyDashboard,
-    "Docs": Docs,
 }
 
 export const pagesConfig = {

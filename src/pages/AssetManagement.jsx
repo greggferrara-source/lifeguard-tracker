@@ -6,8 +6,10 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { Plus, AlertTriangle, CheckCircle2, Wrench, TrendingDown, Clock, DollarSign, Upload, Zap, BookOpen, FileText } from "lucide-react";
+import { Plus, AlertTriangle, CheckCircle2, Wrench, TrendingDown, Clock, DollarSign, Upload, Filter, Download, Pencil } from "lucide-react";
 import { differenceInDays, parseISO, format } from "date-fns";
+import AssetDialog from "@/components/assets/AssetDialog";
+import AssetImporter from "@/components/import/AssetImporter";
 
 export default function AssetManagement() {
   const qc = useQueryClient();
