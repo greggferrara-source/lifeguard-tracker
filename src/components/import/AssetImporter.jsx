@@ -24,18 +24,24 @@ const downloadTemplate = () => {
 };
 
 function normalize(row) {
-  const status = STATUS_OPTIONS.includes(row.status?.toLowerCase()) ? row.status.toLowerCase() : "active";
-  const asset_type = TYPE_OPTIONS.includes(row.asset_type?.toLowerCase()) ? row.asset_type.toLowerCase() : "equipment";
+  const status = STATUS_OPTIONS.includes(row.status?.toLowerCase()) ? row.status.toLowerCase() : "operational";
+  const category = CATEGORY_OPTIONS.includes(row.category?.toLowerCase()) ? row.category.toLowerCase() : "other";
+  const condition = CONDITION_OPTIONS.includes(row.condition?.toLowerCase()) ? row.condition.toLowerCase() : "good";
   return {
     name: row.name || row["Name"] || row["Asset Name"] || "",
-    asset_type,
+    asset_tag: row.asset_tag || row["Asset Tag"] || row["Tag"] || "",
+    category,
     serial_number: row.serial_number || row["Serial Number"] || "",
-    location_id: row.location_id || row["Location ID"] || "",
     location_name: row.location_name || row["Location"] || "",
     status,
+    condition,
+    manufacturer: row.manufacturer || row["Manufacturer"] || "",
+    model: row.model || row["Model"] || "",
     purchase_date: row.purchase_date || row["Purchase Date"] || "",
+    purchase_price: row.purchase_price ? Number(row.purchase_price) : undefined,
+    warranty_expiry: row.warranty_expiry || row["Warranty Expiry"] || "",
     last_maintenance_date: row.last_maintenance_date || row["Last Maintenance"] || "",
-    next_maintenance_date: row.next_maintenance_date || row["Next Maintenance"] || "",
+    next_maintenance_due: row.next_maintenance_due || row["Next Maintenance Due"] || "",
     notes: row.notes || row["Notes"] || ""
   };
 }
