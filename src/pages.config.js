@@ -147,6 +147,7 @@ import BlogPost1 from './pages/BlogPost1';
 import BlogPost2 from './pages/BlogPost2';
 import BlogPost3 from './pages/BlogPost3';
 import BlogPost4 from './pages/BlogPost4';
+import BlogPost5 from './pages/BlogPost5';
 import __Layout from './Layout.jsx';
 
 
@@ -251,6 +252,7 @@ export const PAGES = {
     "BlogPost2": BlogPost2,
     "BlogPost3": BlogPost3,
     "BlogPost4": BlogPost4,
+    "BlogPost5": BlogPost5,
 }
 
 export const pagesConfig = {
