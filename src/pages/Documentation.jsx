@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 import { createPageUrl } from '@/utils';
-import { BookOpen, ChevronRight, ArrowLeft, Search } from 'lucide-react';
+import { BookOpen, ChevronRight, ArrowLeft, Search, Radio, Trophy, TrendingUp, CheckCircle2, Zap, AlertTriangle, Shield } from 'lucide-react';
 
 export default function Documentation() {
   const [search, setSearch] = useState('');
@@ -19,53 +19,53 @@ export default function Documentation() {
       ]
     },
     {
-      title: 'Scheduling',
-      icon: BookOpen,
+      title: 'IoT & Analytics',
+      icon: Radio,
       articles: [
-        { title: 'Creating Shifts', path: '/docs/scheduling/shifts' },
-        { title: 'Managing Schedules', path: '/docs/scheduling/management' },
-        { title: 'Shift Swaps & Requests', path: '/docs/scheduling/swaps' },
-        { title: 'Time Off Management', path: '/docs/scheduling/timeoff' },
+        { title: 'Setting Up IoT Sensors', path: '/docs/iot/setup' },
+        { title: 'Water Quality Monitoring', path: '/docs/iot/water-quality' },
+        { title: 'Anomaly Detection', path: '/docs/iot/anomalies' },
+        { title: 'Predictive Reports', path: '/docs/iot/predictions' },
       ]
     },
     {
-      title: 'Compliance',
-      icon: BookOpen,
+      title: 'Incident Management',
+      icon: AlertTriangle,
       articles: [
-        { title: 'Certification Tracking', path: '/docs/compliance/certifications' },
-        { title: 'Incident Reporting', path: '/docs/compliance/incidents' },
-        { title: 'Compliance Workflows', path: '/docs/compliance/workflows' },
-        { title: 'Audit Preparation', path: '/docs/compliance/audits' },
+        { title: 'Reporting Incidents', path: '/docs/incidents/reporting' },
+        { title: 'Incident Analysis', path: '/docs/incidents/analysis' },
+        { title: 'AI Insights & Trends', path: '/docs/incidents/ai-insights' },
+        { title: 'Follow-up Actions', path: '/docs/incidents/followup' },
       ]
     },
     {
-      title: 'Administration',
-      icon: BookOpen,
+      title: 'Training & Gamification',
+      icon: Trophy,
       articles: [
-        { title: 'Managing Employees', path: '/docs/admin/employees' },
-        { title: 'Role-Based Access', path: '/docs/admin/roles' },
-        { title: 'Location Management', path: '/docs/admin/locations' },
-        { title: 'System Settings', path: '/docs/admin/settings' },
+        { title: 'Creating Training Modules', path: '/docs/training/creation' },
+        { title: 'Assigning Training', path: '/docs/training/assignment' },
+        { title: 'Gamification System', path: '/docs/training/gamification' },
+        { title: 'Leaderboards & Badges', path: '/docs/training/leaderboards' },
       ]
     },
     {
-      title: 'Integrations',
-      icon: BookOpen,
+      title: 'Safety Predictions',
+      icon: TrendingUp,
       articles: [
-        { title: 'Payroll Integration', path: '/docs/integrations/payroll' },
-        { title: 'Weather Alerts', path: '/docs/integrations/weather' },
-        { title: 'LMS Integration', path: '/docs/integrations/lms' },
-        { title: 'Event Calendar Sync', path: '/docs/integrations/calendar' },
+        { title: 'Risk Assessment', path: '/docs/safety/risk-assessment' },
+        { title: 'Staffing Recommendations', path: '/docs/safety/staffing' },
+        { title: 'Training Gap Analysis', path: '/docs/safety/gaps' },
+        { title: 'Predictive Insights', path: '/docs/safety/insights' },
       ]
     },
     {
-      title: 'Mobile App',
-      icon: BookOpen,
+      title: 'Advanced Features',
+      icon: Zap,
       articles: [
-        { title: 'iOS & Android Setup', path: '/docs/mobile/setup' },
-        { title: 'Clock In/Out', path: '/docs/mobile/clockinout' },
-        { title: 'Mobile Chat', path: '/docs/mobile/chat' },
-        { title: 'Push Notifications', path: '/docs/mobile/notifications' },
+        { title: 'AI Safety Advisor', path: '/docs/advanced/ai-advisor' },
+        { title: 'Multi-Location Management', path: '/docs/advanced/multi-location' },
+        { title: 'Document Management', path: '/docs/advanced/documents' },
+        { title: 'Compliance Automation', path: '/docs/advanced/compliance' },
       ]
     }
   ];
@@ -137,10 +137,10 @@ export default function Documentation() {
           <h2 className="text-2xl font-bold text-gray-900 mb-8">Frequently Asked Questions</h2>
           <div className="space-y-4">
             {[
-              { q: 'How do I reset my password?', a: 'Click "Forgot Password" on the login page and follow the email link.' },
-              { q: 'Can I import my current schedule?', a: 'Yes! We offer free data migration from your current system.' },
-              { q: 'How do I set up GPS tracking?', a: 'Enable it in settings and opt-in employees will be tracked when clocked in.' },
-              { q: 'Is there a mobile app?', a: 'Yes, iOS and Android apps are available for clock in/out and schedule access.' },
+              { q: 'How do I set up IoT sensors?', a: 'Connect your water quality sensors via our integration platform. Configure thresholds and alerts in the IoT settings dashboard.' },
+              { q: 'How does AI predict safety risks?', a: 'Our system analyzes incident history, staff certifications, sensor data, and performance metrics to predict incident likelihood and recommend preventive actions.' },
+              { q: 'Can I gamify training for my staff?', a: 'Yes! The training system includes points, badges, streaks, and leaderboards. Staff earn rewards for completing modules and quiz success.' },
+              { q: 'How are training modules recommended?', a: 'AI analyzes your incident trends and employee performance to recommend personalized training modules addressing identified skill gaps.' },
             ].map((faq, i) => (
               <details key={i} className="border border-gray-200 rounded-lg p-4 group cursor-pointer">
                 <summary className="font-semibold text-gray-900 flex items-center justify-between">
