@@ -171,11 +171,13 @@ export default function BillingDashboard() {
             <p className="text-2xl font-bold text-red-600">{overdueBills.length}</p>
             <p className="text-xs text-gray-400 mt-1">Needs attention</p>
           </Card>
-          <Card className="p-4">
-            <p className="text-xs text-gray-500 mb-1">Stripe Revenue</p>
-            <p className="text-2xl font-bold text-green-700">${totalRevenue.toFixed(2)}</p>
-            <p className="text-xs text-gray-400 mt-1">{activeSubscriptions} active subs</p>
-          </Card>
+          {user?.email === "greggferrara@gmail.com" && (
+            <Card className="p-4">
+              <p className="text-xs text-gray-500 mb-1">Stripe Revenue</p>
+              <p className="text-2xl font-bold text-green-700">${totalRevenue.toFixed(2)}</p>
+              <p className="text-xs text-gray-400 mt-1">{activeSubscriptions} active subs</p>
+            </Card>
+          )}
         </div>
 
         {/* Tabs */}
