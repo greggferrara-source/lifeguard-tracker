@@ -332,6 +332,13 @@ export default function Home() {
         </div>
       </section>
 
+      {/* ── SEO keyword-rich intro paragraph (visible to Google) ── */}
+      <section className="px-4 sm:px-6 pt-12 pb-4 max-w-4xl mx-auto text-center">
+        <p className="text-sm text-gray-400 leading-relaxed">
+          LifeGuard Tracker is the leading <strong className="text-gray-500">lifeguard tracking system</strong> and <strong className="text-gray-500">aquatic staff management software</strong> trusted by community pools, water parks, YMCAs, municipal beaches, and recreation centers across the United States. Our platform combines <strong className="text-gray-500">lifeguard GPS tracking</strong>, real-time scheduling, certification compliance, incident logging, and chemical monitoring into one easy-to-use tool designed specifically for aquatic facility managers.
+        </p>
+      </section>
+
       {/* ── Benefits ── */}
       <section id="benefits" className="py-14 sm:py-20 px-4 sm:px-6">
         <div className="max-w-6xl mx-auto space-y-16 sm:space-y-24">
