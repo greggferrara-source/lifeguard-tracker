@@ -144,6 +144,7 @@ import WeatherAlertsMonitor from './pages/WeatherAlertsMonitor';
 import WorkflowAutomation from './pages/WorkflowAutomation';
 import WorkforceScheduler from './pages/WorkforceScheduler';
 import BlogPost1 from './pages/BlogPost1';
+import BlogPost2 from './pages/BlogPost2';
 import __Layout from './Layout.jsx';
 
 
@@ -245,6 +246,7 @@ export const PAGES = {
     "WorkflowAutomation": WorkflowAutomation,
     "WorkforceScheduler": WorkforceScheduler,
     "BlogPost1": BlogPost1,
+    "BlogPost2": BlogPost2,
 }
 
 export const pagesConfig = {
