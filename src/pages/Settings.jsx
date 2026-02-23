@@ -19,9 +19,16 @@ import InviteEmployees from "@/components/settings/InviteEmployees";
 import DataDeletion from "@/components/settings/DataDeletion";
 import RosterImport from "@/components/settings/RosterImport";
 
+const ROOT_EMAIL = "greggferrara@gmail.com";
+
 export default function Settings() {
   const queryClient = useQueryClient();
   const [tab, setTab] = useState("templates");
+  const [currentUser, setCurrentUser] = useState(null);
+
+  React.useEffect(() => {
+    base44.auth.me().then(setCurrentUser).catch(() => {});
+  }, []);
   const [templateOpen, setTemplateOpen] = useState(false);
   const [editingTemplate, setEditingTemplate] = useState(null);
   const [form, setForm] = useState({ name: "", start_time: "09:00", end_time: "17:00", location_id: "", days_of_week: [], notes: "" });
