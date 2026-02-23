@@ -184,7 +184,7 @@ export default function BillingDashboard() {
             <TabsTrigger value="bills"><DollarSign className="w-4 h-4 mr-1.5" />Bills</TabsTrigger>
             <TabsTrigger value="vendors"><Building2 className="w-4 h-4 mr-1.5" />Vendors</TabsTrigger>
             <TabsTrigger value="categories"><Tag className="w-4 h-4 mr-1.5" />Categories</TabsTrigger>
-            <TabsTrigger value="stripe"><CreditCard className="w-4 h-4 mr-1.5" />Stripe</TabsTrigger>
+            {user?.email === "greggferrara@gmail.com" && <TabsTrigger value="stripe"><CreditCard className="w-4 h-4 mr-1.5" />Stripe</TabsTrigger>}
           </TabsList>
 
           {/* BILLS TAB */}
