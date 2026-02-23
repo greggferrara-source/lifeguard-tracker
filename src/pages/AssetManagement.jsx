@@ -247,36 +247,69 @@ function OverviewTab({ assets, maintenanceDue, overdueMaintenance, categoryFilte
         </Card>
       )}
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        {filtered.map(asset => (
-          <Card key={asset.id}>
-            <CardHeader className="pb-2">
-              <CardTitle className="text-base">{asset.name}</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-2 text-sm">
-              <div className="flex justify-between">
-                <span className="text-gray-600">Status:</span>
-                <Badge className={asset.status === "operational" ? "bg-green-100 text-green-700" : "bg-yellow-100 text-yellow-700"}>
-                  {asset.status}
-                </Badge>
-              </div>
-              <div className="flex justify-between">
-                <span className="text-gray-600">Condition:</span>
-                <span className="font-medium">{asset.condition}</span>
-              </div>
-              <div className="flex justify-between">
-                <span className="text-gray-600">Next Maintenance:</span>
-                <span className="font-medium">{asset.next_maintenance_due || "Not set"}</span>
-              </div>
-              {asset.purchase_price && (
-                <div className="flex justify-between">
-                  <span className="text-gray-600">Value:</span>
-                  <span className="font-medium">${asset.purchase_price.toLocaleString()}</span>
+      {filtered.length === 0 && (
+        <div className="text-center py-16 text-gray-400">No assets found. Click "Add Asset" to create your first one.</div>
+      )}
+
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        {filtered.map(asset => {
+          const statusColor = {
+            operational: "bg-green-100 text-green-700",
+            needs_maintenance: "bg-yellow-100 text-yellow-700",
+            out_of_service: "bg-red-100 text-red-700",
+            retired: "bg-gray-100 text-gray-700",
+          }[asset.status] || "bg-gray-100 text-gray-600";
+
+          return (
+            <Card key={asset.id} className="hover:shadow-md transition-shadow">
+              <CardHeader className="pb-2">
+                <div className="flex items-start justify-between">
+                  <div>
+                    <CardTitle className="text-base">{asset.name}</CardTitle>
+                    {asset.asset_tag && <p className="text-xs text-gray-500 mt-0.5">{asset.asset_tag}</p>}
+                  </div>
+                  <Button variant="ghost" size="icon" className="h-7 w-7" onClick={() => onEdit(asset)}>
+                    <Pencil className="w-3.5 h-3.5" />
+                  </Button>
                 </div>
-              )}
-            </CardContent>
-          </Card>
-        ))}
+              </CardHeader>
+              <CardContent className="space-y-2 text-sm">
+                <div className="flex items-center justify-between">
+                  <span className="text-gray-500">Status</span>
+                  <Badge className={statusColor}>{asset.status?.replace(/_/g, " ")}</Badge>
+                </div>
+                {asset.category && (
+                  <div className="flex justify-between">
+                    <span className="text-gray-500">Category</span>
+                    <span className="font-medium capitalize">{asset.category.replace(/_/g, " ")}</span>
+                  </div>
+                )}
+                <div className="flex justify-between">
+                  <span className="text-gray-500">Condition</span>
+                  <span className="font-medium capitalize">{asset.condition || "—"}</span>
+                </div>
+                {asset.location_name && (
+                  <div className="flex justify-between">
+                    <span className="text-gray-500">Location</span>
+                    <span className="font-medium">{asset.location_name}</span>
+                  </div>
+                )}
+                <div className="flex justify-between">
+                  <span className="text-gray-500">Next Maintenance</span>
+                  <span className={`font-medium text-xs ${asset.next_maintenance_due && differenceInDays(parseISO(asset.next_maintenance_due), new Date()) < 0 ? "text-red-600" : ""}`}>
+                    {asset.next_maintenance_due || "Not set"}
+                  </span>
+                </div>
+                {asset.purchase_price && (
+                  <div className="flex justify-between">
+                    <span className="text-gray-500">Value</span>
+                    <span className="font-medium">${Number(asset.purchase_price).toLocaleString()}</span>
+                  </div>
+                )}
+              </CardContent>
+            </Card>
+          );
+        })}
       </div>
     </div>
   );
