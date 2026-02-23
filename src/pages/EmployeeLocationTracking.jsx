@@ -107,7 +107,7 @@ export default function EmployeeLocationTrackingPage() {
             )}
           </TabsContent>
 
-          {/* Map Tab */}
+          {/* Live Tracking Tab */}
           <TabsContent value="map" className="space-y-4">
             {selectedEmployee ? (
               <div className="space-y-4">
