@@ -181,14 +181,26 @@ export default function AssetManagement() {
       </div>
 
       {/* Tab Content */}
-      {tab === "overview" && <OverviewTab assets={assets} maintenanceDue={maintenanceDue} overdueMaintenance={overdueMaintenance} />}
+      {tab === "overview" && <OverviewTab assets={assets} maintenanceDue={maintenanceDue} overdueMaintenance={overdueMaintenance} categoryFilter={categoryFilter} onEdit={openEdit} />}
       {tab === "requests" && <MaintenanceRequestsTab requests={requests} setShowDialog={setShowMaintenanceDialog} />}
       {tab === "history" && <ServiceHistoryTab serviceHistory={serviceHistory} />}
       {tab === "dashboard" && <PerformanceDashboard assets={assets} serviceHistory={serviceHistory} requests={requests} />}
 
       {/* Dialogs */}
+      <AssetDialog open={showAssetDialog} onOpenChange={setShowAssetDialog} asset={editingAsset} />
       <MaintenanceRequestDialog open={showMaintenanceDialog} onOpenChange={setShowMaintenanceDialog} assets={assets} />
       <ServiceLogDialog open={showServiceDialog} onOpenChange={setShowServiceDialog} assets={assets} />
+      {showImporter && (
+        <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
+          <div className="bg-white rounded-xl shadow-xl w-full max-w-2xl max-h-[90vh] overflow-auto p-6">
+            <div className="flex justify-between items-center mb-4">
+              <h2 className="text-lg font-bold">Import Assets from CSV</h2>
+              <Button variant="ghost" size="sm" onClick={() => setShowImporter(false)}>✕</Button>
+            </div>
+            <AssetImporter onComplete={() => { setShowImporter(false); qc.invalidateQueries({ queryKey: ["assets"] }); }} />
+          </div>
+        </div>
+      )}
     </div>
   );
 }
