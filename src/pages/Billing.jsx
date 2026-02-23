@@ -145,8 +145,8 @@ export default function Billing() {
 
   const currentPlan = subscription ? planDetails[subscription.plan_name] : null;
   const status = subscription?.status || "inactive";
-  const statusInfo = statusConfig[status] || statusConfig.inactive;
-  const Icon = statusInfo.icon;
+  const statusInfo = statusConfig[status] || statusConfig.canceled;
+  const Icon = statusInfo?.icon || AlertCircle;
 
   const formatDate = (dateString) => {
     if (!dateString) return "N/A";
