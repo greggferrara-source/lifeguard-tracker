@@ -13,6 +13,20 @@ import {
   Menu,
   X,
   Play,
+  AlertTriangle,
+  ClipboardList,
+  Droplets,
+  Wrench,
+  BookOpen,
+  FileText,
+  BarChart2,
+  MessageSquare,
+  Bell,
+  DollarSign,
+  Globe,
+  Eye,
+  Zap,
+  MapPin,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import ChatbotWidget from "@/components/ChatbotWidget";
