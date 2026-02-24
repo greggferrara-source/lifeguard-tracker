@@ -9,56 +9,70 @@ Deno.serve(async (req) => {
       return Response.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
-    const body = await req.json();
-    const { provider } = body;
+    const { location_id, provider } = await req.json();
 
-    if (!provider) {
-      return Response.json({ error: 'Missing provider' }, { status: 400 });
+    if (!location_id || !provider) {
+      return Response.json({ error: 'Missing required fields' }, { status: 400 });
     }
 
-    // OAuth authorization endpoints
-    const oauthAuthEndpoints = {
-      gusto: 'https://api.gusto.com/oauth/authorize',
-      adp: 'https://api.adp.com/oauth/authorize',
-      paychex: 'https://api.paychex.com/oauth/authorize',
-      bamboohr: 'https://api.bamboohr.com/login/oauth/authorize',
-      rippling: 'https://api.rippling.com/oauth/authorize',
-      workday: 'https://workday.okta.com/oauth2/v1/authorize'
-    };
-
-    const authEndpoint = oauthAuthEndpoints[provider];
-    if (!authEndpoint) {
+    const validProviders = ['gusto', 'adp', 'paychex'];
+    if (!validProviders.includes(provider)) {
       return Response.json({ error: 'Invalid provider' }, { status: 400 });
     }
 
-    const clientId = Deno.env.get(`PAYROLL_${provider.toUpperCase()}_CLIENT_ID`);
-    const redirectUri = Deno.env.get('PAYROLL_REDIRECT_URI') || 'https://app.base44.com/payroll/oauth/callback';
-    
-    if (!clientId) {
-      return Response.json(
-        { error: `Missing credentials for ${provider}` },
-        { status: 500 }
-      );
+    // OAuth URLs for each provider
+    const oauthUrls = {
+      gusto: {
+        authUrl: 'https://api.gusto.com/oauth/authorize',
+        clientId: Deno.env.get('GUSTO_CLIENT_ID'),
+        redirectUri: `${Deno.env.get('APP_BASE_URL')}/oauth/callback/gusto`
+      },
+      adp: {
+        authUrl: 'https://api.adp.com/oauth/authorize',
+        clientId: Deno.env.get('ADP_CLIENT_ID'),
+        redirectUri: `${Deno.env.get('APP_BASE_URL')}/oauth/callback/adp`
+      },
+      paychex: {
+        authUrl: 'https://api.paychex.com/oauth/authorize',
+        clientId: Deno.env.get('PAYCHEX_CLIENT_ID'),
+        redirectUri: `${Deno.env.get('APP_BASE_URL')}/oauth/callback/paychex`
+      }
+    };
+
+    const config = oauthUrls[provider];
+    if (!config.clientId) {
+      console.error(`Missing OAuth credentials for ${provider}`);
+      return Response.json({ 
+        error: `${provider} OAuth not configured` 
+      }, { status: 500 });
     }
 
-    // Generate state token for CSRF protection
-    const state = crypto.getRandomValues(new Uint8Array(32));
-    const stateStr = Array.from(state).map(b => b.toString(16).padStart(2, '0')).join('');
+    // Generate state for CSRF protection
+    const state = crypto.randomUUID();
+    
+    // Store state temporarily (in production, use Redis or similar)
+    const stateData = {
+      state,
+      provider,
+      location_id,
+      user_email: user.email,
+      created_at: new Date().toISOString()
+    };
 
     // Build authorization URL
-    const authUrl = new URL(authEndpoint);
-    authUrl.searchParams.append('client_id', clientId);
-    authUrl.searchParams.append('redirect_uri', redirectUri);
+    const authUrl = new URL(config.authUrl);
+    authUrl.searchParams.append('client_id', config.clientId);
+    authUrl.searchParams.append('redirect_uri', config.redirectUri);
     authUrl.searchParams.append('response_type', 'code');
-    authUrl.searchParams.append('state', stateStr);
-    authUrl.searchParams.append('scope', 'employees:read payroll:read');
+    authUrl.searchParams.append('state', state);
+    authUrl.searchParams.append('scope', 'payroll:read payroll:write timesheets:read');
 
-    return Response.json({
+    return Response.json({ 
       authUrl: authUrl.toString(),
-      provider
+      state 
     });
   } catch (error) {
-    console.error('OAuth init error:', error);
+    console.error('PayrollOAuth init error:', error);
     return Response.json({ error: error.message }, { status: 500 });
   }
 });

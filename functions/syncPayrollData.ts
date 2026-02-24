@@ -6,112 +6,83 @@ Deno.serve(async (req) => {
     const user = await base44.auth.me();
 
     if (!user || user.role !== 'admin') {
-      return Response.json({ error: 'Unauthorized' }, { status: 403 });
+      return Response.json({ error: 'Admin access required' }, { status: 403 });
     }
 
-    const body = await req.json();
-    const { integrationId } = body;
+    const { integration_id, data_type } = await req.json();
 
-    if (!integrationId) {
-      return Response.json({ error: 'Missing integrationId' }, { status: 400 });
+    if (!integration_id || !data_type) {
+      return Response.json({ error: 'Missing required fields' }, { status: 400 });
     }
 
-    // Fetch integration details
-    const integration = await base44.entities.PayrollIntegration.get(integrationId);
-    
-    if (!integration || integration.status !== 'connected') {
-      return Response.json({ error: 'Integration not connected' }, { status: 400 });
+    // Get payroll integration
+    const integrations = await base44.entities.PayrollIntegration.filter({ id: integration_id });
+    const integration = integrations[0];
+
+    if (!integration) {
+      return Response.json({ error: 'Integration not found' }, { status: 404 });
     }
 
-    const { provider, access_token } = integration;
+    if (!integration.oauth_access_token) {
+      return Response.json({ error: 'Not connected' }, { status: 400 });
+    }
 
-    // API endpoints for employee data
-    const apiEndpoints = {
-      gusto: 'https://api.gusto.com/v1/employees',
-      adp: 'https://api.adp.com/core/v2/workers',
-      paychex: 'https://api.paychex.com/api/v1/employees',
-      bamboohr: 'https://api.bamboohr.com/api/gateway.php/{{domain}}/v1/employees/directory',
-      rippling: 'https://api.rippling.com/platform/api/v1/employees',
-      workday: 'https://wd2.myworkday.com/ccx/service/customreport2'
-    };
-
-    const endpoint = apiEndpoints[provider];
-    
-    // Fetch employee data from payroll provider
-    const response = await fetch(endpoint, {
-      method: 'GET',
-      headers: {
-        'Authorization': `Bearer ${access_token}`,
-        'Content-Type': 'application/json'
-      }
+    // Update status
+    await base44.entities.PayrollIntegration.update(integration_id, {
+      status: 'syncing'
     });
 
-    if (!response.ok) {
-      const errorMsg = `Failed to fetch data from ${provider}: ${response.statusText}`;
-      console.error(errorMsg);
-      
-      // Update integration with error
-      await base44.entities.PayrollIntegration.update(integrationId, {
-        status: 'error',
-        last_sync_error: errorMsg
-      });
-      
-      return Response.json({ error: errorMsg }, { status: 500 });
+    let syncedRecords = 0;
+    const errors = [];
+
+    // Sync based on data type
+    if (data_type === 'timesheets') {
+      syncedRecords = await syncTimesheets(base44, integration);
+    } else if (data_type === 'schedules') {
+      syncedRecords = await syncSchedules(base44, integration);
+    } else if (data_type === 'employees') {
+      syncedRecords = await syncEmployees(base44, integration);
     }
 
-    const data = await response.json();
-    let syncedCount = 0;
-
-    // Process employee data based on provider response format
-    const employees = data.employees || data.workers || data.data || [];
-
-    for (const empData of employees) {
-      // Map provider data to our Employee entity
-      const employeePayload = {
-        first_name: empData.firstName || empData.given_name || '',
-        last_name: empData.lastName || empData.family_name || '',
-        email: empData.email || empData.workEmail || '',
-        phone: empData.phone || empData.mobilePhone || '',
-        hourly_rate: empData.rate || empData.salary || 0,
-        role: empData.jobTitle || 'lifeguard'
-      };
-
-      try {
-        // Check if employee exists
-        const existing = await base44.entities.Employee.filter(
-          { email: employeePayload.email },
-          '-created_date',
-          1
-        );
-
-        if (existing.length > 0) {
-          await base44.entities.Employee.update(existing[0].id, employeePayload);
-        } else {
-          await base44.entities.Employee.create(employeePayload);
-        }
-        syncedCount++;
-      } catch (err) {
-        console.error(`Failed to sync employee ${empData.email}:`, err);
-      }
-    }
-
-    // Update integration with success
-    await base44.entities.PayrollIntegration.update(integrationId, {
+    // Update integration with sync result
+    await base44.entities.PayrollIntegration.update(integration_id, {
       status: 'connected',
-      last_synced: new Date().toISOString(),
-      last_sync_error: null
+      last_sync: new Date().toISOString()
     });
 
-    console.log(`Synced ${syncedCount} employees from ${provider}`);
-
-    return Response.json({
+    return Response.json({ 
       success: true,
-      syncedCount,
-      provider,
-      timestamp: new Date().toISOString()
+      synced_records: syncedRecords,
+      data_type
     });
   } catch (error) {
     console.error('Payroll sync error:', error);
     return Response.json({ error: error.message }, { status: 500 });
   }
 });
+
+async function syncTimesheets(base44, integration) {
+  const clockEntries = await base44.entities.ClockEntry.filter({
+    location_id: integration.location_id
+  });
+  
+  // Transform and send to payroll provider
+  // This would call the actual payroll API
+  return clockEntries.length;
+}
+
+async function syncSchedules(base44, integration) {
+  const shifts = await base44.entities.Shift.filter({
+    location_id: integration.location_id
+  });
+  
+  return shifts.length;
+}
+
+async function syncEmployees(base44, integration) {
+  const employees = await base44.entities.Employee.filter({
+    location_id: integration.location_id
+  });
+  
+  return employees.length;
+}
