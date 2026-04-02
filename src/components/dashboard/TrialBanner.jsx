@@ -12,6 +12,9 @@ export default function TrialBanner({ user, subscription }) {
   if (dismissed) return null;
   if (!user) return null;
 
+  // Root account always has full access — never show trial banner
+  if (user.email === "greggferrara@gmail.com") return null;
+
   // If they have an active paid subscription, don't show
   if (subscription?.status === "active" && subscription?.plan_name) return null;
 
