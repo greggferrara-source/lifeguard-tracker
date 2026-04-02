@@ -1,16 +1,11 @@
-import { createClientFromRequest } from 'npm:@base44/sdk@0.8.6';
+import { createClientFromRequest } from 'npm:@base44/sdk@0.8.23';
 
 Deno.serve(async (req) => {
   try {
     const base44 = createClientFromRequest(req);
     
     // Get all certifications
-    const certifications = await base44.asServiceRole.entities.Certification.list('', 1000);
-    
-    // Get alert preferences
-    const alertPrefs = await base44.asServiceRole.entities.NotificationPreference.filter({ 
-      notification_type: 'certification_expiry' 
-    });
+    const certifications = await base44.asServiceRole.entities.Certification.list('-created_date', 1000);
     
     const now = new Date();
     const alerts = [];
@@ -62,7 +57,8 @@ Deno.serve(async (req) => {
     }
     
     // Check for OSHA/MAHC compliance gaps
-    const employees = await base44.asServiceRole.entities.Employee.filter({ status: 'active' });
+    const allEmployees = await base44.asServiceRole.entities.Employee.list();
+    const employees = allEmployees.filter(e => e.status === 'active');
     const requiredCerts = ['CPR', 'First Aid', 'Lifeguard'];
     
     for (const emp of employees) {
@@ -85,16 +81,25 @@ Deno.serve(async (req) => {
     }
     
     // Create in-app notifications
+    // Find all managers/admins to notify
+    const adminEmails = employees.filter(e => e.role === 'manager' || e.role === 'supervisor').map(e => e.email).filter(Boolean);
+    if (adminEmails.length === 0) adminEmails.push('admin');
+
     for (const alert of alerts) {
-      await base44.asServiceRole.entities.UserNotification.create({
-        user_email: alert.employee_id ? null : 'admin',
-        title: alert.severity === 'critical' ? '🚨 Critical Alert' : alert.severity === 'high' ? '⚠️ Urgent Alert' : '📋 Compliance Notice',
-        message: alert.message,
-        type: alert.type,
-        priority: alert.severity,
-        read: false,
-        action_url: alert.employee_id ? `/employee/${alert.employee_id}` : '/certifications'
-      });
+      const notifType = (alert.type === 'certification_expired' || alert.type === 'certification_expiring_soon' || alert.type === 'certification_expiring')
+        ? 'certification_expiry' : 'compliance_gap';
+      const severity = alert.severity === 'critical' ? 'critical' : alert.severity === 'high' ? 'warning' : 'info';
+      for (const email of adminEmails) {
+        await base44.asServiceRole.entities.UserNotification.create({
+          recipient_email: email,
+          title: alert.severity === 'critical' ? '🚨 Critical Alert' : alert.severity === 'high' ? '⚠️ Urgent Alert' : '📋 Compliance Notice',
+          message: alert.message,
+          notification_type: notifType,
+          severity,
+          read: false,
+          action_url: alert.employee_id ? `/employee/${alert.employee_id}` : '/certifications'
+        });
+      }
     }
     
     // Send email alerts for critical/high severity
