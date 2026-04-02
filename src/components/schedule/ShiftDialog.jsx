@@ -113,15 +113,19 @@ export default function ShiftDialog({
   // Shift time validation
   const timeError = useMemo(() => {
     if (!form.start_time || !form.end_time) return null;
-    if (form.start_time >= form.end_time) {
-      return "End time must be after start time. Overnight shifts are not currently supported.";
-    }
+    // Allow overnight shifts (end < start means crosses midnight)
+    const [sh, sm] = form.start_time.split(":").map(Number);
+    const [eh, em] = form.end_time.split(":").map(Number);
+    const startMins = sh * 60 + sm;
+    const endMins = eh * 60 + em;
+    if (startMins === endMins) return "Start and end time cannot be the same.";
     return null;
   }, [form.start_time, form.end_time]);
 
   const handleSave = () => {
-    // Block on missing cert unless manager confirmed override
-    if (timeError) return; // blocked by time validation
+    if (timeError) return;
+    if (!form.date) return;
+    if (!form.location_id) return;
     if (certWarning?.level === "block" && !confirmCert) {
       setConfirmCert(true);
       return;
@@ -289,7 +293,7 @@ export default function ShiftDialog({
                 <Button onClick={handleSave} className="bg-orange-500 hover:bg-orange-600">Confirm Override</Button>
               </>
             ) : (
-              <Button onClick={handleSave} disabled={!!timeError} className="bg-[#1a9c5b] hover:bg-[#158a4e]">
+              <Button onClick={handleSave} disabled={!!timeError || !form.date || !form.location_id} className="bg-[#1a9c5b] hover:bg-[#158a4e]">
                 {shift ? "Update" : "Create"}
               </Button>
             )}

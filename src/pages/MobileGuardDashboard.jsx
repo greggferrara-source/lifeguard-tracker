@@ -45,8 +45,23 @@ export default function MobileGuardDashboard() {
     queryFn: () => base44.entities.Shift.list("-date", 50),
     enabled: isOnline && !!user,
   });
+  const { data: myEmployeeRecord } = useQuery({
+    queryKey: ["my-employee-record", user?.email],
+    queryFn: async () => {
+      const results = await base44.entities.Employee.filter({ email: user.email });
+      return results[0] || null;
+    },
+    enabled: isOnline && !!user?.email,
+  });
+
   const todayStr = format(new Date(), "yyyy-MM-dd");
-  const myShiftToday = allShifts.find(s => s.date === todayStr && s.employee_name && user?.full_name && s.employee_name.includes(user.full_name.split(" ")[0]));
+  // Match by employee_id first (reliable), fall back to name fuzzy match
+  const myShiftToday = allShifts.find(s =>
+    s.date === todayStr && (
+      (myEmployeeRecord?.id && s.employee_id === myEmployeeRecord.id) ||
+      (s.employee_name && user?.full_name && s.employee_name.includes(user.full_name.split(" ")[0]))
+    )
+  );
   const { data: myEntry } = useQuery({
     queryKey: ["my-clock-entry"],
     queryFn: async () => {
@@ -160,9 +175,11 @@ export default function MobileGuardDashboard() {
 
   const handleSubmitLog = async () => {
     if (!logText.trim()) return;
+    const locationId = clockedIn?.location_id || selectedLocation;
+    const locationName = clockedIn?.location_name || locations.find(l => l.id === locationId)?.name || "";
     const data = {
-      location_id: clockedIn?.location_id || selectedLocation,
-      location_name: clockedIn?.location_name || "",
+      location_id: locationId,
+      location_name: locationName,
       date: format(new Date(), "yyyy-MM-dd"),
       time: format(new Date(), "HH:mm"),
       type: logType,
@@ -170,10 +187,23 @@ export default function MobileGuardDashboard() {
       description: logText,
       reporting_staff_name: user?.full_name,
       reporting_staff_email: user?.email,
+      shift_id: myShiftToday?.id || clockedIn?.shift_id || null,
       status: "open",
     };
     if (isOnline) {
       await base44.entities.IncidentLog.create(data);
+      // For critical/rescue: also fire an UrgentAlert immediately
+      if (logSeverity === "critical" || logType === "rescue") {
+        await base44.entities.UrgentAlert.create({
+          title: `🚨 ${logType === "rescue" ? "RESCUE" : "CRITICAL"} — ${locationName}`,
+          message: logText.slice(0, 200),
+          location_id: locationId,
+          location_name: locationName,
+          reported_by: user?.full_name,
+          status: "active",
+          created_at: new Date().toISOString(),
+        });
+      }
     } else {
       addToQueue({ type: "incident_log", data });
     }

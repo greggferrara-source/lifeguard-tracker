@@ -6,7 +6,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { useNavigate } from 'react-router-dom';
 import { createPageUrl } from '@/utils';
-import { Upload, X } from 'lucide-react';
+import { Upload, X, Loader2 } from 'lucide-react';
 
 export default function CreateIncidentReport() {
   const navigate = useNavigate();
@@ -22,6 +22,8 @@ export default function CreateIncidentReport() {
   });
   const [attachments, setAttachments] = useState([]);
   const [people, setPeople] = useState([]);
+  const [uploadingFile, setUploadingFile] = useState(false);
+  const [validationError, setValidationError] = useState("");
 
   const { data: locations = [] } = useQuery({
     queryKey: ['locations'],
@@ -47,12 +49,22 @@ export default function CreateIncidentReport() {
   });
 
   const handleAddAttachment = async (file) => {
+    setUploadingFile(true);
     const { file_url } = await base44.integrations.Core.UploadFile({ file });
-    setAttachments([...attachments, {
+    setAttachments(prev => [...prev, {
       file_url,
       file_type: file.type.startsWith('image') ? 'photo' : file.type.startsWith('video') ? 'video' : 'document',
+      caption: file.name,
       uploaded_at: new Date().toISOString()
     }]);
+    setUploadingFile(false);
+  };
+
+  const handleSubmitClick = () => {
+    if (!form.description.trim()) { setValidationError("Description is required."); return; }
+    if (!form.location_id) { setValidationError("Location is required."); return; }
+    setValidationError("");
+    createIncident();
   };
 
   return (
@@ -170,9 +182,11 @@ export default function CreateIncidentReport() {
           <CardTitle>Media Attachments</CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
-          <div className="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center cursor-pointer hover:border-blue-500">
-            <Upload className="w-8 h-8 mx-auto mb-2 text-gray-400" />
-            <p className="text-sm text-gray-600">Drag photos/videos or click to upload</p>
+          <label htmlFor="file-upload" className="block border-2 border-dashed border-gray-300 rounded-lg p-8 text-center cursor-pointer hover:border-blue-500 transition-colors">
+            {uploadingFile
+              ? <Loader2 className="w-8 h-8 mx-auto mb-2 text-blue-400 animate-spin" />
+              : <Upload className="w-8 h-8 mx-auto mb-2 text-gray-400" />}
+            <p className="text-sm text-gray-600">{uploadingFile ? "Uploading..." : "Tap or drag to attach photos/videos"}</p>
             <input
               type="file"
               multiple
@@ -180,13 +194,9 @@ export default function CreateIncidentReport() {
               onChange={(e) => Array.from(e.target.files || []).forEach(handleAddAttachment)}
               className="hidden"
               id="file-upload"
+              disabled={uploadingFile}
             />
-            <label htmlFor="file-upload" className="cursor-pointer">
-              <Button variant="outline" className="mt-2">
-                Choose Files
-              </Button>
-            </label>
-          </div>
+          </label>
 
           {attachments.length > 0 && (
             <div className="space-y-2">
@@ -207,16 +217,21 @@ export default function CreateIncidentReport() {
       </Card>
 
       {/* Actions */}
+      {validationError && (
+        <div className="flex items-center gap-2 px-4 py-2 bg-red-50 border border-red-200 rounded-lg text-red-700 text-sm">
+          <X className="w-4 h-4 flex-shrink-0" /> {validationError}
+        </div>
+      )}
       <div className="flex gap-3 justify-end">
         <Button variant="outline" onClick={() => navigate(createPageUrl('IncidentManagement'))}>
           Cancel
         </Button>
         <Button
           className="bg-blue-600 hover:bg-blue-700"
-          onClick={() => createIncident()}
-          disabled={isPending || !form.description || !form.location_id}
+          onClick={handleSubmitClick}
+          disabled={isPending || uploadingFile}
         >
-          {isPending ? 'Submitting...' : 'Submit Report'}
+          {isPending ? <><Loader2 className="w-4 h-4 mr-2 animate-spin" />Submitting...</> : 'Submit Report'}
         </Button>
       </div>
     </div>

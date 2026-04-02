@@ -15,6 +15,9 @@ export default function CallOutDialog({ open, onOpenChange, user, clockedIn, myS
 
   const handleSubmit = async () => {
     setSubmitting(true);
+    const locationName = clockedIn?.location_name || myShift?.location_name || "";
+    const locationId = clockedIn?.location_id || myShift?.location_id || "";
+    const shiftTime = myShift ? `${myShift.start_time}–${myShift.end_time}` : "";
 
     // Mark shift as open/uncovered if we know the shift
     if (myShift?.id) {
@@ -26,19 +29,33 @@ export default function CallOutDialog({ open, onOpenChange, user, clockedIn, myS
       });
     }
 
-    // Create an Alert for managers
-    const locationName = clockedIn?.location_name || myShift?.location_name || "";
+    // Create a critical Alert with dedup key to avoid duplicate callout alerts
+    const dedupKey = `callout-${user?.email}-${myShift?.id || new Date().toISOString().split("T")[0]}`;
     await base44.entities.Alert.create({
       type: "callout",
-      severity: "warning",
+      severity: "critical",
       title: `Call Out: ${user?.full_name}`,
-      message: `${user?.full_name} has called out (${reason})${notes ? " — " + notes : ""}. Shift at ${locationName} is now uncovered.`,
+      message: `${user?.full_name} has called out (${reason})${notes ? " — " + notes : ""}. Shift ${shiftTime} at ${locationName} is now UNCOVERED.`,
       date: new Date().toISOString().split("T")[0],
-      location_id: clockedIn?.location_id || myShift?.location_id || "",
+      location_id: locationId,
       location_name: locationName,
       employee_name: user?.full_name,
+      shift_id: myShift?.id || "",
+      dedup_key: dedupKey,
       resolved: false,
     });
+
+    // Also auto-clock out if currently clocked in
+    if (clockedIn?.id && !clockedIn.id.startsWith("offline_")) {
+      const now = new Date().toISOString();
+      const mins = Math.floor((Date.now() - new Date(clockedIn.clock_in).getTime()) / 60000);
+      await base44.entities.ClockEntry.update(clockedIn.id, {
+        clock_out: now,
+        status: "clocked_out",
+        total_minutes: mins,
+        notes: `Auto clock-out on call-out: ${reason}`,
+      });
+    }
 
     setDone(true);
     setSubmitting(false);
@@ -60,6 +77,13 @@ export default function CallOutDialog({ open, onOpenChange, user, clockedIn, myS
           </DialogTitle>
         </DialogHeader>
 
+        {!myShift && !clockedIn && !done && (
+          <div className="py-4 text-center space-y-2">
+            <AlertTriangle className="w-8 h-8 text-amber-400 mx-auto" />
+            <p className="text-sm text-amber-700 font-medium">No active shift found for today.</p>
+            <p className="text-xs text-gray-500">The call-out will still send a manager alert without modifying a shift.</p>
+          </div>
+        )}
         {done ? (
           <div className="py-6 text-center space-y-2">
             <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mx-auto">

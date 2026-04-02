@@ -55,8 +55,16 @@ export default function ShiftSwaps() {
   // Shifts belonging to current user (match by email via employee records)
   const myEmployee = employees.find(e => e.email === user?.email);
   const today = new Date().toISOString().split("T")[0];
-  const myShifts = allShifts.filter(s => s.employee_id === myEmployee?.id && s.date >= today && s.status === "scheduled");
-  const otherShifts = allShifts.filter(s => s.employee_id && s.employee_id !== myEmployee?.id && s.date >= today && s.status === "scheduled");
+  const myShifts = allShifts.filter(s => s.employee_id === myEmployee?.id && s.date >= today && (s.status === "scheduled" || s.status === "open"));
+  // Only include shifts for employees who are still active
+  const activeEmpIds = new Set(employees.filter(e => e.status === "active").map(e => e.id));
+  const otherShifts = allShifts.filter(s =>
+    s.employee_id &&
+    s.employee_id !== myEmployee?.id &&
+    activeEmpIds.has(s.employee_id) &&
+    s.date >= today &&
+    s.status === "scheduled"
+  );
   const empMap = Object.fromEntries(employees.map(e => [e.id, e]));
 
   const myShiftObj = myShifts.find(s => s.id === reqMyShiftId);
@@ -75,6 +83,7 @@ export default function ShiftSwaps() {
 
   const handleRequestSubmit = () => {
     if (!myShiftObj || !targetShiftObj || !myEmployee) return;
+    if (!targetEmp) return; // guard: target employee record must exist
     createSwap.mutate({
       requester_employee_id: myEmployee.id,
       requester_employee_name: `${myEmployee.first_name} ${myEmployee.last_name}`,
@@ -166,7 +175,8 @@ export default function ShiftSwaps() {
 
     await base44.functions.invoke("shiftSwapNotify", {
       swap_request_id: selectedSwap.id,
-      action
+      action,
+      notify_both: true,
     });
     setManagerDialogOpen(false);
     setSelectedSwap(null);
