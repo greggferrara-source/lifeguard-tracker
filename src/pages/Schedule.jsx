@@ -14,6 +14,7 @@ import ShiftSwapDialog from "@/components/schedule/ShiftSwapDialog";
 import RecommendationsPanel from "@/components/schedule/RecommendationsPanel";
 import ScheduleSuggestionsPanel from "@/components/schedule/ScheduleSuggestionsPanel";
 import CertExpiryBanner from "@/components/schedule/CertExpiryBanner";
+import SmartScheduleBuilder from "@/components/schedule/SmartScheduleBuilder";
 
 export default function Schedule() {
   const queryClient = useQueryClient();
@@ -31,6 +32,7 @@ export default function Schedule() {
   const [recommendations, setRecommendations] = useState([]);
   const [recommendationsLoading, setRecommendationsLoading] = useState(false);
   const [suggestionsOpen, setSuggestionsOpen] = useState(false);
+  const [smartBuilderOpen, setSmartBuilderOpen] = useState(false);
 
   const days = Array.from({ length: 7 }, (_, i) => addDays(weekStart, i));
   const weekDates = days.map(d => format(d, "yyyy-MM-dd"));
@@ -276,12 +278,11 @@ export default function Schedule() {
             <Repeat className="w-4 h-4 mr-1" /> Recurring
           </Button>
           <Button
-            variant="outline"
             size="sm"
-            onClick={() => setSuggestionsOpen(true)}
-            title="Generate automated shift schedule"
+            onClick={() => setSmartBuilderOpen(true)}
+            className="bg-gradient-to-r from-[#0f6638] to-[#1a9c5b] hover:from-[#0a4f2b] hover:to-[#158a4e] text-white font-semibold gap-1.5 shadow-sm"
           >
-            <Sparkles className="w-4 h-4 mr-1" /> Auto Schedule
+            <Sparkles className="w-3.5 h-3.5" /> Auto Build Schedule
           </Button>
           <Button
             variant="outline"
@@ -397,6 +398,16 @@ export default function Schedule() {
           onClose={() => setSuggestionsOpen(false)}
         />
       )}
+      <SmartScheduleBuilder
+        open={smartBuilderOpen}
+        onOpenChange={setSmartBuilderOpen}
+        employees={employees}
+        locations={locations}
+        certifications={certifications}
+        availabilities={availabilities}
+        existingShifts={shifts}
+        onPublish={() => queryClient.invalidateQueries({ queryKey: ["shifts"] })}
+      />
       </div>
       </DragDropContext>
       );
