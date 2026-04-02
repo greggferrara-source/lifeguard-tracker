@@ -1,4 +1,4 @@
-import { createClientFromRequest } from 'npm:@base44/sdk@0.8.6';
+import { createClientFromRequest } from 'npm:@base44/sdk@0.8.23';
 
 Deno.serve(async (req) => {
   try {
@@ -6,11 +6,12 @@ Deno.serve(async (req) => {
     const today = new Date().toISOString().split("T")[0];
     const tomorrow = new Date(Date.now() + 86400000).toISOString().split("T")[0];
 
-    const [employees, locations, shifts, settingsRecords] = await Promise.all([
+    const [employees, locations, shifts, settingsRecords, certifications] = await Promise.all([
       base44.asServiceRole.entities.Employee.list(),
       base44.asServiceRole.entities.Location.list(),
       base44.asServiceRole.entities.Shift.list("-date", 500),
-      base44.asServiceRole.entities.AppSettings.filter({ key: "alert_settings" })
+      base44.asServiceRole.entities.AppSettings.filter({ key: "alert_settings" }),
+      base44.asServiceRole.entities.Certification.list()
     ]);
 
     const settings = settingsRecords.length > 0 ? settingsRecords[0].value : {};
@@ -74,32 +75,32 @@ Deno.serve(async (req) => {
       }
     }
 
-    // 3. Cert expiry check
+    // 3. Cert expiry check (uses separate Certification entity)
     if (isEnabled("cert_expiry")) {
       const thirtyDays = new Date();
       thirtyDays.setDate(thirtyDays.getDate() + 30);
       const thirtyDaysStr = thirtyDays.toISOString().split("T")[0];
-      for (const emp of employees.filter(e => e.status === "active")) {
-        for (const cert of (emp.certifications || [])) {
-          if (cert.expiry_date && cert.expiry_date <= thirtyDaysStr) {
-            const expired = cert.expiry_date < today;
-            await base44.asServiceRole.entities.Alert.create({
-              type: "cert_expiry",
-              severity: expired ? "critical" : "warning",
-              title: `Cert ${expired ? "Expired" : "Expiring"}: ${emp.first_name} ${emp.last_name}`,
-              message: `${emp.first_name} ${emp.last_name}'s ${cert.name} ${expired ? "expired" : "expires"} on ${cert.expiry_date}.`,
-              employee_id: emp.id,
-              employee_name: `${emp.first_name} ${emp.last_name}`,
-              resolved: false
-            });
-            results.alerts_created++;
-          }
+      const activeCerts = certifications.filter(c => c.status === "approved" && c.expiry_date);
+      for (const cert of activeCerts) {
+        if (cert.expiry_date <= thirtyDaysStr) {
+          const expired = cert.expiry_date < today;
+          await base44.asServiceRole.entities.Alert.create({
+            type: "cert_expiry",
+            severity: expired ? "critical" : "warning",
+            title: `Cert ${expired ? "Expired" : "Expiring"}: ${cert.employee_name}`,
+            message: `${cert.employee_name}'s ${cert.name} ${expired ? "expired" : "expires"} on ${cert.expiry_date}.`,
+            employee_id: cert.employee_id,
+            employee_name: cert.employee_name,
+            resolved: false
+          });
+          results.alerts_created++;
         }
       }
     }
 
     // 4. Shift reminders for tomorrow's shifts
     if (!isEnabled("shift_reminders")) {
+      // skip reminders but still complete the scan
       return Response.json({ success: true, ...results });
     }
     const tomorrowShifts = shifts.filter(s => s.date === tomorrow && s.employee_id && s.status === "scheduled");

@@ -73,7 +73,7 @@ export default function Locations() {
         <p className="text-sm text-slate-500">{locations.length} location{locations.length !== 1 ? "s" : ""}</p>
         <Button
           onClick={() => { setEditingLocation(null); setDialogOpen(true); }}
-          className="bg-cyan-600 hover:bg-cyan-700"
+          className="bg-[#1a9c5b] hover:bg-[#158a4e]"
           size="sm"
         >
           <Plus className="w-4 h-4 mr-1" />

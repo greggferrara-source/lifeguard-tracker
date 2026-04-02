@@ -56,11 +56,11 @@ export default function TimeOff() {
 
   const createRequest = useMutation({
     mutationFn: (data) => base44.entities.TimeOffRequest.create(data),
-    onSuccess: async () => {
+    onSuccess: async (newRequest) => {
       queryClient.invalidateQueries({ queryKey: ["timeoff-all"] });
       setDialogOpen(false);
       await base44.functions.invoke("timeOffNotifications", {
-        timeoff_request_id: "new",
+        timeoff_request_id: newRequest?.id || "new",
         action: "submitted",
       });
     },

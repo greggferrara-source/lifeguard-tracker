@@ -1,4 +1,4 @@
-import { createClientFromRequest } from 'npm:@base44/sdk@0.8.6';
+import { createClientFromRequest } from 'npm:@base44/sdk@0.8.23';
 
 Deno.serve(async (req) => {
   try {
@@ -8,6 +8,11 @@ Deno.serve(async (req) => {
 
     if (!timeoff_request_id || !action) {
       return Response.json({ error: 'Missing parameters' }, { status: 400 });
+    }
+
+    // Handle "submitted" with "new" placeholder gracefully
+    if (timeoff_request_id === "new") {
+      return Response.json({ success: true, skipped: true });
     }
 
     const request = await base44.asServiceRole.entities.TimeOffRequest.filter({ id: timeoff_request_id });

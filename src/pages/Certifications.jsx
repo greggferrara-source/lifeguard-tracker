@@ -86,6 +86,7 @@ export default function Certifications() {
 
   const handleSubmit = () => {
     if (!myEmployee) return;
+    if (!form.name || !form.expiry_date) return;
     createCert.mutate({
       ...form,
       employee_id: myEmployee.id,

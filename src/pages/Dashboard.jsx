@@ -89,7 +89,7 @@ export default function Dashboard() {
     enabled: isAdmin,
   });
 
-  const isNewUser = isAdmin && onboardingStatus === null && employees.length === 0 && locations.length === 0;
+  const isNewUser = isAdmin && onboardingStatus === null && employees.length === 0 && locations.length === 0 && !onboardingStatus;
   if (isNewUser) {
     window.location.href = createPageUrl("SetupWizard");
     return null;

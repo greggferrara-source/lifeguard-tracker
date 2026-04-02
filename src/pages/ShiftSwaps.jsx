@@ -225,7 +225,7 @@ export default function ShiftSwaps() {
                   )}
                 </div>
                 <div className="flex flex-col gap-2 flex-shrink-0">
-                  {swap.status === "pending_employee" && (
+                  {swap.status === "pending_employee" && swap.target_employee_id === myEmployee?.id && (
                     <>
                       <Button size="sm" className="bg-[#1a9c5b] hover:bg-[#158a4e] rounded-full"
                         onClick={() => handleEmployeeResponse(swap, "accepted")}>
@@ -237,7 +237,7 @@ export default function ShiftSwaps() {
                       </Button>
                     </>
                   )}
-                  {swap.status === "pending_manager" && (
+                  {swap.status === "pending_manager" && isManagerOrAdmin && (
                     <Button size="sm" className="bg-blue-600 hover:bg-blue-700 rounded-full"
                       onClick={() => { setSelectedSwap(swap); setManagerDialogOpen(true); }}>
                       Review
