@@ -6,9 +6,10 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
-import { Clock, MapPin, AlertTriangle, CheckCircle, Wifi, WifiOff, FileText, Bell, LogIn, LogOut, ArrowLeftRight, CheckCircle2 } from "lucide-react";
+import { Clock, MapPin, AlertTriangle, CheckCircle, Wifi, WifiOff, FileText, Bell, LogIn, LogOut, ArrowLeftRight, CheckCircle2, PhoneOff } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { createPageUrl } from "@/utils";
+import CallOutDialog from "@/components/mobile/CallOutDialog";
 import { format } from "date-fns";
 
 const OFFLINE_QUEUE_KEY = "guard_offline_queue";
@@ -26,15 +27,25 @@ export default function MobileGuardDashboard() {
   const [logText, setLogText] = useState("");
   const [logType, setLogType] = useState("incident");
   const [logSeverity, setLogSeverity] = useState("minor");
-  const [tab, setTab] = useState("clock"); // clock | log | alerts
+  const [tab, setTab] = useState("clock"); // clock | log | alerts | swap
   const [syncing, setSyncing] = useState(false);
   const [logSubmitted, setLogSubmitted] = useState(false);
+  const [callOutOpen, setCallOutOpen] = useState(false);
   const navigate = useNavigate();
   const queryClient = useQueryClient();
 
   const { data: user } = useQuery({ queryKey: ["user"], queryFn: () => base44.auth.me() });
   const { data: locations = [] } = useQuery({ queryKey: ["locations"], queryFn: () => base44.entities.Location.list(), enabled: isOnline });
   const { data: alerts = [] } = useQuery({ queryKey: ["urgent-alerts-mobile"], queryFn: () => base44.entities.UrgentAlert.filter({ status: "active" }), refetchInterval: 30000, enabled: isOnline });
+
+  // Find today's scheduled shift for the current user (for call-out)
+  const { data: allShifts = [] } = useQuery({
+    queryKey: ["my-shifts-today"],
+    queryFn: () => base44.entities.Shift.list("-date", 50),
+    enabled: isOnline && !!user,
+  });
+  const todayStr = format(new Date(), "yyyy-MM-dd");
+  const myShiftToday = allShifts.find(s => s.date === todayStr && s.employee_name && user?.full_name && s.employee_name.includes(user.full_name.split(" ")[0]));
   const { data: myEntry } = useQuery({
     queryKey: ["my-clock-entry"],
     queryFn: async () => {
@@ -328,19 +339,31 @@ export default function MobileGuardDashboard() {
 
         {tab === "swap" && (
           <div className="space-y-4">
-            <p className="text-sm text-gray-600">Need to swap a shift or call out? Use the full swap request form.</p>
+            <p className="text-sm text-gray-600">Can't make your shift? Call out or request a swap.</p>
             <Button
-              className="w-full bg-[#1a9c5b] hover:bg-[#158a4e] h-14 text-base"
+              className="w-full bg-red-600 hover:bg-red-700 h-14 text-base"
+              onClick={() => setCallOutOpen(true)}
+            >
+              <PhoneOff className="w-5 h-5 mr-2" /> Call Out of Shift
+            </Button>
+            <div className="relative flex items-center gap-2">
+              <div className="flex-1 border-t border-gray-200" />
+              <span className="text-xs text-gray-400">or</span>
+              <div className="flex-1 border-t border-gray-200" />
+            </div>
+            <Button
+              variant="outline"
+              className="w-full h-12 text-base"
               onClick={() => navigate(createPageUrl("ShiftSwaps"))}
             >
-              <ArrowLeftRight className="w-5 h-5 mr-2" /> Go to Shift Swaps
+              <ArrowLeftRight className="w-5 h-5 mr-2" /> Request Shift Swap
             </Button>
             <Button
               variant="outline"
-              className="w-full h-12 text-base border-red-300 text-red-600 hover:bg-red-50"
+              className="w-full h-12 text-sm border-gray-200 text-gray-600 hover:bg-gray-50"
               onClick={() => navigate(createPageUrl("TimeOff"))}
             >
-              Request Time Off / Call Out
+              Request Time Off
             </Button>
           </div>
         )}
@@ -371,6 +394,15 @@ export default function MobileGuardDashboard() {
           </div>
         )}
       </div>
+
+      <CallOutDialog
+        open={callOutOpen}
+        onOpenChange={setCallOutOpen}
+        user={user}
+        clockedIn={clockedIn}
+        myShift={myShiftToday}
+        locations={locations}
+      />
     </div>
   );
 }

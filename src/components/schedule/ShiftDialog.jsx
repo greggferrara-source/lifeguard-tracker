@@ -110,8 +110,18 @@ export default function ShiftDialog({
 
   const [confirmConflict, setConfirmConflict] = useState(false);
 
+  // Shift time validation
+  const timeError = useMemo(() => {
+    if (!form.start_time || !form.end_time) return null;
+    if (form.start_time >= form.end_time) {
+      return "End time must be after start time. Overnight shifts are not currently supported.";
+    }
+    return null;
+  }, [form.start_time, form.end_time]);
+
   const handleSave = () => {
     // Block on missing cert unless manager confirmed override
+    if (timeError) return; // blocked by time validation
     if (certWarning?.level === "block" && !confirmCert) {
       setConfirmCert(true);
       return;
@@ -196,9 +206,16 @@ export default function ShiftDialog({
             <div>
               <Label className="text-xs">End Time</Label>
               <Input type="time" value={form.end_time}
+                className={timeError ? "border-red-400" : ""}
                 onChange={e => setForm({ ...form, end_time: e.target.value })} />
             </div>
           </div>
+          {timeError && (
+            <div className="flex items-start gap-1.5 p-2 bg-red-50 border border-red-200 rounded-lg">
+              <AlertTriangle className="w-3.5 h-3.5 text-red-500 mt-0.5 flex-shrink-0" />
+              <p className="text-xs text-red-700">{timeError}</p>
+            </div>
+          )}
 
           <div>
             <Label className="text-xs">Location</Label>
@@ -272,7 +289,7 @@ export default function ShiftDialog({
                 <Button onClick={handleSave} className="bg-orange-500 hover:bg-orange-600">Confirm Override</Button>
               </>
             ) : (
-              <Button onClick={handleSave} className="bg-[#1a9c5b] hover:bg-[#158a4e]">
+              <Button onClick={handleSave} disabled={!!timeError} className="bg-[#1a9c5b] hover:bg-[#158a4e]">
                 {shift ? "Update" : "Create"}
               </Button>
             )}

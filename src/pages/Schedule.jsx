@@ -13,6 +13,7 @@ import RecurringShiftDialog from "@/components/schedule/RecurringShiftDialog";
 import ShiftSwapDialog from "@/components/schedule/ShiftSwapDialog";
 import RecommendationsPanel from "@/components/schedule/RecommendationsPanel";
 import ScheduleSuggestionsPanel from "@/components/schedule/ScheduleSuggestionsPanel";
+import CertExpiryBanner from "@/components/schedule/CertExpiryBanner";
 
 export default function Schedule() {
   const queryClient = useQueryClient();
@@ -128,10 +129,15 @@ export default function Schedule() {
     }
   };
 
+  const [recurringResult, setRecurringResult] = useState(null);
+
   const handleRecurringSave = async (shiftList) => {
-    await Promise.all(shiftList.map(s => base44.entities.Shift.create(s)));
+    const results = await Promise.allSettled(shiftList.map(s => base44.entities.Shift.create(s)));
+    const succeeded = results.filter(r => r.status === "fulfilled").length;
+    const failed = results.filter(r => r.status === "rejected").length;
     queryClient.invalidateQueries({ queryKey: ["shifts"] });
-    setRecurringOpen(false);
+    setRecurringResult({ succeeded, failed, total: shiftList.length });
+    if (failed === 0) setRecurringOpen(false);
   };
 
   const handleSwapSubmit = async (swapData) => {
@@ -296,6 +302,21 @@ export default function Schedule() {
           </Button>
         </div>
       </div>
+
+      {/* Cert Expiry Banner */}
+      <CertExpiryBanner certifications={certifications} employees={employees} weekDates={weekDates} />
+
+      {/* Recurring shift result toast */}
+      {recurringResult && (
+        <div className={`flex items-center justify-between gap-3 px-4 py-3 rounded-xl border text-sm ${recurringResult.failed > 0 ? "bg-red-50 border-red-200 text-red-800" : "bg-green-50 border-green-200 text-green-800"}`}>
+          <span>
+            {recurringResult.failed > 0
+              ? `⚠️ ${recurringResult.succeeded}/${recurringResult.total} shifts created. ${recurringResult.failed} failed — please retry.`
+              : `✅ ${recurringResult.succeeded} recurring shifts created successfully.`}
+          </span>
+          <button onClick={() => setRecurringResult(null)} className="text-gray-400 hover:text-gray-600 text-xs underline">Dismiss</button>
+        </div>
+      )}
 
       {/* Recommendations Panel */}
       {(recommendations.length > 0 || recommendationsLoading) && (
