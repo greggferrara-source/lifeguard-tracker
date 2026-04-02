@@ -30,6 +30,7 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import ChatbotWidget from "@/components/ChatbotWidget";
+import HomeMetricsOverview from "@/components/home/HomeMetricsOverview";
 
 // ─── Data ───────────────────────────────────────────────────────────────────
 
@@ -164,6 +165,9 @@ export default function Home() {
         }
       } else {
         setChecking(false);
+        // Hide metrics section for unauthenticated users
+        const metricsSection = document.getElementById('metrics-section');
+        if (metricsSection) metricsSection.classList.add('hidden');
       }
     });
   }, [navigate]);
@@ -340,6 +344,17 @@ export default function Home() {
               <p className="text-sm text-gray-500 mt-2 font-medium">{s.label}</p>
             </div>
           ))}
+        </div>
+      </section>
+
+      {/* ── Admin Metrics Overview (for authenticated users) ── */}
+      <section className="px-4 sm:px-6 py-8 bg-gradient-to-b from-slate-50 to-white border-t border-slate-200 hidden" id="metrics-section">
+        <div className="max-w-4xl mx-auto">
+          <div className="mb-6">
+            <h2 className="text-2xl font-bold text-slate-900 mb-1">Dashboard Overview</h2>
+            <p className="text-sm text-slate-600">Key metrics and action items for your facility</p>
+          </div>
+          <HomeMetricsOverview />
         </div>
       </section>
 

@@ -13,6 +13,8 @@ import RetentionDashboard from './pages/RetentionDashboard';
 import PayrollExport from './pages/PayrollExport';
 import GeofenceCheckIn from './pages/GeofenceCheckIn';
 import EmployeeShiftDashboard from './pages/EmployeeShiftDashboard';
+import AdminMetricsDashboard from './pages/AdminMetricsDashboard';
+import EquipmentTracking from './pages/EquipmentTracking';
 import { AuthProvider, useAuth } from '@/lib/AuthContext';
 import UserNotRegisteredError from '@/components/UserNotRegisteredError';
 
@@ -100,6 +102,16 @@ const AuthenticatedApp = () => {
       <Route path="/EmployeeShiftDashboard" element={
         <LayoutWrapper currentPageName="EmployeeShiftDashboard">
           <EmployeeShiftDashboard />
+        </LayoutWrapper>
+      } />
+      <Route path="/AdminMetricsDashboard" element={
+        <LayoutWrapper currentPageName="AdminMetricsDashboard">
+          <AdminMetricsDashboard />
+        </LayoutWrapper>
+      } />
+      <Route path="/EquipmentTracking" element={
+        <LayoutWrapper currentPageName="EquipmentTracking">
+          <EquipmentTracking />
         </LayoutWrapper>
       } />
       <Route path="*" element={<PageNotFound />} />
