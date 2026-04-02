@@ -96,17 +96,16 @@ export default function RecurringShiftDialog({ open, onOpenChange, employees, lo
   const conflicts = useMemo(() => detectConflicts(generatedShifts, allShifts), [generatedShifts, allShifts]);
 
   const [saveError, setSaveError] = useState(null);
+  const [saveResult, setSaveResult] = useState(null); // { succeeded, failed, total }
 
   const handleSave = async () => {
     setSaving(true);
     setSaveError(null);
-    try {
-      await onSave(generatedShifts);
-    } catch (err) {
-      setSaveError("Some shifts could not be saved. Please try again.");
-    } finally {
-      setSaving(false);
-    }
+    setSaveResult(null);
+    const result = await onSave(generatedShifts);
+    // onSave returns { succeeded, failed, total } from Promise.allSettled in parent
+    if (result) setSaveResult(result);
+    setSaving(false);
   };
 
   const toggleDay = (d) => {
@@ -246,9 +245,10 @@ export default function RecurringShiftDialog({ open, onOpenChange, employees, lo
             </div>
           )}
         </div>
-        {saveError && (
-          <div className="px-1 pb-2 text-xs text-red-600 font-medium flex items-center gap-1">
-            <AlertTriangle className="w-3.5 h-3.5" /> {saveError}
+        {saveResult?.failed > 0 && (
+          <div className="px-1 pb-2 text-xs text-red-600 font-medium flex items-center gap-1.5 bg-red-50 border border-red-200 rounded-lg px-3 py-2">
+            <AlertTriangle className="w-3.5 h-3.5 flex-shrink-0" />
+            {saveResult.succeeded}/{saveResult.total} shifts created. {saveResult.failed} failed — please retry.
           </div>
         )}
         <DialogFooter>
@@ -257,7 +257,13 @@ export default function RecurringShiftDialog({ open, onOpenChange, employees, lo
             disabled={generatedShifts.length === 0 || saving || (form.start_time >= form.end_time)}
             onClick={handleSave}
             className={conflicts.length > 0 ? "bg-orange-500 hover:bg-orange-600" : "bg-[#1a9c5b] hover:bg-[#158a4e]"}>
-            {saving ? "Creating…" : conflicts.length > 0 ? `Create Anyway (${generatedShifts.length})` : `Create ${generatedShifts.length} Shifts`}
+            {saving
+              ? `Creating ${generatedShifts.length} shifts…`
+              : saveResult?.failed > 0
+              ? `Retry ${saveResult.failed} Failed`
+              : conflicts.length > 0
+              ? `Create Anyway (${generatedShifts.length})`
+              : `Create ${generatedShifts.length} Shifts`}
           </Button>
         </DialogFooter>
       </DialogContent>

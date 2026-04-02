@@ -136,8 +136,10 @@ export default function Schedule() {
     const succeeded = results.filter(r => r.status === "fulfilled").length;
     const failed = results.filter(r => r.status === "rejected").length;
     queryClient.invalidateQueries({ queryKey: ["shifts"] });
-    setRecurringResult({ succeeded, failed, total: shiftList.length });
+    const summary = { succeeded, failed, total: shiftList.length };
+    setRecurringResult(summary);
     if (failed === 0) setRecurringOpen(false);
+    return summary;
   };
 
   const handleSwapSubmit = async (swapData) => {
