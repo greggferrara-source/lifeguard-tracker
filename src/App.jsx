@@ -9,6 +9,7 @@ import SharedView from './pages/SharedView';
 import OperationsCommandDashboard from './pages/OperationsCommandDashboard';
 import EnterprisePreview from './pages/EnterprisePreview';
 import AttendanceAudit from './pages/AttendanceAudit';
+import RetentionDashboard from './pages/RetentionDashboard';
 import { AuthProvider, useAuth } from '@/lib/AuthContext';
 import UserNotRegisteredError from '@/components/UserNotRegisteredError';
 
@@ -76,6 +77,11 @@ const AuthenticatedApp = () => {
       <Route path="/AttendanceAudit" element={
         <LayoutWrapper currentPageName="AttendanceAudit">
           <AttendanceAudit />
+        </LayoutWrapper>
+      } />
+      <Route path="/RetentionDashboard" element={
+        <LayoutWrapper currentPageName="RetentionDashboard">
+          <RetentionDashboard />
         </LayoutWrapper>
       } />
       <Route path="*" element={<PageNotFound />} />

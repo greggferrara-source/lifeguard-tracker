@@ -1,0 +1,156 @@
+{
+  "name": "UserActivityMetric",
+  "type": "object",
+  "properties": {
+    "user_email": {
+      "type": "string"
+    },
+    "user_name": {
+      "type": "string"
+    },
+    "user_role": {
+      "type": "string"
+    },
+    "last_active": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "last_login": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "login_count_total": {
+      "type": "number",
+      "default": 0
+    },
+    "login_count_7d": {
+      "type": "number",
+      "default": 0
+    },
+    "login_count_30d": {
+      "type": "number",
+      "default": 0
+    },
+    "shifts_created": {
+      "type": "number",
+      "default": 0
+    },
+    "schedules_generated": {
+      "type": "number",
+      "default": 0
+    },
+    "incidents_logged": {
+      "type": "number",
+      "default": 0
+    },
+    "certifications_added": {
+      "type": "number",
+      "default": 0
+    },
+    "alerts_interacted": {
+      "type": "number",
+      "default": 0
+    },
+    "dashboard_views": {
+      "type": "number",
+      "default": 0
+    },
+    "smart_scheduler_uses": {
+      "type": "number",
+      "default": 0
+    },
+    "active_staff_count": {
+      "type": "number",
+      "default": 0
+    },
+    "location_count": {
+      "type": "number",
+      "default": 0
+    },
+    "has_added_staff": {
+      "type": "boolean",
+      "default": false
+    },
+    "has_added_certs": {
+      "type": "boolean",
+      "default": false
+    },
+    "has_created_schedule": {
+      "type": "boolean",
+      "default": false
+    },
+    "has_added_location": {
+      "type": "boolean",
+      "default": false
+    },
+    "activation_score": {
+      "type": "number",
+      "default": 0,
+      "description": "0-100"
+    },
+    "engagement_score": {
+      "type": "number",
+      "default": 0,
+      "description": "0-100"
+    },
+    "retention_risk": {
+      "type": "string",
+      "enum": [
+        "low",
+        "medium",
+        "high"
+      ],
+      "default": "medium"
+    },
+    "expansion_signal": {
+      "type": "string",
+      "enum": [
+        "none",
+        "low",
+        "medium",
+        "high"
+      ],
+      "default": "none"
+    },
+    "churn_risk_score": {
+      "type": "number",
+      "default": 0,
+      "description": "0-100 higher = more at risk"
+    },
+    "inactive_email_sent": {
+      "type": "boolean",
+      "default": false
+    },
+    "inactive_email_sent_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "upsell_email_sent": {
+      "type": "boolean",
+      "default": false
+    },
+    "upsell_email_sent_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "onboarding_reminder_sent": {
+      "type": "boolean",
+      "default": false
+    },
+    "plan_name": {
+      "type": "string"
+    },
+    "week_of": {
+      "type": "string",
+      "format": "date",
+      "description": "Start of week for this snapshot"
+    },
+    "computed_at": {
+      "type": "string",
+      "format": "date-time"
+    }
+  },
+  "required": [
+    "user_email"
+  ]
+}

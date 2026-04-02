@@ -1,5 +1,6 @@
 import React, { useState, useMemo, useCallback } from "react";
 import { base44 } from "@/api/base44Client";
+import { useActivityTracker, TRACK } from "@/hooks/useActivityTracker";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -218,6 +219,7 @@ export default function SmartScheduleBuilder({
 }) {
   const today = new Date().toISOString().split("T")[0];
   const nextWeekStart = startOfWeek(addWeeks(new Date(), 1), { weekStartsOn: 0 });
+  const { trackEvent } = useActivityTracker();
 
   // ── Config state ──
   const [weekStart, setWeekStart] = useState(format(nextWeekStart, "yyyy-MM-dd"));
@@ -253,6 +255,7 @@ export default function SmartScheduleBuilder({
     setGenerating(true);
 
     // slight delay for UX "feel"
+    trackEvent(TRACK.SMART_SCHEDULER_USED);
     setTimeout(() => {
       const result = generateSchedule({
         weekDates,

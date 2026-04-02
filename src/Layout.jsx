@@ -16,6 +16,7 @@ import {
 import { useQuery } from "@tanstack/react-query";
 import { base44 } from "@/api/base44Client";
 import FeedbackWidget from "@/components/FeedbackWidget";
+import { useActivityTracker, TRACK } from "@/hooks/useActivityTracker";
 
 const ROOT_EMAIL = "greggferrara@gmail.com";
 const ENTERPRISE_ROLES = ["enterprise_site_owner", "enterprise_admin"];
@@ -100,6 +101,7 @@ const enterpriseGroups = [
       { name: "Reports", icon: BarChart2, page: "Reports" },
       { name: "Advanced Reporting", icon: BarChart2, page: "AdvancedReporting" },
       { name: "Attendance Audit", icon: Clock, page: "AttendanceAudit" },
+      { name: "Retention Dashboard", icon: BarChart2, page: "RetentionDashboard", ownerOnly: true },
       { name: "Safety Metrics Dashboard", icon: BarChart2, page: "SafetyDashboard" },
       { name: "Incident Trends", icon: TrendingDown, page: "IncidentTrendReport" },
       { name: "Staffing Forecast", icon: Zap, page: "StaffingForecastDashboard" },
@@ -165,6 +167,13 @@ function MobileSection({ label, icon: Icon, children, defaultOpen = false }) {
 export default function Layout({ children, currentPageName }) {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+  const { trackEvent } = useActivityTracker();
+
+  // Track dashboard views silently
+  useEffect(() => {
+    const dashPages = ["Dashboard", "OperationsCommandDashboard", "ComplianceDashboard", "SafetyDashboard"];
+    if (dashPages.includes(currentPageName)) trackEvent(TRACK.DASHBOARD_VIEW);
+  }, [currentPageName]);
 
   useEffect(() => {
     const handleResize = () => setIsMobile(window.innerWidth < 768);
