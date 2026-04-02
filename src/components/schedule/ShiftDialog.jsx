@@ -10,7 +10,7 @@ import {
   Select, SelectContent, SelectItem, SelectTrigger, SelectValue,
 } from "@/components/ui/select";
 import { Badge } from "@/components/ui/badge";
-import { Trash2, AlertTriangle, Wand2, ShieldAlert } from "lucide-react";
+import { Trash2, AlertTriangle, Wand2, ShieldAlert, CheckCircle2, Clock, XCircle } from "lucide-react";
 
 export default function ShiftDialog({
   open, onOpenChange, shift, employees, locations, shifts = [], templates = [],

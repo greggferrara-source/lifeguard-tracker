@@ -1,0 +1,67 @@
+{
+  "name": "SharedLink",
+  "type": "object",
+  "properties": {
+    "token": {
+      "type": "string",
+      "description": "Unique random token used in the share URL"
+    },
+    "record_type": {
+      "type": "string",
+      "description": "Entity name (e.g. IncidentReport, Shift, Employee)"
+    },
+    "record_id": {
+      "type": "string",
+      "description": "ID of the shared record"
+    },
+    "record_label": {
+      "type": "string",
+      "description": "Human-readable label for what is being shared"
+    },
+    "access_level": {
+      "type": "string",
+      "enum": [
+        "read_only",
+        "edit"
+      ],
+      "default": "read_only"
+    },
+    "shared_by_email": {
+      "type": "string"
+    },
+    "shared_by_name": {
+      "type": "string"
+    },
+    "invited_emails": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Emails that were explicitly invited"
+    },
+    "link_active": {
+      "type": "boolean",
+      "default": true,
+      "description": "Whether the link is still usable"
+    },
+    "expires_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Optional expiry datetime"
+    },
+    "view_count": {
+      "type": "number",
+      "default": 0
+    },
+    "last_viewed_at": {
+      "type": "string",
+      "format": "date-time"
+    }
+  },
+  "required": [
+    "token",
+    "record_type",
+    "record_id",
+    "shared_by_email"
+  ]
+}
