@@ -12,6 +12,7 @@ import AttendanceAudit from './pages/AttendanceAudit';
 import RetentionDashboard from './pages/RetentionDashboard';
 import PayrollExport from './pages/PayrollExport';
 import GeofenceCheckIn from './pages/GeofenceCheckIn';
+import EmployeeShiftDashboard from './pages/EmployeeShiftDashboard';
 import { AuthProvider, useAuth } from '@/lib/AuthContext';
 import UserNotRegisteredError from '@/components/UserNotRegisteredError';
 
@@ -94,6 +95,11 @@ const AuthenticatedApp = () => {
       <Route path="/GeofenceCheckIn" element={
         <LayoutWrapper currentPageName="GeofenceCheckIn">
           <GeofenceCheckIn />
+        </LayoutWrapper>
+      } />
+      <Route path="/EmployeeShiftDashboard" element={
+        <LayoutWrapper currentPageName="EmployeeShiftDashboard">
+          <EmployeeShiftDashboard />
         </LayoutWrapper>
       } />
       <Route path="*" element={<PageNotFound />} />
