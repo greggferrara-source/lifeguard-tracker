@@ -1,0 +1,112 @@
+{
+  "name": "ClockEntry",
+  "type": "object",
+  "properties": {
+    "employee_id": {
+      "type": "string"
+    },
+    "employee_name": {
+      "type": "string"
+    },
+    "employee_email": {
+      "type": "string"
+    },
+    "location_id": {
+      "type": "string"
+    },
+    "location_name": {
+      "type": "string"
+    },
+    "shift_id": {
+      "type": "string",
+      "description": "Associated scheduled shift ID"
+    },
+    "shift_start": {
+      "type": "string",
+      "description": "Scheduled shift start time HH:MM"
+    },
+    "shift_end": {
+      "type": "string",
+      "description": "Scheduled shift end time HH:MM"
+    },
+    "shift_date": {
+      "type": "string",
+      "format": "date",
+      "description": "Date of the shift"
+    },
+    "clock_in": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "clock_in_latitude": {
+      "type": "number"
+    },
+    "clock_in_longitude": {
+      "type": "number"
+    },
+    "clock_in_verified": {
+      "type": "boolean",
+      "default": false,
+      "description": "Within geofence radius"
+    },
+    "clock_in_distance_meters": {
+      "type": "number"
+    },
+    "clock_out": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "clock_out_latitude": {
+      "type": "number"
+    },
+    "clock_out_longitude": {
+      "type": "number"
+    },
+    "clock_out_verified": {
+      "type": "boolean",
+      "default": false
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "clocked_in",
+        "clocked_out"
+      ],
+      "default": "clocked_in"
+    },
+    "total_minutes": {
+      "type": "number"
+    },
+    "discrepancy_flag": {
+      "type": "string",
+      "enum": [
+        "none",
+        "late",
+        "early_out",
+        "no_show",
+        "location_mismatch",
+        "overtime"
+      ],
+      "default": "none",
+      "description": "Auto-flagged attendance issue"
+    },
+    "discrepancy_minutes": {
+      "type": "number",
+      "description": "How many minutes late/early"
+    },
+    "notes": {
+      "type": "string"
+    },
+    "manager_reviewed": {
+      "type": "boolean",
+      "default": false
+    },
+    "manager_notes": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "employee_id",
+    "clock_in"
+  ]
+}

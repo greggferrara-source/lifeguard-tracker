@@ -6,10 +6,11 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
-import { Clock, MapPin, AlertTriangle, CheckCircle, Wifi, WifiOff, FileText, Bell, LogIn, LogOut, ArrowLeftRight, CheckCircle2, PhoneOff } from "lucide-react";
+import { Clock, MapPin, AlertTriangle, CheckCircle, Wifi, WifiOff, FileText, Bell, LogIn, LogOut, ArrowLeftRight, CheckCircle2, PhoneOff, CalendarClock } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { createPageUrl } from "@/utils";
 import CallOutDialog from "@/components/mobile/CallOutDialog";
+import GeofenceClockIn from "@/components/mobile/GeofenceClockIn";
 import { format } from "date-fns";
 
 const OFFLINE_QUEUE_KEY = "guard_offline_queue";
@@ -106,10 +107,9 @@ export default function MobileGuardDashboard() {
     );
   });
 
-  const handleClockIn = async () => {
+  const handleClockIn = async (gpsData) => {
     if (!selectedLocation) return;
     const loc = locations.find(l => l.id === selectedLocation);
-    const { lat, lng } = await getGPS();
     const data = {
       employee_id: user?.id || "offline",
       employee_name: user?.full_name || "Unknown",
@@ -117,8 +117,14 @@ export default function MobileGuardDashboard() {
       location_id: selectedLocation,
       location_name: loc?.name,
       clock_in: new Date().toISOString(),
-      clock_in_latitude: lat,
-      clock_in_longitude: lng,
+      clock_in_latitude: gpsData?.lat ?? null,
+      clock_in_longitude: gpsData?.lng ?? null,
+      clock_in_verified: gpsData?.verified ?? false,
+      clock_in_distance_meters: gpsData?.distance ?? null,
+      shift_id: myShiftToday?.id ?? null,
+      shift_start: myShiftToday?.start_time ?? null,
+      shift_end: myShiftToday?.end_time ?? null,
+      shift_date: myShiftToday?.date ?? format(new Date(), "yyyy-MM-dd"),
       status: "clocked_in",
     };
     if (isOnline) {
@@ -131,12 +137,18 @@ export default function MobileGuardDashboard() {
     }
   };
 
-  const handleClockOut = async () => {
+  const handleClockOut = async (gpsPos) => {
     if (!clockedIn) return;
-    const { lat, lng } = await getGPS();
     const now = new Date().toISOString();
     const mins = Math.floor((Date.now() - new Date(clockedIn.clock_in).getTime()) / 60000);
-    const data = { clock_out: now, clock_out_latitude: lat, clock_out_longitude: lng, status: "clocked_out", total_minutes: mins };
+    const data = {
+      clock_out: now,
+      clock_out_latitude: gpsPos?.lat ?? null,
+      clock_out_longitude: gpsPos?.lng ?? null,
+      clock_out_verified: gpsPos?.lat !== null,
+      status: "clocked_out",
+      total_minutes: mins,
+    };
     if (isOnline && !clockedIn.id?.startsWith("offline_")) {
       await base44.entities.ClockEntry.update(clockedIn.id, data);
       queryClient.invalidateQueries();
@@ -247,6 +259,18 @@ export default function MobileGuardDashboard() {
       <div className="p-4 space-y-4">
         {tab === "clock" && (
           <>
+            {/* Today's shift card */}
+            {myShiftToday && (
+              <div className="rounded-xl border border-blue-200 bg-blue-50 px-4 py-3 flex items-center gap-3">
+                <CalendarClock className="w-5 h-5 text-blue-600 flex-shrink-0" />
+                <div>
+                  <p className="text-xs font-semibold text-blue-700">Your Shift Today</p>
+                  <p className="text-sm font-bold text-blue-900">{myShiftToday.start_time} – {myShiftToday.end_time}</p>
+                  <p className="text-xs text-blue-600">{myShiftToday.location_name}</p>
+                </div>
+              </div>
+            )}
+
             {!clockedIn && (
               <div className="space-y-3">
                 <Select value={selectedLocation} onValueChange={setSelectedLocation}>
@@ -255,15 +279,23 @@ export default function MobileGuardDashboard() {
                     {locations.map(loc => <SelectItem key={loc.id} value={loc.id}>{loc.name}</SelectItem>)}
                   </SelectContent>
                 </Select>
-                <Button onClick={handleClockIn} disabled={!selectedLocation} className="w-full bg-[#1a9c5b] hover:bg-[#158a4e] h-14 text-base">
-                  <LogIn className="w-5 h-5 mr-2" /> Clock In
-                </Button>
+                <GeofenceClockIn
+                  clockedIn={clockedIn}
+                  selectedLocation={selectedLocation}
+                  locations={locations}
+                  onClockIn={handleClockIn}
+                  onClockOut={handleClockOut}
+                />
               </div>
             )}
             {clockedIn && (
-              <Button onClick={handleClockOut} variant="destructive" className="w-full h-14 text-base">
-                <LogOut className="w-5 h-5 mr-2" /> Clock Out
-              </Button>
+              <GeofenceClockIn
+                clockedIn={clockedIn}
+                selectedLocation={selectedLocation}
+                locations={locations}
+                onClockIn={handleClockIn}
+                onClockOut={handleClockOut}
+              />
             )}
             {queue.length > 0 && (
               <Card className="bg-orange-50 border-orange-200">

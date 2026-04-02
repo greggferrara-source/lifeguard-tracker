@@ -8,6 +8,7 @@ import PageNotFound from './lib/PageNotFound';
 import SharedView from './pages/SharedView';
 import OperationsCommandDashboard from './pages/OperationsCommandDashboard';
 import EnterprisePreview from './pages/EnterprisePreview';
+import AttendanceAudit from './pages/AttendanceAudit';
 import { AuthProvider, useAuth } from '@/lib/AuthContext';
 import UserNotRegisteredError from '@/components/UserNotRegisteredError';
 
@@ -70,6 +71,11 @@ const AuthenticatedApp = () => {
       <Route path="/EnterprisePreview" element={
         <LayoutWrapper currentPageName="EnterprisePreview">
           <EnterprisePreview />
+        </LayoutWrapper>
+      } />
+      <Route path="/AttendanceAudit" element={
+        <LayoutWrapper currentPageName="AttendanceAudit">
+          <AttendanceAudit />
         </LayoutWrapper>
       } />
       <Route path="*" element={<PageNotFound />} />

@@ -99,6 +99,7 @@ const enterpriseGroups = [
     items: [
       { name: "Reports", icon: BarChart2, page: "Reports" },
       { name: "Advanced Reporting", icon: BarChart2, page: "AdvancedReporting" },
+      { name: "Attendance Audit", icon: Clock, page: "AttendanceAudit" },
       { name: "Safety Metrics Dashboard", icon: BarChart2, page: "SafetyDashboard" },
       { name: "Incident Trends", icon: TrendingDown, page: "IncidentTrendReport" },
       { name: "Staffing Forecast", icon: Zap, page: "StaffingForecastDashboard" },
