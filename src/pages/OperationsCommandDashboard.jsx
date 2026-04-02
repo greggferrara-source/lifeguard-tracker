@@ -4,6 +4,8 @@ import { createPageUrl } from "../utils";
 import { useQuery } from "@tanstack/react-query";
 import { base44 } from "@/api/base44Client";
 import { format, isToday, parseISO, differenceInDays, startOfWeek, endOfWeek, isWithinInterval, subWeeks } from "date-fns";
+import { useSubscription } from "@/hooks/useSubscription";
+import EnterpriseUpsellBanner from "@/components/enterprise/EnterpriseUpsellBanner";
 import {
   CalendarDays, Users, Shield, AlertTriangle, BarChart2,
   TrendingUp, TrendingDown, Zap, Plus, FileText, UserPlus,
@@ -125,6 +127,7 @@ function InsightItem({ text, type }) {
 // ── Main Component ────────────────────────────────────────────────────────────
 
 export default function OperationsCommandDashboard() {
+  const { isEnterprise } = useSubscription();
   const today = new Date();
   const todayStr = format(today, "yyyy-MM-dd");
   const weekStart = startOfWeek(today, { weekStartsOn: 1 });
@@ -334,6 +337,11 @@ export default function OperationsCommandDashboard() {
             </Link>
           </div>
         </div>
+
+        {/* Enterprise upsell — triggers for large operations or multi-location */}
+        {!isEnterprise && (locations.length >= 2 || activeEmployees >= 15) && (
+          <EnterpriseUpsellBanner variant="large-operation" />
+        )}
 
         {/* ── Section 1: Key Metrics ── */}
         <div className="grid grid-cols-2 lg:grid-cols-5 gap-3 sm:gap-4">
@@ -603,6 +611,7 @@ export default function OperationsCommandDashboard() {
             { label: "Team Management", icon: Users, to: createPageUrl("Employees") },
             { label: "Compliance", icon: Shield, to: createPageUrl("ComplianceDashboard") },
             { label: "Analytics", icon: BarChart2, to: createPageUrl("Reports") },
+          { label: "Enterprise", icon: TrendingUp, to: createPageUrl("EnterprisePreview") },
           ].map(({ label, icon: Icon, to }) => (
             <Link key={label} to={to}>
               <div className="flex items-center gap-2.5 p-3.5 bg-white rounded-xl border border-gray-100 hover:border-[#1a9c5b] hover:shadow-sm transition-all group">

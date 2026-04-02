@@ -3,6 +3,8 @@ import { Link } from "react-router-dom";
 import { createPageUrl } from "@/utils";
 import { useQuery } from "@tanstack/react-query";
 import { base44 } from "@/api/base44Client";
+import { useSubscription } from "@/hooks/useSubscription";
+import EnterpriseUpsellBanner from "@/components/enterprise/EnterpriseUpsellBanner";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -18,6 +20,7 @@ function daysUntil(dateStr) {
 }
 
 export default function ComplianceDashboard() {
+  const { isEnterprise } = useSubscription();
   const { data: user } = useQuery({ queryKey: ["me"], queryFn: () => base44.auth.me() });
   const { data: certs = [] } = useQuery({ queryKey: ["certifications"], queryFn: () => base44.entities.Certification.list("-created_date", 500) });
   const { data: chemLogs = [] } = useQuery({ queryKey: ["chemical-logs"], queryFn: () => base44.entities.ChemicalLog.list("-created_date", 100) });
@@ -120,6 +123,11 @@ export default function ComplianceDashboard() {
         <h1 className="text-3xl font-bold text-gray-900">Compliance Dashboard</h1>
         <p className="text-gray-500 mt-1">Overview of all compliance areas across your facilities</p>
       </div>
+
+      {/* Enterprise upsell — shown to non-enterprise users viewing compliance */}
+      {!isEnterprise && (
+        <EnterpriseUpsellBanner variant="compliance" />
+      )}
 
       {/* Overall Score + Top Alerts */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">

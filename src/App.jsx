@@ -7,6 +7,7 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import PageNotFound from './lib/PageNotFound';
 import SharedView from './pages/SharedView';
 import OperationsCommandDashboard from './pages/OperationsCommandDashboard';
+import EnterprisePreview from './pages/EnterprisePreview';
 import { AuthProvider, useAuth } from '@/lib/AuthContext';
 import UserNotRegisteredError from '@/components/UserNotRegisteredError';
 
@@ -64,6 +65,11 @@ const AuthenticatedApp = () => {
       <Route path="/OperationsCommandDashboard" element={
         <LayoutWrapper currentPageName="OperationsCommandDashboard">
           <OperationsCommandDashboard />
+        </LayoutWrapper>
+      } />
+      <Route path="/EnterprisePreview" element={
+        <LayoutWrapper currentPageName="EnterprisePreview">
+          <EnterprisePreview />
         </LayoutWrapper>
       } />
       <Route path="*" element={<PageNotFound />} />
