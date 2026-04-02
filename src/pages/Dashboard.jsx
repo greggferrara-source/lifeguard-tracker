@@ -44,6 +44,8 @@ export default function Dashboard() {
     if (isManager) navigate(createPageUrl("OperationsCommandDashboard"), { replace: true });
   }, [user, navigate]);
 
+  const isAdmin = user?.role === "admin";
+
   const { data: shifts = [] } = useQuery({
     queryKey: ["shifts"],
     queryFn: () => base44.entities.Shift.list("-created_date", 100)
@@ -97,8 +99,6 @@ export default function Dashboard() {
   ).length;
   const activeEmployees = employees.filter((e) => e.status === "active").length;
   const openShifts = shifts.filter((s) => s.status === "open").length;
-
-  const isAdmin = user?.role === "admin";
 
   // Show setup wizard for new admins who haven't completed onboarding
   const { data: onboardingStatus } = useQuery({
