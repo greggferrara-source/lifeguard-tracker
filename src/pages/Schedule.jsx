@@ -1,12 +1,14 @@
 import React, { useState, useMemo, useEffect } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { base44 } from "@/api/base44Client";
-import { format, startOfWeek, addDays, addWeeks, subWeeks, isSameDay } from "date-fns";
+import { format, startOfWeek, addDays, addWeeks, subWeeks, addMonths, subMonths, startOfMonth, isSameDay } from "date-fns";
 import { DragDropContext } from "@hello-pangea/dnd";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { ChevronLeft, ChevronRight, Plus, CalendarDays, MapPin, Users, AlertTriangle, Repeat, ArrowLeftRight, Sparkles } from "lucide-react";
+import { ChevronLeft, ChevronRight, Plus, CalendarDays, MapPin, Users, AlertTriangle, Repeat, Sparkles, Calendar } from "lucide-react";
 import ScheduleGrid from "@/components/schedule/ScheduleGrid";
+import DayView from "@/components/schedule/DayView";
+import MonthView from "@/components/schedule/MonthView";
 import EmployeeView from "@/components/schedule/EmployeeView";
 import ShiftDialog from "@/components/schedule/ShiftDialog";
 import RecurringShiftDialog from "@/components/schedule/RecurringShiftDialog";
@@ -20,6 +22,9 @@ import TooltipHint from "@/components/onboarding/TooltipHint";
 export default function Schedule() {
   const queryClient = useQueryClient();
   const [weekStart, setWeekStart] = useState(startOfWeek(new Date(), { weekStartsOn: 0 }));
+  const [dayDate, setDayDate] = useState(new Date());
+  const [monthDate, setMonthDate] = useState(startOfMonth(new Date()));
+  const [calView, setCalView] = useState("week"); // "day" | "week" | "month"
   const [view, setView] = useState("location"); // "location" | "employee"
   const [dialogOpen, setDialogOpen] = useState(false);
   const [recurringOpen, setRecurringOpen] = useState(false);
@@ -70,12 +75,10 @@ export default function Schedule() {
       try {
         const user = await base44.auth.me();
         setCurrentUser(user);
-        // Only enable drag-drop on mobile/touch devices
-        const isTouchDevice = () => window.matchMedia("(hover: none)").matches || navigator.maxTouchPoints > 0;
-        setCanDragDrop((user?.role === "admin" || user?.role === "manager") && isTouchDevice());
+        // Enable drag-drop for admins/managers on all devices
+        setCanDragDrop(user?.role === "admin" || user?.role === "manager" || user?.role === "site_owner" || user?.role === "enterprise_admin" || user?.role === "enterprise_site_owner");
       } catch (e) {
-        const isTouchDevice = () => window.matchMedia("(hover: none)").matches || navigator.maxTouchPoints > 0;
-        setCanDragDrop(isTouchDevice());
+        setCanDragDrop(false);
       }
     };
     getUserData();
@@ -95,6 +98,17 @@ export default function Schedule() {
   });
 
   const weekShifts = useMemo(() => shifts.filter(s => weekDates.includes(s.date)), [shifts, weekDates]);
+
+  // All shifts relevant to the current calendar view
+  const viewShifts = useMemo(() => {
+    if (calView === "day") return shifts.filter(s => s.date === format(dayDate, "yyyy-MM-dd"));
+    if (calView === "month") {
+      const start = format(startOfMonth(monthDate), "yyyy-MM-dd");
+      const end = format(new Date(monthDate.getFullYear(), monthDate.getMonth() + 1, 0), "yyyy-MM-dd");
+      return shifts.filter(s => s.date >= start && s.date <= end);
+    }
+    return weekShifts;
+  }, [calView, shifts, weekShifts, dayDate, monthDate]);
 
   // Count conflicts in the current week
   const conflictCount = useMemo(() => {
@@ -159,32 +173,29 @@ export default function Schedule() {
 
   const handleDragEnd = (result) => {
     const { source, destination, draggableId } = result;
-    if (!destination) return;
-    
+    if (!destination || source.droppableId === destination.droppableId) return;
+
     const shift = shifts.find(s => s.id === draggableId);
     if (!shift) return;
 
-    const [locId, dateStr] = source.droppableId.split("-");
-    const [newLocId, newDateStr] = destination.droppableId.split("-");
+    // Month view uses "month-YYYY-MM-DD" droppable IDs
+    if (destination.droppableId.startsWith("month-")) {
+      const newDateStr = destination.droppableId.replace("month-", "");
+      updateShift.mutate({ id: shift.id, data: { ...shift, date: newDateStr } });
+      return;
+    }
 
-    if (view === "location") {
-      updateShift.mutate({
-        id: shift.id,
-        data: {
-          ...shift,
-          location_id: newLocId,
-          date: newDateStr,
-        }
-      });
-    } else if (view === "employee") {
-      updateShift.mutate({
-        id: shift.id,
-        data: {
-          ...shift,
-          employee_id: newLocId,
-          date: newDateStr,
-        }
-      });
+    // Week / Day view uses "locationId-YYYY-MM-DD"
+    const lastDash = destination.droppableId.lastIndexOf("-");
+    const secondLastDash = destination.droppableId.lastIndexOf("-", lastDash - 1);
+    // date is always last 10 chars (yyyy-MM-dd)
+    const newDateStr = destination.droppableId.slice(-10);
+    const newLocId = destination.droppableId.slice(0, destination.droppableId.length - 11);
+
+    if (view === "employee") {
+      updateShift.mutate({ id: shift.id, data: { ...shift, employee_id: newLocId, date: newDateStr } });
+    } else {
+      updateShift.mutate({ id: shift.id, data: { ...shift, location_id: newLocId, date: newDateStr } });
     }
   };
 
@@ -231,28 +242,47 @@ export default function Schedule() {
 
   const openShiftsCount = weekShifts.filter(s => s.status === "open" || !s.employee_id).length;
 
+  // Navigation helpers per calView
+  const goBack = () => {
+    if (calView === "day") setDayDate(d => addDays(d, -1));
+    else if (calView === "week") setWeekStart(w => subWeeks(w, 1));
+    else setMonthDate(m => subMonths(m, 1));
+  };
+  const goForward = () => {
+    if (calView === "day") setDayDate(d => addDays(d, 1));
+    else if (calView === "week") setWeekStart(w => addWeeks(w, 1));
+    else setMonthDate(m => addMonths(m, 1));
+  };
+  const goToday = () => {
+    const today = new Date();
+    setDayDate(today);
+    setWeekStart(startOfWeek(today, { weekStartsOn: 0 }));
+    setMonthDate(startOfMonth(today));
+  };
+
+  const dateRangeLabel = () => {
+    if (calView === "day") return format(dayDate, "EEEE, MMMM d, yyyy");
+    if (calView === "week") return `${format(days[0], "MMM d")} – ${format(days[6], "MMM d, yyyy")}`;
+    return format(monthDate, "MMMM yyyy");
+  };
+
   return (
-    <DragDropContext onDragEnd={handleDragEnd} enableMouseEvents={canDragDrop}>
+    <DragDropContext onDragEnd={handleDragEnd} enableMouseEvents>
       <div className="p-4 lg:p-8 space-y-5 max-w-full bg-white min-h-screen">
       {/* Toolbar */}
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 pb-2 border-b border-gray-100">
         <div className="flex items-center gap-2 flex-wrap">
-          <Button variant="outline" size="icon" className="h-9 w-9"
-            onClick={() => setWeekStart(subWeeks(weekStart, 1))}>
+          <Button variant="outline" size="icon" className="h-9 w-9" onClick={goBack}>
             <ChevronLeft className="w-4 h-4" />
           </Button>
-          <Button variant="outline" size="sm" className="text-xs font-semibold px-3"
-            onClick={() => setWeekStart(startOfWeek(new Date(), { weekStartsOn: 0 }))}>
+          <Button variant="outline" size="sm" className="text-xs font-semibold px-3" onClick={goToday}>
             <CalendarDays className="w-3.5 h-3.5 mr-1.5" /> Today
           </Button>
-          <Button variant="outline" size="icon" className="h-9 w-9"
-            onClick={() => setWeekStart(addWeeks(weekStart, 1))}>
+          <Button variant="outline" size="icon" className="h-9 w-9" onClick={goForward}>
             <ChevronRight className="w-4 h-4" />
           </Button>
-          <h3 className="text-sm font-semibold text-slate-700 ml-1">
-            {format(days[0], "MMM d")} – {format(days[6], "MMM d, yyyy")}
-          </h3>
-          {conflictCount > 0 && (
+          <h3 className="text-sm font-semibold text-slate-700 ml-1">{dateRangeLabel()}</h3>
+          {calView !== "month" && conflictCount > 0 && (
             <Badge className="bg-orange-100 text-orange-700 border-orange-200 gap-1">
               <AlertTriangle className="w-3 h-3" />
               {Math.ceil(conflictCount)} conflict{Math.ceil(conflictCount) !== 1 ? "s" : ""}
@@ -260,20 +290,32 @@ export default function Schedule() {
           )}
         </div>
 
-        <div className="flex items-center gap-2">
-          {/* View toggle */}
+        <div className="flex items-center gap-2 flex-wrap justify-end">
+          {/* Day / Week / Month toggle */}
           <div className="flex rounded-lg border border-slate-200 overflow-hidden">
-            <button
-              onClick={() => setView("location")}
-              className={`flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium transition-colors ${view === "location" ? "bg-slate-900 text-white" : "bg-white text-slate-600 hover:bg-slate-50"}`}>
-              <MapPin className="w-3.5 h-3.5" /> By Location
-            </button>
-            <button
-              onClick={() => setView("employee")}
-              className={`flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium transition-colors ${view === "employee" ? "bg-slate-900 text-white" : "bg-white text-slate-600 hover:bg-slate-50"}`}>
-              <Users className="w-3.5 h-3.5" /> By Employee
-            </button>
+            {[["day", "Day"], ["week", "Week"], ["month", "Month"]].map(([key, label]) => (
+              <button key={key} onClick={() => setCalView(key)}
+                className={`px-3 py-1.5 text-xs font-medium transition-colors ${calView === key ? "bg-slate-900 text-white" : "bg-white text-slate-600 hover:bg-slate-50"}`}>
+                {label}
+              </button>
+            ))}
           </div>
+
+          {/* Location / Employee toggle (only in week/day) */}
+          {calView !== "month" && (
+            <div className="flex rounded-lg border border-slate-200 overflow-hidden">
+              <button
+                onClick={() => setView("location")}
+                className={`flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium transition-colors ${view === "location" ? "bg-slate-900 text-white" : "bg-white text-slate-600 hover:bg-slate-50"}`}>
+                <MapPin className="w-3.5 h-3.5" /> Location
+              </button>
+              <button
+                onClick={() => setView("employee")}
+                className={`flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium transition-colors ${view === "employee" ? "bg-slate-900 text-white" : "bg-white text-slate-600 hover:bg-slate-50"}`}>
+                <Users className="w-3.5 h-3.5" /> Employee
+              </button>
+            </div>
+          )}
 
           <Button variant="outline" size="sm" onClick={() => setRecurringOpen(true)}>
             <Repeat className="w-4 h-4 mr-1" /> Recurring
@@ -344,6 +386,24 @@ export default function Schedule() {
           <MapPin className="w-10 h-10 mx-auto mb-3 opacity-40" />
           <p className="font-medium">Add a location first to start scheduling</p>
         </div>
+      ) : calView === "day" ? (
+        <DayView
+          shifts={viewShifts}
+          locations={activeLocations}
+          day={dayDate}
+          onShiftClick={handleShiftClick}
+          onCellClick={handleCellClick}
+          canDragDrop={canDragDrop}
+        />
+      ) : calView === "month" ? (
+        <MonthView
+          shifts={viewShifts}
+          locations={activeLocations}
+          monthDate={monthDate}
+          onShiftClick={handleShiftClick}
+          onCellClick={handleCellClick}
+          canDragDrop={canDragDrop}
+        />
       ) : view === "location" ? (
         <ScheduleGrid
           shifts={weekShifts}

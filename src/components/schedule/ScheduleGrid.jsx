@@ -28,7 +28,7 @@ function hasConflict(shift, allShifts) {
   );
 }
 
-export default function ScheduleGrid({ shifts, locations, days, onShiftClick, onCellClick, canDragDrop = false }) {
+export default function ScheduleGrid({ shifts, locations, days, onShiftClick, onCellClick, canDragDrop = true }) {
   return (
     <div className="bg-white rounded-2xl shadow-sm overflow-hidden border border-slate-100">
       <div className="overflow-x-auto">
@@ -73,21 +73,21 @@ export default function ScheduleGrid({ shifts, locations, days, onShiftClick, on
                         <td
                           ref={provided.innerRef}
                           {...provided.droppableProps}
-                          className={`px-1.5 py-1.5 border-b border-slate-200/60 align-top transition-colors ${isToday ? "bg-cyan-50/20" : ""} ${snapshot.isDraggingOver && canDragDrop ? "bg-blue-100/50" : ""}`}
+                          className={`px-1.5 py-1.5 border-b border-slate-200/60 align-top transition-colors ${isToday ? "bg-cyan-50/20" : ""} ${snapshot.isDraggingOver ? "bg-blue-100/50" : ""}`}
                           onClick={() => onCellClick(location, dateStr)}
                         >
                           <div className="space-y-1 min-h-[40px]">
                             {dayShifts.map((shift, idx) => {
                                const conflicted = hasConflict(shift, shifts);
                                return (
-                                 <Draggable key={shift.id} draggableId={`${shift.id}`} index={idx} isDragDisabled={!canDragDrop}>
+                                 <Draggable key={shift.id} draggableId={`${shift.id}`} index={idx} isDragDisabled={false}>
                                   {(provided, snapshot) => (
                                     <motion.div
                                       ref={provided.innerRef}
                                       {...provided.draggableProps}
                                       {...provided.dragHandleProps}
                                       whileHover={canDragDrop ? { scale: 1.03 } : {}}
-                                      className={`shift-block rounded-lg px-2 py-1.5 text-white text-[11px] font-medium leading-tight relative ${conflicted ? "ring-2 ring-orange-400 ring-offset-1" : ""} ${canDragDrop ? "cursor-grab" : "cursor-pointer"} ${snapshot.isDragging ? "shadow-lg ring-2 ring-blue-400" : ""}`}
+                                      className={`shift-block rounded-lg px-2 py-1.5 text-white text-[11px] font-medium leading-tight relative ${conflicted ? "ring-2 ring-orange-400 ring-offset-1" : ""} cursor-grab active:cursor-grabbing ${snapshot.isDragging ? "shadow-lg ring-2 ring-blue-400" : ""}`}
                                       style={{
                                         backgroundColor: shift.color || getShiftColor(shift.employee_name),
                                         opacity: shift.status === "cancelled" ? 0.4 : 1,
