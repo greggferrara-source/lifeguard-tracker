@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { createPageUrl } from "../utils";
 import { useQuery } from "@tanstack/react-query";
 import { base44 } from "@/api/base44Client";
@@ -22,6 +22,8 @@ import {
 } from "lucide-react";
 
 export default function Dashboard() {
+  const navigate = useNavigate();
+
   const { data: user } = useQuery({
     queryKey: ["user"],
     queryFn: async () => {
@@ -32,6 +34,15 @@ export default function Dashboard() {
       }
     }
   });
+
+  // Redirect managers/admins to the Operations Command Dashboard
+  useEffect(() => {
+    if (!user) return;
+    const isManager = user.role === "admin" || user.role === "manager" ||
+      user.role === "site_owner" || user.role === "enterprise_admin" ||
+      user.role === "enterprise_site_owner";
+    if (isManager) navigate(createPageUrl("OperationsCommandDashboard"), { replace: true });
+  }, [user, navigate]);
 
   const { data: shifts = [] } = useQuery({
     queryKey: ["shifts"],

@@ -151,9 +151,20 @@ export default function Home() {
   const [showDemoModal, setShowDemoModal] = useState(false);
 
   useEffect(() => {
-    base44.auth.isAuthenticated().then((auth) => {
-      if (auth) navigate(createPageUrl("Dashboard"));
-      else setChecking(false);
+    base44.auth.isAuthenticated().then(async (auth) => {
+      if (auth) {
+        try {
+          const user = await base44.auth.me();
+          const isManager = user?.role === "admin" || user?.role === "manager" ||
+            user?.role === "site_owner" || user?.role === "enterprise_admin" ||
+            user?.role === "enterprise_site_owner";
+          navigate(isManager ? createPageUrl("OperationsCommandDashboard") : createPageUrl("Dashboard"));
+        } catch {
+          navigate(createPageUrl("Dashboard"));
+        }
+      } else {
+        setChecking(false);
+      }
     });
   }, [navigate]);
 
