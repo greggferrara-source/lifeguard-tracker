@@ -5,9 +5,9 @@ Deno.serve(async (req) => {
     const base44 = createClientFromRequest(req);
     const { swap_request_id, action } = await req.json();
 
-    const swaps = await base44.asServiceRole.entities.ShiftSwapRequest.filter({ id: swap_request_id });
-    if (!swaps.length) return Response.json({ error: "Swap request not found" }, { status: 404 });
-    const swap = swaps[0];
+    const allSwaps = await base44.asServiceRole.entities.ShiftSwapRequest.list('-created_date', 500);
+    const swap = allSwaps.find(s => s.id === swap_request_id);
+    if (!swap) return Response.json({ error: "Swap request not found" }, { status: 404 });
 
     const employees = await base44.asServiceRole.entities.Employee.list();
     const requester = employees.find(e => e.id === swap.requester_employee_id);

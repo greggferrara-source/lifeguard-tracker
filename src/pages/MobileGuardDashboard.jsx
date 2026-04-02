@@ -6,7 +6,9 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
-import { Clock, MapPin, AlertTriangle, CheckCircle, Wifi, WifiOff, FileText, Bell, LogIn, LogOut } from "lucide-react";
+import { Clock, MapPin, AlertTriangle, CheckCircle, Wifi, WifiOff, FileText, Bell, LogIn, LogOut, ArrowLeftRight, CheckCircle2 } from "lucide-react";
+import { useNavigate } from "react-router-dom";
+import { createPageUrl } from "@/utils";
 import { format } from "date-fns";
 
 const OFFLINE_QUEUE_KEY = "guard_offline_queue";
@@ -26,6 +28,8 @@ export default function MobileGuardDashboard() {
   const [logSeverity, setLogSeverity] = useState("minor");
   const [tab, setTab] = useState("clock"); // clock | log | alerts
   const [syncing, setSyncing] = useState(false);
+  const [logSubmitted, setLogSubmitted] = useState(false);
+  const navigate = useNavigate();
   const queryClient = useQueryClient();
 
   const { data: user } = useQuery({ queryKey: ["user"], queryFn: () => base44.auth.me() });
@@ -153,6 +157,8 @@ export default function MobileGuardDashboard() {
     setLogText("");
     setLogType("incident");
     setLogSeverity("minor");
+    setLogSubmitted(true);
+    setTimeout(() => setLogSubmitted(false), 3000);
   };
 
   const minutesOnDuty = clockedIn ? Math.floor((Date.now() - new Date(clockedIn.clock_in).getTime()) / 60000) : 0;
@@ -216,6 +222,7 @@ export default function MobileGuardDashboard() {
           { id: "clock", label: "Clock In/Out", icon: Clock },
           { id: "log", label: "Log Incident", icon: FileText },
           { id: "alerts", label: "Alerts", icon: Bell },
+          { id: "swap", label: "Shift Swap", icon: ArrowLeftRight },
         ].map(t => (
           <button key={t.id} onClick={() => setTab(t.id)}
             className={`flex-1 py-3 text-xs font-medium flex flex-col items-center gap-0.5 border-b-2 transition-colors ${tab === t.id ? "border-[#1a9c5b] text-[#1a9c5b]" : "border-transparent text-gray-500"}`}>
@@ -306,9 +313,34 @@ export default function MobileGuardDashboard() {
               rows={4}
               className="resize-none"
             />
+            {logSubmitted && (
+              <div className="flex items-center gap-2 bg-green-50 border border-green-200 rounded-lg px-3 py-2 text-green-700 text-sm font-medium">
+                <CheckCircle2 className="w-4 h-4 flex-shrink-0" />
+                Log submitted successfully.
+              </div>
+            )}
             <Button onClick={handleSubmitLog} disabled={!logText.trim()} className="w-full bg-orange-600 hover:bg-orange-700">
               <FileText className="w-4 h-4 mr-2" />
               {isOnline ? "Submit Log" : "Queue Log (Offline)"}
+            </Button>
+          </div>
+        )}
+
+        {tab === "swap" && (
+          <div className="space-y-4">
+            <p className="text-sm text-gray-600">Need to swap a shift or call out? Use the full swap request form.</p>
+            <Button
+              className="w-full bg-[#1a9c5b] hover:bg-[#158a4e] h-14 text-base"
+              onClick={() => navigate(createPageUrl("ShiftSwaps"))}
+            >
+              <ArrowLeftRight className="w-5 h-5 mr-2" /> Go to Shift Swaps
+            </Button>
+            <Button
+              variant="outline"
+              className="w-full h-12 text-base border-red-300 text-red-600 hover:bg-red-50"
+              onClick={() => navigate(createPageUrl("TimeOff"))}
+            >
+              Request Time Off / Call Out
             </Button>
           </div>
         )}

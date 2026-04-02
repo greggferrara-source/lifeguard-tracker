@@ -51,13 +51,17 @@ export default function ShiftDialog({
   const certWarning = useMemo(() => {
     if (!form.employee_id) return null;
     const empCerts = certifications.filter(
-      c => c.employee_id === form.employee_id && c.status === "approved" && c.expiry_date && c.expiry_date >= today
+      c => c.employee_id === form.employee_id &&
+        (!c.status || c.status === "approved" || c.status === "active") &&
+        c.expiry_date && c.expiry_date >= today
     );
     if (empCerts.length === 0) {
       const hasPending = certifications.some(c => c.employee_id === form.employee_id && c.status === "pending_review");
+      const hasAnyCert = certifications.some(c => c.employee_id === form.employee_id);
+      if (!hasAnyCert) return { level: "block", msg: "No certifications on file. Assignment blocked." };
       return hasPending
         ? { level: "warn", msg: "No approved certifications — pending review exists." }
-        : { level: "block", msg: "No valid approved certifications on file. Assignment blocked." };
+        : { level: "warn", msg: "All certifications expired or not yet approved." };
     }
     const expiringSoon = empCerts.filter(c => {
       const days = Math.ceil((new Date(c.expiry_date) - new Date()) / 86400000);

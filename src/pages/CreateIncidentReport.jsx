@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { base44 } from '@/api/base44Client';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { useNavigate } from 'react-router-dom';
 import { createPageUrl } from '@/utils';
 import { Upload, X } from 'lucide-react';
@@ -22,6 +23,11 @@ export default function CreateIncidentReport() {
   const [attachments, setAttachments] = useState([]);
   const [people, setPeople] = useState([]);
 
+  const { data: locations = [] } = useQuery({
+    queryKey: ['locations'],
+    queryFn: () => base44.entities.Location.list(),
+  });
+
   const { mutate: createIncident, isPending } = useMutation({
     mutationFn: async () => {
       const user = await base44.auth.me();
@@ -31,7 +37,8 @@ export default function CreateIncidentReport() {
         reported_by_name: user.full_name,
         people_involved: people,
         media_attachments: attachments,
-        status: 'submitted'
+        status: 'submitted',
+        created_at: new Date().toISOString(),
       });
     },
     onSuccess: (incident) => {
@@ -91,13 +98,19 @@ export default function CreateIncidentReport() {
 
           <div>
             <label className="block text-sm font-semibold mb-2">Location *</label>
-            <input
-              type="text"
-              placeholder="Enter location ID"
-              value={form.location_id}
-              onChange={(e) => setForm({ ...form, location_id: e.target.value })}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg"
-            />
+            <Select value={form.location_id} onValueChange={(v) => {
+              const loc = locations.find(l => l.id === v);
+              setForm({ ...form, location_id: v, location_name: loc?.name || '' });
+            }}>
+              <SelectTrigger className="w-full">
+                <SelectValue placeholder="Select location…" />
+              </SelectTrigger>
+              <SelectContent>
+                {locations.map(l => (
+                  <SelectItem key={l.id} value={l.id}>{l.name}</SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
           </div>
 
           <div>
@@ -201,7 +214,7 @@ export default function CreateIncidentReport() {
         <Button
           className="bg-blue-600 hover:bg-blue-700"
           onClick={() => createIncident()}
-          disabled={isPending || !form.description}
+          disabled={isPending || !form.description || !form.location_id}
         >
           {isPending ? 'Submitting...' : 'Submit Report'}
         </Button>

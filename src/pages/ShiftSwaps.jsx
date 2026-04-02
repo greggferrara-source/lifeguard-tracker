@@ -185,10 +185,15 @@ export default function ShiftSwaps() {
           <h1 className="text-5xl font-extrabold text-gray-900 tracking-tight">Shift Swaps</h1>
           <p className="text-gray-400 mt-2 text-lg">Manage shift swap requests and approvals</p>
         </div>
-        {myEmployee && (
+        {myEmployee ? (
           <Button className="bg-[#1a9c5b] hover:bg-[#158a4e] gap-2" onClick={() => setRequestDialogOpen(true)}>
             <Plus className="w-4 h-4" /> Request Swap
           </Button>
+        ) : user && (
+          <div className="flex items-center gap-2 text-sm text-amber-700 bg-amber-50 border border-amber-200 rounded-lg px-3 py-2">
+            <AlertTriangle className="w-4 h-4 flex-shrink-0" />
+            Your account isn't linked to an employee record. Contact your manager.
+          </div>
         )}
       </div>
 
