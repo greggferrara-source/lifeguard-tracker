@@ -6,7 +6,7 @@ import {
     LayoutDashboard, CalendarDays, Calendar, Users, MapPin, Clock, Menu, X, Shield,
     AlertTriangle, ArrowLeftRight, BarChart2, MessageSquare, Settings,
     BookOpen, Mail, Zap, CreditCard, Eye, FileText, LogOut, Globe,
-    ChevronDown, ChevronRight, Bell, Wrench, Droplets, ClipboardList, TrendingDown, TrendingUp, Award, Lightbulb, Search, Grid3x3 as LayoutIcon, Upload, Radio, Trophy,
+    ChevronDown, ChevronRight, Bell, Wrench, Droplets, ClipboardList, TrendingDown, TrendingUp, Award, Lightbulb, Search, Grid3x3 as LayoutIcon, Upload, Radio, Trophy, DollarSign,
   } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
@@ -82,6 +82,7 @@ const enterpriseGroups = [
       { name: "Certifications", icon: Shield, page: "Certifications" },
       { name: "Directory", icon: Users, page: "EmployeeDirectory" },
       { name: "My Availability", icon: Clock, page: "MyAvailability" },
+      { name: "Geofence Check-In", icon: MapPin, page: "GeofenceCheckIn" },
       { name: "Onboarding", icon: LayoutDashboard, page: "OnboardingDashboard" },
     ],
   },
@@ -120,6 +121,7 @@ const enterpriseGroups = [
       { name: "My Dashboard", icon: LayoutIcon, page: "CustomDashboard" },
       { name: "Multi-Location Dashboard", icon: Globe, page: "MultiLocationDashboard", enterpriseOnly: true },
       { name: "Public Status Widget", icon: Eye, page: "PublicStatusWidget", ownerOnly: true },
+      { name: "Payroll Export", icon: DollarSign, page: "PayrollExport" },
       { name: "Payroll Integrations", icon: BarChart2, page: "PayrollIntegrations", enterpriseOnly: true },
       { name: "External Integrations", icon: Zap, page: "Integrations" },
       { name: "Compliance Workflows", icon: Shield, page: "ComplianceWorkflowManager" },
