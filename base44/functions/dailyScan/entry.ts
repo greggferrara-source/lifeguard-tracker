@@ -6,51 +6,63 @@ Deno.serve(async (req) => {
     const today = new Date().toISOString().split("T")[0];
     const tomorrow = new Date(Date.now() + 86400000).toISOString().split("T")[0];
 
-    const [employees, locations, shifts, settingsRecords, certifications] = await Promise.all([
-      base44.asServiceRole.entities.Employee.list(),
-      base44.asServiceRole.entities.Location.list(),
-      base44.asServiceRole.entities.Shift.list("-date", 500),
-      base44.asServiceRole.entities.AppSettings.filter({ key: "alert_settings" }),
-      base44.asServiceRole.entities.Certification.list()
-    ]);
-
-    const settings = settingsRecords.length > 0 ? settingsRecords[0].value : {};
-    const isEnabled = (key) => settings[key] !== false; // default true if not set
+    console.log("Step 1a: employees...");
+    const employees = await base44.asServiceRole.entities.Employee.list();
+    console.log("employees ok:", employees.length);
+    console.log("Step 1b: locations...");
+    const locations = await base44.asServiceRole.entities.Location.list();
+    console.log("locations ok:", locations.length);
+    console.log("Step 1c: shifts...");
+    const shifts = await base44.asServiceRole.entities.Shift.list("-date", 500);
+    console.log("shifts ok:", shifts.length);
+    console.log("Step 1d: certifications...");
+    const certifications = await base44.asServiceRole.entities.Certification.list();
+    console.log("certifications ok:", certifications.length);
+    console.log("Step 1e: settings...");
+    const allSettings = await base44.asServiceRole.entities.AppSettings.list();
+    console.log("settings ok:", allSettings.length);
+    const settingRecord = allSettings.find(s => s.key === "alert_settings");
+    const settings = settingRecord ? settingRecord.value : {};
+    const isEnabled = (key) => settings[key] !== false;
 
     const results = { alerts_created: 0, reminders_sent: 0, errors: [] };
 
-    // Load existing unresolved alerts once for deduplication
-    const existingAlerts = await base44.asServiceRole.entities.Alert.filter({ resolved: false });
-    const hasAlert = (type, key) => existingAlerts.some(a => a.type === type && a.dedup_key === key);
+    console.log("Step 2: loading alerts...");
+    const existingAlerts = await base44.asServiceRole.entities.Alert.list("-created_date", 500);
+    console.log("existing alerts:", existingAlerts.length);
+    const hasAlert = (type, key) => existingAlerts.some(a => !a.resolved && a.type === type && a.dedup_key === key);
 
     // 1. Scan understaffing for today and tomorrow
-    if (isEnabled("understaffing"))
-    for (const scanDate of [today, tomorrow]) {
-      const dateShifts = shifts.filter(s => s.date === scanDate && s.status !== "cancelled");
-      for (const loc of locations.filter(l => l.status === "active")) {
-        const locShifts = dateShifts.filter(s => s.location_id === loc.id);
-        const staffedCount = locShifts.filter(s => s.employee_id && s.status === "scheduled").length;
-        const required = loc.min_guards_required || 1;
-        const dedupKey = `understaffing_${loc.id}_${scanDate}`;
-        if (staffedCount < required && !hasAlert("understaffing", dedupKey)) {
-          await base44.asServiceRole.entities.Alert.create({
-            type: "understaffing",
-            severity: staffedCount === 0 ? "critical" : "warning",
-            title: `Understaffing at ${loc.name} on ${scanDate}`,
-            message: `${loc.name} needs ${required} guard(s) on ${scanDate} but only ${staffedCount} scheduled.`,
-            date: scanDate,
-            location_id: loc.id,
-            location_name: loc.name,
-            dedup_key: dedupKey,
-            resolved: false
-          });
-          results.alerts_created++;
+    if (isEnabled("understaffing")) {
+      console.log("Step 3: understaffing scan...");
+      for (const scanDate of [today, tomorrow]) {
+        const dateShifts = shifts.filter(s => s.date === scanDate && s.status !== "cancelled");
+        for (const loc of locations.filter(l => l.status === "active")) {
+          const locShifts = dateShifts.filter(s => s.location_id === loc.id);
+          const staffedCount = locShifts.filter(s => s.employee_id && s.status === "scheduled").length;
+          const required = loc.min_guards_required || 1;
+          const dedupKey = `understaffing_${loc.id}_${scanDate}`;
+          if (staffedCount < required && !hasAlert("understaffing", dedupKey)) {
+            await base44.asServiceRole.entities.Alert.create({
+              type: "understaffing",
+              severity: staffedCount === 0 ? "critical" : "warning",
+              title: `Understaffing at ${loc.name} on ${scanDate}`,
+              message: `${loc.name} needs ${required} guard(s) on ${scanDate} but only ${staffedCount} scheduled.`,
+              date: scanDate,
+              location_id: loc.id,
+              location_name: loc.name,
+              dedup_key: dedupKey,
+              resolved: false
+            });
+            results.alerts_created++;
+          }
         }
       }
     }
 
     // 2. Scan shift conflicts for today
     if (isEnabled("conflicts")) {
+      console.log("Step 4: conflict scan...");
       const todayShifts = shifts.filter(s => s.date === today && s.employee_id && s.status !== "cancelled");
       const byEmployee = {};
       for (const s of todayShifts) {
@@ -87,6 +99,7 @@ Deno.serve(async (req) => {
 
     // 3. Cert expiry check (uses separate Certification entity)
     if (isEnabled("cert_expiry")) {
+      console.log("Step 5: cert expiry scan...");
       const thirtyDays = new Date();
       thirtyDays.setDate(thirtyDays.getDate() + 30);
       const thirtyDaysStr = thirtyDays.toISOString().split("T")[0];
@@ -114,22 +127,25 @@ Deno.serve(async (req) => {
 
     // 4. Shift reminders for tomorrow's shifts
     if (!isEnabled("shift_reminders")) {
-      // skip reminders but still complete the scan
       return Response.json({ success: true, ...results });
     }
+    console.log("Step 6: shift reminders...");
     const tomorrowShifts = shifts.filter(s => s.date === tomorrow && s.employee_id && s.status === "scheduled");
     for (const shift of tomorrowShifts) {
       const emp = employees.find(e => e.id === shift.employee_id);
       if (!emp || !emp.email) continue;
-      
+
       const subject = `LifeGuard Tracker: Shift Reminder for Tomorrow`;
       const body = `Hi ${emp.first_name},\n\nReminder: You have a shift tomorrow!\n\n📅 Date: ${shift.date}\n⏰ Time: ${shift.start_time}–${shift.end_time}\n📍 Location: ${shift.location_name}\n\nLifeGuard Tracker Team`;
-      
-      // Log reminder in notification history
+
       await base44.asServiceRole.entities.Notification.create({
         recipient_email: emp.email,
         recipient_name: `${emp.first_name} ${emp.last_name}`,
-        subject, body, type: "email", category: "shift_reminder", status: "sent"
+        subject,
+        body,
+        type: "email",
+        category: "shift_reminder",
+        status: "sent"
       });
       results.reminders_sent++;
 
@@ -155,19 +171,10 @@ Deno.serve(async (req) => {
       }
     }
 
-    // 5. Log scan results as a notification (no email to avoid "outside app" errors for demo data)
-    await base44.asServiceRole.entities.Notification.create({
-      recipient_email: "system@shiftguard.internal",
-      recipient_name: "System",
-      subject: `Daily Scan Complete: ${results.alerts_created} alert(s)`,
-      body: `Daily scan for ${today}: ${results.alerts_created} alerts created, ${results.reminders_sent} reminders sent.`,
-      type: "email",
-      category: "general",
-      status: "sent"
-    }).catch(() => {});
-
+    console.log("Done:", results);
     return Response.json({ success: true, ...results });
   } catch (error) {
+    console.error("dailyScan error:", error.message, error.stack);
     return Response.json({ error: error.message }, { status: 500 });
   }
 });

@@ -1,4 +1,4 @@
-import { createClientFromRequest } from 'npm:@base44/sdk@0.8.6';
+import { createClientFromRequest } from 'npm:@base44/sdk@0.8.23';
 
 Deno.serve(async (req) => {
   try {
@@ -12,6 +12,10 @@ Deno.serve(async (req) => {
 
     const results = [];
 
+    // Load existing unresolved alerts for deduplication
+    const existingAlerts = await base44.asServiceRole.entities.Alert.list("-created_date", 500);
+    const hasAlert = (type, key) => existingAlerts.some(a => !a.resolved && a.type === type && a.dedup_key === key);
+
     // Build alerts based on type
     if (alert_type === "scan_understaffing") {
       const targetDate = date || new Date().toISOString().split("T")[0];
@@ -24,17 +28,21 @@ Deno.serve(async (req) => {
         
         if (staffedCount < required) {
           const shortage = required - staffedCount;
-          await base44.asServiceRole.entities.Alert.create({
-            type: "understaffing",
-            severity: staffedCount === 0 ? "critical" : "warning",
-            title: `Understaffing at ${loc.name}`,
-            message: `${loc.name} needs ${required} guard(s) on ${targetDate} but only ${staffedCount} scheduled. Short by ${shortage}.`,
-            date: targetDate,
-            location_id: loc.id,
-            location_name: loc.name,
-            resolved: false
-          });
-          results.push({ type: "understaffing", location: loc.name, shortage });
+          const dedupKey = `understaffing_${loc.id}_${targetDate}`;
+          if (!hasAlert("understaffing", dedupKey)) {
+            await base44.asServiceRole.entities.Alert.create({
+              type: "understaffing",
+              severity: staffedCount === 0 ? "critical" : "warning",
+              title: `Understaffing at ${loc.name}`,
+              message: `${loc.name} needs ${required} guard(s) on ${targetDate} but only ${staffedCount} scheduled. Short by ${shortage}.`,
+              date: targetDate,
+              location_id: loc.id,
+              location_name: loc.name,
+              dedup_key: dedupKey,
+              resolved: false
+            });
+            results.push({ type: "understaffing", location: loc.name, shortage });
+          }
         }
       }
     }
@@ -57,17 +65,21 @@ Deno.serve(async (req) => {
               const a = empShifts[i], b = empShifts[j];
               const aStart = a.start_time, aEnd = a.end_time, bStart = b.start_time, bEnd = b.end_time;
               if (aStart < bEnd && aEnd > bStart) {
-                await base44.asServiceRole.entities.Alert.create({
-                  type: "conflict",
-                  severity: "critical",
-                  title: `Shift Conflict: ${a.employee_name}`,
-                  message: `${a.employee_name} has overlapping shifts on ${targetDate}: ${a.start_time}-${a.end_time} at ${a.location_name} and ${b.start_time}-${b.end_time} at ${b.location_name}.`,
-                  date: targetDate,
-                  employee_id: empId,
-                  employee_name: a.employee_name,
-                  resolved: false
-                });
-                results.push({ type: "conflict", employee: a.employee_name });
+                const dedupKey = `conflict_${empId}_${targetDate}`;
+                if (!hasAlert("conflict", dedupKey)) {
+                  await base44.asServiceRole.entities.Alert.create({
+                    type: "conflict",
+                    severity: "critical",
+                    title: `Shift Conflict: ${a.employee_name}`,
+                    message: `${a.employee_name} has overlapping shifts on ${targetDate}: ${a.start_time}-${a.end_time} at ${a.location_name} and ${b.start_time}-${b.end_time} at ${b.location_name}.`,
+                    date: targetDate,
+                    employee_id: empId,
+                    employee_name: a.employee_name,
+                    dedup_key: dedupKey,
+                    resolved: false
+                  });
+                  results.push({ type: "conflict", employee: a.employee_name });
+                }
               }
             }
           }
@@ -80,22 +92,26 @@ Deno.serve(async (req) => {
       thirtyDays.setDate(thirtyDays.getDate() + 30);
       const thirtyDaysStr = thirtyDays.toISOString().split("T")[0];
       const today = new Date().toISOString().split("T")[0];
-      
-      for (const emp of employees.filter(e => e.status === "active")) {
-        const certs = emp.certifications || [];
-        for (const cert of certs) {
-          if (cert.expiry_date && cert.expiry_date <= thirtyDaysStr) {
-            const expired = cert.expiry_date < today;
+
+      // Use the dedicated Certification entity (not employee-embedded certs)
+      const certifications = await base44.asServiceRole.entities.Certification.list();
+      const activeCerts = certifications.filter(c => c.status === "approved" && c.expiry_date);
+      for (const cert of activeCerts) {
+        if (cert.expiry_date <= thirtyDaysStr) {
+          const expired = cert.expiry_date < today;
+          const dedupKey = `cert_expiry_${cert.id}`;
+          if (!hasAlert("cert_expiry", dedupKey)) {
             await base44.asServiceRole.entities.Alert.create({
               type: "cert_expiry",
               severity: expired ? "critical" : "warning",
-              title: `Cert ${expired ? "Expired" : "Expiring Soon"}: ${emp.first_name} ${emp.last_name}`,
-              message: `${emp.first_name} ${emp.last_name}'s ${cert.name} certification ${expired ? "expired on" : "expires on"} ${cert.expiry_date}.`,
-              employee_id: emp.id,
-              employee_name: `${emp.first_name} ${emp.last_name}`,
+              title: `Cert ${expired ? "Expired" : "Expiring Soon"}: ${cert.employee_name}`,
+              message: `${cert.employee_name}'s ${cert.name} certification ${expired ? "expired on" : "expires on"} ${cert.expiry_date}.`,
+              employee_id: cert.employee_id,
+              employee_name: cert.employee_name,
+              dedup_key: dedupKey,
               resolved: false
             });
-            results.push({ type: "cert_expiry", employee: `${emp.first_name} ${emp.last_name}`, cert: cert.name });
+            results.push({ type: "cert_expiry", employee: cert.employee_name, cert: cert.name });
           }
         }
       }

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { createPageUrl } from "../utils";
 import { useQuery } from "@tanstack/react-query";
@@ -89,11 +89,11 @@ export default function Dashboard() {
     enabled: isAdmin,
   });
 
-  const isNewUser = isAdmin && onboardingStatus === null && employees.length === 0 && locations.length === 0 && !onboardingStatus;
-  if (isNewUser) {
-    window.location.href = createPageUrl("SetupWizard");
-    return null;
-  }
+  // Only redirect after query has resolved (undefined = loading, null = no record found)
+  const isNewUser = isAdmin && onboardingStatus === null && employees.length === 0 && locations.length === 0;
+  React.useEffect(() => {
+    if (isNewUser) window.location.href = createPageUrl("SetupWizard");
+  }, [isNewUser]);
 
   return (
     <div className="bg-white">

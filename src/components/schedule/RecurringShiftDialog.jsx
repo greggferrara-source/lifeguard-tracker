@@ -18,7 +18,7 @@ function detectConflicts(newShifts, existingShifts) {
     const clash = existingShifts.find(
       s => s.employee_id === ns.employee_id && s.date === ns.date &&
         s.status !== "cancelled" &&
-        ns.start_time < s.end_time && ns.end_time > ns.start_time
+        ns.start_time < s.end_time && ns.end_time > s.start_time
     );
     if (clash) conflicts.push({ date: ns.date, with: clash.start_time + "–" + clash.end_time + " @ " + (clash.location_name || "") });
   }

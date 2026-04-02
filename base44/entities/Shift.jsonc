@@ -1,0 +1,61 @@
+{
+  "name": "Shift",
+  "type": "object",
+  "properties": {
+    "date": {
+      "type": "string",
+      "format": "date",
+      "description": "Date of the shift"
+    },
+    "start_time": {
+      "type": "string",
+      "description": "Shift start time (HH:MM)"
+    },
+    "end_time": {
+      "type": "string",
+      "description": "Shift end time (HH:MM)"
+    },
+    "employee_id": {
+      "type": "string",
+      "description": "Assigned employee ID"
+    },
+    "employee_name": {
+      "type": "string",
+      "description": "Assigned employee name (denormalized)"
+    },
+    "location_id": {
+      "type": "string",
+      "description": "Location ID"
+    },
+    "location_name": {
+      "type": "string",
+      "description": "Location name (denormalized)"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "scheduled",
+        "open",
+        "completed",
+        "cancelled",
+        "no_show"
+      ],
+      "default": "scheduled",
+      "description": "Shift status"
+    },
+    "notes": {
+      "type": "string",
+      "description": "Shift notes"
+    },
+    "color": {
+      "type": "string",
+      "description": "Display color (inherited from employee or location)"
+    }
+  },
+  "required": [
+    "date",
+    "start_time",
+    "end_time",
+    "location_id"
+  ]
+}
