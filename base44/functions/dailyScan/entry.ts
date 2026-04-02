@@ -108,8 +108,8 @@ Deno.serve(async (req) => {
       const emp = employees.find(e => e.id === shift.employee_id);
       if (!emp || !emp.email) continue;
       
-      const subject = `ShiftGuard: Shift Reminder for Tomorrow`;
-      const body = `Hi ${emp.first_name},\n\nReminder: You have a shift tomorrow!\n\n📅 Date: ${shift.date}\n⏰ Time: ${shift.start_time}–${shift.end_time}\n📍 Location: ${shift.location_name}\n\nShiftGuard Team`;
+      const subject = `LifeGuard Tracker: Shift Reminder for Tomorrow`;
+      const body = `Hi ${emp.first_name},\n\nReminder: You have a shift tomorrow!\n\n📅 Date: ${shift.date}\n⏰ Time: ${shift.start_time}–${shift.end_time}\n📍 Location: ${shift.location_name}\n\nLifeGuard Tracker Team`;
       
       // Log reminder in notification history
       await base44.asServiceRole.entities.Notification.create({
@@ -127,7 +127,7 @@ Deno.serve(async (req) => {
         if (TWILIO_SID && TWILIO_TOKEN && TWILIO_FROM) {
           const phone = emp.phone.replace(/\D/g, '');
           const e164 = phone.startsWith('1') ? `+${phone}` : `+1${phone}`;
-          const smsBody = `ShiftGuard REMINDER: Shift tomorrow ${shift.date} ${shift.start_time}-${shift.end_time} at ${shift.location_name}.`;
+          const smsBody = `LifeGuard Tracker REMINDER: Shift tomorrow ${shift.date} ${shift.start_time}-${shift.end_time} at ${shift.location_name}.`;
           const twilioUrl = `https://api.twilio.com/2010-04-01/Accounts/${TWILIO_SID}/Messages.json`;
           const auth = btoa(`${TWILIO_SID}:${TWILIO_TOKEN}`);
           const fd = new URLSearchParams();

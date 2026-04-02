@@ -75,7 +75,13 @@ export default function ShiftDialog({
     }));
   };
 
+  const [confirmConflict, setConfirmConflict] = useState(false);
+
   const handleSave = () => {
+    if (conflict && !confirmConflict) {
+      setConfirmConflict(true);
+      return;
+    }
     const emp = employees.find(e => e.id === form.employee_id);
     const loc = locations.find(l => l.id === form.location_id);
     onSave({
@@ -84,7 +90,11 @@ export default function ShiftDialog({
       location_name: loc ? loc.name : "",
       color: emp?.color || loc?.color || "",
     });
+    setConfirmConflict(false);
   };
+
+  // Reset confirm state when conflict clears
+  React.useEffect(() => { if (!conflict) setConfirmConflict(false); }, [conflict]);
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -205,11 +215,21 @@ export default function ShiftDialog({
             )}
           </div>
           <div className="flex gap-2">
-            <Button variant="outline" onClick={() => onOpenChange(false)}>Cancel</Button>
-            <Button onClick={handleSave}
-              className={conflict ? "bg-orange-500 hover:bg-orange-600" : "bg-[#1a9c5b] hover:bg-[#158a4e]"}>
-              {conflict ? "Save Anyway" : shift ? "Update" : "Create"}
-            </Button>
+            <Button variant="outline" onClick={() => { onOpenChange(false); setConfirmConflict(false); }}>Cancel</Button>
+            {confirmConflict ? (
+              <>
+                <Button variant="outline" onClick={() => setConfirmConflict(false)} className="text-orange-600 border-orange-300">
+                  Go Back
+                </Button>
+                <Button onClick={handleSave} className="bg-orange-500 hover:bg-orange-600">
+                  Confirm Override
+                </Button>
+              </>
+            ) : (
+              <Button onClick={handleSave} className="bg-[#1a9c5b] hover:bg-[#158a4e]">
+                {shift ? "Update" : "Create"}
+              </Button>
+            )}
           </div>
         </DialogFooter>
       </DialogContent>

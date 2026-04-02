@@ -189,13 +189,11 @@ export default function Schedule() {
   const handleGetRecommendations = async () => {
     setRecommendationsLoading(true);
     try {
-      const openShifts = weekShifts.filter(s => s.status === "open" || !s.employee_id);
       const response = await base44.functions.invoke("getShiftRecommendations", {
-        startDate: weekDates[0],
-        endDate: weekDates[6],
-        openShifts,
+        location_id: activeLocations[0]?.id || "",
+        week_start: weekDates[0],
       });
-      setRecommendations(response.recommendations || []);
+      setRecommendations(response.data?.slots || []);
     } catch (error) {
       console.error("Error getting recommendations:", error);
       setRecommendations([]);
