@@ -10,7 +10,8 @@ import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import {
   ChevronLeft, ChevronRight, CalendarDays, Plus, Trash2, Zap,
-  CheckCircle2, AlertTriangle, Loader, Users, Clock, MapPin, X
+  CheckCircle2, AlertTriangle, Loader, Users, Clock, MapPin, X,
+  Lightbulb, TrendingUp, ShieldAlert, Sparkles
 } from "lucide-react";
 
 const DAYS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
@@ -27,6 +28,9 @@ export default function AutoShiftPlanner() {
     end_time: "16:00",
     days: []
   });
+  const [aiLoading, setAiLoading] = useState(false);
+  const [aiResult, setAiResult] = useState(null);
+  const [aiLocationId, setAiLocationId] = useState("");
 
   const days = Array.from({ length: 7 }, (_, i) => addDays(weekStart, i));
   const weekStartStr = format(weekStart, "yyyy-MM-dd");
@@ -79,6 +83,30 @@ export default function AutoShiftPlanner() {
   };
 
   const handleRemoveSlot = (id) => setSlots(prev => prev.filter(s => s.id !== id));
+
+  const handleAIRecommend = async () => {
+    if (!aiLocationId) return;
+    setAiLoading(true);
+    setAiResult(null);
+    try {
+      const res = await base44.functions.invoke("getShiftRecommendations", {
+        location_id: aiLocationId,
+        week_start: weekStartStr
+      });
+      setAiResult(res.data);
+    } catch (err) {
+      setAiResult({ error: err.message });
+    } finally {
+      setAiLoading(false);
+    }
+  };
+
+  const handleApplyAISlots = () => {
+    if (!aiResult?.slots) return;
+    const newSlots = aiResult.slots.map((s, i) => ({ ...s, id: `ai-${Date.now()}-${i}` }));
+    setSlots(prev => [...prev, ...newSlots]);
+    setAiResult(null);
+  };
 
   const handleAutoAssign = async () => {
     if (slots.length === 0) return;
@@ -172,6 +200,122 @@ export default function AutoShiftPlanner() {
             <Button variant="ghost" size="icon" onClick={() => setResult(null)}><X className="w-4 h-4" /></Button>
           </div>
         )}
+
+        {/* AI Recommendations Panel */}
+        <Card className="border-2 border-[#1a9c5b]/30 bg-gradient-to-br from-[#f0faf5] to-white">
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2 text-base">
+              <Sparkles className="w-5 h-5 text-[#1a9c5b]" />
+              AI Shift Recommendations
+              <Badge className="ml-auto bg-[#1a9c5b] text-white text-xs">Powered by AI</Badge>
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="flex flex-col sm:flex-row gap-3 items-end mb-4">
+              <div className="flex-1">
+                <Label className="text-xs mb-1 block">Select Location to Analyze</Label>
+                <Select value={aiLocationId} onValueChange={setAiLocationId}>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Choose location..." />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {activeLocations.map(l => (
+                      <SelectItem key={l.id} value={l.id}>{l.name}</SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+              <Button
+                onClick={handleAIRecommend}
+                disabled={!aiLocationId || aiLoading}
+                className="bg-[#1a9c5b] hover:bg-[#158a4e] shrink-0"
+              >
+                {aiLoading ? (
+                  <><Loader className="w-4 h-4 mr-2 animate-spin" />Analyzing...</>
+                ) : (
+                  <><Lightbulb className="w-4 h-4 mr-2" />Generate Recommendations</>
+                )}
+              </Button>
+            </div>
+
+            {aiResult?.error && (
+              <div className="bg-red-50 border border-red-200 rounded-lg p-3 text-sm text-red-700">
+                {aiResult.error}
+              </div>
+            )}
+
+            {aiResult && !aiResult.error && (
+              <div className="space-y-4">
+                {/* Insights */}
+                {aiResult.insights?.length > 0 && (
+                  <div className="bg-blue-50 border border-blue-200 rounded-lg p-3">
+                    <p className="text-xs font-semibold text-blue-700 uppercase tracking-wide mb-2 flex items-center gap-1">
+                      <TrendingUp className="w-3.5 h-3.5" /> AI Insights
+                    </p>
+                    <ul className="space-y-1">
+                      {aiResult.insights.map((insight, i) => (
+                        <li key={i} className="text-sm text-blue-800">• {insight}</li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+
+                {/* Risk Flags */}
+                {aiResult.risk_flags?.length > 0 && (
+                  <div className="bg-orange-50 border border-orange-200 rounded-lg p-3">
+                    <p className="text-xs font-semibold text-orange-700 uppercase tracking-wide mb-2 flex items-center gap-1">
+                      <ShieldAlert className="w-3.5 h-3.5" /> Risk Flags
+                    </p>
+                    {aiResult.risk_flags.map((flag, i) => (
+                      <p key={i} className="text-sm text-orange-800">⚠ {flag}</p>
+                    ))}
+                  </div>
+                )}
+
+                {/* Recommended Slots Preview */}
+                <div>
+                  <p className="text-xs font-semibold text-gray-600 mb-2">
+                    {aiResult.slots?.length} recommended shift slots:
+                  </p>
+                  <div className="max-h-40 overflow-y-auto space-y-1 pr-1">
+                    {aiResult.slots?.map((slot, i) => (
+                      <div key={i} className="flex items-center justify-between bg-white rounded-lg px-3 py-1.5 border text-xs">
+                        <span className="font-medium text-gray-700 w-20">{slot.day_name}</span>
+                        <span className="text-gray-500">{slot.start_time} – {slot.end_time}</span>
+                        <Badge
+                          variant="outline"
+                          className={`text-xs ${slot.priority === 'high' ? 'border-red-300 text-red-700' : slot.priority === 'medium' ? 'border-yellow-300 text-yellow-700' : 'border-gray-300 text-gray-600'}`}
+                        >
+                          {slot.priority}
+                        </Badge>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="flex gap-2">
+                  <Button
+                    onClick={handleApplyAISlots}
+                    className="flex-1 bg-[#1a9c5b] hover:bg-[#158a4e]"
+                    size="sm"
+                  >
+                    <CheckCircle2 className="w-4 h-4 mr-1" />
+                    Apply All {aiResult.slots?.length} Slots
+                  </Button>
+                  <Button variant="outline" size="sm" onClick={() => setAiResult(null)}>
+                    Dismiss
+                  </Button>
+                </div>
+              </div>
+            )}
+
+            {!aiResult && !aiLoading && (
+              <p className="text-sm text-gray-500 text-center py-2">
+                AI analyzes patron trends, incident history, and staff availability to recommend optimal staffing for the week.
+              </p>
+            )}
+          </CardContent>
+        </Card>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
 
