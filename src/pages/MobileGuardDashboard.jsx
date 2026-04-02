@@ -22,6 +22,8 @@ export default function MobileGuardDashboard() {
   const [clockedIn, setClockedIn] = useState(null);
   const [selectedLocation, setSelectedLocation] = useState("");
   const [logText, setLogText] = useState("");
+  const [logType, setLogType] = useState("incident");
+  const [logSeverity, setLogSeverity] = useState("minor");
   const [tab, setTab] = useState("clock"); // clock | log | alerts
   const [syncing, setSyncing] = useState(false);
   const queryClient = useQueryClient();
@@ -136,8 +138,8 @@ export default function MobileGuardDashboard() {
       location_name: clockedIn?.location_name || "",
       date: format(new Date(), "yyyy-MM-dd"),
       time: format(new Date(), "HH:mm"),
-      type: "incident",
-      severity: "minor",
+      type: logType,
+      severity: logSeverity,
       description: logText,
       reporting_staff_name: user?.full_name,
       reporting_staff_email: user?.email,
@@ -149,6 +151,8 @@ export default function MobileGuardDashboard() {
       addToQueue({ type: "incident_log", data });
     }
     setLogText("");
+    setLogType("incident");
+    setLogSeverity("minor");
   };
 
   const minutesOnDuty = clockedIn ? Math.floor((Date.now() - new Date(clockedIn.clock_in).getTime()) / 60000) : 0;
@@ -258,12 +262,48 @@ export default function MobileGuardDashboard() {
 
         {tab === "log" && (
           <div className="space-y-3">
-            <p className="text-sm text-gray-600">Quickly log an observation or incident. Will sync when online.</p>
+            <p className="text-sm text-gray-600">Log an incident or observation. Will sync when online.</p>
+            <div className="grid grid-cols-2 gap-2">
+              <div>
+                <p className="text-xs font-semibold text-gray-600 mb-1">Type *</p>
+                <select
+                  value={logType}
+                  onChange={e => setLogType(e.target.value)}
+                  className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm bg-white"
+                >
+                  <option value="rescue">🚨 Rescue</option>
+                  <option value="injury">🩹 Injury</option>
+                  <option value="incident">⚠️ Incident</option>
+                  <option value="near_miss">⚡ Near Miss</option>
+                  <option value="first_aid">➕ First Aid</option>
+                  <option value="other">Other</option>
+                </select>
+              </div>
+              <div>
+                <p className="text-xs font-semibold text-gray-600 mb-1">Severity *</p>
+                <select
+                  value={logSeverity}
+                  onChange={e => setLogSeverity(e.target.value)}
+                  className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm bg-white"
+                >
+                  <option value="minor">Minor</option>
+                  <option value="moderate">Moderate</option>
+                  <option value="serious">Serious</option>
+                  <option value="critical">Critical</option>
+                </select>
+              </div>
+            </div>
+            {(logType === "rescue" || logSeverity === "critical" || logSeverity === "serious") && (
+              <div className="flex items-center gap-2 bg-red-50 border border-red-200 rounded-lg px-3 py-2 text-red-700 text-xs font-medium">
+                <AlertTriangle className="w-4 h-4 flex-shrink-0" />
+                Critical/rescue — ensure emergency protocols are active.
+              </div>
+            )}
             <Textarea
-              placeholder="Describe the incident or observation..."
+              placeholder="Describe exactly what happened..."
               value={logText}
               onChange={e => setLogText(e.target.value)}
-              rows={5}
+              rows={4}
               className="resize-none"
             />
             <Button onClick={handleSubmitLog} disabled={!logText.trim()} className="w-full bg-orange-600 hover:bg-orange-700">

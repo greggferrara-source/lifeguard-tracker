@@ -11,7 +11,7 @@ import {
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { ArrowLeftRight, CheckCircle2, XCircle, Clock, Calendar, MapPin, Plus } from "lucide-react";
+import { ArrowLeftRight, CheckCircle2, XCircle, Clock, Calendar, MapPin, Plus, AlertTriangle } from "lucide-react";
 import { format } from "date-fns";
 
 const statusConfig = {
@@ -107,6 +107,35 @@ export default function ShiftSwaps() {
     });
   };
 
+  const [swapConflictWarning, setSwapConflictWarning] = useState(null);
+
+  // Check for post-swap conflicts when manager opens the review dialog
+  const checkSwapConflicts = (swap) => {
+    if (!swap) return null;
+    const reqShift = allShifts.find(s => s.id === swap.requester_shift_id);
+    const tgtShift = allShifts.find(s => s.id === swap.target_shift_id);
+    if (!reqShift || !tgtShift) return null;
+    const warnings = [];
+    // After swap: requester gets tgtShift's date/time, target gets reqShift's date/time
+    // Check if requester employee would conflict at tgtShift's slot
+    const reqConflict = allShifts.find(s =>
+      s.employee_id === swap.requester_employee_id &&
+      s.date === tgtShift.date && s.id !== tgtShift.id && s.id !== reqShift.id &&
+      s.status !== "cancelled" &&
+      tgtShift.start_time < s.end_time && tgtShift.end_time > s.start_time
+    );
+    if (reqConflict) warnings.push(`${swap.requester_employee_name} will conflict on ${tgtShift.date} with ${reqConflict.start_time}–${reqConflict.end_time}`);
+    // Check if target employee would conflict at reqShift's slot
+    const tgtConflict = allShifts.find(s =>
+      s.employee_id === swap.target_employee_id &&
+      s.date === reqShift.date && s.id !== reqShift.id && s.id !== tgtShift.id &&
+      s.status !== "cancelled" &&
+      reqShift.start_time < s.end_time && reqShift.end_time > s.start_time
+    );
+    if (tgtConflict) warnings.push(`${swap.target_employee_name} will conflict on ${reqShift.date} with ${tgtConflict.start_time}–${tgtConflict.end_time}`);
+    return warnings.length > 0 ? warnings : null;
+  };
+
   const handleManagerDecision = async (approved) => {
     const action = approved ? "manager_approved" : "manager_denied";
     await updateSwap.mutateAsync({
@@ -142,6 +171,7 @@ export default function ShiftSwaps() {
     setManagerDialogOpen(false);
     setSelectedSwap(null);
     setManagerNotes("");
+    setSwapConflictWarning(null);
   };
 
   const pending = swaps.filter(s => s.status === "pending_employee" || s.status === "pending_manager");
@@ -239,7 +269,11 @@ export default function ShiftSwaps() {
                   )}
                   {swap.status === "pending_manager" && isManagerOrAdmin && (
                     <Button size="sm" className="bg-blue-600 hover:bg-blue-700 rounded-full"
-                      onClick={() => { setSelectedSwap(swap); setManagerDialogOpen(true); }}>
+                      onClick={() => {
+                        setSelectedSwap(swap);
+                        setSwapConflictWarning(checkSwapConflicts(swap));
+                        setManagerDialogOpen(true);
+                      }}>
                       Review
                     </Button>
                   )}
@@ -331,6 +365,16 @@ export default function ShiftSwaps() {
               Approve this swap between <strong>{selectedSwap?.requester_employee_name}</strong> and <strong>{selectedSwap?.target_employee_name}</strong>?
               The shifts will be automatically reassigned upon approval.
             </p>
+            {swapConflictWarning && (
+              <div className="p-3 bg-orange-50 border border-orange-200 rounded-xl space-y-1">
+                <p className="text-xs font-semibold text-orange-800 flex items-center gap-1">
+                  <AlertTriangle className="w-3.5 h-3.5" /> Post-swap conflicts detected:
+                </p>
+                {swapConflictWarning.map((w, i) => (
+                  <p key={i} className="text-xs text-orange-700">• {w}</p>
+                ))}
+              </div>
+            )}
             <div>
               <Label className="text-xs">Notes (optional)</Label>
               <Textarea value={managerNotes} onChange={e => setManagerNotes(e.target.value)}

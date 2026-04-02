@@ -56,6 +56,11 @@ export default function Schedule() {
     queryFn: () => base44.entities.EmployeeAvailability.list(),
   });
 
+  const { data: certifications = [] } = useQuery({
+    queryKey: ["certifications"],
+    queryFn: () => base44.entities.Certification.list(),
+  });
+
   useEffect(() => {
     const getUserData = async () => {
       try {
@@ -338,6 +343,7 @@ export default function Schedule() {
         locations={activeLocations}
         shifts={shifts}
         templates={templates}
+        certifications={certifications}
         onSave={handleSave}
         onDelete={(id) => deleteShift.mutate(id)}
         defaultDate={defaultDate}

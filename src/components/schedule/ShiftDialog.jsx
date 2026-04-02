@@ -10,10 +10,11 @@ import {
   Select, SelectContent, SelectItem, SelectTrigger, SelectValue,
 } from "@/components/ui/select";
 import { Badge } from "@/components/ui/badge";
-import { Trash2, AlertTriangle, Wand2 } from "lucide-react";
+import { Trash2, AlertTriangle, Wand2, ShieldAlert } from "lucide-react";
 
 export default function ShiftDialog({
   open, onOpenChange, shift, employees, locations, shifts = [], templates = [],
+  certifications = [],
   onSave, onDelete, defaultDate, defaultLocationId,
 }) {
   const [form, setForm] = useState({
@@ -44,6 +45,34 @@ export default function ShiftDialog({
       });
     }
   }, [shift, defaultDate, defaultLocationId, open]);
+
+  // Certification validation for selected employee
+  const today = new Date().toISOString().split("T")[0];
+  const certWarning = useMemo(() => {
+    if (!form.employee_id) return null;
+    const empCerts = certifications.filter(
+      c => c.employee_id === form.employee_id && c.status === "approved" && c.expiry_date && c.expiry_date >= today
+    );
+    if (empCerts.length === 0) {
+      const hasPending = certifications.some(c => c.employee_id === form.employee_id && c.status === "pending_review");
+      return hasPending
+        ? { level: "warn", msg: "No approved certifications — pending review exists." }
+        : { level: "block", msg: "No valid approved certifications on file. Assignment blocked." };
+    }
+    const expiringSoon = empCerts.filter(c => {
+      const days = Math.ceil((new Date(c.expiry_date) - new Date()) / 86400000);
+      return days <= 30;
+    });
+    if (expiringSoon.length > 0) {
+      return { level: "warn", msg: `Certification expires in ≤30 days (${expiringSoon[0].name}).` };
+    }
+    return null;
+  }, [form.employee_id, certifications, today]);
+
+  const [confirmCert, setConfirmCert] = useState(false);
+
+  // Reset cert confirm when employee changes
+  React.useEffect(() => { setConfirmCert(false); }, [form.employee_id]);
 
   // Conflict detection
   const conflict = useMemo(() => {
@@ -78,6 +107,11 @@ export default function ShiftDialog({
   const [confirmConflict, setConfirmConflict] = useState(false);
 
   const handleSave = () => {
+    // Block on missing cert unless manager confirmed override
+    if (certWarning?.level === "block" && !confirmCert) {
+      setConfirmCert(true);
+      return;
+    }
     if (conflict && !confirmConflict) {
       setConfirmConflict(true);
       return;
@@ -91,6 +125,7 @@ export default function ShiftDialog({
       color: emp?.color || loc?.color || "",
     });
     setConfirmConflict(false);
+    setConfirmCert(false);
   };
 
   // Reset confirm state when conflict clears
@@ -188,6 +223,12 @@ export default function ShiftDialog({
                 ))}
               </SelectContent>
             </Select>
+            {certWarning && (
+              <div className={`flex items-start gap-1.5 mt-1.5 p-2 rounded-lg border ${certWarning.level === "block" ? "bg-red-50 border-red-200" : "bg-yellow-50 border-yellow-200"}`}>
+                <ShieldAlert className={`w-3.5 h-3.5 mt-0.5 flex-shrink-0 ${certWarning.level === "block" ? "text-red-500" : "text-yellow-600"}`} />
+                <p className={`text-xs ${certWarning.level === "block" ? "text-red-700" : "text-yellow-700"}`}>{certWarning.msg}</p>
+              </div>
+            )}
             {conflict && (
               <div className="flex items-start gap-1.5 mt-1.5 p-2 bg-orange-50 border border-orange-200 rounded-lg">
                 <AlertTriangle className="w-3.5 h-3.5 text-orange-500 mt-0.5 flex-shrink-0" />
@@ -215,15 +256,16 @@ export default function ShiftDialog({
             )}
           </div>
           <div className="flex gap-2">
-            <Button variant="outline" onClick={() => { onOpenChange(false); setConfirmConflict(false); }}>Cancel</Button>
-            {confirmConflict ? (
+            <Button variant="outline" onClick={() => { onOpenChange(false); setConfirmConflict(false); setConfirmCert(false); }}>Cancel</Button>
+            {confirmCert ? (
               <>
-                <Button variant="outline" onClick={() => setConfirmConflict(false)} className="text-orange-600 border-orange-300">
-                  Go Back
-                </Button>
-                <Button onClick={handleSave} className="bg-orange-500 hover:bg-orange-600">
-                  Confirm Override
-                </Button>
+                <Button variant="outline" onClick={() => setConfirmCert(false)} className="text-red-600 border-red-300">Go Back</Button>
+                <Button onClick={handleSave} className="bg-red-500 hover:bg-red-600">Override — No Cert</Button>
+              </>
+            ) : confirmConflict ? (
+              <>
+                <Button variant="outline" onClick={() => setConfirmConflict(false)} className="text-orange-600 border-orange-300">Go Back</Button>
+                <Button onClick={handleSave} className="bg-orange-500 hover:bg-orange-600">Confirm Override</Button>
               </>
             ) : (
               <Button onClick={handleSave} className="bg-[#1a9c5b] hover:bg-[#158a4e]">

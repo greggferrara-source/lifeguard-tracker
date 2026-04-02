@@ -3,7 +3,7 @@ import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sh
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { base44 } from "@/api/base44Client";
 import { CheckCircle2, Clock, MapPin, User, Calendar, AlertTriangle, Siren, ClipboardList } from "lucide-react";
 import IncidentFollowUpPanel from "./IncidentFollowUpPanel";
@@ -16,8 +16,23 @@ export default function IncidentDetailDrawer({ incident, onClose }) {
   const qc = useQueryClient();
   const [tab, setTab] = useState("details");
 
+  const { data: user } = useQuery({ queryKey: ["user"], queryFn: () => base44.auth.me() });
+
   const updateStatus = useMutation({
-    mutationFn: ({ id, status }) => base44.entities.IncidentLog.update(id, { status }),
+    mutationFn: async ({ id, oldStatus, newStatus }) => {
+      await base44.entities.IncidentLog.update(id, { status: newStatus });
+      await base44.entities.IncidentAuditTrail.create({
+        incident_id: id,
+        action: "updated",
+        performed_by_email: user?.email || "unknown",
+        performed_by_name: user?.full_name || "Unknown",
+        timestamp: new Date().toISOString(),
+        field_changed: "status",
+        old_value: oldStatus,
+        new_value: newStatus,
+        description: `Status changed from "${oldStatus}" to "${newStatus}"`,
+      });
+    },
     onSuccess: () => qc.invalidateQueries({ queryKey: ["incident-logs"] })
   });
 
@@ -127,13 +142,13 @@ export default function IncidentDetailDrawer({ incident, onClose }) {
                 <div className="flex gap-2 pt-2 border-t">
                   {incident.status === "open" && (
                     <Button variant="outline" size="sm" className="flex-1"
-                      onClick={() => updateStatus.mutate({ id: incident.id, status: "reviewed" })}
+                      onClick={() => updateStatus.mutate({ id: incident.id, oldStatus: incident.status, newStatus: "reviewed" })}
                       disabled={updateStatus.isPending}>
                       <Clock className="w-4 h-4 mr-1" />Mark Reviewed
                     </Button>
                   )}
                   <Button size="sm" className="flex-1 bg-[#1a9c5b] hover:bg-[#158a4e]"
-                    onClick={() => updateStatus.mutate({ id: incident.id, status: "closed" })}
+                    onClick={() => updateStatus.mutate({ id: incident.id, oldStatus: incident.status, newStatus: "closed" })}
                     disabled={updateStatus.isPending}>
                     <CheckCircle2 className="w-4 h-4 mr-1" />Close Incident
                   </Button>

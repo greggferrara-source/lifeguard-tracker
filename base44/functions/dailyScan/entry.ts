@@ -19,6 +19,10 @@ Deno.serve(async (req) => {
 
     const results = { alerts_created: 0, reminders_sent: 0, errors: [] };
 
+    // Load existing unresolved alerts once for deduplication
+    const existingAlerts = await base44.asServiceRole.entities.Alert.filter({ resolved: false });
+    const hasAlert = (type, key) => existingAlerts.some(a => a.type === type && a.dedup_key === key);
+
     // 1. Scan understaffing for today and tomorrow
     if (isEnabled("understaffing"))
     for (const scanDate of [today, tomorrow]) {
@@ -27,7 +31,8 @@ Deno.serve(async (req) => {
         const locShifts = dateShifts.filter(s => s.location_id === loc.id);
         const staffedCount = locShifts.filter(s => s.employee_id && s.status === "scheduled").length;
         const required = loc.min_guards_required || 1;
-        if (staffedCount < required) {
+        const dedupKey = `understaffing_${loc.id}_${scanDate}`;
+        if (staffedCount < required && !hasAlert("understaffing", dedupKey)) {
           await base44.asServiceRole.entities.Alert.create({
             type: "understaffing",
             severity: staffedCount === 0 ? "critical" : "warning",
@@ -36,6 +41,7 @@ Deno.serve(async (req) => {
             date: scanDate,
             location_id: loc.id,
             location_name: loc.name,
+            dedup_key: dedupKey,
             resolved: false
           });
           results.alerts_created++;
@@ -57,17 +63,21 @@ Deno.serve(async (req) => {
             for (let j = i + 1; j < empShifts.length; j++) {
               const a = empShifts[i], b = empShifts[j];
               if (a.start_time < b.end_time && a.end_time > b.start_time) {
-                await base44.asServiceRole.entities.Alert.create({
-                  type: "conflict",
-                  severity: "critical",
-                  title: `Shift Conflict: ${a.employee_name}`,
-                  message: `${a.employee_name} has overlapping shifts on ${today}.`,
-                  date: today,
-                  employee_id: empId,
-                  employee_name: a.employee_name,
-                  resolved: false
-                });
-                results.alerts_created++;
+                const dedupKey = `conflict_${empId}_${today}`;
+                if (!hasAlert("conflict", dedupKey)) {
+                  await base44.asServiceRole.entities.Alert.create({
+                    type: "conflict",
+                    severity: "critical",
+                    title: `Shift Conflict: ${a.employee_name}`,
+                    message: `${a.employee_name} has overlapping shifts on ${today}.`,
+                    date: today,
+                    employee_id: empId,
+                    employee_name: a.employee_name,
+                    dedup_key: dedupKey,
+                    resolved: false
+                  });
+                  results.alerts_created++;
+                }
               }
             }
           }
@@ -84,16 +94,20 @@ Deno.serve(async (req) => {
       for (const cert of activeCerts) {
         if (cert.expiry_date <= thirtyDaysStr) {
           const expired = cert.expiry_date < today;
-          await base44.asServiceRole.entities.Alert.create({
-            type: "cert_expiry",
-            severity: expired ? "critical" : "warning",
-            title: `Cert ${expired ? "Expired" : "Expiring"}: ${cert.employee_name}`,
-            message: `${cert.employee_name}'s ${cert.name} ${expired ? "expired" : "expires"} on ${cert.expiry_date}.`,
-            employee_id: cert.employee_id,
-            employee_name: cert.employee_name,
-            resolved: false
-          });
-          results.alerts_created++;
+          const dedupKey = `cert_expiry_${cert.id}`;
+          if (!hasAlert("cert_expiry", dedupKey)) {
+            await base44.asServiceRole.entities.Alert.create({
+              type: "cert_expiry",
+              severity: expired ? "critical" : "warning",
+              title: `Cert ${expired ? "Expired" : "Expiring"}: ${cert.employee_name}`,
+              message: `${cert.employee_name}'s ${cert.name} ${expired ? "expired" : "expires"} on ${cert.expiry_date}.`,
+              employee_id: cert.employee_id,
+              employee_name: cert.employee_name,
+              dedup_key: dedupKey,
+              resolved: false
+            });
+            results.alerts_created++;
+          }
         }
       }
     }
