@@ -8,7 +8,7 @@ import DashboardFooter from "@/components/dashboard/DashboardFooter";
 import TrialBanner from "@/components/dashboard/TrialBanner";
 import PushNotificationPrompt from "@/components/dashboard/PushNotificationPrompt";
 import FacilityManagerWidgets from "@/components/dashboard/FacilityManagerWidgets";
-import QuickStartChecklist from "@/components/dashboard/QuickStartChecklist";
+import SetupChecklist from "@/components/dashboard/SetupChecklist";
 import InviteTeamBanner from "@/components/dashboard/InviteTeamBanner";
 import {
   CalendarDays,
@@ -36,6 +36,18 @@ export default function Dashboard() {
   const { data: shifts = [] } = useQuery({
     queryKey: ["shifts"],
     queryFn: () => base44.entities.Shift.list("-created_date", 100)
+  });
+
+  const { data: certifications = [] } = useQuery({
+    queryKey: ["certifications"],
+    queryFn: () => base44.entities.Certification.list(),
+    enabled: isAdmin,
+  });
+
+  const { data: incidentLogs = [] } = useQuery({
+    queryKey: ["incident-logs-dash"],
+    queryFn: () => base44.entities.IncidentLog.list("-created_date", 10),
+    enabled: isAdmin,
   });
 
   const { data: employees = [] } = useQuery({
@@ -105,7 +117,13 @@ export default function Dashboard() {
           <InviteTeamBanner employees={employees} />
         )}
         {isAdmin && (
-          <QuickStartChecklist hasLocations={locations.length > 0} hasEmployees={employees.length > 0} />
+          <SetupChecklist
+            hasLocations={locations.length > 0}
+            employeeCount={employees.filter(e => e.status === "active").length}
+            hasShifts={shifts.length > 0}
+            hasCerts={certifications.length > 0}
+            hasIncidents={incidentLogs.length > 0}
+          />
         )}
       </div>
 

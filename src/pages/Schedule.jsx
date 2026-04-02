@@ -15,6 +15,7 @@ import RecommendationsPanel from "@/components/schedule/RecommendationsPanel";
 import ScheduleSuggestionsPanel from "@/components/schedule/ScheduleSuggestionsPanel";
 import CertExpiryBanner from "@/components/schedule/CertExpiryBanner";
 import SmartScheduleBuilder from "@/components/schedule/SmartScheduleBuilder";
+import TooltipHint from "@/components/onboarding/TooltipHint";
 
 export default function Schedule() {
   const queryClient = useQueryClient();
@@ -305,6 +306,12 @@ export default function Schedule() {
           </Button>
         </div>
       </div>
+
+      {/* Onboarding hint */}
+      <TooltipHint
+        id="schedule-auto-build"
+        message="💡 New here? Click Auto Build Schedule to generate a full compliant week's schedule in one click."
+      />
 
       {/* Cert Expiry Banner */}
       <CertExpiryBanner certifications={certifications} employees={employees} weekDates={weekDates} />

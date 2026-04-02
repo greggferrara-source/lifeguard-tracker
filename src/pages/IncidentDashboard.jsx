@@ -17,6 +17,7 @@ import {
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer } from "recharts";
 import LogIncidentForm from "@/components/incidents/LogIncidentForm";
 import IncidentDetailDrawer from "@/components/incidents/IncidentDetailDrawer";
+import TooltipHint from "@/components/onboarding/TooltipHint";
 
 const typeStyle = { rescue: "bg-red-100 text-red-700", incident: "bg-orange-100 text-orange-700", near_miss: "bg-yellow-100 text-yellow-700", first_aid: "bg-blue-100 text-blue-700", injury: "bg-purple-100 text-purple-700", other: "bg-gray-100 text-gray-600" };
 const severityStyle = { minor: "bg-green-100 text-green-700", moderate: "bg-yellow-100 text-yellow-700", serious: "bg-orange-100 text-orange-700", critical: "bg-red-100 text-red-700" };
@@ -118,6 +119,12 @@ export default function IncidentDashboard() {
           </Button>
         </div>
       </div>
+
+      {/* Onboarding hint */}
+      <TooltipHint
+        id="incident-mobile"
+        message="📱 You can log incidents from any mobile device — just open the app and tap 'Log Incident'. Takes under 60 seconds."
+      />
 
       {/* Alert banner if open incidents */}
       {openCount > 0 && (

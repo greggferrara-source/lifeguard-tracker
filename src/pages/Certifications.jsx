@@ -15,6 +15,7 @@ import {
   FileText, Eye, Calendar, Building2, Loader2
 } from "lucide-react";
 import { format, differenceInDays, parseISO } from "date-fns";
+import TooltipHint from "@/components/onboarding/TooltipHint";
 
 const CERT_STATUS = {
   pending_review: { label: "Pending Review", color: "bg-yellow-100 text-yellow-700" },
@@ -131,6 +132,12 @@ export default function Certifications() {
           </Button>
         )}
       </div>
+
+      {/* Onboarding hint */}
+      <TooltipHint
+        id="cert-expiry-info"
+        message="🛡️ Expired certifications will automatically trigger alerts and block uncertified staff from being assigned shifts."
+      />
 
       {/* Expiry Alerts */}
       {expiringSoon.length > 0 && (
