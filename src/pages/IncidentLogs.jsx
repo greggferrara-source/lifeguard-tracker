@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
+import { IncidentListSkeleton, StatCardsSkeleton } from "@/components/ui/PageSkeleton";
 import { base44 } from "@/api/base44Client";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -19,7 +20,7 @@ export default function IncidentLogs() {
   const [filterType, setFilterType] = useState("all");
 
   const { data: user } = useQuery({ queryKey: ["user"], queryFn: () => base44.auth.me() });
-  const { data: logs = [] } = useQuery({ queryKey: ["incident-logs"], queryFn: () => base44.entities.IncidentLog.list("-created_date", 50), refetchInterval: 30000 });
+  const { data: logs = [], isLoading: logsLoading } = useQuery({ queryKey: ["incident-logs"], queryFn: () => base44.entities.IncidentLog.list("-created_date", 50), refetchInterval: 30000 });
   
   const locationId = logs.length > 0 ? logs[0].location_id : null;
 
@@ -70,7 +71,8 @@ export default function IncidentLogs() {
 
       {/* List */}
       <div className="space-y-3">
-        {filtered.length === 0 && (
+        {logsLoading && <IncidentListSkeleton count={5} />}
+        {!logsLoading && filtered.length === 0 && (
           <div className="text-center py-12 text-gray-400">
             <AlertTriangle className="w-10 h-10 mx-auto mb-2 opacity-40" />
             <p>No incidents logged</p>

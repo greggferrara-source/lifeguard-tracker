@@ -6,6 +6,8 @@ import { format, startOfWeek, addDays, subDays, isSameDay } from "date-fns";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronLeft, ChevronRight, Plus, MapPin, Clock, User } from "lucide-react";
 import ShiftDialog from "@/components/schedule/ShiftDialog";
+import PullToRefresh from "@/components/mobile/PullToRefresh";
+import OfflineBanner from "@/components/mobile/OfflineBanner";
 
 const statusColors = {
   scheduled: "#1a9c5b",
@@ -57,6 +59,7 @@ export default function MobileSchedule() {
 
   return (
     <div className="flex flex-col h-full bg-gray-50 pb-24">
+      <OfflineBanner />
       {/* Date Header */}
       <div className="bg-white px-4 pt-4 pb-2 shadow-sm">
         <div className="flex items-center justify-between mb-3">
@@ -102,7 +105,7 @@ export default function MobileSchedule() {
       </div>
 
       {/* Shifts */}
-      <div className="flex-1 overflow-auto px-4 pt-4 space-y-4">
+      <PullToRefresh onRefresh={() => queryClient.invalidateQueries({ queryKey: ["shifts"] })} className="flex-1 overflow-auto px-4 pt-4 space-y-4">
         <AnimatePresence mode="wait">
           {dayShifts.length === 0 ? (
             <motion.div
@@ -188,7 +191,7 @@ export default function MobileSchedule() {
             </motion.div>
           )}
         </AnimatePresence>
-      </div>
+      </PullToRefresh>
 
       <ShiftDialog
         open={dialogOpen}

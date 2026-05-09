@@ -11,6 +11,8 @@ import { useNavigate } from "react-router-dom";
 import { createPageUrl } from "@/utils";
 import CallOutDialog from "@/components/mobile/CallOutDialog";
 import GeofenceClockIn from "@/components/mobile/GeofenceClockIn";
+import OfflineBanner from "@/components/mobile/OfflineBanner";
+import PullToRefresh from "@/components/mobile/PullToRefresh";
 import { format } from "date-fns";
 
 const OFFLINE_QUEUE_KEY = "guard_offline_queue";
@@ -226,27 +228,11 @@ export default function MobileGuardDashboard() {
             <div className="text-xs opacity-80">{user?.full_name || "Loading..."}</div>
           </div>
           <div className="flex items-center gap-2">
-            {queue.length > 0 && (
-              <Badge className="bg-orange-500 text-white text-xs">{queue.length} queued</Badge>
-            )}
             {isOnline ? <Wifi className="w-4 h-4" /> : <WifiOff className="w-4 h-4 text-yellow-300" />}
           </div>
         </div>
-
-        {/* Offline banner */}
-        {!isOnline && (
-          <div className="mt-2 bg-yellow-500 text-yellow-900 text-xs rounded px-2 py-1 font-medium">
-            ⚠️ Offline — actions will sync when you reconnect
-          </div>
-        )}
-
-        {/* Sync button */}
-        {isOnline && queue.length > 0 && (
-          <button onClick={syncQueue} className="mt-2 w-full bg-white/20 hover:bg-white/30 rounded text-xs py-1 font-medium">
-            {syncing ? "Syncing..." : `Sync ${queue.length} offline action(s)`}
-          </button>
-        )}
       </div>
+      <OfflineBanner isOnline={isOnline} queueCount={queue.length} onSync={syncQueue} syncing={syncing} />
 
       {/* Status Card */}
       <div className="p-4">
@@ -286,7 +272,7 @@ export default function MobileGuardDashboard() {
       </div>
 
       {/* Tab Content */}
-      <div className="p-4 space-y-4">
+      <PullToRefresh onRefresh={() => queryClient.invalidateQueries()} className="p-4 space-y-4">
         {tab === "clock" && (
           <>
             {/* Today's shift card */}
@@ -455,7 +441,7 @@ export default function MobileGuardDashboard() {
             )}
           </div>
         )}
-      </div>
+      </PullToRefresh>
 
       <CallOutDialog
         open={callOutOpen}

@@ -1,3 +1,4 @@
+import { EmployeeGridSkeleton } from "@/components/ui/PageSkeleton";
 import React, { useState } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { base44 } from "@/api/base44Client";
@@ -184,8 +185,9 @@ export default function Employees() {
       </div>
 
       {/* Grid */}
+      {isLoading && <EmployeeGridSkeleton count={6} />}
       <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
-        {filtered.map((emp, i) => (
+        {!isLoading && filtered.map((emp, i) => (
           <motion.div
             key={emp.id}
             initial={{ opacity: 0, y: 10 }}

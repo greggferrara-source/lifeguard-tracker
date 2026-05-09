@@ -17,6 +17,7 @@ import AdminMetricsDashboard from './pages/AdminMetricsDashboard';
 import EquipmentTracking from './pages/EquipmentTracking';
 import AIShiftRecommendations from './pages/AIShiftRecommendations';
 import OnboardingProgressTracker from './pages/OnboardingProgressTracker';
+import TestingChecklist from './pages/TestingChecklist';
 import { AuthProvider, useAuth } from '@/lib/AuthContext';
 import UserNotRegisteredError from '@/components/UserNotRegisteredError';
 
@@ -119,6 +120,11 @@ const AuthenticatedApp = () => {
       <Route path="/OnboardingProgressTracker" element={
         <LayoutWrapper currentPageName="OnboardingProgressTracker">
           <OnboardingProgressTracker />
+        </LayoutWrapper>
+      } />
+      <Route path="/TestingChecklist" element={
+        <LayoutWrapper currentPageName="TestingChecklist">
+          <TestingChecklist />
         </LayoutWrapper>
       } />
       <Route path="/EquipmentTracking" element={

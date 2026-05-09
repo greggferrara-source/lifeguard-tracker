@@ -1,4 +1,5 @@
 import React from "react";
+import { ComplianceSkeleton } from "@/components/ui/PageSkeleton";
 import { Link } from "react-router-dom";
 import { createPageUrl } from "@/utils";
 import { useQuery } from "@tanstack/react-query";
@@ -115,6 +116,10 @@ export default function ComplianceDashboard() {
       recent: openIncidents.slice(0, 3).map(i => ({ label: `${i.type?.replace("_", " ")} — ${i.severity}`, sub: `${i.location_name} · ${i.date}`, type: "warning" })),
     },
   ];
+
+  const isLoading = !certs.length && !inspections.length && !maintenance.length;
+
+  if (isLoading) return <ComplianceSkeleton />;
 
   return (
     <div className="max-w-6xl mx-auto px-4 sm:px-6 py-8 space-y-8">

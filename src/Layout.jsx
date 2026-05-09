@@ -17,6 +17,7 @@ import { useQuery } from "@tanstack/react-query";
 import { base44 } from "@/api/base44Client";
 import FeedbackWidget from "@/components/FeedbackWidget";
 import { useActivityTracker, TRACK } from "@/hooks/useActivityTracker";
+import GlobalSearchBar from "@/components/search/GlobalSearchBar";
 
 const ROOT_EMAIL = "greggferrara@gmail.com";
 const ENTERPRISE_ROLES = ["enterprise_site_owner", "enterprise_admin"];
@@ -316,7 +317,8 @@ export default function Layout({ children, currentPageName }) {
           </nav>
 
           {/* Desktop right actions */}
-          <div className="hidden lg:flex items-center gap-1">
+          <div className="hidden lg:flex items-center gap-2">
+            <GlobalSearchBar />
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <button className="flex items-center gap-1.5 px-3 py-1.5 rounded-md text-sm font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-50 transition-colors">

@@ -1,3 +1,4 @@
+import { DashboardSkeleton } from "@/components/ui/PageSkeleton";
 import React, { useMemo } from 'react';
 import { base44 } from '@/api/base44Client';
 import { useQuery } from '@tanstack/react-query';
@@ -120,11 +121,7 @@ export default function AdminMetricsDashboard() {
   }, [expiringCerts]);
 
   if (shiftsLoading) {
-    return (
-      <div className="flex items-center justify-center min-h-screen">
-        <Loader2 className="w-8 h-8 animate-spin text-slate-400" />
-      </div>
-    );
+    return <DashboardSkeleton />;
   }
 
   return (
