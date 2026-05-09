@@ -13,7 +13,6 @@ import {
   CheckCircle2, AlertTriangle, Loader, Users, Clock, MapPin, X,
   Lightbulb, TrendingUp, ShieldAlert, Sparkles
 } from "lucide-react";
-import { PageLoadingSkeleton } from "@/components/ui/PageSkeleton";
 
 const DAYS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
@@ -36,11 +35,11 @@ export default function AutoShiftPlanner() {
   const days = Array.from({ length: 7 }, (_, i) => addDays(weekStart, i));
   const weekStartStr = format(weekStart, "yyyy-MM-dd");
 
-  const { data: locations = [], isLoading: locLoading } = useQuery({
+  const { data: locations = [] } = useQuery({
     queryKey: ["locations"],
     queryFn: () => base44.entities.Location.list()
   });
-  const { data: employees = [], isLoading: empLoading } = useQuery({
+  const { data: employees = [] } = useQuery({
     queryKey: ["employees"],
     queryFn: () => base44.entities.Employee.filter({ status: "active" })
   });
@@ -127,8 +126,6 @@ export default function AutoShiftPlanner() {
       setRunning(false);
     }
   };
-
-  if (locLoading || empLoading) return <PageLoadingSkeleton title="Auto Shift Planner" statCount={3} listCount={4} />;
 
   // Group slots by location for summary
   const slotsByLocation = useMemo(() => {
