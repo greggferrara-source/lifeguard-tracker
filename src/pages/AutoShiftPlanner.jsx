@@ -45,7 +45,7 @@ export default function AutoShiftPlanner() {
   });
   const { data: existingShifts = [] } = useQuery({
     queryKey: ["shifts"],
-    queryFn: () => base44.entities.Shift.list("-date", 500)
+    queryFn: () => base44.entities.Shift.list("-date", 50)
   });
 
   const activeLocations = locations.filter(l => l.status === "active" || !l.status);

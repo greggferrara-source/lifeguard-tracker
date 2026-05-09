@@ -43,11 +43,11 @@ export class ErrorBoundary extends React.Component {
   }
 
   handleReset = () => {
-    this.setState({
-      hasError: false,
-      error: null,
-      errorInfo: null
-    });
+    this.setState({ hasError: false, error: null, errorInfo: null });
+  };
+
+  handleGoHome = () => {
+    this.setState({ hasError: false, error: null, errorInfo: null });
     window.location.href = '/';
   };
 
@@ -73,11 +73,18 @@ export class ErrorBoundary extends React.Component {
                 className="w-full bg-[#1a9c5b] hover:bg-[#158a4e] text-white"
               >
                 <RotateCw className="w-4 h-4 mr-2" />
-                Return to Home
+                Try Again
               </Button>
               <Button
                 variant="outline"
                 className="w-full"
+                onClick={this.handleGoHome}
+              >
+                Return to Home
+              </Button>
+              <Button
+                variant="ghost"
+                className="w-full text-sm text-gray-500"
                 onClick={() => window.location.href = '/contact'}
               >
                 Contact Support

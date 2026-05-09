@@ -19,7 +19,7 @@ export default function IncidentLogs() {
   const [filterType, setFilterType] = useState("all");
 
   const { data: user } = useQuery({ queryKey: ["user"], queryFn: () => base44.auth.me() });
-  const { data: logs = [] } = useQuery({ queryKey: ["incident-logs"], queryFn: () => base44.entities.IncidentLog.list("-created_date", 200), refetchInterval: 30000 });
+  const { data: logs = [] } = useQuery({ queryKey: ["incident-logs"], queryFn: () => base44.entities.IncidentLog.list("-created_date", 50), refetchInterval: 30000 });
   
   const locationId = logs.length > 0 ? logs[0].location_id : null;
 

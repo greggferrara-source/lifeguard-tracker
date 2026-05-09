@@ -22,7 +22,7 @@ function daysUntil(dateStr) {
 export default function ComplianceDashboard() {
   const { isEnterprise } = useSubscription();
   const { data: user } = useQuery({ queryKey: ["me"], queryFn: () => base44.auth.me() });
-  const { data: certs = [] } = useQuery({ queryKey: ["certifications"], queryFn: () => base44.entities.Certification.list("-created_date", 500) });
+  const { data: certs = [] } = useQuery({ queryKey: ["certifications"], queryFn: () => base44.entities.Certification.list("-created_date", 50) });
   const { data: chemLogs = [] } = useQuery({ queryKey: ["chemical-logs"], queryFn: () => base44.entities.ChemicalLog.list("-created_date", 100) });
   const { data: inspections = [] } = useQuery({ queryKey: ["inspections"], queryFn: () => base44.entities.InspectionReport.list("-created_date", 100) });
   const { data: maintenance = [] } = useQuery({ queryKey: ["maintenance-reports"], queryFn: () => base44.entities.MaintenanceReport.list("-created_date", 100) });

@@ -61,12 +61,12 @@ export default function Employees() {
 
   const { data: shifts = [] } = useQuery({
     queryKey: ["shifts"],
-    queryFn: () => base44.entities.Shift.list("-created_date", 500),
+    queryFn: () => base44.entities.Shift.list("-created_date", 50),
   });
 
   const { data: onboardings = [] } = useQuery({
     queryKey: ["onboardings"],
-    queryFn: () => base44.entities.Onboarding.list("-created_date", 200),
+    queryFn: () => base44.entities.Onboarding.list("-created_date", 50),
   });
 
   const saveAvailability = useMutation({

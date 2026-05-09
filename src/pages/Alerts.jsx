@@ -44,19 +44,6 @@ export default function AlertsPage() {
     },
   });
 
-  // Only admins/managers can view alerts
-  if (user && user.role !== "admin" && user.role !== "manager") {
-    return (
-      <div className="max-w-4xl mx-auto px-6 py-20 text-center">
-        <AlertTriangle className="w-12 h-12 text-red-400 mx-auto mb-4" />
-        <h1 className="text-3xl font-bold text-gray-900 mb-4">Access Denied</h1>
-        <p className="text-gray-600">
-          Alerts are only available to administrators and managers.
-        </p>
-      </div>
-    );
-  }
-
   const { data: alerts = [], isLoading } = useQuery({
     queryKey: ["alerts"],
     queryFn: () => base44.entities.Alert.list("-created_date", 200),
@@ -80,6 +67,19 @@ export default function AlertsPage() {
     },
     onSuccess: () => queryClient.invalidateQueries({ queryKey: ["alerts"] }),
   });
+
+  // Only admins/managers can view alerts
+  if (user && user.role !== "admin" && user.role !== "manager") {
+    return (
+      <div className="max-w-4xl mx-auto px-6 py-20 text-center">
+        <AlertTriangle className="w-12 h-12 text-red-400 mx-auto mb-4" />
+        <h1 className="text-3xl font-bold text-gray-900 mb-4">Access Denied</h1>
+        <p className="text-gray-600">
+          Alerts are only available to administrators and managers.
+        </p>
+      </div>
+    );
+  }
 
   const handleScan = async () => {
     setScanning(true);

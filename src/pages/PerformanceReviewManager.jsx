@@ -31,27 +31,16 @@ export default function PerformanceReviewManager() {
 
   const isEnterprise = user?.role === 'enterprise_admin' || user?.role === 'enterprise_site_owner';
 
-  if (!isEnterprise) {
-    return (
-      <div className="min-h-screen bg-gray-50 p-6 flex items-center justify-center">
-        <Card className="max-w-md">
-          <CardContent className="pt-6 text-center">
-            <p className="text-red-600 font-semibold">Enterprise Feature</p>
-            <p className="text-gray-600 mt-2">Performance reviews are available to enterprise users only.</p>
-          </CardContent>
-        </Card>
-      </div>
-    );
-  }
-
   const { data: reviews = [], isLoading } = useQuery({
     queryKey: ['performance-reviews'],
-    queryFn: () => base44.entities.PerformanceReview.filter({}, '-created_at', 50)
+    queryFn: () => base44.entities.PerformanceReview.filter({}, '-created_at', 50),
+    enabled: isEnterprise
   });
 
   const { data: employees = [] } = useQuery({
     queryKey: ['employees'],
-    queryFn: () => base44.entities.Employee.filter({ status: 'active' })
+    queryFn: () => base44.entities.Employee.filter({ status: 'active' }),
+    enabled: isEnterprise
   });
 
   const createReviewMutation = useMutation({
@@ -92,6 +81,19 @@ export default function PerformanceReviewManager() {
       setSelectedReview(null);
     }
   });
+
+  if (!isEnterprise) {
+    return (
+      <div className="min-h-screen bg-gray-50 p-6 flex items-center justify-center">
+        <Card className="max-w-md">
+          <CardContent className="pt-6 text-center">
+            <p className="text-red-600 font-semibold">Enterprise Feature</p>
+            <p className="text-gray-600 mt-2">Performance reviews are available to enterprise users only.</p>
+          </CardContent>
+        </Card>
+      </div>
+    );
+  }
 
   const statusColor = {
     'draft': 'bg-gray-100 text-gray-800',

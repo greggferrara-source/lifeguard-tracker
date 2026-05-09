@@ -31,15 +31,6 @@ export default function ErrorLogs() {
     },
   });
 
-  if (user && user.role !== "admin") {
-    return (
-      <div className="max-w-4xl mx-auto px-6 py-20 text-center">
-        <h1 className="text-3xl font-bold text-gray-900 mb-4">Access Denied</h1>
-        <p className="text-gray-600">Error logs are only available to administrators.</p>
-      </div>
-    );
-  }
-
   const { data: logs = [] } = useQuery({
     queryKey: ["system-logs"],
     queryFn: () => base44.entities.SystemLog.list("-created_date", 200),
@@ -55,6 +46,15 @@ export default function ErrorLogs() {
     mutationFn: (id) => base44.entities.SystemLog.delete(id),
     onSuccess: () => queryClient.invalidateQueries({ queryKey: ["system-logs"] }),
   });
+
+  if (user && user.role !== "admin") {
+    return (
+      <div className="max-w-4xl mx-auto px-6 py-20 text-center">
+        <h1 className="text-3xl font-bold text-gray-900 mb-4">Access Denied</h1>
+        <p className="text-gray-600">Error logs are only available to administrators.</p>
+      </div>
+    );
+  }
 
   const filtered = tab === "unresolved"
     ? logs.filter(l => !l.resolved)
