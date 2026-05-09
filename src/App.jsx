@@ -15,6 +15,8 @@ import GeofenceCheckIn from './pages/GeofenceCheckIn';
 import EmployeeShiftDashboard from './pages/EmployeeShiftDashboard';
 import AdminMetricsDashboard from './pages/AdminMetricsDashboard';
 import EquipmentTracking from './pages/EquipmentTracking';
+import AIShiftRecommendations from './pages/AIShiftRecommendations';
+import OnboardingProgressTracker from './pages/OnboardingProgressTracker';
 import { AuthProvider, useAuth } from '@/lib/AuthContext';
 import UserNotRegisteredError from '@/components/UserNotRegisteredError';
 
@@ -107,6 +109,16 @@ const AuthenticatedApp = () => {
       <Route path="/AdminMetricsDashboard" element={
         <LayoutWrapper currentPageName="AdminMetricsDashboard">
           <AdminMetricsDashboard />
+        </LayoutWrapper>
+      } />
+      <Route path="/AIShiftRecommendations" element={
+        <LayoutWrapper currentPageName="AIShiftRecommendations">
+          <AIShiftRecommendations />
+        </LayoutWrapper>
+      } />
+      <Route path="/OnboardingProgressTracker" element={
+        <LayoutWrapper currentPageName="OnboardingProgressTracker">
+          <OnboardingProgressTracker />
         </LayoutWrapper>
       } />
       <Route path="/EquipmentTracking" element={
