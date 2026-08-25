@@ -1,0 +1,111 @@
+{
+  "name": "IncidentLog",
+  "type": "object",
+  "properties": {
+    "location_id": {
+      "type": "string"
+    },
+    "location_name": {
+      "type": "string"
+    },
+    "date": {
+      "type": "string",
+      "format": "date"
+    },
+    "time": {
+      "type": "string"
+    },
+    "type": {
+      "type": "string",
+      "enum": [
+        "rescue",
+        "incident",
+        "near_miss",
+        "first_aid",
+        "injury",
+        "other"
+      ],
+      "default": "incident"
+    },
+    "severity": {
+      "type": "string",
+      "enum": [
+        "minor",
+        "moderate",
+        "serious",
+        "critical"
+      ],
+      "default": "minor"
+    },
+    "patron_name": {
+      "type": "string"
+    },
+    "patron_age": {
+      "type": "number"
+    },
+    "description": {
+      "type": "string"
+    },
+    "action_taken": {
+      "type": "string"
+    },
+    "ems_called": {
+      "type": "boolean",
+      "default": false
+    },
+    "patron_transported": {
+      "type": "boolean",
+      "default": false
+    },
+    "reporting_staff_name": {
+      "type": "string"
+    },
+    "reporting_staff_email": {
+      "type": "string"
+    },
+    "witnesses": {
+      "type": "string"
+    },
+    "follow_up_required": {
+      "type": "boolean",
+      "default": false
+    },
+    "follow_up_notes": {
+      "type": "string"
+    },
+    "follow_up_steps_completed": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "IDs of completed follow-up workflow steps",
+      "default": []
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "open",
+        "reviewed",
+        "closed"
+      ],
+      "default": "open"
+    },
+    "photo_urls": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Attached photo URLs"
+    },
+    "signature_url": {
+      "type": "string",
+      "description": "Digital signature URL from signature pad"
+    }
+  },
+  "required": [
+    "location_id",
+    "date",
+    "type",
+    "description"
+  ]
+}

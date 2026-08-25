@@ -1,0 +1,84 @@
+{
+  "name": "Workflow",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Workflow name"
+    },
+    "description": {
+      "type": "string"
+    },
+    "trigger_type": {
+      "type": "string",
+      "enum": [
+        "document_upload",
+        "asset_status_change",
+        "certification_expiry",
+        "incident_logged",
+        "pool_test_result",
+        "manual"
+      ],
+      "description": "What triggers this workflow"
+    },
+    "trigger_config": {
+      "type": "object",
+      "description": "Trigger-specific configuration"
+    },
+    "steps": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "order": {
+            "type": "number"
+          },
+          "action_type": {
+            "type": "string",
+            "enum": [
+              "create_task",
+              "create_assessment",
+              "send_notification",
+              "update_entity",
+              "approval_gate"
+            ]
+          },
+          "action_config": {
+            "type": "object",
+            "description": "Action-specific configuration"
+          },
+          "requires_approval": {
+            "type": "boolean",
+            "default": false
+          },
+          "approval_roles": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "description": "Steps to execute in order"
+    },
+    "enabled": {
+      "type": "boolean",
+      "default": true
+    },
+    "created_by_email": {
+      "type": "string"
+    },
+    "location_id": {
+      "type": "string",
+      "description": "Location this workflow applies to (optional)"
+    }
+  },
+  "required": [
+    "name",
+    "trigger_type",
+    "steps"
+  ]
+}

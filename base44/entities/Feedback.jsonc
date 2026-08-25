@@ -1,0 +1,46 @@
+{
+  "name": "Feedback",
+  "type": "object",
+  "properties": {
+    "email": {
+      "type": "string",
+      "description": "User email"
+    },
+    "name": {
+      "type": "string",
+      "description": "User name"
+    },
+    "type": {
+      "type": "string",
+      "enum": [
+        "bug",
+        "feature_request",
+        "general"
+      ],
+      "default": "general",
+      "description": "Feedback type"
+    },
+    "content": {
+      "type": "string",
+      "description": "Feedback message"
+    },
+    "page": {
+      "type": "string",
+      "description": "Page where feedback was submitted"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "new",
+        "reviewed",
+        "in_progress",
+        "resolved"
+      ],
+      "default": "new",
+      "description": "Feedback status"
+    }
+  },
+  "required": [
+    "content"
+  ]
+}

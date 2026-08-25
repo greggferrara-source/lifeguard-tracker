@@ -1,0 +1,107 @@
+{
+  "name": "PoolTestLog",
+  "type": "object",
+  "properties": {
+    "location_id": {
+      "type": "string",
+      "description": "Pool/facility location ID"
+    },
+    "location_name": {
+      "type": "string",
+      "description": "Location name (denormalized)"
+    },
+    "test_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "test_time": {
+      "type": "string",
+      "description": "Time of test (HH:MM)"
+    },
+    "tested_by_email": {
+      "type": "string",
+      "description": "Email of staff member who performed test"
+    },
+    "tested_by_name": {
+      "type": "string",
+      "description": "Name of staff member (denormalized)"
+    },
+    "chlorine_free": {
+      "type": "number",
+      "description": "Free chlorine level (ppm)"
+    },
+    "chlorine_total": {
+      "type": "number",
+      "description": "Total chlorine level (ppm)"
+    },
+    "ph": {
+      "type": "number",
+      "description": "pH level"
+    },
+    "alkalinity": {
+      "type": "number",
+      "description": "Total alkalinity (ppm)"
+    },
+    "calcium_hardness": {
+      "type": "number",
+      "description": "Calcium hardness (ppm)"
+    },
+    "cyanuric_acid": {
+      "type": "number",
+      "description": "Cyanuric acid/stabilizer (ppm)"
+    },
+    "temperature": {
+      "type": "number",
+      "description": "Water temperature (\u00b0F)"
+    },
+    "notes": {
+      "type": "string",
+      "description": "Additional notes or observations"
+    },
+    "out_of_range": {
+      "type": "boolean",
+      "default": false,
+      "description": "Flag if any parameter is out of acceptable range"
+    },
+    "out_of_range_parameters": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Which parameters are out of range"
+    },
+    "action_taken": {
+      "type": "string",
+      "description": "Corrective action taken if out of range"
+    },
+    "signature_url": {
+      "type": "string",
+      "description": "Digital signature from staff member"
+    },
+    "compliance_status": {
+      "type": "string",
+      "enum": [
+        "pass",
+        "warning",
+        "fail"
+      ],
+      "default": "pass",
+      "description": "Overall compliance status"
+    },
+    "test_standard": {
+      "type": "string",
+      "enum": [
+        "MAHC",
+        "local_guidelines",
+        "custom"
+      ],
+      "default": "MAHC",
+      "description": "Testing standard used"
+    }
+  },
+  "required": [
+    "location_id",
+    "test_date",
+    "tested_by_email"
+  ]
+}

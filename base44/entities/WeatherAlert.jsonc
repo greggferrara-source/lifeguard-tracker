@@ -1,0 +1,77 @@
+{
+  "name": "WeatherAlert",
+  "type": "object",
+  "properties": {
+    "location_id": {
+      "type": "string",
+      "description": "Associated facility location"
+    },
+    "location_name": {
+      "type": "string"
+    },
+    "alert_type": {
+      "type": "string",
+      "enum": [
+        "severe_thunderstorm",
+        "tornado",
+        "extreme_heat",
+        "extreme_cold",
+        "lightning",
+        "heavy_rain",
+        "hail",
+        "wind",
+        "flood"
+      ],
+      "description": "Type of weather alert"
+    },
+    "severity": {
+      "type": "string",
+      "enum": [
+        "minor",
+        "moderate",
+        "severe"
+      ],
+      "default": "moderate"
+    },
+    "description": {
+      "type": "string"
+    },
+    "issued_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "expires_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "impact_on_operations": {
+      "type": "string",
+      "enum": [
+        "closure_recommended",
+        "limited_operations",
+        "advisory",
+        "none"
+      ],
+      "default": "advisory"
+    },
+    "recommended_action": {
+      "type": "string",
+      "description": "Action to take"
+    },
+    "acknowledged": {
+      "type": "boolean",
+      "default": false
+    },
+    "acknowledged_by": {
+      "type": "string"
+    },
+    "acknowledged_at": {
+      "type": "string",
+      "format": "date-time"
+    }
+  },
+  "required": [
+    "location_id",
+    "alert_type"
+  ]
+}

@@ -1,0 +1,57 @@
+{
+  "name": "AbandonedCheckout",
+  "type": "object",
+  "properties": {
+    "user_email": {
+      "type": "string",
+      "description": "Email of user who abandoned checkout"
+    },
+    "user_name": {
+      "type": "string",
+      "description": "Name of user"
+    },
+    "plan_name": {
+      "type": "string",
+      "description": "Plan that was being purchased (Starter, Pro, Enterprise)"
+    },
+    "checkout_url": {
+      "type": "string",
+      "description": "URL to return to checkout"
+    },
+    "abandoned_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When checkout was abandoned"
+    },
+    "email_sent": {
+      "type": "boolean",
+      "default": false,
+      "description": "Whether recovery email was sent"
+    },
+    "recovery_attempts": {
+      "type": "number",
+      "default": 0,
+      "description": "Number of recovery attempts"
+    },
+    "last_email_sent": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When last recovery email was sent"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "abandoned",
+        "recovered",
+        "invalid_email"
+      ],
+      "default": "abandoned",
+      "description": "Current status of abandoned checkout"
+    }
+  },
+  "required": [
+    "user_email",
+    "plan_name",
+    "abandoned_at"
+  ]
+}

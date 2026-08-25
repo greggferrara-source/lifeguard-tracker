@@ -1,0 +1,65 @@
+{
+  "name": "StaffingForecast",
+  "type": "object",
+  "properties": {
+    "location_id": {
+      "type": "string"
+    },
+    "location_name": {
+      "type": "string"
+    },
+    "date": {
+      "type": "string",
+      "format": "date"
+    },
+    "shift_start_time": {
+      "type": "string",
+      "description": "HH:MM format"
+    },
+    "shift_end_time": {
+      "type": "string"
+    },
+    "required_staff": {
+      "type": "number",
+      "description": "Minimum staff needed based on patron demand"
+    },
+    "scheduled_staff": {
+      "type": "number",
+      "description": "Currently scheduled staff"
+    },
+    "predicted_shortage": {
+      "type": "number",
+      "description": "Predicted shortage (negative = overstaffed)"
+    },
+    "confidence": {
+      "type": "number",
+      "description": "Confidence level (0-100)"
+    },
+    "historical_demand": {
+      "type": "number",
+      "description": "Average demand from past data"
+    },
+    "risk_level": {
+      "type": "string",
+      "enum": [
+        "low",
+        "medium",
+        "high"
+      ],
+      "description": "Understaffing risk level"
+    },
+    "recommended_action": {
+      "type": "string",
+      "description": "Suggested action (e.g., 'hire 2 more', 'reduce hours')"
+    },
+    "forecast_generated_at": {
+      "type": "string",
+      "format": "date-time"
+    }
+  },
+  "required": [
+    "location_id",
+    "date",
+    "shift_start_time"
+  ]
+}

@@ -1,0 +1,83 @@
+{
+  "name": "ChecklistTemplate",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Checklist name"
+    },
+    "type": {
+      "type": "string",
+      "enum": [
+        "chemical",
+        "equipment",
+        "safety",
+        "opening",
+        "closing"
+      ],
+      "default": "chemical",
+      "description": "Type of checklist"
+    },
+    "frequency": {
+      "type": "string",
+      "enum": [
+        "daily",
+        "weekly",
+        "monthly",
+        "per_shift"
+      ],
+      "default": "daily"
+    },
+    "location_id": {
+      "type": "string"
+    },
+    "location_name": {
+      "type": "string"
+    },
+    "items": {
+      "type": "array",
+      "description": "Checklist items",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "label": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "checkbox",
+              "number",
+              "text"
+            ],
+            "default": "checkbox"
+          },
+          "required": {
+            "type": "boolean",
+            "default": true
+          },
+          "min_value": {
+            "type": "number"
+          },
+          "max_value": {
+            "type": "number"
+          },
+          "unit": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "is_active": {
+      "type": "boolean",
+      "default": true
+    }
+  },
+  "required": [
+    "name",
+    "type"
+  ]
+}

@@ -1,0 +1,142 @@
+{
+  "name": "TrainingAssignment",
+  "type": "object",
+  "properties": {
+    "module_id": {
+      "type": "string",
+      "description": "Training module ID"
+    },
+    "module_title": {
+      "type": "string"
+    },
+    "employee_id": {
+      "type": "string"
+    },
+    "employee_email": {
+      "type": "string"
+    },
+    "employee_name": {
+      "type": "string"
+    },
+    "assigned_by_email": {
+      "type": "string"
+    },
+    "assigned_by_name": {
+      "type": "string"
+    },
+    "assigned_date": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "due_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "reason": {
+      "type": "string",
+      "enum": [
+        "compliance_gap",
+        "incident_followup",
+        "skill_development",
+        "mandatory",
+        "other"
+      ],
+      "description": "Why module was assigned"
+    },
+    "reason_details": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "assigned",
+        "started",
+        "in_progress",
+        "completed",
+        "failed",
+        "overdue"
+      ],
+      "default": "assigned"
+    },
+    "started_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "completed_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "quiz_attempts": {
+      "type": "number",
+      "default": 0
+    },
+    "final_score": {
+      "type": "number",
+      "description": "Quiz score percentage"
+    },
+    "passed": {
+      "type": "boolean"
+    },
+    "certificate_issued": {
+      "type": "boolean",
+      "default": false
+    },
+    "certificate_url": {
+      "type": "string"
+    },
+    "sections_completed": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "time_spent_minutes": {
+      "type": "number"
+    },
+    "gamification": {
+      "type": "object",
+      "properties": {
+        "points_earned": {
+          "type": "number",
+          "default": 0,
+          "description": "Total points from module completion"
+        },
+        "badges_earned": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Badge IDs earned"
+        },
+        "leaderboard_rank": {
+          "type": "number",
+          "description": "Current rank among all employees"
+        },
+        "streak_count": {
+          "type": "number",
+          "default": 0,
+          "description": "Consecutive modules completed"
+        },
+        "achievement_unlocked": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Special achievement names"
+        }
+      }
+    },
+    "notes": {
+      "type": "string"
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time"
+    }
+  },
+  "required": [
+    "module_id",
+    "employee_id",
+    "assigned_by_email"
+  ]
+}

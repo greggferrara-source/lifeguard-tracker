@@ -1,0 +1,51 @@
+{
+  "name": "DirectMessage",
+  "type": "object",
+  "properties": {
+    "sender_email": {
+      "type": "string"
+    },
+    "sender_name": {
+      "type": "string"
+    },
+    "recipient_email": {
+      "type": "string"
+    },
+    "recipient_name": {
+      "type": "string"
+    },
+    "content": {
+      "type": "string"
+    },
+    "conversation_id": {
+      "type": "string",
+      "description": "Links to the conversation thread"
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "read": {
+      "type": "boolean",
+      "default": false
+    },
+    "read_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "edited": {
+      "type": "boolean",
+      "default": false
+    },
+    "edited_at": {
+      "type": "string",
+      "format": "date-time"
+    }
+  },
+  "required": [
+    "sender_email",
+    "recipient_email",
+    "content",
+    "conversation_id"
+  ]
+}

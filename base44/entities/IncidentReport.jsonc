@@ -1,0 +1,208 @@
+{
+  "name": "IncidentReport",
+  "type": "object",
+  "properties": {
+    "incident_type": {
+      "type": "string",
+      "enum": [
+        "drowning",
+        "rescue",
+        "injury",
+        "chemical_spill"
+      ],
+      "description": "Type of incident"
+    },
+    "location_id": {
+      "type": "string",
+      "description": "Facility location"
+    },
+    "location_name": {
+      "type": "string"
+    },
+    "date_time": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When incident occurred"
+    },
+    "reported_by_email": {
+      "type": "string",
+      "description": "Person reporting incident"
+    },
+    "reported_by_name": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string",
+      "description": "Detailed incident description"
+    },
+    "severity": {
+      "type": "string",
+      "enum": [
+        "minor",
+        "moderate",
+        "severe",
+        "critical"
+      ],
+      "default": "moderate"
+    },
+    "people_involved": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "role": {
+            "type": "string",
+            "enum": [
+              "victim",
+              "witness",
+              "responder",
+              "other"
+            ]
+          },
+          "email": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "injuries": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": [
+              "cut",
+              "bruise",
+              "fracture",
+              "drowning",
+              "chemical_exposure",
+              "other"
+            ]
+          },
+          "body_part": {
+            "type": "string"
+          },
+          "person_name": {
+            "type": "string"
+          },
+          "medical_attention_needed": {
+            "type": "boolean"
+          }
+        }
+      }
+    },
+    "chemical_spill_details": {
+      "type": "object",
+      "properties": {
+        "chemical_name": {
+          "type": "string"
+        },
+        "quantity": {
+          "type": "string"
+        },
+        "area_affected": {
+          "type": "string"
+        },
+        "immediate_action_taken": {
+          "type": "string"
+        }
+      }
+    },
+    "immediate_actions_taken": {
+      "type": "string",
+      "description": "Actions taken immediately after incident"
+    },
+    "first_aid_provided": {
+      "type": "boolean"
+    },
+    "emergency_services_called": {
+      "type": "boolean"
+    },
+    "emergency_responder_notes": {
+      "type": "string"
+    },
+    "media_attachments": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "file_url": {
+            "type": "string"
+          },
+          "file_type": {
+            "type": "string",
+            "enum": [
+              "photo",
+              "video",
+              "document"
+            ]
+          },
+          "uploaded_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "caption": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "root_cause_analysis": {
+      "type": "string",
+      "description": "Analysis of what caused incident"
+    },
+    "preventive_measures": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "draft",
+        "submitted",
+        "under_review",
+        "closed"
+      ],
+      "default": "draft"
+    },
+    "follow_up_tasks_assigned": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "IDs of follow-up tasks"
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "updated_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "reviewed_by_email": {
+      "type": "string"
+    },
+    "review_date": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "review_notes": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "incident_type",
+    "location_id",
+    "date_time",
+    "reported_by_email",
+    "description"
+  ]
+}

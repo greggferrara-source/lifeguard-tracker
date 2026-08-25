@@ -1,0 +1,45 @@
+{
+  "name": "TrainingCompletion",
+  "type": "object",
+  "properties": {
+    "module_id": {
+      "type": "string"
+    },
+    "module_title": {
+      "type": "string"
+    },
+    "employee_id": {
+      "type": "string"
+    },
+    "employee_name": {
+      "type": "string"
+    },
+    "employee_email": {
+      "type": "string"
+    },
+    "completed_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "quiz_score": {
+      "type": "number",
+      "description": "Score percentage (0-100)"
+    },
+    "passed": {
+      "type": "boolean",
+      "default": false
+    },
+    "attempts": {
+      "type": "number",
+      "default": 1
+    },
+    "notes": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "module_id",
+    "employee_id",
+    "completed_date"
+  ]
+}

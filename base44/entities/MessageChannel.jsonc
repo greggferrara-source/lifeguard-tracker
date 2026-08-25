@@ -1,0 +1,47 @@
+{
+  "name": "MessageChannel",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "type": {
+      "type": "string",
+      "enum": [
+        "team",
+        "location",
+        "general"
+      ],
+      "default": "general"
+    },
+    "location_id": {
+      "type": "string",
+      "description": "Associated location if location-specific"
+    },
+    "members": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Member emails"
+    },
+    "created_by": {
+      "type": "string"
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "is_archived": {
+      "type": "boolean",
+      "default": false
+    }
+  },
+  "required": [
+    "name",
+    "created_by"
+  ]
+}

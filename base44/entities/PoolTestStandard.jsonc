@@ -1,0 +1,65 @@
+{
+  "name": "PoolTestStandard",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Standard name (e.g., MAHC, Local Guidelines)"
+    },
+    "type": {
+      "type": "string",
+      "enum": [
+        "MAHC",
+        "local_guidelines",
+        "custom"
+      ],
+      "default": "custom"
+    },
+    "location_id": {
+      "type": "string",
+      "description": "Location this standard applies to"
+    },
+    "parameters": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Parameter name (e.g., free_chlorine, ph)"
+          },
+          "display_name": {
+            "type": "string",
+            "description": "Display name for UI"
+          },
+          "unit": {
+            "type": "string",
+            "description": "Measurement unit (e.g., ppm, \u00b0F)"
+          },
+          "min_value": {
+            "type": "number",
+            "description": "Minimum acceptable value"
+          },
+          "max_value": {
+            "type": "number",
+            "description": "Maximum acceptable value"
+          },
+          "required": {
+            "type": "boolean",
+            "default": true
+          }
+        }
+      },
+      "description": "List of test parameters and their acceptable ranges"
+    },
+    "is_active": {
+      "type": "boolean",
+      "default": true
+    }
+  },
+  "required": [
+    "name",
+    "type",
+    "parameters"
+  ]
+}

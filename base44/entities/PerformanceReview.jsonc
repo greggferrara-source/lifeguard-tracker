@@ -1,0 +1,151 @@
+{
+  "name": "PerformanceReview",
+  "type": "object",
+  "properties": {
+    "employee_id": {
+      "type": "string"
+    },
+    "employee_name": {
+      "type": "string"
+    },
+    "employee_email": {
+      "type": "string"
+    },
+    "reviewer_email": {
+      "type": "string"
+    },
+    "reviewer_name": {
+      "type": "string"
+    },
+    "review_period_start": {
+      "type": "string",
+      "format": "date"
+    },
+    "review_period_end": {
+      "type": "string",
+      "format": "date"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "draft",
+        "in_progress",
+        "completed",
+        "published"
+      ],
+      "default": "draft"
+    },
+    "overall_rating": {
+      "type": "number",
+      "minimum": 1,
+      "maximum": 5,
+      "description": "Overall performance rating (1-5)"
+    },
+    "skills_feedback": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "skill_name": {
+            "type": "string"
+          },
+          "rating": {
+            "type": "number",
+            "minimum": 1,
+            "maximum": 5
+          },
+          "feedback": {
+            "type": "string"
+          },
+          "improvement_areas": {
+            "type": "string"
+          }
+        }
+      },
+      "description": "Feedback on specific skills"
+    },
+    "work_history_summary": {
+      "type": "string",
+      "description": "Summary of work history and contributions"
+    },
+    "strengths": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Key strengths identified"
+    },
+    "areas_for_improvement": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Areas where improvement is needed"
+    },
+    "goals_for_next_period": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Goals for next review period"
+    },
+    "ai_generated_summary": {
+      "type": "string",
+      "description": "AI-generated performance summary"
+    },
+    "manager_notes": {
+      "type": "string",
+      "description": "Additional manager notes"
+    },
+    "employee_response": {
+      "type": "string",
+      "description": "Employee response to review"
+    },
+    "metrics": {
+      "type": "object",
+      "properties": {
+        "total_hours_worked": {
+          "type": "number"
+        },
+        "avg_hours_per_week": {
+          "type": "number"
+        },
+        "certifications_completed": {
+          "type": "number"
+        },
+        "training_modules_completed": {
+          "type": "number"
+        },
+        "incidents_count": {
+          "type": "number"
+        },
+        "attendance_rate": {
+          "type": "number"
+        }
+      },
+      "description": "Performance metrics"
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "updated_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "completed_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "published_at": {
+      "type": "string",
+      "format": "date-time"
+    }
+  },
+  "required": [
+    "employee_id",
+    "reviewer_email",
+    "review_period_start",
+    "review_period_end"
+  ]
+}

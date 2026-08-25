@@ -1,0 +1,43 @@
+{
+  "name": "EmployeeSkill",
+  "type": "object",
+  "properties": {
+    "employee_id": {
+      "type": "string"
+    },
+    "employee_name": {
+      "type": "string"
+    },
+    "skill_name": {
+      "type": "string"
+    },
+    "proficiency_level": {
+      "type": "string",
+      "enum": [
+        "beginner",
+        "intermediate",
+        "advanced",
+        "expert"
+      ],
+      "default": "intermediate"
+    },
+    "certification_number": {
+      "type": "string"
+    },
+    "certification_expiry": {
+      "type": "string",
+      "format": "date"
+    },
+    "years_of_experience": {
+      "type": "number"
+    },
+    "verified": {
+      "type": "boolean",
+      "default": false
+    }
+  },
+  "required": [
+    "employee_id",
+    "skill_name"
+  ]
+}

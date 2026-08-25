@@ -1,0 +1,93 @@
+{
+  "name": "SystemReport",
+  "type": "object",
+  "properties": {
+    "report_type": {
+      "type": "string",
+      "enum": [
+        "asset_performance",
+        "pool_test_summary",
+        "compliance_scorecard",
+        "staff_performance",
+        "safety_trends",
+        "maintenance_forecast"
+      ],
+      "description": "Type of report"
+    },
+    "report_name": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "location_id": {
+      "type": "string",
+      "description": "Location this report covers (optional)"
+    },
+    "location_name": {
+      "type": "string"
+    },
+    "date_range_start": {
+      "type": "string",
+      "format": "date"
+    },
+    "date_range_end": {
+      "type": "string",
+      "format": "date"
+    },
+    "generated_by_email": {
+      "type": "string"
+    },
+    "generated_by_name": {
+      "type": "string"
+    },
+    "generated_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "format": {
+      "type": "string",
+      "enum": [
+        "pdf",
+        "csv",
+        "json"
+      ],
+      "default": "pdf"
+    },
+    "file_url": {
+      "type": "string",
+      "description": "URL to generated report file"
+    },
+    "metrics": {
+      "type": "object",
+      "description": "Key metrics and statistics in the report"
+    },
+    "visualizations": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      },
+      "description": "Chart/visualization data"
+    },
+    "is_scheduled": {
+      "type": "boolean",
+      "default": false
+    },
+    "schedule_frequency": {
+      "type": "string",
+      "enum": [
+        "daily",
+        "weekly",
+        "monthly",
+        "quarterly"
+      ],
+      "description": "If scheduled, how often"
+    }
+  },
+  "required": [
+    "report_type",
+    "report_name",
+    "date_range_start",
+    "date_range_end"
+  ]
+}

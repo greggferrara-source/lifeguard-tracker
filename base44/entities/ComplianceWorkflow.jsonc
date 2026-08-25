@@ -1,0 +1,106 @@
+{
+  "name": "ComplianceWorkflow",
+  "type": "object",
+  "properties": {
+    "title": {
+      "type": "string",
+      "description": "Workflow title"
+    },
+    "description": {
+      "type": "string",
+      "description": "Workflow description"
+    },
+    "category": {
+      "type": "string",
+      "enum": [
+        "certification_renewal",
+        "audit_prep",
+        "violation_remediation",
+        "incident_response",
+        "policy_update",
+        "training_completion",
+        "facility_inspection"
+      ],
+      "description": "Workflow category"
+    },
+    "trigger_type": {
+      "type": "string",
+      "enum": [
+        "compliance_risk",
+        "certification_expiry",
+        "schedule",
+        "manual"
+      ],
+      "description": "What triggers this workflow"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "draft",
+        "active",
+        "completed",
+        "on_hold"
+      ],
+      "default": "draft"
+    },
+    "priority": {
+      "type": "string",
+      "enum": [
+        "low",
+        "medium",
+        "high",
+        "critical"
+      ],
+      "default": "medium"
+    },
+    "assigned_to_email": {
+      "type": "string",
+      "description": "Manager email responsible for workflow"
+    },
+    "assigned_to_name": {
+      "type": "string"
+    },
+    "location_id": {
+      "type": "string",
+      "description": "Associated facility location"
+    },
+    "location_name": {
+      "type": "string"
+    },
+    "due_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "compliance_gap_id": {
+      "type": "string",
+      "description": "Associated compliance gap from risk analysis"
+    },
+    "estimated_hours": {
+      "type": "number",
+      "description": "Estimated hours to complete"
+    },
+    "progress_percentage": {
+      "type": "number",
+      "default": 0
+    },
+    "steps_completed": {
+      "type": "number",
+      "default": 0
+    },
+    "total_steps": {
+      "type": "number"
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "completed_at": {
+      "type": "string",
+      "format": "date-time"
+    }
+  },
+  "required": [
+    "title",
+    "category"
+  ]
+}

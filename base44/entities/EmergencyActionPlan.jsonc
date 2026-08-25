@@ -1,0 +1,103 @@
+{
+  "name": "EmergencyActionPlan",
+  "type": "object",
+  "properties": {
+    "title": {
+      "type": "string",
+      "description": "Plan title"
+    },
+    "location_id": {
+      "type": "string"
+    },
+    "location_name": {
+      "type": "string"
+    },
+    "type": {
+      "type": "string",
+      "enum": [
+        "drowning",
+        "spinal_injury",
+        "lightning",
+        "missing_patron",
+        "chemical_leak",
+        "fire",
+        "medical_emergency",
+        "active_threat",
+        "other"
+      ],
+      "default": "drowning"
+    },
+    "version": {
+      "type": "string",
+      "default": "1.0"
+    },
+    "last_reviewed": {
+      "type": "string",
+      "format": "date"
+    },
+    "next_review_due": {
+      "type": "string",
+      "format": "date"
+    },
+    "steps": {
+      "type": "array",
+      "description": "Step-by-step response actions",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "order": {
+            "type": "number"
+          },
+          "title": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "responsible_role": {
+            "type": "string"
+          },
+          "time_target": {
+            "type": "string",
+            "description": "e.g. Within 30 seconds"
+          }
+        }
+      }
+    },
+    "emergency_contacts": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "role": {
+            "type": "string"
+          },
+          "phone": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "equipment_locations": {
+      "type": "string",
+      "description": "Where AED, rescue tubes, etc. are located"
+    },
+    "notes": {
+      "type": "string"
+    },
+    "is_active": {
+      "type": "boolean",
+      "default": true
+    }
+  },
+  "required": [
+    "title",
+    "type"
+  ]
+}

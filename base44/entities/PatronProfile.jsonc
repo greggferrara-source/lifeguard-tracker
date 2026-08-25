@@ -1,0 +1,99 @@
+{
+  "name": "PatronProfile",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string"
+    },
+    "email": {
+      "type": "string"
+    },
+    "phone": {
+      "type": "string"
+    },
+    "age_group": {
+      "type": "string",
+      "enum": [
+        "child",
+        "teen",
+        "adult",
+        "senior"
+      ],
+      "description": "Age category"
+    },
+    "swimming_ability": {
+      "type": "string",
+      "enum": [
+        "non_swimmer",
+        "beginner",
+        "intermediate",
+        "advanced"
+      ]
+    },
+    "medical_conditions": {
+      "type": "string",
+      "description": "Any relevant health issues (optional)"
+    },
+    "emergency_contact": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "phone": {
+          "type": "string"
+        },
+        "relationship": {
+          "type": "string"
+        }
+      }
+    },
+    "visit_frequency": {
+      "type": "string",
+      "enum": [
+        "occasional",
+        "regular",
+        "frequent"
+      ]
+    },
+    "incident_history": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "date": {
+            "type": "string",
+            "format": "date"
+          },
+          "type": {
+            "type": "string"
+          },
+          "severity": {
+            "type": "string"
+          }
+        }
+      },
+      "description": "Previous incidents involving this patron"
+    },
+    "visits_count": {
+      "type": "number",
+      "default": 1
+    },
+    "last_visit": {
+      "type": "string",
+      "format": "date"
+    },
+    "risk_level": {
+      "type": "string",
+      "enum": [
+        "low",
+        "medium",
+        "high"
+      ],
+      "description": "Based on swimming ability and history"
+    }
+  },
+  "required": [
+    "name"
+  ]
+}

@@ -1,0 +1,76 @@
+{
+  "name": "ResourceRequest",
+  "type": "object",
+  "properties": {
+    "resource_id": {
+      "type": "string"
+    },
+    "resource_name": {
+      "type": "string"
+    },
+    "requested_by_email": {
+      "type": "string"
+    },
+    "requested_by_name": {
+      "type": "string"
+    },
+    "start_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "start_time": {
+      "type": "string"
+    },
+    "end_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "end_time": {
+      "type": "string"
+    },
+    "purpose": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "approved",
+        "rejected",
+        "cancelled"
+      ],
+      "default": "pending"
+    },
+    "auto_approved": {
+      "type": "boolean",
+      "default": false,
+      "description": "Auto-approved due to no conflicts"
+    },
+    "conflict_detected": {
+      "type": "boolean",
+      "default": false,
+      "description": "Whether booking conflict exists"
+    },
+    "conflict_details": {
+      "type": "string"
+    },
+    "approved_by_email": {
+      "type": "string"
+    },
+    "approved_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "notes": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "resource_id",
+    "requested_by_email",
+    "start_date",
+    "start_time",
+    "end_date",
+    "end_time"
+  ]
+}

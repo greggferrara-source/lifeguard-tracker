@@ -1,0 +1,28 @@
+{
+  "name": "BillCategory",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Category name"
+    },
+    "color": {
+      "type": "string",
+      "description": "Color hex code for display"
+    },
+    "description": {
+      "type": "string"
+    },
+    "budget_monthly": {
+      "type": "number",
+      "description": "Monthly budget for this category"
+    },
+    "is_active": {
+      "type": "boolean",
+      "default": true
+    }
+  },
+  "required": [
+    "name"
+  ]
+}

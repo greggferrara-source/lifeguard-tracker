@@ -1,0 +1,65 @@
+{
+  "name": "Location",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Location name (e.g., Main Pool, Beach Zone A)"
+    },
+    "type": {
+      "type": "string",
+      "enum": [
+        "pool",
+        "beach",
+        "waterpark",
+        "lake",
+        "other"
+      ],
+      "default": "pool",
+      "description": "Type of location"
+    },
+    "address": {
+      "type": "string",
+      "description": "Physical address"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "active",
+        "inactive",
+        "seasonal"
+      ],
+      "default": "active",
+      "description": "Location status"
+    },
+    "min_guards_required": {
+      "type": "number",
+      "default": 1,
+      "description": "Minimum number of guards required"
+    },
+    "color": {
+      "type": "string",
+      "description": "Color code for schedule display"
+    },
+    "notes": {
+      "type": "string",
+      "description": "Additional notes about the location"
+    },
+    "latitude": {
+      "type": "number",
+      "description": "GPS latitude coordinate"
+    },
+    "longitude": {
+      "type": "number",
+      "description": "GPS longitude coordinate"
+    },
+    "geofence_radius_meters": {
+      "type": "number",
+      "default": 100,
+      "description": "Geofence radius in meters for GPS verification"
+    }
+  },
+  "required": [
+    "name"
+  ]
+}

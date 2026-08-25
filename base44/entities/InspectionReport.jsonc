@@ -1,0 +1,63 @@
+{
+  "name": "InspectionReport",
+  "type": "object",
+  "properties": {
+    "location_id": {
+      "type": "string"
+    },
+    "location_name": {
+      "type": "string"
+    },
+    "inspector_name": {
+      "type": "string"
+    },
+    "inspector_id": {
+      "type": "string"
+    },
+    "date": {
+      "type": "string",
+      "format": "date"
+    },
+    "overall_result": {
+      "type": "string",
+      "enum": [
+        "pass",
+        "conditional",
+        "fail"
+      ],
+      "default": "pass"
+    },
+    "items": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "pass",
+              "fail",
+              "na"
+            ]
+          },
+          "notes": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "notes": {
+      "type": "string"
+    },
+    "signed_off_by": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "location_id",
+    "date"
+  ]
+}

@@ -1,0 +1,37 @@
+{
+  "name": "CategoryRule",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Rule name for identification"
+    },
+    "keyword": {
+      "type": "string",
+      "description": "Keyword to match (case-insensitive)"
+    },
+    "match_field": {
+      "type": "string",
+      "enum": [
+        "vendor",
+        "description",
+        "both"
+      ],
+      "default": "both",
+      "description": "Which field to match the keyword against"
+    },
+    "category": {
+      "type": "string",
+      "description": "Category to assign when rule matches"
+    },
+    "enabled": {
+      "type": "boolean",
+      "default": true
+    }
+  },
+  "required": [
+    "name",
+    "keyword",
+    "category"
+  ]
+}

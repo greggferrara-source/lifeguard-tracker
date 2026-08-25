@@ -1,0 +1,79 @@
+{
+  "name": "TimeOffRequest",
+  "type": "object",
+  "properties": {
+    "employee_id": {
+      "type": "string",
+      "description": "Employee requesting time off"
+    },
+    "employee_name": {
+      "type": "string",
+      "description": "Employee name (denormalized)"
+    },
+    "start_date": {
+      "type": "string",
+      "format": "date",
+      "description": "Start date of time off"
+    },
+    "end_date": {
+      "type": "string",
+      "format": "date",
+      "description": "End date of time off"
+    },
+    "is_partial_day": {
+      "type": "boolean",
+      "default": false,
+      "description": "Whether this is a partial day request"
+    },
+    "partial_start_time": {
+      "type": "string",
+      "description": "Start time for partial day (HH:MM)"
+    },
+    "partial_end_time": {
+      "type": "string",
+      "description": "End time for partial day (HH:MM)"
+    },
+    "is_recurring": {
+      "type": "boolean",
+      "default": false,
+      "description": "Whether this is a recurring time off"
+    },
+    "recurrence_pattern": {
+      "type": "string",
+      "enum": [
+        "weekly",
+        "biweekly",
+        "monthly"
+      ],
+      "description": "Recurrence pattern if recurring"
+    },
+    "recurrence_end_date": {
+      "type": "string",
+      "format": "date",
+      "description": "When recurring time off ends"
+    },
+    "reason": {
+      "type": "string",
+      "description": "Reason for time off"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "approved",
+        "denied"
+      ],
+      "default": "pending",
+      "description": "Request status"
+    },
+    "notes": {
+      "type": "string",
+      "description": "Additional notes"
+    }
+  },
+  "required": [
+    "employee_id",
+    "start_date",
+    "end_date"
+  ]
+}

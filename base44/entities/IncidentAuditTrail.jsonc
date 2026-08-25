@@ -1,0 +1,63 @@
+{
+  "name": "IncidentAuditTrail",
+  "type": "object",
+  "properties": {
+    "incident_id": {
+      "type": "string",
+      "description": "Associated incident report ID"
+    },
+    "action": {
+      "type": "string",
+      "enum": [
+        "created",
+        "updated",
+        "reviewed",
+        "approved",
+        "rejected",
+        "forwarded",
+        "closed",
+        "media_added"
+      ],
+      "description": "Action performed"
+    },
+    "performed_by_email": {
+      "type": "string",
+      "description": "User who performed action"
+    },
+    "performed_by_name": {
+      "type": "string"
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "field_changed": {
+      "type": "string",
+      "description": "Specific field that was changed"
+    },
+    "old_value": {
+      "type": "string",
+      "description": "Previous value"
+    },
+    "new_value": {
+      "type": "string",
+      "description": "New value"
+    },
+    "description": {
+      "type": "string",
+      "description": "Details of the change"
+    },
+    "ip_address": {
+      "type": "string"
+    },
+    "device_info": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "incident_id",
+    "action",
+    "performed_by_email",
+    "timestamp"
+  ]
+}

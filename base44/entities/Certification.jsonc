@@ -1,0 +1,66 @@
+{
+  "name": "Certification",
+  "type": "object",
+  "properties": {
+    "employee_id": {
+      "type": "string",
+      "description": "Employee this certification belongs to"
+    },
+    "employee_name": {
+      "type": "string",
+      "description": "Employee name (denormalized)"
+    },
+    "name": {
+      "type": "string",
+      "description": "Certification name (e.g. CPR, Lifeguard, First Aid)"
+    },
+    "issuing_organization": {
+      "type": "string",
+      "description": "Organization that issued the certification"
+    },
+    "issue_date": {
+      "type": "string",
+      "format": "date",
+      "description": "Date certification was issued"
+    },
+    "expiry_date": {
+      "type": "string",
+      "format": "date",
+      "description": "Date certification expires"
+    },
+    "certificate_url": {
+      "type": "string",
+      "description": "URL to uploaded certificate file"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "pending_review",
+        "approved",
+        "rejected",
+        "expired"
+      ],
+      "default": "pending_review",
+      "description": "Manager approval status"
+    },
+    "manager_notes": {
+      "type": "string",
+      "description": "Notes from manager during review"
+    },
+    "notification_sent_30": {
+      "type": "boolean",
+      "default": false,
+      "description": "30-day expiry notification sent"
+    },
+    "notification_sent_7": {
+      "type": "boolean",
+      "default": false,
+      "description": "7-day expiry notification sent"
+    }
+  },
+  "required": [
+    "employee_id",
+    "name",
+    "expiry_date"
+  ]
+}

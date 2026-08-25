@@ -1,0 +1,92 @@
+{
+  "name": "Payroll",
+  "type": "object",
+  "properties": {
+    "pay_period_id": {
+      "type": "string",
+      "description": "Associated pay period ID"
+    },
+    "pay_period_name": {
+      "type": "string",
+      "description": "Pay period name (denormalized)"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "draft",
+        "ready_for_review",
+        "approved",
+        "processing",
+        "completed",
+        "failed"
+      ],
+      "default": "draft",
+      "description": "Payroll status"
+    },
+    "total_employees": {
+      "type": "number",
+      "default": 0,
+      "description": "Number of employees in payroll"
+    },
+    "total_gross_pay": {
+      "type": "number",
+      "default": 0,
+      "description": "Total gross pay for all employees"
+    },
+    "total_deductions": {
+      "type": "number",
+      "default": 0,
+      "description": "Total deductions"
+    },
+    "total_net_pay": {
+      "type": "number",
+      "default": 0,
+      "description": "Total net pay to be distributed"
+    },
+    "processed_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When payroll was processed"
+    }
+  },
+  "required": [
+    "pay_period_id",
+    "status"
+  ],
+  "rls": {
+    "read": [
+      {
+        "role": "admin",
+        "condition": {}
+      },
+      {
+        "role": "site_owner",
+        "condition": {}
+      }
+    ],
+    "create": [
+      {
+        "role": "admin"
+      },
+      {
+        "role": "site_owner"
+      }
+    ],
+    "update": [
+      {
+        "role": "admin"
+      },
+      {
+        "role": "site_owner"
+      }
+    ],
+    "delete": [
+      {
+        "role": "admin"
+      },
+      {
+        "role": "site_owner"
+      }
+    ]
+  }
+}

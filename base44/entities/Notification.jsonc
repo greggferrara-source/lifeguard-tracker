@@ -1,0 +1,60 @@
+{
+  "name": "Notification",
+  "type": "object",
+  "properties": {
+    "recipient_email": {
+      "type": "string"
+    },
+    "recipient_phone": {
+      "type": "string"
+    },
+    "recipient_name": {
+      "type": "string"
+    },
+    "subject": {
+      "type": "string"
+    },
+    "body": {
+      "type": "string"
+    },
+    "type": {
+      "type": "string",
+      "enum": [
+        "email",
+        "sms",
+        "both"
+      ],
+      "default": "email"
+    },
+    "category": {
+      "type": "string",
+      "enum": [
+        "shift_reminder",
+        "shift_assigned",
+        "callout",
+        "open_shift",
+        "time_off_decision",
+        "understaffing",
+        "cert_expiry",
+        "welcome"
+      ]
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "sent",
+        "failed"
+      ],
+      "default": "pending"
+    },
+    "error": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "recipient_email",
+    "subject",
+    "body"
+  ]
+}

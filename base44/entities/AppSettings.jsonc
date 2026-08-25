@@ -1,0 +1,17 @@
+{
+  "name": "AppSettings",
+  "type": "object",
+  "properties": {
+    "key": {
+      "type": "string",
+      "description": "Settings key identifier (e.g. 'alert_settings')"
+    },
+    "value": {
+      "type": "object",
+      "description": "Settings value as a JSON object"
+    }
+  },
+  "required": [
+    "key"
+  ]
+}

@@ -1,0 +1,83 @@
+{
+  "name": "LMSIntegration",
+  "type": "object",
+  "properties": {
+    "employee_id": {
+      "type": "string"
+    },
+    "employee_email": {
+      "type": "string"
+    },
+    "employee_name": {
+      "type": "string"
+    },
+    "lms_provider": {
+      "type": "string",
+      "enum": [
+        "red_cross",
+        "ellis_and_associates",
+        "ise",
+        "kingfish",
+        "custom"
+      ],
+      "description": "LMS platform name"
+    },
+    "lms_user_id": {
+      "type": "string",
+      "description": "User ID in external LMS"
+    },
+    "course_name": {
+      "type": "string",
+      "description": "Training course name"
+    },
+    "course_code": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "not_started",
+        "in_progress",
+        "completed",
+        "failed"
+      ],
+      "default": "not_started"
+    },
+    "completion_percentage": {
+      "type": "number",
+      "default": 0
+    },
+    "score": {
+      "type": "number",
+      "description": "Final course score if applicable"
+    },
+    "started_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "completed_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "certification_issued": {
+      "type": "boolean",
+      "default": false
+    },
+    "certification_name": {
+      "type": "string"
+    },
+    "certification_expiry": {
+      "type": "string",
+      "format": "date"
+    },
+    "last_synced": {
+      "type": "string",
+      "format": "date-time"
+    }
+  },
+  "required": [
+    "employee_id",
+    "lms_provider",
+    "course_name"
+  ]
+}

@@ -1,0 +1,84 @@
+{
+  "name": "Resource",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Resource name"
+    },
+    "description": {
+      "type": "string"
+    },
+    "resource_type": {
+      "type": "string",
+      "enum": [
+        "meeting_room",
+        "equipment",
+        "vehicle",
+        "facility",
+        "other"
+      ],
+      "description": "Type of resource"
+    },
+    "location_id": {
+      "type": "string",
+      "description": "Location where resource is available"
+    },
+    "location_name": {
+      "type": "string"
+    },
+    "capacity": {
+      "type": "number",
+      "description": "Capacity (people for rooms, count for equipment)"
+    },
+    "available_from": {
+      "type": "string",
+      "format": "date"
+    },
+    "available_to": {
+      "type": "string",
+      "format": "date"
+    },
+    "business_hours_only": {
+      "type": "boolean",
+      "default": true,
+      "description": "Can only be booked during business hours"
+    },
+    "business_hours_start": {
+      "type": "string",
+      "description": "HH:MM format"
+    },
+    "business_hours_end": {
+      "type": "string",
+      "description": "HH:MM format"
+    },
+    "max_booking_duration_hours": {
+      "type": "number",
+      "description": "Maximum duration for a single booking"
+    },
+    "requires_approval": {
+      "type": "boolean",
+      "default": false,
+      "description": "Bookings need approval"
+    },
+    "allowed_roles": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Roles that can book this resource"
+    },
+    "is_active": {
+      "type": "boolean",
+      "default": true
+    },
+    "created_by_email": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "name",
+    "resource_type",
+    "location_id"
+  ]
+}

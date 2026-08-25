@@ -1,0 +1,52 @@
+{
+  "name": "Onboarding",
+  "type": "object",
+  "properties": {
+    "employee_id": {
+      "type": "string",
+      "description": "Associated employee ID"
+    },
+    "employee_name": {
+      "type": "string",
+      "description": "Employee name (denormalized)"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "not_started",
+        "in_progress",
+        "completed",
+        "paused"
+      ],
+      "default": "not_started",
+      "description": "Onboarding status"
+    },
+    "start_date": {
+      "type": "string",
+      "format": "date",
+      "description": "When onboarding started"
+    },
+    "target_completion_date": {
+      "type": "string",
+      "format": "date",
+      "description": "Expected completion date"
+    },
+    "assigned_by": {
+      "type": "string",
+      "description": "Email of admin/manager who initiated onboarding"
+    },
+    "progress_percentage": {
+      "type": "number",
+      "default": 0,
+      "description": "Percentage of tasks completed (0-100)"
+    },
+    "notes": {
+      "type": "string",
+      "description": "Internal notes about the onboarding process"
+    }
+  },
+  "required": [
+    "employee_id",
+    "status"
+  ]
+}

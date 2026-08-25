@@ -1,0 +1,87 @@
+{
+  "name": "OnboardingTask",
+  "type": "object",
+  "properties": {
+    "onboarding_id": {
+      "type": "string",
+      "description": "Associated onboarding ID"
+    },
+    "employee_id": {
+      "type": "string",
+      "description": "Employee ID"
+    },
+    "employee_name": {
+      "type": "string",
+      "description": "Employee name (denormalized)"
+    },
+    "title": {
+      "type": "string",
+      "description": "Task title"
+    },
+    "description": {
+      "type": "string",
+      "description": "Detailed task description"
+    },
+    "category": {
+      "type": "string",
+      "enum": [
+        "documentation",
+        "training",
+        "equipment",
+        "orientation",
+        "policy",
+        "other"
+      ],
+      "description": "Task category"
+    },
+    "assigned_to": {
+      "type": "string",
+      "description": "Email of person responsible for this task"
+    },
+    "assigned_to_name": {
+      "type": "string",
+      "description": "Name of person responsible"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "in_progress",
+        "completed",
+        "blocked"
+      ],
+      "default": "pending",
+      "description": "Task status"
+    },
+    "due_date": {
+      "type": "string",
+      "format": "date",
+      "description": "When task is due"
+    },
+    "completed_date": {
+      "type": "string",
+      "format": "date",
+      "description": "When task was completed"
+    },
+    "completion_notes": {
+      "type": "string",
+      "description": "Notes on completion"
+    },
+    "is_required": {
+      "type": "boolean",
+      "default": true,
+      "description": "Whether this task is required for completion"
+    },
+    "display_order": {
+      "type": "number",
+      "default": 0,
+      "description": "Order to display in checklist"
+    }
+  },
+  "required": [
+    "onboarding_id",
+    "employee_id",
+    "title",
+    "status"
+  ]
+}

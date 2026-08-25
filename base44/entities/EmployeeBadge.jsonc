@@ -1,0 +1,65 @@
+{
+  "name": "EmployeeBadge",
+  "type": "object",
+  "properties": {
+    "employee_id": {
+      "type": "string"
+    },
+    "employee_email": {
+      "type": "string"
+    },
+    "employee_name": {
+      "type": "string"
+    },
+    "badge_id": {
+      "type": "string",
+      "description": "Unique badge identifier"
+    },
+    "badge_name": {
+      "type": "string",
+      "description": "Display name of badge"
+    },
+    "badge_description": {
+      "type": "string"
+    },
+    "badge_icon": {
+      "type": "string",
+      "description": "Emoji or icon representing badge"
+    },
+    "badge_type": {
+      "type": "string",
+      "enum": [
+        "completion",
+        "achievement",
+        "streak",
+        "excellence",
+        "leadership"
+      ]
+    },
+    "earned_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "earned_for": {
+      "type": "string",
+      "description": "What earned this badge (module ID, achievement, etc)"
+    },
+    "rarity": {
+      "type": "string",
+      "enum": [
+        "common",
+        "uncommon",
+        "rare",
+        "epic",
+        "legendary"
+      ],
+      "default": "common"
+    }
+  },
+  "required": [
+    "employee_id",
+    "badge_id",
+    "badge_name",
+    "earned_at"
+  ]
+}

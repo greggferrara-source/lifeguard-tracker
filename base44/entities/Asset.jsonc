@@ -1,0 +1,101 @@
+{
+  "name": "Asset",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Asset name or description"
+    },
+    "asset_tag": {
+      "type": "string",
+      "description": "Unique asset tag / ID"
+    },
+    "serial_number": {
+      "type": "string"
+    },
+    "category": {
+      "type": "string",
+      "enum": [
+        "safety_equipment",
+        "pool_equipment",
+        "chemical_equipment",
+        "technology",
+        "vehicle",
+        "furniture",
+        "other"
+      ],
+      "default": "safety_equipment"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "operational",
+        "needs_maintenance",
+        "out_of_service",
+        "retired",
+        "lost"
+      ],
+      "default": "operational"
+    },
+    "condition": {
+      "type": "string",
+      "enum": [
+        "excellent",
+        "good",
+        "fair",
+        "poor"
+      ],
+      "default": "good"
+    },
+    "location_id": {
+      "type": "string"
+    },
+    "location_name": {
+      "type": "string"
+    },
+    "assigned_to": {
+      "type": "string",
+      "description": "Employee name or department"
+    },
+    "purchase_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "purchase_price": {
+      "type": "number"
+    },
+    "warranty_expiry": {
+      "type": "string",
+      "format": "date"
+    },
+    "last_maintenance_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "next_maintenance_due": {
+      "type": "string",
+      "format": "date"
+    },
+    "maintenance_interval_days": {
+      "type": "number",
+      "description": "How often maintenance is required (days)"
+    },
+    "manufacturer": {
+      "type": "string"
+    },
+    "model": {
+      "type": "string"
+    },
+    "notes": {
+      "type": "string"
+    },
+    "image_url": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "name",
+    "category",
+    "status"
+  ]
+}

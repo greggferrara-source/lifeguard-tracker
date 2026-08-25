@@ -1,0 +1,108 @@
+{
+  "name": "IoTSensorThreshold",
+  "type": "object",
+  "properties": {
+    "sensor_id": {
+      "type": "string",
+      "description": "Sensor this threshold applies to"
+    },
+    "location_id": {
+      "type": "string"
+    },
+    "sensor_type": {
+      "type": "string",
+      "enum": [
+        "ph",
+        "chlorine",
+        "temperature_water",
+        "temperature_air",
+        "humidity"
+      ]
+    },
+    "sensor_name": {
+      "type": "string"
+    },
+    "min_optimal": {
+      "type": "number",
+      "description": "Lower bound of optimal range"
+    },
+    "max_optimal": {
+      "type": "number",
+      "description": "Upper bound of optimal range"
+    },
+    "min_warning": {
+      "type": "number",
+      "description": "Warning threshold - low"
+    },
+    "max_warning": {
+      "type": "number",
+      "description": "Warning threshold - high"
+    },
+    "min_critical": {
+      "type": "number",
+      "description": "Critical threshold - low"
+    },
+    "max_critical": {
+      "type": "number",
+      "description": "Critical threshold - high"
+    },
+    "alert_on_breach": {
+      "type": "boolean",
+      "default": true
+    },
+    "notify_emails": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Emails to notify on alert"
+    },
+    "automated_actions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "trigger": {
+            "type": "string",
+            "enum": [
+              "warning",
+              "critical"
+            ]
+          },
+          "action": {
+            "type": "string",
+            "enum": [
+              "send_alert",
+              "close_pool",
+              "increase_staffing",
+              "create_task"
+            ]
+          },
+          "action_details": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "enabled": {
+      "type": "boolean",
+      "default": true
+    },
+    "created_by_email": {
+      "type": "string"
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "updated_at": {
+      "type": "string",
+      "format": "date-time"
+    }
+  },
+  "required": [
+    "sensor_id",
+    "sensor_type",
+    "location_id"
+  ]
+}

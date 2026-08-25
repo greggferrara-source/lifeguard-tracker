@@ -1,0 +1,93 @@
+{
+  "name": "UrgentAlert",
+  "type": "object",
+  "properties": {
+    "title": {
+      "type": "string",
+      "description": "Alert title (e.g., Pool Closure, Emergency)"
+    },
+    "severity": {
+      "type": "string",
+      "enum": [
+        "critical",
+        "high",
+        "medium"
+      ],
+      "default": "high",
+      "description": "Alert severity level"
+    },
+    "type": {
+      "type": "string",
+      "enum": [
+        "pool_closure",
+        "weather",
+        "emergency",
+        "chemical_issue",
+        "staffing",
+        "other"
+      ],
+      "description": "Type of alert"
+    },
+    "message": {
+      "type": "string",
+      "description": "Full alert message/description"
+    },
+    "location_id": {
+      "type": "string",
+      "description": "Location affected (or empty for all)"
+    },
+    "location_name": {
+      "type": "string",
+      "description": "Location name (denormalized)"
+    },
+    "send_sms": {
+      "type": "boolean",
+      "default": true,
+      "description": "Whether to send SMS notifications"
+    },
+    "send_email": {
+      "type": "boolean",
+      "default": true,
+      "description": "Whether to send email notifications"
+    },
+    "send_push": {
+      "type": "boolean",
+      "default": true,
+      "description": "Whether to send push notifications"
+    },
+    "send_announcement": {
+      "type": "boolean",
+      "default": true,
+      "description": "Whether to post as announcement"
+    },
+    "target_roles": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Which roles to notify (empty = all)",
+      "default": []
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "active",
+        "resolved",
+        "cancelled"
+      ],
+      "default": "active",
+      "description": "Current status"
+    },
+    "created_by_email": {
+      "type": "string"
+    },
+    "created_by_name": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "title",
+    "type",
+    "message"
+  ]
+}

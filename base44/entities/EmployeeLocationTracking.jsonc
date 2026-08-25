@@ -1,0 +1,51 @@
+{
+  "name": "EmployeeLocationTracking",
+  "type": "object",
+  "properties": {
+    "employee_id": {
+      "type": "string"
+    },
+    "employee_name": {
+      "type": "string"
+    },
+    "latitude": {
+      "type": "number"
+    },
+    "longitude": {
+      "type": "number"
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "accuracy_meters": {
+      "type": "number"
+    },
+    "location_name": {
+      "type": "string"
+    },
+    "location_id": {
+      "type": "string"
+    },
+    "event_type": {
+      "type": "string",
+      "enum": [
+        "location_update",
+        "geofence_entry",
+        "geofence_exit",
+        "shift_start",
+        "shift_end"
+      ],
+      "default": "location_update"
+    },
+    "shift_id": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "employee_id",
+    "latitude",
+    "longitude",
+    "timestamp"
+  ]
+}

@@ -1,0 +1,80 @@
+{
+  "name": "EmployeePerformance",
+  "type": "object",
+  "properties": {
+    "employee_id": {
+      "type": "string"
+    },
+    "employee_name": {
+      "type": "string"
+    },
+    "email": {
+      "type": "string"
+    },
+    "total_shifts_worked": {
+      "type": "number",
+      "default": 0
+    },
+    "total_hours": {
+      "type": "number",
+      "default": 0
+    },
+    "attendance_rate": {
+      "type": "number",
+      "description": "Percentage (0-100)"
+    },
+    "incidents_responded_to": {
+      "type": "number",
+      "default": 0
+    },
+    "avg_response_time_seconds": {
+      "type": "number",
+      "description": "Average incident response time in seconds"
+    },
+    "certifications_current": {
+      "type": "number",
+      "default": 0
+    },
+    "certifications_expiring": {
+      "type": "number",
+      "default": 0
+    },
+    "performance_rating": {
+      "type": "number",
+      "description": "1-5 stars"
+    },
+    "reliability_score": {
+      "type": "number",
+      "description": "0-100 based on punctuality and attendance"
+    },
+    "safety_violations": {
+      "type": "number",
+      "default": 0
+    },
+    "commendations": {
+      "type": "number",
+      "default": 0
+    },
+    "last_30_days_performance": {
+      "type": "object",
+      "properties": {
+        "shifts_worked": {
+          "type": "number"
+        },
+        "hours_worked": {
+          "type": "number"
+        },
+        "absent_count": {
+          "type": "number"
+        }
+      }
+    },
+    "last_updated": {
+      "type": "string",
+      "format": "date-time"
+    }
+  },
+  "required": [
+    "employee_id"
+  ]
+}

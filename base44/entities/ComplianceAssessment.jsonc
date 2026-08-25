@@ -1,0 +1,121 @@
+{
+  "name": "ComplianceAssessment",
+  "type": "object",
+  "properties": {
+    "location_id": {
+      "type": "string",
+      "description": "Pool/facility location ID"
+    },
+    "location_name": {
+      "type": "string",
+      "description": "Location name (denormalized)"
+    },
+    "assessment_type": {
+      "type": "string",
+      "enum": [
+        "facility_maintenance",
+        "daily_operations",
+        "risk_management",
+        "staff_training",
+        "safety_team"
+      ],
+      "description": "Category of assessment"
+    },
+    "title": {
+      "type": "string",
+      "description": "Assessment title"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "not_started",
+        "in_progress",
+        "completed"
+      ],
+      "default": "not_started"
+    },
+    "overall_score": {
+      "type": "number",
+      "description": "Overall compliance score (0-100)"
+    },
+    "started_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "completed_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "completed_by_email": {
+      "type": "string"
+    },
+    "completed_by_name": {
+      "type": "string"
+    },
+    "questions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "text": {
+            "type": "string"
+          },
+          "standard_reference": {
+            "type": "string",
+            "description": "Which standard this references (e.g., MAHC, ANSI)"
+          },
+          "answer": {
+            "type": "boolean"
+          },
+          "notes": {
+            "type": "string"
+          },
+          "evidence_urls": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "gap_summary": {
+      "type": "string",
+      "description": "Summary of identified compliance gaps"
+    },
+    "next_retest_date": {
+      "type": "string",
+      "format": "date",
+      "description": "When this assessment should be retested"
+    },
+    "retests": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "date": {
+            "type": "string",
+            "format": "date"
+          },
+          "score": {
+            "type": "number"
+          },
+          "improved_areas": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    }
+  },
+  "required": [
+    "location_id",
+    "assessment_type",
+    "title"
+  ]
+}

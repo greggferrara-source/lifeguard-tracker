@@ -1,0 +1,78 @@
+{
+  "name": "UserSubscription",
+  "type": "object",
+  "properties": {
+    "user_email": {
+      "type": "string",
+      "description": "Email of the user"
+    },
+    "stripe_customer_id": {
+      "type": "string",
+      "description": "Stripe customer ID"
+    },
+    "stripe_subscription_id": {
+      "type": "string",
+      "description": "Stripe subscription ID"
+    },
+    "plan_name": {
+      "type": "string",
+      "enum": [
+        "starter",
+        "pro",
+        "enterprise"
+      ],
+      "description": "Current plan name"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "active",
+        "paused",
+        "canceled",
+        "past_due",
+        "trialing",
+        "trial_expired"
+      ],
+      "default": "active",
+      "description": "Subscription status"
+    },
+    "current_period_start": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Current billing period start"
+    },
+    "current_period_end": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Current billing period end"
+    },
+    "trial_end": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Trial end date if applicable"
+    },
+    "pause_resumes_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Date the paused subscription will automatically resume"
+    },
+    "cancel_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Scheduled cancellation date"
+    },
+    "canceled_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When subscription was canceled"
+    },
+    "last_synced": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Last sync with Stripe"
+    }
+  },
+  "required": [
+    "user_email"
+  ]
+}

@@ -1,0 +1,53 @@
+{
+  "name": "ComplianceResource",
+  "type": "object",
+  "properties": {
+    "title": {
+      "type": "string",
+      "description": "Resource title"
+    },
+    "resource_type": {
+      "type": "string",
+      "enum": [
+        "template",
+        "guidance",
+        "checklist",
+        "reference",
+        "glossary"
+      ],
+      "description": "Type of resource"
+    },
+    "category": {
+      "type": "string",
+      "enum": [
+        "facility_maintenance",
+        "daily_operations",
+        "risk_management",
+        "staff_training",
+        "safety_team"
+      ],
+      "description": "Category this applies to"
+    },
+    "content": {
+      "type": "string",
+      "description": "Resource content (markdown)"
+    },
+    "file_url": {
+      "type": "string",
+      "description": "URL to downloadable file if applicable"
+    },
+    "standard_reference": {
+      "type": "string",
+      "description": "Which safety standard this addresses (MAHC, ANSI, etc.)"
+    },
+    "is_active": {
+      "type": "boolean",
+      "default": true
+    }
+  },
+  "required": [
+    "title",
+    "resource_type",
+    "category"
+  ]
+}

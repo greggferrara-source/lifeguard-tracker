@@ -1,0 +1,145 @@
+{
+  "name": "IoTAnalyticsReport",
+  "type": "object",
+  "properties": {
+    "location_id": {
+      "type": "string",
+      "description": "Facility location"
+    },
+    "location_name": {
+      "type": "string"
+    },
+    "report_type": {
+      "type": "string",
+      "enum": [
+        "daily",
+        "weekly",
+        "monthly",
+        "anomaly",
+        "trend"
+      ]
+    },
+    "period_start": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "period_end": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "sensor_metrics": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "sensor_type": {
+            "type": "string"
+          },
+          "sensor_name": {
+            "type": "string"
+          },
+          "average_value": {
+            "type": "number"
+          },
+          "min_value": {
+            "type": "number"
+          },
+          "max_value": {
+            "type": "number"
+          },
+          "readings_count": {
+            "type": "number"
+          },
+          "out_of_range_count": {
+            "type": "number"
+          },
+          "trend": {
+            "type": "string",
+            "enum": [
+              "stable",
+              "increasing",
+              "decreasing"
+            ]
+          }
+        }
+      }
+    },
+    "anomalies_detected": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "timestamp": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "sensor_id": {
+            "type": "string"
+          },
+          "sensor_type": {
+            "type": "string"
+          },
+          "value": {
+            "type": "number"
+          },
+          "expected_range": {
+            "type": "string"
+          },
+          "severity": {
+            "type": "string",
+            "enum": [
+              "warning",
+              "critical"
+            ]
+          },
+          "description": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "correlations": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "sensor1": {
+            "type": "string"
+          },
+          "sensor2": {
+            "type": "string"
+          },
+          "correlation_coefficient": {
+            "type": "number"
+          },
+          "description": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "summary": {
+      "type": "string",
+      "description": "AI-generated summary and insights"
+    },
+    "recommendations": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "generated_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "generated_by": {
+      "type": "string",
+      "description": "System or user who generated"
+    }
+  },
+  "required": [
+    "location_id",
+    "report_type",
+    "period_start"
+  ]
+}

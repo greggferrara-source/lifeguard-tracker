@@ -1,0 +1,87 @@
+{
+  "name": "DocumentUpload",
+  "type": "object",
+  "properties": {
+    "file_name": {
+      "type": "string"
+    },
+    "file_url": {
+      "type": "string",
+      "description": "URL to uploaded file"
+    },
+    "file_type": {
+      "type": "string",
+      "description": "MIME type"
+    },
+    "file_size": {
+      "type": "number",
+      "description": "File size in bytes"
+    },
+    "category": {
+      "type": "string",
+      "enum": [
+        "certification",
+        "inspection_report",
+        "equipment_manual",
+        "maintenance_log",
+        "compliance_doc",
+        "training_material",
+        "incident_report",
+        "other"
+      ],
+      "description": "Document category"
+    },
+    "entity_type": {
+      "type": "string",
+      "description": "What this document is associated with (Employee, Asset, Location, etc.)"
+    },
+    "entity_id": {
+      "type": "string",
+      "description": "ID of associated entity"
+    },
+    "entity_name": {
+      "type": "string"
+    },
+    "uploaded_by_email": {
+      "type": "string"
+    },
+    "uploaded_by_name": {
+      "type": "string"
+    },
+    "uploaded_date": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "version": {
+      "type": "number",
+      "default": 1,
+      "description": "Document version number"
+    },
+    "previous_version_id": {
+      "type": "string",
+      "description": "ID of previous version if replaced"
+    },
+    "expiry_date": {
+      "type": "string",
+      "format": "date",
+      "description": "When document expires (if applicable)"
+    },
+    "tags": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Searchable tags"
+    },
+    "description": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "file_name",
+    "file_url",
+    "category",
+    "entity_type",
+    "entity_id"
+  ]
+}

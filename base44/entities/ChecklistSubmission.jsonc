@@ -1,0 +1,86 @@
+{
+  "name": "ChecklistSubmission",
+  "type": "object",
+  "properties": {
+    "template_id": {
+      "type": "string"
+    },
+    "template_name": {
+      "type": "string"
+    },
+    "type": {
+      "type": "string",
+      "enum": [
+        "chemical",
+        "equipment",
+        "safety",
+        "opening",
+        "closing"
+      ],
+      "default": "chemical"
+    },
+    "location_id": {
+      "type": "string"
+    },
+    "location_name": {
+      "type": "string"
+    },
+    "submitted_by_email": {
+      "type": "string"
+    },
+    "submitted_by_name": {
+      "type": "string"
+    },
+    "date": {
+      "type": "string",
+      "format": "date"
+    },
+    "time": {
+      "type": "string"
+    },
+    "responses": {
+      "type": "array",
+      "description": "Responses to each checklist item",
+      "items": {
+        "type": "object",
+        "properties": {
+          "item_id": {
+            "type": "string"
+          },
+          "label": {
+            "type": "string"
+          },
+          "value": {
+            "type": "string"
+          },
+          "passed": {
+            "type": "boolean"
+          }
+        }
+      }
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "pass",
+        "warning",
+        "fail"
+      ],
+      "default": "pass"
+    },
+    "notes": {
+      "type": "string"
+    },
+    "items_passed": {
+      "type": "number"
+    },
+    "items_total": {
+      "type": "number"
+    }
+  },
+  "required": [
+    "template_id",
+    "date",
+    "status"
+  ]
+}

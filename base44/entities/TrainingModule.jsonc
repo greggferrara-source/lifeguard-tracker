@@ -1,0 +1,204 @@
+{
+  "name": "TrainingModule",
+  "type": "object",
+  "properties": {
+    "title": {
+      "type": "string",
+      "description": "Module title"
+    },
+    "description": {
+      "type": "string"
+    },
+    "category": {
+      "type": "string",
+      "enum": [
+        "incident_response",
+        "water_quality",
+        "lifeguarding",
+        "first_aid",
+        "compliance",
+        "safety",
+        "other"
+      ],
+      "description": "Module category"
+    },
+    "skill_gaps_addressed": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Compliance gaps this module addresses"
+    },
+    "target_roles": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Employee roles this applies to"
+    },
+    "difficulty_level": {
+      "type": "string",
+      "enum": [
+        "beginner",
+        "intermediate",
+        "advanced"
+      ],
+      "default": "beginner"
+    },
+    "estimated_duration_minutes": {
+      "type": "number",
+      "description": "Time to complete"
+    },
+    "content_sections": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
+          "order": {
+            "type": "number"
+          },
+          "content_type": {
+            "type": "string",
+            "enum": [
+              "text",
+              "video",
+              "image",
+              "document",
+              "interactive"
+            ]
+          },
+          "content_url": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "quiz": {
+      "type": "object",
+      "properties": {
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "passing_score": {
+          "type": "number",
+          "default": 80
+        },
+        "questions_count": {
+          "type": "number"
+        },
+        "questions": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "question": {
+                "type": "string"
+              },
+              "type": {
+                "type": "string",
+                "enum": [
+                  "multiple_choice",
+                  "true_false",
+                  "short_answer"
+                ]
+              },
+              "options": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "correct_answer": {
+                "type": "string"
+              },
+              "explanation": {
+                "type": "string"
+              },
+              "points": {
+                "type": "number",
+                "default": 1
+              }
+            }
+          }
+        }
+      }
+    },
+    "certificate_enabled": {
+      "type": "boolean",
+      "default": true
+    },
+    "certificate_template": {
+      "type": "string",
+      "description": "URL to certificate template"
+    },
+    "gamification": {
+      "type": "object",
+      "properties": {
+        "points_on_completion": {
+          "type": "number",
+          "default": 100,
+          "description": "Points awarded for completing module"
+        },
+        "points_on_quiz_perfect": {
+          "type": "number",
+          "default": 50,
+          "description": "Bonus points for 100% quiz score"
+        },
+        "badge_id": {
+          "type": "string",
+          "description": "Badge earned on completion"
+        },
+        "milestone_rank": {
+          "type": "string",
+          "enum": [
+            "bronze",
+            "silver",
+            "gold",
+            "platinum"
+          ],
+          "description": "Leaderboard tier"
+        }
+      }
+    },
+    "created_by_email": {
+      "type": "string"
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "updated_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "is_active": {
+      "type": "boolean",
+      "default": true
+    },
+    "total_assigned": {
+      "type": "number",
+      "default": 0
+    },
+    "completion_rate": {
+      "type": "number",
+      "description": "Percentage of assigned employees who completed"
+    }
+  },
+  "required": [
+    "title",
+    "category"
+  ]
+}

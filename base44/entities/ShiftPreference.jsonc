@@ -1,0 +1,68 @@
+{
+  "name": "ShiftPreference",
+  "type": "object",
+  "properties": {
+    "employee_id": {
+      "type": "string",
+      "description": "Employee ID"
+    },
+    "employee_name": {
+      "type": "string",
+      "description": "Employee name (denormalized)"
+    },
+    "preferred_days": {
+      "type": "array",
+      "items": {
+        "type": "integer"
+      },
+      "description": "Preferred days of week (0=Sunday, 6=Saturday)"
+    },
+    "preferred_shift_times": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "start_time": {
+            "type": "string"
+          },
+          "end_time": {
+            "type": "string"
+          }
+        }
+      },
+      "description": "Preferred shift time windows"
+    },
+    "preferred_locations": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Preferred location IDs"
+    },
+    "max_consecutive_shifts": {
+      "type": "number",
+      "default": 5,
+      "description": "Max consecutive shifts employee prefers"
+    },
+    "avoid_back_to_back": {
+      "type": "boolean",
+      "default": false,
+      "description": "Avoid back-to-back shifts"
+    },
+    "blackout_dates": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Dates to never schedule (vacations, etc)"
+    },
+    "priority_weight": {
+      "type": "number",
+      "default": 1,
+      "description": "Weight for preference matching (1-10)"
+    }
+  },
+  "required": [
+    "employee_id"
+  ]
+}

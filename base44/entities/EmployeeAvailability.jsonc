@@ -1,0 +1,67 @@
+{
+  "name": "EmployeeAvailability",
+  "type": "object",
+  "properties": {
+    "employee_id": {
+      "type": "string"
+    },
+    "employee_name": {
+      "type": "string"
+    },
+    "preferred_days": {
+      "type": "array",
+      "items": {
+        "type": "number"
+      },
+      "description": "Preferred working days 0=Sun..6=Sat"
+    },
+    "preferred_start": {
+      "type": "string",
+      "description": "Preferred start time HH:MM"
+    },
+    "preferred_end": {
+      "type": "string",
+      "description": "Preferred end time HH:MM"
+    },
+    "unavailable_periods": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "start_date": {
+            "type": "string",
+            "format": "date"
+          },
+          "end_date": {
+            "type": "string",
+            "format": "date"
+          },
+          "reason": {
+            "type": "string"
+          }
+        }
+      },
+      "description": "Blocked date ranges (vacations, appointments, etc.)"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "approved",
+        "rejected"
+      ],
+      "default": "pending",
+      "description": "Manager approval status"
+    },
+    "manager_notes": {
+      "type": "string",
+      "description": "Notes from manager on approval/rejection"
+    },
+    "notes": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "employee_id"
+  ]
+}

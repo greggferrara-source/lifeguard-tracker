@@ -1,0 +1,79 @@
+{
+  "name": "ComplianceGap",
+  "type": "object",
+  "properties": {
+    "assessment_id": {
+      "type": "string",
+      "description": "Associated assessment ID"
+    },
+    "location_id": {
+      "type": "string"
+    },
+    "location_name": {
+      "type": "string"
+    },
+    "gap_description": {
+      "type": "string",
+      "description": "What needs to be fixed"
+    },
+    "standard_reference": {
+      "type": "string",
+      "description": "Which safety standard this addresses"
+    },
+    "severity": {
+      "type": "string",
+      "enum": [
+        "critical",
+        "high",
+        "medium",
+        "low"
+      ],
+      "default": "medium",
+      "description": "Impact severity"
+    },
+    "assigned_to_email": {
+      "type": "string",
+      "description": "Staff member responsible for fixing"
+    },
+    "assigned_to_name": {
+      "type": "string"
+    },
+    "assigned_date": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "open",
+        "in_progress",
+        "completed",
+        "verified"
+      ],
+      "default": "open"
+    },
+    "due_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "completion_notes": {
+      "type": "string"
+    },
+    "completed_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "evidence_photo_urls": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Before/after photos or documentation"
+    }
+  },
+  "required": [
+    "assessment_id",
+    "gap_description",
+    "severity"
+  ]
+}

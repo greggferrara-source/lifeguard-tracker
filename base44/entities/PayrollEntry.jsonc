@@ -1,0 +1,83 @@
+{
+  "name": "PayrollEntry",
+  "type": "object",
+  "properties": {
+    "payroll_id": {
+      "type": "string",
+      "description": "Associated payroll ID"
+    },
+    "pay_period_id": {
+      "type": "string",
+      "description": "Associated pay period ID"
+    },
+    "employee_id": {
+      "type": "string",
+      "description": "Employee ID"
+    },
+    "employee_name": {
+      "type": "string",
+      "description": "Employee name (denormalized)"
+    },
+    "hourly_rate": {
+      "type": "number",
+      "description": "Hourly rate at time of payment"
+    },
+    "regular_hours": {
+      "type": "number",
+      "default": 0,
+      "description": "Regular hours worked"
+    },
+    "overtime_hours": {
+      "type": "number",
+      "default": 0,
+      "description": "Overtime hours (1.5x)"
+    },
+    "double_time_hours": {
+      "type": "number",
+      "default": 0,
+      "description": "Double time hours (2x)"
+    },
+    "gross_pay": {
+      "type": "number",
+      "description": "Gross pay before deductions"
+    },
+    "federal_tax": {
+      "type": "number",
+      "default": 0,
+      "description": "Federal income tax withholding"
+    },
+    "social_security": {
+      "type": "number",
+      "default": 0,
+      "description": "Social Security withholding"
+    },
+    "medicare": {
+      "type": "number",
+      "default": 0,
+      "description": "Medicare withholding"
+    },
+    "state_tax": {
+      "type": "number",
+      "default": 0,
+      "description": "State income tax withholding"
+    },
+    "other_deductions": {
+      "type": "number",
+      "default": 0,
+      "description": "Other deductions (benefits, etc.)"
+    },
+    "total_deductions": {
+      "type": "number",
+      "description": "Total deductions"
+    },
+    "net_pay": {
+      "type": "number",
+      "description": "Net pay after deductions"
+    }
+  },
+  "required": [
+    "payroll_id",
+    "employee_id",
+    "hourly_rate"
+  ]
+}

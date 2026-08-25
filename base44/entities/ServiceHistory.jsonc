@@ -1,0 +1,77 @@
+{
+  "name": "ServiceHistory",
+  "type": "object",
+  "properties": {
+    "asset_id": {
+      "type": "string",
+      "description": "Associated asset ID"
+    },
+    "asset_name": {
+      "type": "string",
+      "description": "Asset name (denormalized)"
+    },
+    "service_date": {
+      "type": "string",
+      "format": "date",
+      "description": "When service was performed"
+    },
+    "service_type": {
+      "type": "string",
+      "enum": [
+        "maintenance",
+        "repair",
+        "inspection",
+        "replacement",
+        "upgrade"
+      ],
+      "description": "Type of service"
+    },
+    "description": {
+      "type": "string",
+      "description": "What was done during service"
+    },
+    "performed_by": {
+      "type": "string",
+      "description": "Technician or person who performed service"
+    },
+    "performed_by_email": {
+      "type": "string"
+    },
+    "duration_hours": {
+      "type": "number",
+      "description": "Hours spent on service"
+    },
+    "cost": {
+      "type": "number",
+      "description": "Cost of service"
+    },
+    "parts_used": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Parts or supplies used"
+    },
+    "next_service_due": {
+      "type": "string",
+      "format": "date",
+      "description": "When next service is recommended"
+    },
+    "notes": {
+      "type": "string"
+    },
+    "photo_urls": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Service documentation photos"
+    }
+  },
+  "required": [
+    "asset_id",
+    "service_date",
+    "service_type",
+    "description"
+  ]
+}

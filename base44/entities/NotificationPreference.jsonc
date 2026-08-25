@@ -1,0 +1,63 @@
+{
+  "name": "NotificationPreference",
+  "type": "object",
+  "properties": {
+    "user_email": {
+      "type": "string",
+      "description": "User's email address"
+    },
+    "user_name": {
+      "type": "string"
+    },
+    "location_id": {
+      "type": "string",
+      "description": "Location-specific preferences (optional)"
+    },
+    "notification_type": {
+      "type": "string",
+      "enum": [
+        "pool_test_alert",
+        "maintenance_due",
+        "compliance_gap",
+        "task_assignment",
+        "incident_report",
+        "certification_expiry"
+      ],
+      "description": "Type of notification"
+    },
+    "email_enabled": {
+      "type": "boolean",
+      "default": true
+    },
+    "in_app_enabled": {
+      "type": "boolean",
+      "default": true
+    },
+    "sms_enabled": {
+      "type": "boolean",
+      "default": false
+    },
+    "urgency_threshold": {
+      "type": "string",
+      "enum": [
+        "all",
+        "high",
+        "critical"
+      ],
+      "default": "high",
+      "description": "Minimum severity to trigger notifications"
+    },
+    "quiet_hours_start": {
+      "type": "string",
+      "description": "Time to stop notifications (HH:MM)"
+    },
+    "quiet_hours_end": {
+      "type": "string",
+      "description": "Time to resume notifications (HH:MM)"
+    }
+  },
+  "required": [
+    "user_email",
+    "notification_type"
+  ]
+}

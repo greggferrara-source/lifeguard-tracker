@@ -1,0 +1,89 @@
+{
+  "name": "IoTSensorReading",
+  "type": "object",
+  "properties": {
+    "sensor_id": {
+      "type": "string",
+      "description": "Unique sensor identifier"
+    },
+    "location_id": {
+      "type": "string",
+      "description": "Facility location"
+    },
+    "location_name": {
+      "type": "string"
+    },
+    "sensor_type": {
+      "type": "string",
+      "enum": [
+        "ph",
+        "chlorine",
+        "temperature_water",
+        "temperature_air",
+        "humidity",
+        "gate_entry"
+      ],
+      "description": "Type of sensor"
+    },
+    "sensor_name": {
+      "type": "string",
+      "description": "User-friendly sensor name"
+    },
+    "unit": {
+      "type": "string",
+      "description": "Measurement unit (ppm, \u00b0C, \u00b0F, %RH, count)"
+    },
+    "value": {
+      "type": "number",
+      "description": "Current sensor reading"
+    },
+    "min_normal": {
+      "type": "number",
+      "description": "Minimum normal value"
+    },
+    "max_normal": {
+      "type": "number",
+      "description": "Maximum normal value"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "normal",
+        "warning",
+        "critical",
+        "offline"
+      ],
+      "default": "normal"
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When reading was taken"
+    },
+    "battery_level": {
+      "type": "number",
+      "description": "Battery percentage for wireless sensors"
+    },
+    "signal_strength": {
+      "type": "number",
+      "description": "Network signal strength"
+    },
+    "notes": {
+      "type": "string"
+    },
+    "alert_triggered": {
+      "type": "boolean",
+      "default": false
+    },
+    "alert_id": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "sensor_id",
+    "sensor_type",
+    "location_id",
+    "value",
+    "timestamp"
+  ]
+}

@@ -1,0 +1,89 @@
+{
+  "name": "OperationalForm",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Form name"
+    },
+    "description": {
+      "type": "string",
+      "description": "What this form is for"
+    },
+    "category": {
+      "type": "string",
+      "enum": [
+        "vehicle",
+        "equipment",
+        "safety",
+        "training",
+        "patient",
+        "facility",
+        "other"
+      ],
+      "default": "safety",
+      "description": "Form category"
+    },
+    "fields": {
+      "type": "array",
+      "description": "Form fields definition",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "label": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "pass_fail",
+              "yes_no",
+              "number",
+              "text",
+              "select"
+            ],
+            "default": "pass_fail"
+          },
+          "required": {
+            "type": "boolean",
+            "default": true
+          },
+          "options": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "unit": {
+            "type": "string"
+          },
+          "alert_on_fail": {
+            "type": "boolean",
+            "default": false
+          }
+        }
+      }
+    },
+    "location_id": {
+      "type": "string"
+    },
+    "location_name": {
+      "type": "string"
+    },
+    "is_active": {
+      "type": "boolean",
+      "default": true
+    },
+    "alert_email": {
+      "type": "string",
+      "description": "Email to notify on failures"
+    }
+  },
+  "required": [
+    "name",
+    "category"
+  ]
+}

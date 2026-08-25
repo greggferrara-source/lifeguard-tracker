@@ -1,0 +1,96 @@
+{
+  "name": "Message",
+  "type": "object",
+  "properties": {
+    "sender_email": {
+      "type": "string",
+      "description": "Email of message sender"
+    },
+    "sender_name": {
+      "type": "string",
+      "description": "Name of sender (denormalized)"
+    },
+    "recipient_email": {
+      "type": "string",
+      "description": "Email of message recipient"
+    },
+    "recipient_name": {
+      "type": "string",
+      "description": "Name of recipient (denormalized)"
+    },
+    "content": {
+      "type": "string",
+      "description": "Message content"
+    },
+    "read": {
+      "type": "boolean",
+      "default": false,
+      "description": "Whether recipient has read the message"
+    },
+    "read_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When message was read"
+    }
+  },
+  "required": [
+    "sender_email",
+    "recipient_email",
+    "content"
+  ],
+  "rls": {
+    "read": [
+      {
+        "role": "admin",
+        "condition": {}
+      },
+      {
+        "role": "site_owner",
+        "condition": {}
+      },
+      {
+        "role": "employee",
+        "condition": {
+          "or": [
+            {
+              "sender_email": "{{user_email}}"
+            },
+            {
+              "recipient_email": "{{user_email}}"
+            }
+          ]
+        }
+      }
+    ],
+    "create": [
+      {
+        "role": "employee"
+      },
+      {
+        "role": "manager"
+      },
+      {
+        "role": "admin"
+      },
+      {
+        "role": "site_owner"
+      }
+    ],
+    "update": [
+      {
+        "role": "admin"
+      },
+      {
+        "role": "site_owner"
+      }
+    ],
+    "delete": [
+      {
+        "role": "admin"
+      },
+      {
+        "role": "site_owner"
+      }
+    ]
+  }
+}

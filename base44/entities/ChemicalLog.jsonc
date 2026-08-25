@@ -1,0 +1,72 @@
+{
+  "name": "ChemicalLog",
+  "type": "object",
+  "properties": {
+    "location_id": {
+      "type": "string"
+    },
+    "location_name": {
+      "type": "string"
+    },
+    "recorded_by": {
+      "type": "string"
+    },
+    "recorded_by_name": {
+      "type": "string"
+    },
+    "date": {
+      "type": "string",
+      "format": "date"
+    },
+    "time": {
+      "type": "string"
+    },
+    "ph_level": {
+      "type": "number"
+    },
+    "free_chlorine": {
+      "type": "number"
+    },
+    "combined_chlorine": {
+      "type": "number"
+    },
+    "alkalinity": {
+      "type": "number"
+    },
+    "calcium_hardness": {
+      "type": "number"
+    },
+    "temperature_f": {
+      "type": "number"
+    },
+    "cyanuric_acid": {
+      "type": "number"
+    },
+    "water_clarity": {
+      "type": "string",
+      "enum": [
+        "clear",
+        "slightly_cloudy",
+        "cloudy",
+        "very_cloudy"
+      ],
+      "default": "clear"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "pass",
+        "requires_action",
+        "critical"
+      ],
+      "default": "pass"
+    },
+    "notes": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "location_id",
+    "date"
+  ]
+}

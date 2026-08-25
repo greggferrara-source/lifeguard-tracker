@@ -1,0 +1,123 @@
+{
+  "name": "ComplianceWorkflowStep",
+  "type": "object",
+  "properties": {
+    "workflow_id": {
+      "type": "string",
+      "description": "Parent workflow ID"
+    },
+    "step_number": {
+      "type": "number",
+      "description": "Order in workflow"
+    },
+    "title": {
+      "type": "string",
+      "description": "Step title"
+    },
+    "description": {
+      "type": "string",
+      "description": "Detailed instructions"
+    },
+    "type": {
+      "type": "string",
+      "enum": [
+        "checklist",
+        "form_submission",
+        "document_upload",
+        "meeting_schedule",
+        "training_complete",
+        "approval_required"
+      ],
+      "description": "Step type"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "in_progress",
+        "completed",
+        "blocked"
+      ],
+      "default": "pending"
+    },
+    "due_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "assigned_to_email": {
+      "type": "string",
+      "description": "Person responsible for this step"
+    },
+    "assigned_to_name": {
+      "type": "string"
+    },
+    "checklist_items": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "item": {
+            "type": "string"
+          },
+          "completed": {
+            "type": "boolean"
+          },
+          "completed_by": {
+            "type": "string"
+          },
+          "completed_at": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      }
+    },
+    "resources": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "document",
+              "video",
+              "link",
+              "form"
+            ]
+          },
+          "url": {
+            "type": "string"
+          }
+        }
+      },
+      "description": "Reference documents and resources"
+    },
+    "dependencies": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Step IDs that must be completed first"
+    },
+    "completed_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "notes": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "workflow_id",
+    "step_number",
+    "title",
+    "type"
+  ]
+}

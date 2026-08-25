@@ -1,0 +1,48 @@
+{
+  "name": "PatronCount",
+  "type": "object",
+  "properties": {
+    "location_id": {
+      "type": "string"
+    },
+    "location_name": {
+      "type": "string"
+    },
+    "recorded_by": {
+      "type": "string"
+    },
+    "recorded_by_name": {
+      "type": "string"
+    },
+    "date": {
+      "type": "string",
+      "format": "date"
+    },
+    "time": {
+      "type": "string"
+    },
+    "count": {
+      "type": "number"
+    },
+    "weather": {
+      "type": "string",
+      "enum": [
+        "sunny",
+        "partly_cloudy",
+        "cloudy",
+        "rainy",
+        "hot",
+        "cold"
+      ],
+      "default": "sunny"
+    },
+    "notes": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "location_id",
+    "date",
+    "count"
+  ]
+}

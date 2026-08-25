@@ -1,0 +1,92 @@
+{
+  "name": "PayrollIntegration",
+  "type": "object",
+  "properties": {
+    "location_id": {
+      "type": "string",
+      "description": "Associated facility location"
+    },
+    "location_name": {
+      "type": "string"
+    },
+    "provider": {
+      "type": "string",
+      "enum": [
+        "gusto",
+        "adp",
+        "paychex"
+      ],
+      "description": "Payroll provider"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "not_connected",
+        "connected",
+        "syncing",
+        "error"
+      ],
+      "default": "not_connected"
+    },
+    "oauth_access_token": {
+      "type": "string",
+      "description": "Encrypted OAuth access token"
+    },
+    "oauth_refresh_token": {
+      "type": "string",
+      "description": "Encrypted OAuth refresh token"
+    },
+    "token_expires_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "company_id": {
+      "type": "string",
+      "description": "Company ID in payroll system"
+    },
+    "company_name": {
+      "type": "string"
+    },
+    "last_sync": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "auto_sync_enabled": {
+      "type": "boolean",
+      "default": true
+    },
+    "sync_interval_hours": {
+      "type": "number",
+      "default": 24,
+      "description": "How often to sync in hours"
+    },
+    "error_message": {
+      "type": "string"
+    },
+    "synced_fields": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "timesheets",
+          "schedules",
+          "employees",
+          "pay_rates"
+        ]
+      },
+      "description": "Which data types are being synced"
+    },
+    "setup_completed_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "setup_by_email": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "location_id",
+    "provider",
+    "setup_by_email"
+  ]
+}

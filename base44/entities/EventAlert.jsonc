@@ -1,0 +1,63 @@
+{
+  "name": "EventAlert",
+  "type": "object",
+  "properties": {
+    "location_id": {
+      "type": "string",
+      "description": "Associated facility location"
+    },
+    "location_name": {
+      "type": "string"
+    },
+    "event_name": {
+      "type": "string",
+      "description": "Name of event affecting patron load"
+    },
+    "event_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "event_time": {
+      "type": "string",
+      "description": "Start time of event"
+    },
+    "estimated_extra_patrons": {
+      "type": "number",
+      "description": "Additional patrons expected"
+    },
+    "impact_level": {
+      "type": "string",
+      "enum": [
+        "low",
+        "moderate",
+        "high"
+      ],
+      "default": "moderate"
+    },
+    "source": {
+      "type": "string",
+      "enum": [
+        "local_calendar",
+        "community_board",
+        "manual"
+      ],
+      "default": "local_calendar"
+    },
+    "recommended_staffing_increase": {
+      "type": "number",
+      "description": "Suggested additional staff needed"
+    },
+    "staffing_planned": {
+      "type": "boolean",
+      "default": false
+    },
+    "notes": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "location_id",
+    "event_name",
+    "event_date"
+  ]
+}

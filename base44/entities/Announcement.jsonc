@@ -1,0 +1,61 @@
+{
+  "name": "Announcement",
+  "type": "object",
+  "properties": {
+    "title": {
+      "type": "string",
+      "description": "Announcement title"
+    },
+    "content": {
+      "type": "string",
+      "description": "Announcement content/body"
+    },
+    "author_name": {
+      "type": "string",
+      "description": "Name of person who created announcement"
+    },
+    "location_id": {
+      "type": "string",
+      "description": "Specific location, or null for all"
+    },
+    "location_name": {
+      "type": "string",
+      "description": "Location name (denormalized)"
+    },
+    "priority": {
+      "type": "string",
+      "enum": [
+        "low",
+        "medium",
+        "high",
+        "urgent"
+      ],
+      "default": "medium",
+      "description": "Announcement priority"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "draft",
+        "published",
+        "archived"
+      ],
+      "default": "draft",
+      "description": "Announcement status"
+    },
+    "published_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When announcement was published"
+    },
+    "expires_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When announcement expires (optional)"
+    }
+  },
+  "required": [
+    "title",
+    "content"
+  ]
+}

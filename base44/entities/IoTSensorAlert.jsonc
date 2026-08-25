@@ -1,0 +1,119 @@
+{
+  "name": "IoTSensorAlert",
+  "type": "object",
+  "properties": {
+    "reading_id": {
+      "type": "string",
+      "description": "Associated sensor reading"
+    },
+    "sensor_id": {
+      "type": "string"
+    },
+    "sensor_type": {
+      "type": "string"
+    },
+    "sensor_name": {
+      "type": "string"
+    },
+    "location_id": {
+      "type": "string"
+    },
+    "location_name": {
+      "type": "string"
+    },
+    "alert_type": {
+      "type": "string",
+      "enum": [
+        "low_threshold",
+        "high_threshold",
+        "offline",
+        "battery_low",
+        "signal_lost"
+      ],
+      "description": "Type of alert"
+    },
+    "severity": {
+      "type": "string",
+      "enum": [
+        "warning",
+        "critical"
+      ],
+      "default": "warning"
+    },
+    "value": {
+      "type": "number",
+      "description": "Sensor value that triggered alert"
+    },
+    "threshold": {
+      "type": "number",
+      "description": "Threshold that was crossed"
+    },
+    "message": {
+      "type": "string",
+      "description": "Alert message"
+    },
+    "triggered_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "notified_users": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "notification_method": {
+            "type": "string",
+            "enum": [
+              "email",
+              "sms",
+              "in_app"
+            ]
+          },
+          "notified_at": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      }
+    },
+    "automated_action_taken": {
+      "type": "string",
+      "enum": [
+        "alert_sent",
+        "pool_closed",
+        "staffing_increased",
+        "incident_created",
+        "none"
+      ]
+    },
+    "action_details": {
+      "type": "string"
+    },
+    "resolved": {
+      "type": "boolean",
+      "default": false
+    },
+    "resolved_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "resolved_by_email": {
+      "type": "string"
+    },
+    "resolution_notes": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "sensor_id",
+    "alert_type",
+    "severity",
+    "triggered_at"
+  ]
+}

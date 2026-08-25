@@ -1,0 +1,98 @@
+{
+  "name": "SafetyPrediction",
+  "type": "object",
+  "properties": {
+    "location_id": {
+      "type": "string"
+    },
+    "location_name": {
+      "type": "string"
+    },
+    "prediction_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "incident_risk_level": {
+      "type": "string",
+      "enum": [
+        "low",
+        "moderate",
+        "high",
+        "critical"
+      ]
+    },
+    "risk_factors": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "factor": {
+            "type": "string",
+            "description": "Risk factor name"
+          },
+          "impact": {
+            "type": "number",
+            "description": "Confidence score 0-100"
+          },
+          "description": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "predicted_incident_types": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "drowning",
+          "rescue",
+          "injury",
+          "chemical_spill"
+        ]
+      }
+    },
+    "staffing_recommendation": {
+      "type": "object",
+      "properties": {
+        "recommended_headcount": {
+          "type": "number"
+        },
+        "current_headcount": {
+          "type": "number"
+        },
+        "shortage": {
+          "type": "number"
+        },
+        "reasoning": {
+          "type": "string"
+        }
+      }
+    },
+    "training_gaps_identified": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "recommended_actions": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "generated_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "accuracy_score": {
+      "type": "number",
+      "description": "Model accuracy based on historical data"
+    }
+  },
+  "required": [
+    "location_id",
+    "prediction_date",
+    "incident_risk_level"
+  ]
+}

@@ -1,0 +1,32 @@
+{
+  "name": "ChannelMember",
+  "type": "object",
+  "properties": {
+    "channel_id": {
+      "type": "string",
+      "description": "Associated channel ID"
+    },
+    "member_email": {
+      "type": "string",
+      "description": "Email of channel member"
+    },
+    "member_name": {
+      "type": "string",
+      "description": "Name of member (denormalized)"
+    },
+    "role": {
+      "type": "string",
+      "enum": [
+        "member",
+        "moderator",
+        "admin"
+      ],
+      "default": "member",
+      "description": "Member role in channel"
+    }
+  },
+  "required": [
+    "channel_id",
+    "member_email"
+  ]
+}

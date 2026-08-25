@@ -1,0 +1,34 @@
+{
+  "name": "OnboardingStatus",
+  "type": "object",
+  "properties": {
+    "user_email": {
+      "type": "string",
+      "description": "Email of the user"
+    },
+    "step_completed": {
+      "type": "number",
+      "default": 0,
+      "description": "Last completed step (0-4)"
+    },
+    "location_created": {
+      "type": "boolean",
+      "default": false
+    },
+    "employees_added": {
+      "type": "boolean",
+      "default": false
+    },
+    "settings_configured": {
+      "type": "boolean",
+      "default": false
+    },
+    "completed": {
+      "type": "boolean",
+      "default": false
+    }
+  },
+  "required": [
+    "user_email"
+  ]
+}

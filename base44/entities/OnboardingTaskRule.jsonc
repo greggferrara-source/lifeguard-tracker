@@ -1,0 +1,114 @@
+{
+  "name": "OnboardingTaskRule",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Rule name for easy identification"
+    },
+    "description": {
+      "type": "string",
+      "description": "Detailed description of when this rule applies"
+    },
+    "enabled": {
+      "type": "boolean",
+      "default": true,
+      "description": "Whether this rule is active"
+    },
+    "priority": {
+      "type": "number",
+      "default": 100,
+      "description": "Execution priority (higher = execute first)"
+    },
+    "criteria": {
+      "type": "object",
+      "properties": {
+        "roles": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Employee roles this rule applies to"
+        },
+        "locations": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Location IDs this rule applies to"
+        },
+        "certifications_required": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Employee must have these certifications"
+        },
+        "training_modules": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Required training module IDs"
+        }
+      },
+      "description": "Conditions for rule matching"
+    },
+    "tasks": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "task_id": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "days_offset": {
+            "type": "number",
+            "description": "Days from start date for due date"
+          },
+          "assigned_to_role": {
+            "type": "string",
+            "description": "Role responsible for task (e.g., 'HR', 'IT', 'Training')"
+          },
+          "depends_on": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Task IDs this task depends on"
+          },
+          "order": {
+            "type": "number",
+            "description": "Execution order within the rule"
+          }
+        }
+      },
+      "description": "Tasks to assign when rule matches"
+    },
+    "created_by_email": {
+      "type": "string"
+    },
+    "last_modified_by_email": {
+      "type": "string"
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "updated_at": {
+      "type": "string",
+      "format": "date-time"
+    }
+  },
+  "required": [
+    "name",
+    "criteria",
+    "tasks"
+  ]
+}

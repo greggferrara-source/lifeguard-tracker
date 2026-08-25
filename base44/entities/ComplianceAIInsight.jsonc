@@ -1,0 +1,102 @@
+{
+  "name": "ComplianceAIInsight",
+  "type": "object",
+  "properties": {
+    "location_id": {
+      "type": "string"
+    },
+    "location_name": {
+      "type": "string"
+    },
+    "insight_type": {
+      "type": "string",
+      "enum": [
+        "potential_violation",
+        "gap_pattern",
+        "risk_prediction",
+        "trend_alert"
+      ],
+      "description": "Type of insight"
+    },
+    "severity": {
+      "type": "string",
+      "enum": [
+        "info",
+        "warning",
+        "critical"
+      ],
+      "default": "warning"
+    },
+    "title": {
+      "type": "string",
+      "description": "Brief title of the insight"
+    },
+    "description": {
+      "type": "string",
+      "description": "Detailed description of the issue"
+    },
+    "affected_modules": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Which modules are affected (EmployeeManagement, AssetManagement, PoolTesting, etc.)"
+    },
+    "relevant_regulation": {
+      "type": "string",
+      "description": "Which regulation/standard is violated (OSHA, MAHC, ANSI, etc.)"
+    },
+    "data_analyzed": {
+      "type": "object",
+      "description": "Summary of data analyzed to generate this insight"
+    },
+    "recommended_actions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "action": {
+            "type": "string"
+          },
+          "priority": {
+            "type": "string",
+            "enum": [
+              "immediate",
+              "short_term",
+              "long_term"
+            ]
+          },
+          "estimated_effort": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "confidence_score": {
+      "type": "number",
+      "description": "AI confidence (0-100)"
+    },
+    "generated_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "acknowledged": {
+      "type": "boolean",
+      "default": false
+    },
+    "acknowledged_by": {
+      "type": "string"
+    },
+    "action_taken": {
+      "type": "string",
+      "description": "Description of action taken in response"
+    }
+  },
+  "required": [
+    "location_id",
+    "insight_type",
+    "title",
+    "description",
+    "relevant_regulation"
+  ]
+}

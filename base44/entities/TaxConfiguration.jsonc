@@ -1,0 +1,54 @@
+{
+  "name": "TaxConfiguration",
+  "type": "object",
+  "properties": {
+    "employee_id": {
+      "type": "string",
+      "description": "Employee ID"
+    },
+    "employee_name": {
+      "type": "string",
+      "description": "Employee name (denormalized)"
+    },
+    "filing_status": {
+      "type": "string",
+      "enum": [
+        "single",
+        "married",
+        "head_of_household"
+      ],
+      "default": "single",
+      "description": "Tax filing status"
+    },
+    "federal_tax_rate": {
+      "type": "number",
+      "description": "Federal income tax rate as decimal (e.g., 0.12)"
+    },
+    "state": {
+      "type": "string",
+      "description": "State of employment"
+    },
+    "state_tax_rate": {
+      "type": "number",
+      "description": "State income tax rate as decimal"
+    },
+    "w4_withholding_amount": {
+      "type": "number",
+      "default": 0,
+      "description": "Additional withholding amount from W4"
+    },
+    "is_exempt": {
+      "type": "boolean",
+      "default": false,
+      "description": "Is exempt from federal withholding"
+    },
+    "use_tax_service": {
+      "type": "boolean",
+      "default": false,
+      "description": "Use external tax service for calculations"
+    }
+  },
+  "required": [
+    "employee_id"
+  ]
+}

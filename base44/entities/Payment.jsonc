@@ -1,0 +1,115 @@
+{
+  "name": "Payment",
+  "type": "object",
+  "properties": {
+    "payroll_id": {
+      "type": "string",
+      "description": "Associated payroll ID"
+    },
+    "payroll_entry_id": {
+      "type": "string",
+      "description": "Associated payroll entry ID"
+    },
+    "employee_id": {
+      "type": "string",
+      "description": "Employee ID"
+    },
+    "employee_name": {
+      "type": "string",
+      "description": "Employee name (denormalized)"
+    },
+    "pay_period_name": {
+      "type": "string",
+      "description": "Pay period name"
+    },
+    "net_amount": {
+      "type": "number",
+      "description": "Amount to be paid"
+    },
+    "payment_method": {
+      "type": "string",
+      "enum": [
+        "direct_deposit",
+        "check"
+      ],
+      "description": "Payment method used"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "processing",
+        "completed",
+        "failed",
+        "reversed"
+      ],
+      "default": "pending",
+      "description": "Payment status"
+    },
+    "stripe_transaction_id": {
+      "type": "string",
+      "description": "Stripe transfer or payout ID"
+    },
+    "check_number": {
+      "type": "string",
+      "description": "Check number (for check payments)"
+    },
+    "processed_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When payment was processed"
+    },
+    "error_message": {
+      "type": "string",
+      "description": "Error message if payment failed"
+    }
+  },
+  "required": [
+    "payroll_id",
+    "employee_id",
+    "net_amount",
+    "payment_method"
+  ],
+  "rls": {
+    "read": [
+      {
+        "role": "admin",
+        "condition": {}
+      },
+      {
+        "role": "site_owner",
+        "condition": {}
+      },
+      {
+        "role": "employee",
+        "condition": {
+          "employee_id": "{{user_id}}"
+        }
+      }
+    ],
+    "create": [
+      {
+        "role": "admin"
+      },
+      {
+        "role": "site_owner"
+      }
+    ],
+    "update": [
+      {
+        "role": "admin"
+      },
+      {
+        "role": "site_owner"
+      }
+    ],
+    "delete": [
+      {
+        "role": "admin"
+      },
+      {
+        "role": "site_owner"
+      }
+    ]
+  }
+}

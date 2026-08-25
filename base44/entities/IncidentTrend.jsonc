@@ -1,0 +1,63 @@
+{
+  "name": "IncidentTrend",
+  "type": "object",
+  "properties": {
+    "location_id": {
+      "type": "string"
+    },
+    "location_name": {
+      "type": "string"
+    },
+    "date": {
+      "type": "string",
+      "format": "date"
+    },
+    "incident_type": {
+      "type": "string",
+      "enum": [
+        "rescue",
+        "incident",
+        "near_miss",
+        "first_aid",
+        "injury",
+        "other"
+      ]
+    },
+    "severity": {
+      "type": "string",
+      "enum": [
+        "minor",
+        "moderate",
+        "serious",
+        "critical"
+      ]
+    },
+    "count": {
+      "type": "number",
+      "default": 1,
+      "description": "Number of incidents of this type on this date"
+    },
+    "trend": {
+      "type": "string",
+      "enum": [
+        "increasing",
+        "stable",
+        "decreasing"
+      ],
+      "description": "Trend compared to previous period"
+    },
+    "hour_of_day": {
+      "type": "number",
+      "description": "Most common hour incidents occur (0-23)"
+    },
+    "day_of_week": {
+      "type": "integer",
+      "description": "0=Sunday, 6=Saturday"
+    }
+  },
+  "required": [
+    "location_id",
+    "date",
+    "incident_type"
+  ]
+}

@@ -1,0 +1,74 @@
+{
+  "name": "UserPreferences",
+  "type": "object",
+  "properties": {
+    "user_email": {
+      "type": "string"
+    },
+    "pinned_modules": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "page_name": {
+            "type": "string",
+            "description": "Page/module name (Schedule, EmployeeManagement, etc.)"
+          },
+          "display_name": {
+            "type": "string"
+          },
+          "order": {
+            "type": "number"
+          }
+        }
+      },
+      "description": "Pinned modules for quick access"
+    },
+    "dashboard_layout": {
+      "type": "string",
+      "enum": [
+        "grid",
+        "list",
+        "compact"
+      ],
+      "default": "grid",
+      "description": "Dashboard layout preference"
+    },
+    "report_preferences": {
+      "type": "object",
+      "properties": {
+        "default_date_range": {
+          "type": "string",
+          "enum": [
+            "7days",
+            "30days",
+            "90days",
+            "custom"
+          ]
+        },
+        "favorite_reports": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "notification_settings": {
+      "type": "object",
+      "properties": {
+        "digest_frequency": {
+          "type": "string",
+          "enum": [
+            "real_time",
+            "daily",
+            "weekly"
+          ]
+        }
+      }
+    }
+  },
+  "required": [
+    "user_email"
+  ]
+}

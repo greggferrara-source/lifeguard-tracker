@@ -1,0 +1,35 @@
+{
+  "name": "UserActivity",
+  "type": "object",
+  "properties": {
+    "user_email": {
+      "type": "string",
+      "description": "User email"
+    },
+    "user_name": {
+      "type": "string",
+      "description": "User display name"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "active",
+        "idle",
+        "offline"
+      ],
+      "default": "offline"
+    },
+    "last_active": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "current_page": {
+      "type": "string",
+      "description": "Current page user is on"
+    }
+  },
+  "required": [
+    "user_email",
+    "status"
+  ]
+}

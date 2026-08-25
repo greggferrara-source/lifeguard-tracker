@@ -1,0 +1,53 @@
+{
+  "name": "PayPeriod",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Pay period name (e.g., 'Week of Jan 1-7')"
+    },
+    "start_date": {
+      "type": "string",
+      "format": "date",
+      "description": "Period start date"
+    },
+    "end_date": {
+      "type": "string",
+      "format": "date",
+      "description": "Period end date"
+    },
+    "pay_date": {
+      "type": "string",
+      "format": "date",
+      "description": "Date when payment is issued"
+    },
+    "frequency": {
+      "type": "string",
+      "enum": [
+        "weekly",
+        "biweekly",
+        "semimonthly",
+        "monthly"
+      ],
+      "default": "weekly",
+      "description": "Payroll frequency"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "open",
+        "closed",
+        "approved",
+        "processed"
+      ],
+      "default": "open",
+      "description": "Period status"
+    }
+  },
+  "required": [
+    "name",
+    "start_date",
+    "end_date",
+    "pay_date"
+  ]
+}

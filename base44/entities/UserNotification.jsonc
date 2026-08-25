@@ -1,0 +1,78 @@
+{
+  "name": "UserNotification",
+  "type": "object",
+  "properties": {
+    "recipient_email": {
+      "type": "string"
+    },
+    "recipient_name": {
+      "type": "string"
+    },
+    "title": {
+      "type": "string",
+      "description": "Notification title"
+    },
+    "message": {
+      "type": "string",
+      "description": "Notification message"
+    },
+    "notification_type": {
+      "type": "string",
+      "enum": [
+        "pool_test_alert",
+        "maintenance_due",
+        "compliance_gap",
+        "task_assignment",
+        "incident_report",
+        "certification_expiry"
+      ],
+      "description": "Type of notification"
+    },
+    "severity": {
+      "type": "string",
+      "enum": [
+        "info",
+        "warning",
+        "critical"
+      ],
+      "default": "info"
+    },
+    "related_entity_type": {
+      "type": "string",
+      "description": "What entity this is about (Asset, PoolTestLog, ComplianceGap, etc.)"
+    },
+    "related_entity_id": {
+      "type": "string",
+      "description": "ID of the related entity"
+    },
+    "related_entity_name": {
+      "type": "string"
+    },
+    "action_url": {
+      "type": "string",
+      "description": "URL to navigate to related item"
+    },
+    "read": {
+      "type": "boolean",
+      "default": false
+    },
+    "read_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "dismissed": {
+      "type": "boolean",
+      "default": false
+    }
+  },
+  "required": [
+    "recipient_email",
+    "title",
+    "message",
+    "notification_type"
+  ]
+}

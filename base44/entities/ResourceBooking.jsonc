@@ -1,0 +1,116 @@
+{
+  "name": "ResourceBooking",
+  "type": "object",
+  "properties": {
+    "resource_id": {
+      "type": "string",
+      "description": "Resource being booked"
+    },
+    "resource_name": {
+      "type": "string"
+    },
+    "resource_type": {
+      "type": "string"
+    },
+    "location_id": {
+      "type": "string"
+    },
+    "booked_by_email": {
+      "type": "string"
+    },
+    "booked_by_name": {
+      "type": "string"
+    },
+    "booking_title": {
+      "type": "string",
+      "description": "Title or purpose of booking"
+    },
+    "booking_description": {
+      "type": "string"
+    },
+    "start_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "start_time": {
+      "type": "string",
+      "description": "HH:MM format"
+    },
+    "end_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "end_time": {
+      "type": "string",
+      "description": "HH:MM format"
+    },
+    "attendees": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "invited",
+              "accepted",
+              "declined"
+            ]
+          }
+        }
+      },
+      "description": "Attendees/participants"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "pending_approval",
+        "approved",
+        "confirmed",
+        "cancelled",
+        "completed"
+      ],
+      "default": "confirmed"
+    },
+    "approval_notes": {
+      "type": "string"
+    },
+    "approved_by_email": {
+      "type": "string"
+    },
+    "approved_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "confirmation_sent": {
+      "type": "boolean",
+      "default": false
+    },
+    "reminder_sent": {
+      "type": "boolean",
+      "default": false
+    },
+    "notes": {
+      "type": "string"
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time"
+    }
+  },
+  "required": [
+    "resource_id",
+    "booked_by_email",
+    "booking_title",
+    "start_date",
+    "start_time",
+    "end_date",
+    "end_time"
+  ]
+}

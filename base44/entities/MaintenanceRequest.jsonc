@@ -1,0 +1,109 @@
+{
+  "name": "MaintenanceRequest",
+  "type": "object",
+  "properties": {
+    "asset_id": {
+      "type": "string",
+      "description": "Associated asset ID"
+    },
+    "asset_name": {
+      "type": "string",
+      "description": "Asset name (denormalized)"
+    },
+    "submitted_by_email": {
+      "type": "string",
+      "description": "Email of person who submitted request"
+    },
+    "submitted_by_name": {
+      "type": "string",
+      "description": "Name of person who submitted"
+    },
+    "title": {
+      "type": "string",
+      "description": "Maintenance request title"
+    },
+    "description": {
+      "type": "string",
+      "description": "Detailed description of issue"
+    },
+    "priority": {
+      "type": "string",
+      "enum": [
+        "low",
+        "medium",
+        "high",
+        "critical"
+      ],
+      "default": "medium",
+      "description": "Priority level"
+    },
+    "assigned_to_email": {
+      "type": "string",
+      "description": "Email of assigned technician/supervisor"
+    },
+    "assigned_to_name": {
+      "type": "string",
+      "description": "Name of assigned technician"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "submitted",
+        "approved",
+        "in_progress",
+        "completed",
+        "rejected"
+      ],
+      "default": "submitted",
+      "description": "Request status"
+    },
+    "submitted_date": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "approved_date": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "start_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "completion_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "completion_notes": {
+      "type": "string",
+      "description": "Notes on work completed"
+    },
+    "estimated_cost": {
+      "type": "number",
+      "description": "Estimated repair cost"
+    },
+    "actual_cost": {
+      "type": "number",
+      "description": "Actual repair cost"
+    },
+    "parts_needed": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "List of parts/supplies needed"
+    },
+    "photo_urls": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Before/after photos or documentation"
+    }
+  },
+  "required": [
+    "asset_id",
+    "title",
+    "description",
+    "priority"
+  ]
+}

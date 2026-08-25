@@ -1,0 +1,73 @@
+{
+  "name": "ShiftSwapRequest",
+  "type": "object",
+  "properties": {
+    "requester_employee_id": {
+      "type": "string"
+    },
+    "requester_employee_name": {
+      "type": "string"
+    },
+    "requester_shift_id": {
+      "type": "string"
+    },
+    "requester_shift_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "requester_shift_time": {
+      "type": "string"
+    },
+    "requester_shift_location": {
+      "type": "string"
+    },
+    "target_employee_id": {
+      "type": "string"
+    },
+    "target_employee_name": {
+      "type": "string"
+    },
+    "target_shift_id": {
+      "type": "string"
+    },
+    "target_shift_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "target_shift_time": {
+      "type": "string"
+    },
+    "target_shift_location": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "pending_employee",
+        "pending_manager",
+        "approved",
+        "denied",
+        "cancelled"
+      ],
+      "default": "pending_employee"
+    },
+    "requester_message": {
+      "type": "string"
+    },
+    "manager_notes": {
+      "type": "string"
+    },
+    "employee_response": {
+      "type": "string",
+      "enum": [
+        "accepted",
+        "declined"
+      ]
+    }
+  },
+  "required": [
+    "requester_employee_id",
+    "requester_shift_id",
+    "target_employee_id"
+  ]
+}

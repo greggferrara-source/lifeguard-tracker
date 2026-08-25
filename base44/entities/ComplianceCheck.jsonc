@@ -1,0 +1,63 @@
+{
+  "name": "ComplianceCheck",
+  "type": "object",
+  "properties": {
+    "facility_name": {
+      "type": "string",
+      "description": "Name of the facility checked"
+    },
+    "location_id": {
+      "type": "string",
+      "description": "Associated location ID"
+    },
+    "checked_by_email": {
+      "type": "string",
+      "description": "Email of user who triggered the check"
+    },
+    "check_type": {
+      "type": "string",
+      "enum": [
+        "manual",
+        "scheduled",
+        "automated"
+      ],
+      "default": "manual",
+      "description": "Type of compliance check"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "pass",
+        "warning",
+        "fail"
+      ],
+      "default": "pass",
+      "description": "Overall compliance status"
+    },
+    "findings": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "category": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string"
+          },
+          "notes": {
+            "type": "string"
+          }
+        }
+      },
+      "description": "Compliance findings by category"
+    },
+    "notes": {
+      "type": "string",
+      "description": "Additional notes from the check"
+    }
+  },
+  "required": [
+    "facility_name"
+  ]
+}
